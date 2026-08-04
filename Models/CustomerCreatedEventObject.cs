@@ -1,0 +1,23 @@
+using System.Text.Json.Serialization;
+
+namespace Square.Models;
+
+/// <summary>
+/// An object that contains the customer associated with the event.
+/// </summary>
+public record CustomerCreatedEventObject
+{
+    /// <summary>
+    /// Represents a Square customer profile in the Customer Directory of a Square seller.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("customer")]
+    public Customer? Customer { get; init; }
+
+    /// <summary>
+    /// Information about the change that triggered the event.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("event_context")]
+    public CustomerCreatedEventEventContext? EventContext { get; init; }
+}

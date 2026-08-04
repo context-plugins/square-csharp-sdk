@@ -1,0 +1,25 @@
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+
+namespace Square.Models;
+
+/// <summary>
+/// Represents a response from creating an order custom attribute definition.
+/// </summary>
+public record CreateOrderCustomAttributeDefinitionResponse
+{
+    /// <summary>
+    /// Represents a definition for custom attribute values. A custom attribute definition
+    /// specifies the key, visibility, schema, and other properties for a custom attribute.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("custom_attribute_definition")]
+    public CustomAttributeDefinition? CustomAttributeDefinition { get; init; }
+
+    /// <summary>
+    /// Any errors that occurred during the request.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("errors")]
+    public IReadOnlyList<Error>? Errors { get; init; }
+}

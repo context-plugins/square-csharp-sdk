@@ -1,0 +1,24 @@
+using System.Text.Json.Serialization;
+
+namespace Square.Models;
+
+public record TeamMemberCreatedEventData
+{
+    /// <summary>
+    /// Name of the affected object’s type, <c>"team_member"</c>.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("type")]
+    public string? Type { get; init; }
+
+    /// <summary>
+    /// ID of the created team member.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("object")]
+    public TeamMemberCreatedEventObject? Object { get; init; }
+}

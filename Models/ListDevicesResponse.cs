@@ -1,0 +1,30 @@
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+
+namespace Square.Models;
+
+public record ListDevicesResponse
+{
+    /// <summary>
+    /// Information about errors that occurred during the request.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("errors")]
+    public IReadOnlyList<Error>? Errors { get; init; }
+
+    /// <summary>
+    /// The requested list of <c>Device</c> objects.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("devices")]
+    public IReadOnlyList<Device>? Devices { get; init; }
+
+    /// <summary>
+    /// The pagination cursor to be used in a subsequent request. If empty,
+    /// this is the final response.
+    /// See <see href="https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination">Pagination</see> for more information.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("cursor")]
+    public string? Cursor { get; init; }
+}

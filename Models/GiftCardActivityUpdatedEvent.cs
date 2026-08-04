@@ -1,0 +1,49 @@
+using System.Text.Json.Serialization;
+
+namespace Square.Models;
+
+/// <summary>
+/// Published when a <see href="entity:GiftCardActivity">gift card activity</see> is updated.
+/// Subscribe to this event to be notified about the following changes:
+/// - An update to the <c>REDEEM</c> activity for a gift card redemption made from a Square product (such as Square Point of Sale).
+/// These redemptions are initially assigned a <c>PENDING</c> state, but then change to a <c>COMPLETED</c> or <c>CANCELED</c> state.
+/// - An update to the <c>IMPORT</c> activity for an imported gift card when the balance is later adjusted by Square.
+/// </summary>
+public record GiftCardActivityUpdatedEvent
+{
+    /// <summary>
+    /// The ID of the Square seller associated with the event.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("merchant_id")]
+    public string? MerchantId { get; init; }
+
+    /// <summary>
+    /// The type of event. For this event, the value is <c>gift_card.activity.updated</c>.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("type")]
+    public string? Type { get; init; }
+
+    /// <summary>
+    /// The unique ID of the event, which is used for
+    /// <see href="https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices">idempotency support</see>.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("event_id")]
+    public string? EventId { get; init; }
+
+    /// <summary>
+    /// The timestamp of when the event was created, in RFC 3339 format.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("created_at")]
+    public string? CreatedAt { get; init; }
+
+    /// <summary>
+    /// The data associated with a <c>gift_card.activity.updated</c> event.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("data")]
+    public GiftCardActivityUpdatedEventData? Data { get; init; }
+}

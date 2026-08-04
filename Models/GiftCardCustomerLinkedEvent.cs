@@ -1,0 +1,45 @@
+using System.Text.Json.Serialization;
+
+namespace Square.Models;
+
+/// <summary>
+/// Published when a <see href="entity:Customer">customer</see> is linked to a <see href="entity:GiftCard">gift card</see>.
+/// </summary>
+public record GiftCardCustomerLinkedEvent
+{
+    /// <summary>
+    /// The ID of the Square seller associated with the event.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("merchant_id")]
+    public string? MerchantId { get; init; }
+
+    /// <summary>
+    /// The type of event. For this event, the value is <c>gift_card.customer_linked</c>.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("type")]
+    public string? Type { get; init; }
+
+    /// <summary>
+    /// The unique ID of the event, which is used for
+    /// <see href="https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices">idempotency support</see>.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("event_id")]
+    public string? EventId { get; init; }
+
+    /// <summary>
+    /// The timestamp of when the event was created, in RFC 3339 format.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("created_at")]
+    public string? CreatedAt { get; init; }
+
+    /// <summary>
+    /// The data associated with a <c>gift_card.customer_linked</c> event.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("data")]
+    public GiftCardCustomerLinkedEventData? Data { get; init; }
+}

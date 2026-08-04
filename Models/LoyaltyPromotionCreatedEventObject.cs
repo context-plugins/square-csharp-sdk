@@ -1,0 +1,20 @@
+using System.Text.Json.Serialization;
+
+namespace Square.Models;
+
+/// <summary>
+/// An object that contains the loyalty promotion associated with a <c>loyalty.promotion.created</c> event.
+/// </summary>
+public record LoyaltyPromotionCreatedEventObject
+{
+    /// <summary>
+    /// Represents a promotion for a <see href="entity:LoyaltyProgram">loyalty program</see>. Loyalty promotions enable buyers
+    /// to earn extra points on top of those earned from the base program.
+    /// <para>
+    /// A loyalty program can have a maximum of 10 loyalty promotions with an <c>ACTIVE</c> or <c>SCHEDULED</c> status.
+    /// </para>
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonPropertyName("loyalty_promotion")]
+    public LoyaltyPromotion? LoyaltyPromotion { get; init; }
+}
