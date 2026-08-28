@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -53,4 +54,7 @@ public record SubscriptionPhase
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("pricing")]
     public SubscriptionPricing? Pricing { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

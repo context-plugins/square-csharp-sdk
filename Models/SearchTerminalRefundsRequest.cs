@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 
 namespace Square.Models;
@@ -25,4 +26,7 @@ public record SearchTerminalRefundsRequest
     [Minimum(1)]
     [Maximum(100)]
     public int? Limit { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

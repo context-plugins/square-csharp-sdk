@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -16,4 +17,7 @@ public record CatalogQueryItemVariationsForItemOptionValues
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("item_option_value_ids")]
     public IReadOnlyList<string?>? ItemOptionValueIds { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

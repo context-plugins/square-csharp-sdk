@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -135,4 +136,7 @@ public record FulfillmentShipmentDetails
     [JsonPropertyName("failure_reason")]
     [MaxLength(100)]
     public string? FailureReason { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -22,4 +23,7 @@ public record RetrieveLoyaltyRewardResponse
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("reward")]
     public LoyaltyReward? Reward { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

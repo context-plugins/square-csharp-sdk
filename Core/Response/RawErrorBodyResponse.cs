@@ -5,7 +5,7 @@ using Square.Core.ErrorResponse;
 
 namespace Square.Core.Response;
 
-public sealed class RawErrorBodyResponse : IResponse<RawError>
+internal sealed class RawErrorBodyResponse : IResponse<RawError>
 {
     public static RawErrorBodyResponse Instance { get; } = new();
 

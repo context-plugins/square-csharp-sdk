@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -12,4 +13,7 @@ public record DeleteInventoryAdjustmentReasonRequest
     /// </summary>
     [JsonPropertyName("reason_id")]
     public required InventoryAdjustmentReasonId ReasonId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

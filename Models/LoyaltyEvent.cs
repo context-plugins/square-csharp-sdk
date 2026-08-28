@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -105,4 +106,7 @@ public record LoyaltyEvent
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("accumulate_promotion_points")]
     public LoyaltyEventAccumulatePromotionPoints? AccumulatePromotionPoints { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -21,4 +22,7 @@ public record ShippingFee
     /// </summary>
     [JsonPropertyName("charge")]
     public required Money Charge { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

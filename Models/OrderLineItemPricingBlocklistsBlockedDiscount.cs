@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -35,4 +36,7 @@ public record OrderLineItemPricingBlocklistsBlockedDiscount
     [JsonPropertyName("discount_catalog_object_id")]
     [MaxLength(192)]
     public string? DiscountCatalogObjectId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

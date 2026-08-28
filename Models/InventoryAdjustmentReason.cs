@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -60,4 +61,7 @@ public record InventoryAdjustmentReason
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("is_deleted")]
     public bool? IsDeleted { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

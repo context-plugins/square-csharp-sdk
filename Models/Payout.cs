@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -103,4 +104,7 @@ public record Payout
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("end_to_end_id")]
     public string? EndToEndId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

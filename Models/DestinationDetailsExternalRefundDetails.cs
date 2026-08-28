@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -43,4 +44,7 @@ public record DestinationDetailsExternalRefundDetails
     [JsonPropertyName("source_id")]
     [MaxLength(255)]
     public string? SourceId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

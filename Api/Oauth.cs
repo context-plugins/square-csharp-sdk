@@ -12,13 +12,13 @@ using Square.Models;
 
 namespace Square.Api;
 
-public sealed class Oauth
+public sealed class OAuth
 {
     private readonly RawClient _rawClient;
     private readonly Server _server;
     private readonly AuthSchemes _auth;
 
-    internal Oauth(RawClient rawClient, Server server, AuthSchemes auth)
+    internal OAuth(RawClient rawClient, Server server, AuthSchemes auth)
     {
         _rawClient = rawClient;
         _server = server;

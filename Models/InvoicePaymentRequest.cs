@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -155,4 +156,7 @@ public record InvoicePaymentRequest
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("rounding_adjustment_included_money")]
     public Money? RoundingAdjustmentIncludedMoney { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

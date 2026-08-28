@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -29,4 +30,7 @@ public record CreateDisputeEvidenceTextRequest
     [JsonPropertyName("evidence_text")]
     [StringLength(500, MinimumLength = 1)]
     public required string EvidenceText { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -15,4 +16,7 @@ public record RetrieveGiftCardFromNonceRequest
     [JsonPropertyName("nonce")]
     [MinLength(1)]
     public required string Nonce { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

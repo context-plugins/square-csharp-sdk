@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 
 namespace Square.Models;
@@ -50,4 +51,7 @@ public record SearchSubscriptionsRequest
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("include")]
     public IReadOnlyList<string>? Include { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

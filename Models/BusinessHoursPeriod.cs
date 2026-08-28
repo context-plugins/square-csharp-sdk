@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -13,7 +14,7 @@ public record BusinessHoursPeriod
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("day_of_week")]
-    public DayOfWeek? DayOfWeek { get; init; }
+    public DayOfWeekEnum? DayOfWeek { get; init; }
 
     /// <summary>
     /// The start time of a business hours period, specified in local time using partial-time
@@ -32,4 +33,7 @@ public record BusinessHoursPeriod
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("end_local_time")]
     public string? EndLocalTime { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

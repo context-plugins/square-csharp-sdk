@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 
 namespace Square.Models;
@@ -22,4 +23,7 @@ public record CatalogCustomAttributeDefinitionNumberConfig
     [JsonPropertyName("precision")]
     [Maximum(5)]
     public int? Precision { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

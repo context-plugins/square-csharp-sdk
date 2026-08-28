@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -23,4 +24,7 @@ public record CreateTransferOrderRequest
     /// </summary>
     [JsonPropertyName("transfer_order")]
     public required CreateTransferOrderData TransferOrder { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

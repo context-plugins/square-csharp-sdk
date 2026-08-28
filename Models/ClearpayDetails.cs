@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -15,4 +16,7 @@ public record ClearpayDetails
     [JsonPropertyName("email_address")]
     [MaxLength(255)]
     public string? EmailAddress { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 
 namespace Square.Models;
@@ -53,4 +54,7 @@ public record CatalogSubscriptionPlanVariation
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("successor_plan_variation_id")]
     public string? SuccessorPlanVariationId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

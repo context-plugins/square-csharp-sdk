@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -15,4 +16,7 @@ public record DisputedPayment
     [JsonPropertyName("payment_id")]
     [StringLength(192, MinimumLength = 1)]
     public string? PaymentId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

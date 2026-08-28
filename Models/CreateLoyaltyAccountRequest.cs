@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -22,4 +23,7 @@ public record CreateLoyaltyAccountRequest
     [JsonPropertyName("idempotency_key")]
     [StringLength(128, MinimumLength = 1)]
     public required string IdempotencyKey { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

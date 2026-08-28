@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -14,4 +15,7 @@ public record CancelInvoiceRequest
     /// </summary>
     [JsonPropertyName("version")]
     public required int Version { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

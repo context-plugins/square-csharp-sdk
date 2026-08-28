@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -31,4 +32,7 @@ public record SaveCardOptions
     [JsonPropertyName("reference_id")]
     [MaxLength(128)]
     public string? ReferenceId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

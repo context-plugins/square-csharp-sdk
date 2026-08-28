@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -36,7 +37,7 @@ public record DeviceCode
     public string? DeviceId { get; init; }
 
     [JsonPropertyName("product_type")]
-    public string ProductType { get; } = "TERMINAL_API";
+    public required ProductType ProductType { get; init; }
 
     /// <summary>
     /// The location assigned to this code.
@@ -80,4 +81,7 @@ public record DeviceCode
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("paired_at")]
     public string? PairedAt { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

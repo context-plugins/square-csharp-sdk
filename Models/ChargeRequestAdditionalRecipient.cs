@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -33,4 +34,7 @@ public record ChargeRequestAdditionalRecipient
     /// </summary>
     [JsonPropertyName("amount_money")]
     public required Money AmountMoney { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

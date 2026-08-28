@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -14,4 +15,7 @@ public record BulkDeleteCustomersRequest
     /// </summary>
     [JsonPropertyName("customer_ids")]
     public required IReadOnlyList<string> CustomerIds { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

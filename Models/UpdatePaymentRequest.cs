@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -26,4 +27,7 @@ public record UpdatePaymentRequest
     [JsonPropertyName("idempotency_key")]
     [StringLength(45, MinimumLength = 1)]
     public required string IdempotencyKey { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

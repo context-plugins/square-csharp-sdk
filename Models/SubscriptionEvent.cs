@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -53,4 +54,7 @@ public record SubscriptionEvent
     /// </summary>
     [JsonPropertyName("plan_variation_id")]
     public required string PlanVariationId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

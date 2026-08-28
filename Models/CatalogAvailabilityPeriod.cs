@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -31,5 +32,8 @@ public record CatalogAvailabilityPeriod
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("day_of_week")]
-    public DayOfWeek? DayOfWeek { get; init; }
+    public DayOfWeekEnum? DayOfWeek { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

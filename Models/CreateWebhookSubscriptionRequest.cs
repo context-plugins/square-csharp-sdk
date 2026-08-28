@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -22,4 +23,7 @@ public record CreateWebhookSubscriptionRequest
     /// </summary>
     [JsonPropertyName("subscription")]
     public required WebhookSubscription Subscription { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

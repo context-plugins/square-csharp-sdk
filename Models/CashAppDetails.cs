@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -34,4 +35,7 @@ public record CashAppDetails
     [JsonPropertyName("buyer_cashtag")]
     [StringLength(21, MinimumLength = 1)]
     public string? BuyerCashtag { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

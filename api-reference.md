@@ -8332,7 +8332,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveGiftCardFromGanresponse&gt; RetrieveGiftCardFromGan(RetrieveGiftCardFromGanrequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveGiftCardFromGanResponse&gt; RetrieveGiftCardFromGan(RetrieveGiftCardFromGanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
 
 <dl>
 <dd>
@@ -8356,7 +8356,7 @@ Retrieves a gift card using the gift card account number (GAN).
 try
 {
     var response = await client.GiftCards.RetrieveGiftCardFromGan(body);
-    // TODO: Handle 'response' of type RetrieveGiftCardFromGanresponse
+    // TODO: Handle 'response' of type RetrieveGiftCardFromGanResponse
 }
 catch (SdkException<RawError> ex)
 {
@@ -8374,7 +8374,7 @@ catch (SdkException<RawError> ex)
 
 | Name | Type | Description |
 | --- | --- | --- |
-| <code>body</code> | <code>[RetrieveGiftCardFromGanrequest](Models/RetrieveGiftCardFromGanrequest.cs)</code> | - |
+| <code>body</code> | <code>[RetrieveGiftCardFromGanRequest](Models/RetrieveGiftCardFromGanRequest.cs)</code> | - |
 
 </dd>
 </dl>
@@ -8384,7 +8384,7 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveGiftCardFromGanresponse](Models/RetrieveGiftCardFromGanresponse.cs)</code>
+**OnSuccess**: <code>[RetrieveGiftCardFromGanResponse](Models/RetrieveGiftCardFromGanResponse.cs)</code>
 
 **OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
 
@@ -15635,9 +15635,9 @@ catch (SdkException<RawError> ex)
 
 </details>
 
-## Oauth
+## OAuth
 
-> Source: [Oauth](Api/Oauth.cs)
+> Source: [OAuth](Api/OAuth.cs)
 
 <details>
 <summary><code>Task&lt;ObtainTokenResponse&gt; ObtainToken(ObtainTokenRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
@@ -15683,7 +15683,7 @@ Application clients should never interact directly with OAuth tokens.
 ```csharp
 try
 {
-    var response = await client.Oauth.ObtainToken(body);
+    var response = await client.OAuth.ObtainToken(body);
     // TODO: Handle 'response' of type ObtainTokenResponse
 }
 catch (SdkException<RawError> ex)
@@ -15761,7 +15761,7 @@ If the access token is expired or not a valid access token, the endpoint returns
 ```csharp
 try
 {
-    var response = await client.Oauth.RetrieveTokenStatus();
+    var response = await client.OAuth.RetrieveTokenStatus();
     // TODO: Handle 'response' of type RetrieveTokenStatusResponse
 }
 catch (SdkException<RawError> ex)
@@ -15827,7 +15827,7 @@ page for your application in the Developer Dashboard.
 ```csharp
 try
 {
-    var response = await client.Oauth.RevokeToken(body);
+    var response = await client.OAuth.RevokeToken(body);
     // TODO: Handle 'response' of type RevokeTokenResponse
 }
 catch (SdkException<RawError> ex)

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -14,4 +15,7 @@ public record UpdateTimecardRequest
     /// </summary>
     [JsonPropertyName("timecard")]
     public required Timecard Timecard { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

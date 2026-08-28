@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -113,4 +114,7 @@ public record OrderLineItemModifier
     [JsonPropertyName("parent_modifier_uid")]
     [MaxLength(60)]
     public string? ParentModifierUid { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

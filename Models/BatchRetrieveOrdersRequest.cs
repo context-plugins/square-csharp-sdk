@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -22,4 +23,7 @@ public record BatchRetrieveOrdersRequest
     /// </summary>
     [JsonPropertyName("order_ids")]
     public required IReadOnlyList<string> OrderIds { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

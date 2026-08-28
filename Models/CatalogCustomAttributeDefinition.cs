@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -109,4 +110,7 @@ public record CatalogCustomAttributeDefinition
     [StringLength(60, MinimumLength = 1)]
     [RegularExpression("^[a-zA-Z0-9_-]*$")]
     public string? Key { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

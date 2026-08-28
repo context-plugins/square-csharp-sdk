@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -43,4 +44,7 @@ public record TransferOrderGoodsReceiptLineItem
     [StringLength(16, MinimumLength = 1)]
     [RegularExpression("^(0|[1-9]\\d*)(\\.\\d{1,4})?$")]
     public string? QuantityCanceled { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

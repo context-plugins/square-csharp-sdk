@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -52,4 +53,7 @@ public record BatchUpsertCatalogObjectsRequest
     /// </summary>
     [JsonPropertyName("batches")]
     public required IReadOnlyList<CatalogObjectBatch> Batches { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -41,4 +42,7 @@ public record AdditionalRecipient
     [JsonPropertyName("receivable_id")]
     [MaxLength(192)]
     public string? ReceivableId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

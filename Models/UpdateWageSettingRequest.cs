@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -13,4 +14,7 @@ public record UpdateWageSettingRequest
     /// </summary>
     [JsonPropertyName("wage_setting")]
     public required WageSetting WageSetting { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

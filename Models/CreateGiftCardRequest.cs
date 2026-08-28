@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -29,4 +30,7 @@ public record CreateGiftCardRequest
     /// </summary>
     [JsonPropertyName("gift_card")]
     public required GiftCard GiftCard { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

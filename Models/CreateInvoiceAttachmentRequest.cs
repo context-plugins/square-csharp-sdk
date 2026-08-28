@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -24,4 +25,7 @@ public record CreateInvoiceAttachmentRequest
     [JsonPropertyName("description")]
     [MaxLength(128)]
     public string? Description { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

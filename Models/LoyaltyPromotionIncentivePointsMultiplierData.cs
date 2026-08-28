@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 
 namespace Square.Models;
@@ -48,4 +49,7 @@ public record LoyaltyPromotionIncentivePointsMultiplierData
     [JsonPropertyName("multiplier")]
     [MaxLength(5)]
     public string? Multiplier { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

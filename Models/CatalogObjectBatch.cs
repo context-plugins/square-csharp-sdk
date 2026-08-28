@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -13,4 +14,7 @@ public record CatalogObjectBatch
     /// </summary>
     [JsonPropertyName("objects")]
     public required IReadOnlyList<CatalogObject> Objects { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

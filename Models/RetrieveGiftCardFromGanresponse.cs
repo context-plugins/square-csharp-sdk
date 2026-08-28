@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -7,7 +8,7 @@ namespace Square.Models;
 /// A response that contains a <c>GiftCard</c>. This response might contain a set of <c>Error</c> objects
 /// if the request resulted in errors.
 /// </summary>
-public record RetrieveGiftCardFromGanresponse
+public record RetrieveGiftCardFromGanResponse
 {
     /// <summary>
     /// Any errors that occurred during the request.
@@ -22,4 +23,7 @@ public record RetrieveGiftCardFromGanresponse
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("gift_card")]
     public GiftCard? GiftCard { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -23,4 +24,7 @@ public record CreateMerchantCustomAttributeDefinitionRequest
     [JsonPropertyName("idempotency_key")]
     [MaxLength(45)]
     public string? IdempotencyKey { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

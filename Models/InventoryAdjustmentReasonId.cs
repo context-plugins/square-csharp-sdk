@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -41,4 +42,7 @@ public record InventoryAdjustmentReasonId
     [JsonPropertyName("custom_reason_id")]
     [MaxLength(100)]
     public string? CustomReasonId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

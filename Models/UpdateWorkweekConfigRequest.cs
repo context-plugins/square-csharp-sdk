@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -13,4 +14,7 @@ public record UpdateWorkweekConfigRequest
     /// </summary>
     [JsonPropertyName("workweek_config")]
     public required WorkweekConfig WorkweekConfig { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

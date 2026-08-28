@@ -28,7 +28,13 @@ public sealed class SquareClient
         var resiliencePipelineFactory = new ResiliencePipelineFactory(options.Retry);
         var httpLogger = new HttpLogger(options.Logging, "SquareClient");
         var rawClient =
-            new RawClient(httpClient, urlFactory, httpStatusPolicy, headersFactory, resiliencePipelineFactory, httpLogger);
+            new RawClient(httpClient,
+                urlFactory,
+                httpStatusPolicy,
+                headersFactory,
+                resiliencePipelineFactory,
+                httpLogger,
+                options.Hooks);
         var auth = new AuthSchemes(options, server, rawClient, urlFactory);
         ApplePay = new ApplePay(rawClient, server, auth);
         BankAccounts = new BankAccounts(rawClient, server, auth);
@@ -57,7 +63,7 @@ public sealed class SquareClient
         Loyalty = new Loyalty(rawClient, server, auth);
         MerchantCustomAttributes = new MerchantCustomAttributes(rawClient, server, auth);
         Merchants = new Merchants(rawClient, server, auth);
-        Oauth = new Oauth(rawClient, server, auth);
+        OAuth = new OAuth(rawClient, server, auth);
         OrderCustomAttributes = new OrderCustomAttributes(rawClient, server, auth);
         Orders = new Orders(rawClient, server, auth);
         Payments = new Payments(rawClient, server, auth);
@@ -129,7 +135,7 @@ public sealed class SquareClient
 
     public Merchants Merchants { get; }
 
-    public Oauth Oauth { get; }
+    public OAuth OAuth { get; }
 
     public OrderCustomAttributes OrderCustomAttributes { get; }
 

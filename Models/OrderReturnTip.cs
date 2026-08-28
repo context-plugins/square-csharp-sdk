@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -43,4 +44,7 @@ public record OrderReturnTip
     [JsonPropertyName("source_tender_id")]
     [MaxLength(192)]
     public string? SourceTenderId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

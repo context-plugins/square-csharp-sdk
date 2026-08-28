@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -34,4 +35,7 @@ public record CreateOrderRequest
     [JsonPropertyName("idempotency_key")]
     [MaxLength(192)]
     public string? IdempotencyKey { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -28,4 +29,7 @@ public record CheckoutMerchantSettingsPaymentMethodsAfterpayClearpayEligibilityR
     /// </summary>
     [JsonPropertyName("max")]
     public required Money Max { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

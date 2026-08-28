@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 
 namespace Square.Models;
@@ -17,4 +18,7 @@ public record LoyaltyPromotionIncentivePointsAdditionData
     [JsonPropertyName("points_addition")]
     [Minimum(1)]
     public required int PointsAddition { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -43,4 +44,7 @@ public record LoyaltyPromotionAvailableTimeData
     /// </summary>
     [JsonPropertyName("time_periods")]
     public required IReadOnlyList<string> TimePeriods { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

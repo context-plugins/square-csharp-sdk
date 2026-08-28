@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -11,4 +12,7 @@ public record UpdateScheduledShiftRequest
     /// </summary>
     [JsonPropertyName("scheduled_shift")]
     public required ScheduledShift ScheduledShift { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

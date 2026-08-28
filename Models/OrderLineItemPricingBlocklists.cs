@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -37,4 +38,7 @@ public record OrderLineItemPricingBlocklists
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("blocked_service_charges")]
     public IReadOnlyList<OrderLineItemPricingBlocklistsBlockedServiceCharge?>? BlockedServiceCharges { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 using Square.Models.Enums;
 
@@ -90,4 +91,7 @@ public record BatchRetrieveInventoryChangesRequest
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("reason_ids")]
     public IReadOnlyList<InventoryAdjustmentReasonId?>? ReasonIds { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

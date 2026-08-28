@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -29,4 +30,7 @@ public record DestinationDetailsCardRefundDetails
     [JsonPropertyName("auth_result_code")]
     [MaxLength(10)]
     public string? AuthResultCode { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

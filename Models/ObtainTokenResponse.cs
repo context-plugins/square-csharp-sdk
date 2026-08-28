@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -123,4 +124,7 @@ public record ObtainTokenResponse
     [JsonPropertyName("refresh_token_expires_at")]
     [StringLength(48, MinimumLength = 20)]
     public string? RefreshTokenExpiresAt { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

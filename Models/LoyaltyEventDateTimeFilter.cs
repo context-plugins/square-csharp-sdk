@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -16,4 +17,7 @@ public record LoyaltyEventDateTimeFilter
     /// </summary>
     [JsonPropertyName("created_at")]
     public required TimeRange CreatedAt { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

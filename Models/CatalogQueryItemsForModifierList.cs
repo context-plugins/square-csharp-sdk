@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -13,4 +14,7 @@ public record CatalogQueryItemsForModifierList
     /// </summary>
     [JsonPropertyName("modifier_list_ids")]
     public required IReadOnlyList<string> ModifierListIds { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

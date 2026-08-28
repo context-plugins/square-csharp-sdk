@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 
 namespace Square.Models;
@@ -27,4 +28,7 @@ public record CatalogCustomAttributeDefinitionSelectionConfig
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("allowed_selections")]
     public IReadOnlyList<CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection?>? AllowedSelections { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

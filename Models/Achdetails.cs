@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
 /// <summary>
 /// ACH-specific details about <c>BANK_ACCOUNT</c> type payments with the <c>transfer_type</c> of <c>ACH</c>.
 /// </summary>
-public record Achdetails
+public record AchDetails
 {
     /// <summary>
     /// The routing number for the bank account.
@@ -32,4 +33,7 @@ public record Achdetails
     [JsonPropertyName("account_type")]
     [MaxLength(50)]
     public string? AccountType { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

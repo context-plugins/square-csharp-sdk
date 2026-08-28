@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -26,4 +27,7 @@ public record LoyaltyProgramAccrualRuleVisitData
     /// </summary>
     [JsonPropertyName("tax_mode")]
     public required LoyaltyProgramAccrualRuleTaxMode TaxMode { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

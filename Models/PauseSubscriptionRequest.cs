@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -55,4 +56,7 @@ public record PauseSubscriptionRequest
     [JsonPropertyName("pause_reason")]
     [MaxLength(255)]
     public string? PauseReason { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

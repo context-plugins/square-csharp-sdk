@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Core.Validation.Attributes;
 using Square.Models.Enums;
 
@@ -60,4 +61,7 @@ public record BatchRetrieveInventoryCountsRequest
     [Minimum(1)]
     [Maximum(1000)]
     public int? Limit { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

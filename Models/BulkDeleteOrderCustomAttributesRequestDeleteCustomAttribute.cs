@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -23,4 +24,7 @@ public record BulkDeleteOrderCustomAttributesRequestDeleteCustomAttribute
     [JsonPropertyName("order_id")]
     [StringLength(255, MinimumLength = 1)]
     public required string OrderId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

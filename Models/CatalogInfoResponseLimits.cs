@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -91,4 +92,7 @@ public record CatalogInfoResponseLimits
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("update_item_modifier_lists_max_modifier_lists_to_disable")]
     public int? UpdateItemModifierListsMaxModifierListsToDisable { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -64,7 +65,7 @@ public record BankAccountPaymentDetails
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("ach_details")]
-    public Achdetails? AchDetails { get; init; }
+    public AchDetails? AchDetails { get; init; }
 
     /// <summary>
     /// Information about errors encountered during the request.
@@ -72,4 +73,7 @@ public record BankAccountPaymentDetails
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("errors")]
     public IReadOnlyList<Error?>? Errors { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

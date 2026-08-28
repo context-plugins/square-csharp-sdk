@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Square.Core.Enum;
@@ -28,7 +29,7 @@ public abstract record IntEnum<TEnum> : TypedEnum<int, TEnum>
                 null
             );
 
-            if (constructor == null)
+            if (constructor is null)
                 throw new InvalidOperationException(
                     $"Type {type.Name} must have a constructor that accepts an int parameter");
 
@@ -41,6 +42,6 @@ public abstract record IntEnum<TEnum> : TypedEnum<int, TEnum>
     /// <summary>
     /// Tries to get a known value, returns false if value is not predefined
     /// </summary>
-    public static bool TryGetKnownValue(int value, out TEnum? result) =>
+    public static bool TryGetKnownValue(int value, [NotNullWhen(true)] out TEnum? result) =>
         KnownValues.TryGetValue(value, out result);
 }

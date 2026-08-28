@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -11,4 +12,7 @@ public record BulkRetrieveChannelsRequest
 {
     [JsonPropertyName("channel_ids")]
     public required IReadOnlyList<string> ChannelIds { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

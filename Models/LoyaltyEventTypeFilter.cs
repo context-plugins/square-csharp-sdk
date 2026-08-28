@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -17,4 +18,7 @@ public record LoyaltyEventTypeFilter
     /// </summary>
     [JsonPropertyName("types")]
     public required IReadOnlyList<LoyaltyEventType> Types { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -12,4 +13,7 @@ public record BatchDeleteCatalogObjectsRequest
     /// </summary>
     [JsonPropertyName("object_ids")]
     public required IReadOnlyList<string> ObjectIds { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -35,4 +36,7 @@ public record OrderLineItemPricingBlocklistsBlockedTax
     [JsonPropertyName("tax_catalog_object_id")]
     [MaxLength(192)]
     public string? TaxCatalogObjectId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

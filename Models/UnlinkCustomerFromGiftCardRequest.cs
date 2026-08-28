@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -14,4 +15,7 @@ public record UnlinkCustomerFromGiftCardRequest
     [JsonPropertyName("customer_id")]
     [StringLength(191, MinimumLength = 1)]
     public required string CustomerId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

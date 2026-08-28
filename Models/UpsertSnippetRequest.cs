@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -12,4 +13,7 @@ public record UpsertSnippetRequest
     /// </summary>
     [JsonPropertyName("snippet")]
     public required Snippet Snippet { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

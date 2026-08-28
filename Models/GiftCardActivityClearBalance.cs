@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -13,4 +14,7 @@ public record GiftCardActivityClearBalance
     /// </summary>
     [JsonPropertyName("reason")]
     public required GiftCardActivityClearBalanceReason Reason { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

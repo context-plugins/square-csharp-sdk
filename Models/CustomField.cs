@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -16,4 +17,7 @@ public record CustomField
     [JsonPropertyName("title")]
     [StringLength(50, MinimumLength = 1)]
     public required string Title { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

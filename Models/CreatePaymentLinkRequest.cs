@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -69,4 +70,7 @@ public record CreatePaymentLinkRequest
     [JsonPropertyName("payment_note")]
     [MaxLength(500)]
     public string? PaymentNote { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

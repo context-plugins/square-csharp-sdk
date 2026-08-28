@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -37,4 +38,7 @@ public record OrderLineItemPricingBlocklistsBlockedServiceCharge
     [JsonPropertyName("service_charge_catalog_object_id")]
     [MaxLength(192)]
     public string? ServiceChargeCatalogObjectId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

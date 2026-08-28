@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -20,4 +21,7 @@ public record BulkUpsertOrderCustomAttributesResponse
     /// </summary>
     [JsonPropertyName("values")]
     public required IReadOnlyDictionary<string, UpsertOrderCustomAttributeResponse> Values { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

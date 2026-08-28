@@ -154,12 +154,12 @@ public sealed class GiftCards
     /// <param name="body"></param>
     /// <param name="requestOptions">Per-request options, such as an overriding log level for this call</param>
     /// <param name="ct">Cancellation token</param>
-    /// <returns>A <see cref="Task{TResult}"/> of <see cref="RetrieveGiftCardFromGanresponse"/> instance.</returns>
+    /// <returns>A <see cref="Task{TResult}"/> of <see cref="RetrieveGiftCardFromGanResponse"/> instance.</returns>
     /// <exception cref="SdkException{TResult}"> of <see cref="RawError"/> when the server returns an error response.</exception>
     /// <remarks>
     /// Retrieves a gift card using the gift card account number (GAN).
     /// </remarks>
-    public Task<RetrieveGiftCardFromGanresponse> RetrieveGiftCardFromGan(RetrieveGiftCardFromGanrequest body,
+    public Task<RetrieveGiftCardFromGanResponse> RetrieveGiftCardFromGan(RetrieveGiftCardFromGanRequest body,
         RequestOptions? requestOptions = null,
         CancellationToken ct = default) =>
         _rawClient.Execute(_server.Default("/v2/gift-cards/from-gan"),
@@ -168,7 +168,7 @@ public sealed class GiftCards
             [new HeaderParam("Idempotency-Key", Guid.NewGuid())],
             HttpMethod.Post,
             JsonRequest.Create(body),
-            JsonResponse.Create<RetrieveGiftCardFromGanresponse>(),
+            JsonResponse.Create<RetrieveGiftCardFromGanResponse>(),
             RawErrorResponse.Instance,
             [_auth.Oauth2],
             requestOptions,

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -12,7 +13,7 @@ public record InvoiceSort
     /// The field to use for sorting.
     /// </summary>
     [JsonPropertyName("field")]
-    public string Field { get; } = "INVOICE_SORT_DATE";
+    public required InvoiceSortField Field { get; init; }
 
     /// <summary>
     /// The order (e.g., chronological or alphabetical) in which results from a request are returned.
@@ -20,4 +21,7 @@ public record InvoiceSort
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("order")]
     public SortOrder? Order { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

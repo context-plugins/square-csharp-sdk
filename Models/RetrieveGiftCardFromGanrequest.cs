@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
 /// <summary>
 /// A request to retrieve gift cards by their GANs.
 /// </summary>
-public record RetrieveGiftCardFromGanrequest
+public record RetrieveGiftCardFromGanRequest
 {
     /// <summary>
     /// The gift card account number (GAN) of the gift card to retrieve.
@@ -16,4 +17,7 @@ public record RetrieveGiftCardFromGanrequest
     [JsonPropertyName("gan")]
     [StringLength(255, MinimumLength = 1)]
     public required string Gan { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

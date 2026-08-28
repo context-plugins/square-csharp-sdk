@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -14,4 +15,7 @@ public record LoyaltyEventLoyaltyAccountFilter
     [JsonPropertyName("loyalty_account_id")]
     [MinLength(1)]
     public required string LoyaltyAccountId { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

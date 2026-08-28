@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -9,4 +10,7 @@ public record SearchAvailabilityRequest
     /// </summary>
     [JsonPropertyName("query")]
     public required SearchAvailabilityQuery Query { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

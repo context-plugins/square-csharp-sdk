@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 
 namespace Square.Models;
 
@@ -23,4 +24,7 @@ public record BulkUpdateCustomersRequest
     /// </summary>
     [JsonPropertyName("customers")]
     public required IReadOnlyDictionary<string, BulkUpdateCustomerData> Customers { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }

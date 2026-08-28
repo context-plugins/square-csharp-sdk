@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Square.Core.Models;
 using Square.Models.Enums;
 
 namespace Square.Models;
@@ -28,7 +29,7 @@ public record GiftCard
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("gan_source")]
-    public GiftCardGansource? GanSource { get; init; }
+    public GiftCardGanSource? GanSource { get; init; }
 
     /// <summary>
     /// Indicates the gift card state.
@@ -74,4 +75,7 @@ public record GiftCard
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonPropertyName("customer_ids")]
     public IReadOnlyList<string>? CustomerIds { get; init; }
+
+    [JsonExtensionData]
+    public AdditionalProperties AdditionalProperties { get; init; } = [];
 }
