@@ -8,6 +8,7 @@ Accessor: `client.Cards` · Source: `Api/Cards.cs` · 4 operations
 
 ### CreateCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateCard(CreateCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Cards` · Source: `Api/Cards.cs` · 4 operations
 
 ### DisableCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DisableCard(string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DisableCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.Cards` · Source: `Api/Cards.cs` · 4 operations
 
 ### ListCards
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCards(string? cursor, string? customerId, string? referenceId, SortOrder? sortOrder, bool? includeDisabled = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 4 params (`cursor` … `sortOrder`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
   - defaults: `includeDisabled` = `false`
@@ -43,6 +46,7 @@ Accessor: `client.Cards` · Source: `Api/Cards.cs` · 4 operations
 
 ### RetrieveCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveCard(string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

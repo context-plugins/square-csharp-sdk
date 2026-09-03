@@ -8,6 +8,7 @@ Accessor: `client.CustomerSegments` · Source: `Api/CustomerSegments.cs` · 2 op
 
 ### ListCustomerSegments
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCustomerSegments(string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -21,6 +22,7 @@ Accessor: `client.CustomerSegments` · Source: `Api/CustomerSegments.cs` · 2 op
 
 ### RetrieveCustomerSegment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveCustomerSegment(string segmentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveCustomerSegmentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

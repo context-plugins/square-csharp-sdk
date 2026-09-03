@@ -8,6 +8,7 @@ Accessor: `client.BankAccounts` · Source: `Api/BankAccounts.cs` · 5 operations
 
 ### CreateBankAccount
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateBankAccount(CreateBankAccountRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateBankAccountResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.BankAccounts` · Source: `Api/BankAccounts.cs` · 5 operations
 
 ### DisableBankAccount
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DisableBankAccount(string bankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DisableBankAccountResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.BankAccounts` · Source: `Api/BankAccounts.cs` · 5 operations
 
 ### GetBankAccount
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetBankAccount(string bankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetBankAccountResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -39,6 +42,7 @@ Accessor: `client.BankAccounts` · Source: `Api/BankAccounts.cs` · 5 operations
 
 ### GetBankAccountByV1Id
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetBankAccountByV1Id(string v1BankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetBankAccountByV1IdResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -49,6 +53,7 @@ Accessor: `client.BankAccounts` · Source: `Api/BankAccounts.cs` · 5 operations
 
 ### ListBankAccounts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListBankAccounts(string? cursor, int? limit, string? locationId, string? customerId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 4 params (`cursor` … `customerId`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `cursor` ← `cursor`, `limit` ← `limit`, `location_id` ← `locationId`, `customer_id` ← `customerId`

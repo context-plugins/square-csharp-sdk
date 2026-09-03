@@ -8,6 +8,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### BulkDeleteBookingCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkDeleteBookingCustomAttributes(BulkDeleteBookingCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkDeleteBookingCustomAttributesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### BulkUpsertBookingCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkUpsertBookingCustomAttributes(BulkUpsertBookingCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkUpsertBookingCustomAttributesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### CreateBookingCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateBookingCustomAttributeDefinition(CreateBookingCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateBookingCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### DeleteBookingCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteBookingCustomAttribute(string bookingId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteBookingCustomAttributeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -51,6 +55,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### DeleteBookingCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteBookingCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteBookingCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -61,6 +66,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### ListBookingCustomAttributeDefinitions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListBookingCustomAttributeDefinitions(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `limit` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -74,6 +80,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### ListBookingCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListBookingCustomAttributes(string bookingId, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `limit` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -88,6 +95,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### RetrieveBookingCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveBookingCustomAttribute(string bookingId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
   - defaults: `withDefinition` = `false`
@@ -101,6 +109,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### RetrieveBookingCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveBookingCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `version` ← `version`
@@ -113,6 +122,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### UpdateBookingCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateBookingCustomAttributeDefinition(string key, UpdateBookingCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateBookingCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -124,6 +134,7 @@ Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttribut
 
 ### UpsertBookingCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpsertBookingCustomAttribute(string bookingId, string key, UpsertBookingCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpsertBookingCustomAttributeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

@@ -8,6 +8,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### AddGroupToCustomer
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `AddGroupToCustomer(string customerId, string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `AddGroupToCustomerResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -18,6 +19,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### BulkCreateCustomers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkCreateCustomers(BulkCreateCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkCreateCustomersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### BulkDeleteCustomers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkDeleteCustomers(BulkDeleteCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkDeleteCustomersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -40,6 +43,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### BulkRetrieveCustomers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkRetrieveCustomers(BulkRetrieveCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkRetrieveCustomersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -51,6 +55,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### BulkUpdateCustomers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkUpdateCustomers(BulkUpdateCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkUpdateCustomersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -62,6 +67,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### CreateCustomer
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateCustomer(CreateCustomerRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateCustomerResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -73,6 +79,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### CreateCustomerCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateCustomerCard(string customerId, CreateCustomerCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateCustomerCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -84,6 +91,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### DeleteCustomer
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteCustomer(string customerId, long? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `version` ← `version`
@@ -96,6 +104,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### DeleteCustomerCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteCustomerCard(string customerId, string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteCustomerCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -106,6 +115,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### ListCustomers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCustomers(string? cursor, int? limit, CustomerSortField? sortField, SortOrder? sortOrder, bool? count = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 4 params (`cursor` … `sortOrder`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
   - defaults: `count` = `false`
@@ -121,6 +131,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### RemoveGroupFromCustomer
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RemoveGroupFromCustomer(string customerId, string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RemoveGroupFromCustomerResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -131,6 +142,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### RetrieveCustomer
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveCustomer(string customerId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveCustomerResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -141,6 +153,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### SearchCustomers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchCustomers(SearchCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchCustomersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -152,6 +165,7 @@ Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
 
 ### UpdateCustomer
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateCustomer(string customerId, UpdateCustomerRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateCustomerResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

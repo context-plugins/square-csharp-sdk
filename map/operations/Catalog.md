@@ -8,6 +8,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### BatchDeleteCatalogObjects
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BatchDeleteCatalogObjects(BatchDeleteCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchDeleteCatalogObjectsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### BatchRetrieveCatalogObjects
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BatchRetrieveCatalogObjects(BatchRetrieveCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchRetrieveCatalogObjectsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### BatchUpsertCatalogObjects
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BatchUpsertCatalogObjects(BatchUpsertCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchUpsertCatalogObjectsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### CatalogInfo
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CatalogInfo(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CatalogInfoResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -51,6 +55,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### CreateCatalogImage
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateCatalogImage(CreateCatalogImageRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `request` — nullable, no default → **must pass explicitly**
   - `imageFile` — nullable, no default → **must pass explicitly**
@@ -64,6 +69,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### DeleteCatalogObject
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteCatalogObject(string objectId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteCatalogObjectResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -74,6 +80,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### ListCatalog
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCatalog(string? cursor, string? types, long? catalogVersion, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
   - `types` — nullable, no default → **must pass explicitly**
@@ -88,6 +95,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### RetrieveCatalogObject
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveCatalogObject(string objectId, long? catalogVersion, bool? includeRelatedObjects = false, bool? includeCategoryPathToRoot = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `catalogVersion` — nullable, no default → **must pass explicitly**
   - defaults: `includeRelatedObjects` = `false`, `includeCategoryPathToRoot` = `false`
@@ -101,6 +109,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### SearchCatalogItems
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchCatalogItems(SearchCatalogItemsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchCatalogItemsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -112,6 +121,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### SearchCatalogObjects
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchCatalogObjects(SearchCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchCatalogObjectsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -123,6 +133,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### UpdateCatalogImage
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateCatalogImage(string imageId, UpdateCatalogImageRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `request` — nullable, no default → **must pass explicitly**
   - `imageFile` — nullable, no default → **must pass explicitly**
@@ -136,6 +147,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### UpdateItemModifierLists
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateItemModifierLists(UpdateItemModifierListsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateItemModifierListsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -147,6 +159,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### UpdateItemTaxes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateItemTaxes(UpdateItemTaxesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateItemTaxesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -158,6 +171,7 @@ Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
 
 ### UpsertCatalogObject
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpsertCatalogObject(UpsertCatalogObjectRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpsertCatalogObjectResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

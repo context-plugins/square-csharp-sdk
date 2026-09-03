@@ -8,6 +8,7 @@ Accessor: `client.GiftCards` · Source: `Api/GiftCards.cs` · 7 operations
 
 ### CreateGiftCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateGiftCard(CreateGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateGiftCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.GiftCards` · Source: `Api/GiftCards.cs` · 7 operations
 
 ### LinkCustomerToGiftCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `LinkCustomerToGiftCard(string giftCardId, LinkCustomerToGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `LinkCustomerToGiftCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.GiftCards` · Source: `Api/GiftCards.cs` · 7 operations
 
 ### ListGiftCards
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListGiftCards(string? type, string? state, int? limit, string? cursor, string? customerId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 5 params (`type` … `customerId`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `type` ← `type`, `state` ← `state`, `limit` ← `limit`, `cursor` ← `cursor`, `customer_id` ← `customerId`
@@ -42,6 +45,7 @@ Accessor: `client.GiftCards` · Source: `Api/GiftCards.cs` · 7 operations
 
 ### RetrieveGiftCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveGiftCard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveGiftCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -52,6 +56,7 @@ Accessor: `client.GiftCards` · Source: `Api/GiftCards.cs` · 7 operations
 
 ### RetrieveGiftCardFromGan
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveGiftCardFromGan(RetrieveGiftCardFromGanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveGiftCardFromGanResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -63,6 +68,7 @@ Accessor: `client.GiftCards` · Source: `Api/GiftCards.cs` · 7 operations
 
 ### RetrieveGiftCardFromNonce
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveGiftCardFromNonce(RetrieveGiftCardFromNonceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveGiftCardFromNonceResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -74,6 +80,7 @@ Accessor: `client.GiftCards` · Source: `Api/GiftCards.cs` · 7 operations
 
 ### UnlinkCustomerFromGiftCard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UnlinkCustomerFromGiftCard(string giftCardId, UnlinkCustomerFromGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UnlinkCustomerFromGiftCardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

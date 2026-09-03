@@ -8,6 +8,7 @@ Accessor: `client.Employees` · Source: `Api/Employees.cs` · 2 operations
 
 ### ListEmployees
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListEmployees(string? locationId, EmployeeStatus? status, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 4 params (`locationId` … `cursor`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `location_id` ← `locationId`, `status` ← `status`, `limit` ← `limit`, `cursor` ← `cursor`
@@ -21,6 +22,7 @@ Accessor: `client.Employees` · Source: `Api/Employees.cs` · 2 operations
 
 ### RetrieveEmployee
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveEmployee(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveEmployeeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

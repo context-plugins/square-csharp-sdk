@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using Square.Core.Models;
-using Square.Models.Enums;
 
 namespace Square.Models;
 
@@ -13,7 +12,7 @@ public record GiftCardActivityBlock
     /// Indicates the reason for blocking a <see href="entity:GiftCard">gift card</see>.
     /// </summary>
     [JsonPropertyName("reason")]
-    public required GiftCardActivityBlockReason Reason { get; init; }
+    public string Reason { get; } = "CHARGEBACK_BLOCK";
 
     [JsonExtensionData]
     public AdditionalProperties AdditionalProperties { get; init; } = [];

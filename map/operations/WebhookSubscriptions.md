@@ -8,6 +8,7 @@ Accessor: `client.WebhookSubscriptions` · Source: `Api/WebhookSubscriptions.cs`
 
 ### CreateWebhookSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateWebhookSubscription(CreateWebhookSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateWebhookSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.WebhookSubscriptions` · Source: `Api/WebhookSubscriptions.cs`
 
 ### DeleteWebhookSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteWebhookSubscription(string subscriptionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteWebhookSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.WebhookSubscriptions` · Source: `Api/WebhookSubscriptions.cs`
 
 ### ListWebhookEventTypes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListWebhookEventTypes(string? apiVersion, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `apiVersion` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `api_version` ← `apiVersion`
@@ -41,6 +44,7 @@ Accessor: `client.WebhookSubscriptions` · Source: `Api/WebhookSubscriptions.cs`
 
 ### ListWebhookSubscriptions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListWebhookSubscriptions(string? cursor, SortOrder? sortOrder, int? limit, bool? includeDisabled = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
   - `sortOrder` — nullable, no default → **must pass explicitly**
@@ -57,6 +61,7 @@ Accessor: `client.WebhookSubscriptions` · Source: `Api/WebhookSubscriptions.cs`
 
 ### RetrieveWebhookSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveWebhookSubscription(string subscriptionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveWebhookSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -67,6 +72,7 @@ Accessor: `client.WebhookSubscriptions` · Source: `Api/WebhookSubscriptions.cs`
 
 ### TestWebhookSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `TestWebhookSubscription(string subscriptionId, TestWebhookSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `TestWebhookSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -78,6 +84,7 @@ Accessor: `client.WebhookSubscriptions` · Source: `Api/WebhookSubscriptions.cs`
 
 ### UpdateWebhookSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateWebhookSubscription(string subscriptionId, UpdateWebhookSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateWebhookSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -89,6 +96,7 @@ Accessor: `client.WebhookSubscriptions` · Source: `Api/WebhookSubscriptions.cs`
 
 ### UpdateWebhookSubscriptionSignatureKey
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateWebhookSubscriptionSignatureKey(string subscriptionId, UpdateWebhookSubscriptionSignatureKeyRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateWebhookSubscriptionSignatureKeyResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

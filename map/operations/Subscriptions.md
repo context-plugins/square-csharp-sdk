@@ -8,6 +8,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### BulkSwapPlan
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkSwapPlan(BulkSwapPlanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkSwapPlanResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### CancelSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelSubscription(string subscriptionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### ChangeBillingAnchorDate
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ChangeBillingAnchorDate(string subscriptionId, ChangeBillingAnchorDateRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `ChangeBillingAnchorDateResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -40,6 +43,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### CreateSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateSubscription(CreateSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -51,6 +55,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### DeleteSubscriptionAction
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteSubscriptionAction(string subscriptionId, string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteSubscriptionActionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -61,6 +66,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### ListSubscriptionEvents
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListSubscriptionEvents(string subscriptionId, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -74,6 +80,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### PauseSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `PauseSubscription(string subscriptionId, PauseSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `PauseSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -85,6 +92,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### ResumeSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ResumeSubscription(string subscriptionId, ResumeSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `ResumeSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -96,6 +104,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### RetrieveSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveSubscription(string subscriptionId, string? include, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `include` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `include` ← `include`
@@ -108,6 +117,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### SearchSubscriptions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchSubscriptions(SearchSubscriptionsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchSubscriptionsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -119,6 +129,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### SwapPlan
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SwapPlan(string subscriptionId, SwapPlanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SwapPlanResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -130,6 +141,7 @@ Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operati
 
 ### UpdateSubscription
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateSubscription(string subscriptionId, UpdateSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateSubscriptionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

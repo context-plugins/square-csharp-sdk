@@ -8,6 +8,7 @@ Accessor: `client.Transactions` · Source: `Api/Transactions.cs` · 4 operations
 
 ### CaptureTransaction
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CaptureTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CaptureTransactionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -18,6 +19,7 @@ Accessor: `client.Transactions` · Source: `Api/Transactions.cs` · 4 operations
 
 ### ListTransactions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListTransactions(string locationId, string? beginTime, string? endTime, SortOrder? sortOrder, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 4 params (`beginTime` … `cursor`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `begin_time` ← `beginTime`, `end_time` ← `endTime`, `sort_order` ← `sortOrder`, `cursor` ← `cursor`
@@ -31,6 +33,7 @@ Accessor: `client.Transactions` · Source: `Api/Transactions.cs` · 4 operations
 
 ### RetrieveTransaction
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveTransactionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.Transactions` · Source: `Api/Transactions.cs` · 4 operations
 
 ### VoidTransaction
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `VoidTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `VoidTransactionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

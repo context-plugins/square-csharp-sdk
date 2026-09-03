@@ -8,6 +8,7 @@ Accessor: `client.Snippets` · Source: `Api/Snippets.cs` · 3 operations
 
 ### DeleteSnippet
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteSnippet(string siteId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteSnippetResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -18,6 +19,7 @@ Accessor: `client.Snippets` · Source: `Api/Snippets.cs` · 3 operations
 
 ### RetrieveSnippet
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveSnippet(string siteId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveSnippetResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -28,6 +30,7 @@ Accessor: `client.Snippets` · Source: `Api/Snippets.cs` · 3 operations
 
 ### UpsertSnippet
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpsertSnippet(string siteId, UpsertSnippetRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpsertSnippetResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

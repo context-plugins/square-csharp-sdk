@@ -8,6 +8,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### AccumulateLoyaltyPoints
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `AccumulateLoyaltyPoints(string accountId, AccumulateLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `AccumulateLoyaltyPointsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### AdjustLoyaltyPoints
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `AdjustLoyaltyPoints(string accountId, AdjustLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `AdjustLoyaltyPointsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### CalculateLoyaltyPoints
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CalculateLoyaltyPoints(string programId, CalculateLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CalculateLoyaltyPointsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### CancelLoyaltyPromotion
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelLoyaltyPromotion(string promotionId, string programId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelLoyaltyPromotionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -51,6 +55,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### CreateLoyaltyAccount
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateLoyaltyAccount(CreateLoyaltyAccountRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateLoyaltyAccountResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -62,6 +67,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### CreateLoyaltyPromotion
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateLoyaltyPromotion(string programId, CreateLoyaltyPromotionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateLoyaltyPromotionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -73,6 +79,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### CreateLoyaltyReward
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateLoyaltyReward(CreateLoyaltyRewardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateLoyaltyRewardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -84,6 +91,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### DeleteLoyaltyReward
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteLoyaltyReward(string rewardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteLoyaltyRewardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -94,6 +102,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### ListLoyaltyPrograms
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListLoyaltyPrograms(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `ListLoyaltyProgramsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -104,6 +113,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### ListLoyaltyPromotions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListLoyaltyPromotions(string programId, LoyaltyPromotionStatus? status, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `status` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -119,6 +129,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### RedeemLoyaltyReward
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RedeemLoyaltyReward(string rewardId, RedeemLoyaltyRewardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RedeemLoyaltyRewardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -130,6 +141,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### RetrieveLoyaltyAccount
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLoyaltyAccount(string accountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveLoyaltyAccountResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -140,6 +152,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### RetrieveLoyaltyProgram
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLoyaltyProgram(string programId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveLoyaltyProgramResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -150,6 +163,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### RetrieveLoyaltyPromotion
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLoyaltyPromotion(string promotionId, string programId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveLoyaltyPromotionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -160,6 +174,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### RetrieveLoyaltyReward
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLoyaltyReward(string rewardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveLoyaltyRewardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -170,6 +185,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### SearchLoyaltyAccounts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchLoyaltyAccounts(SearchLoyaltyAccountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchLoyaltyAccountsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -181,6 +197,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### SearchLoyaltyEvents
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchLoyaltyEvents(SearchLoyaltyEventsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchLoyaltyEventsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -192,6 +209,7 @@ Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
 
 ### SearchLoyaltyRewards
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchLoyaltyRewards(SearchLoyaltyRewardsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchLoyaltyRewardsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

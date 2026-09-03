@@ -8,6 +8,7 @@ Accessor: `client.Events` · Source: `Api/Events.cs` · 4 operations
 
 ### DisableEvents
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DisableEvents(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DisableEventsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -18,6 +19,7 @@ Accessor: `client.Events` · Source: `Api/Events.cs` · 4 operations
 
 ### EnableEvents
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `EnableEvents(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `EnableEventsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -28,6 +30,7 @@ Accessor: `client.Events` · Source: `Api/Events.cs` · 4 operations
 
 ### ListEventTypes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListEventTypes(string? apiVersion, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `apiVersion` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `api_version` ← `apiVersion`
@@ -40,6 +43,7 @@ Accessor: `client.Events` · Source: `Api/Events.cs` · 4 operations
 
 ### SearchEvents
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchEvents(SearchEventsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchEventsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

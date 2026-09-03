@@ -8,6 +8,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### BulkUpsertCustomerCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkUpsertCustomerCustomAttributes(BulkUpsertCustomerCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkUpsertCustomerCustomAttributesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### CreateCustomerCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateCustomerCustomAttributeDefinition(CreateCustomerCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateCustomerCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### DeleteCustomerCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteCustomerCustomAttribute(string customerId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteCustomerCustomAttributeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -40,6 +43,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### DeleteCustomerCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteCustomerCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteCustomerCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -50,6 +54,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### ListCustomerCustomAttributeDefinitions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCustomerCustomAttributeDefinitions(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `limit` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -63,6 +68,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### ListCustomerCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCustomerCustomAttributes(string customerId, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `limit` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -77,6 +83,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### RetrieveCustomerCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveCustomerCustomAttribute(string customerId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
   - defaults: `withDefinition` = `false`
@@ -90,6 +97,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### RetrieveCustomerCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveCustomerCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `version` ← `version`
@@ -102,6 +110,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### UpdateCustomerCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateCustomerCustomAttributeDefinition(string key, UpdateCustomerCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateCustomerCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -113,6 +122,7 @@ Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttrib
 
 ### UpsertCustomerCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpsertCustomerCustomAttribute(string customerId, string key, UpsertCustomerCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpsertCustomerCustomAttributeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

@@ -8,6 +8,7 @@ Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 op
 
 ### CancelTransferOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelTransferOrder(string transferOrderId, CancelTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelTransferOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 op
 
 ### CreateTransferOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateTransferOrder(CreateTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateTransferOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 op
 
 ### DeleteTransferOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteTransferOrder(string transferOrderId, long? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `version` ← `version`
@@ -42,6 +45,7 @@ Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 op
 
 ### ReceiveTransferOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ReceiveTransferOrder(string transferOrderId, ReceiveTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `ReceiveTransferOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -53,6 +57,7 @@ Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 op
 
 ### RetrieveTransferOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveTransferOrder(string transferOrderId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveTransferOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -63,6 +68,7 @@ Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 op
 
 ### SearchTransferOrders
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchTransferOrders(SearchTransferOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchTransferOrdersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -74,6 +80,7 @@ Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 op
 
 ### StartTransferOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `StartTransferOrder(string transferOrderId, StartTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `StartTransferOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -85,6 +92,7 @@ Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 op
 
 ### UpdateTransferOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateTransferOrder(string transferOrderId, UpdateTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateTransferOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

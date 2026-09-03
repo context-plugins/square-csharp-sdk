@@ -8,6 +8,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### BulkDeleteOrderCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkDeleteOrderCustomAttributes(BulkDeleteOrderCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkDeleteOrderCustomAttributesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### BulkUpsertOrderCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkUpsertOrderCustomAttributes(BulkUpsertOrderCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkUpsertOrderCustomAttributesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### CreateOrderCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateOrderCustomAttributeDefinition(CreateOrderCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateOrderCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### DeleteOrderCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteOrderCustomAttribute(string orderId, string customAttributeKey, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteOrderCustomAttributeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -51,6 +55,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### DeleteOrderCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteOrderCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteOrderCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -61,6 +66,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### ListOrderCustomAttributeDefinitions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListOrderCustomAttributeDefinitions(VisibilityFilter? visibilityFilter, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `visibilityFilter` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -76,6 +82,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### ListOrderCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListOrderCustomAttributes(string orderId, VisibilityFilter? visibilityFilter, string? cursor, int? limit, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `visibilityFilter` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -92,6 +99,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### RetrieveOrderCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveOrderCustomAttribute(string orderId, string customAttributeKey, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
   - defaults: `withDefinition` = `false`
@@ -105,6 +113,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### RetrieveOrderCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveOrderCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `version` ← `version`
@@ -117,6 +126,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### UpdateOrderCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateOrderCustomAttributeDefinition(string key, UpdateOrderCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateOrderCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -128,6 +138,7 @@ Accessor: `client.OrderCustomAttributes` · Source: `Api/OrderCustomAttributes.c
 
 ### UpsertOrderCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpsertOrderCustomAttribute(string orderId, string customAttributeKey, UpsertOrderCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpsertOrderCustomAttributeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

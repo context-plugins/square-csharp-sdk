@@ -8,6 +8,7 @@ Accessor: `client.GiftCardActivities` · Source: `Api/GiftCardActivities.cs` · 
 
 ### CreateGiftCardActivity
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateGiftCardActivity(CreateGiftCardActivityRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateGiftCardActivityResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.GiftCardActivities` · Source: `Api/GiftCardActivities.cs` · 
 
 ### ListGiftCardActivities
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListGiftCardActivities(string? giftCardId, string? type, string? locationId, string? beginTime, string? endTime, int? limit, string? cursor, string? sortOrder, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 8 params (`giftCardId` … `sortOrder`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `gift_card_id` ← `giftCardId`, `type` ← `type`, `location_id` ← `locationId`, `begin_time` ← `beginTime`, `end_time` ← `endTime`, `limit` ← `limit`, `cursor` ← `cursor`, `sort_order` ← `sortOrder`

@@ -8,6 +8,7 @@ Accessor: `client.Locations` · Source: `Api/Locations.cs` · 4 operations
 
 ### CreateLocation
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateLocation(CreateLocationRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateLocationResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Locations` · Source: `Api/Locations.cs` · 4 operations
 
 ### ListLocations
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListLocations(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `ListLocationsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.Locations` · Source: `Api/Locations.cs` · 4 operations
 
 ### RetrieveLocation
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLocation(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveLocationResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -39,6 +42,7 @@ Accessor: `client.Locations` · Source: `Api/Locations.cs` · 4 operations
 
 ### UpdateLocation
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateLocation(string locationId, UpdateLocationRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateLocationResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

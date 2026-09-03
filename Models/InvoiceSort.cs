@@ -13,7 +13,7 @@ public record InvoiceSort
     /// The field to use for sorting.
     /// </summary>
     [JsonPropertyName("field")]
-    public required InvoiceSortField Field { get; init; }
+    public string Field { get; } = "INVOICE_SORT_DATE";
 
     /// <summary>
     /// The order (e.g., chronological or alphabetical) in which results from a request are returned.

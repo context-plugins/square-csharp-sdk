@@ -8,6 +8,7 @@ Accessor: `client.ApplePay` · Source: `Api/ApplePay.cs` · 1 operation
 
 ### RegisterDomain
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RegisterDomain(RegisterDomainRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RegisterDomainResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

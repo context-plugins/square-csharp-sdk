@@ -19,6 +19,7 @@ Accessor: `client.OAuth` · Source: `Api/OAuth.cs` · 3 operations
 
 ### RetrieveTokenStatus
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveTokenStatus(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveTokenStatusResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

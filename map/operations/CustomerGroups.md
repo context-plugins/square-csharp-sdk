@@ -8,6 +8,7 @@ Accessor: `client.CustomerGroups` · Source: `Api/CustomerGroups.cs` · 5 operat
 
 ### CreateCustomerGroup
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateCustomerGroup(CreateCustomerGroupRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateCustomerGroupResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.CustomerGroups` · Source: `Api/CustomerGroups.cs` · 5 operat
 
 ### DeleteCustomerGroup
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteCustomerGroup(string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteCustomerGroupResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.CustomerGroups` · Source: `Api/CustomerGroups.cs` · 5 operat
 
 ### ListCustomerGroups
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCustomerGroups(string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -42,6 +45,7 @@ Accessor: `client.CustomerGroups` · Source: `Api/CustomerGroups.cs` · 5 operat
 
 ### RetrieveCustomerGroup
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveCustomerGroup(string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveCustomerGroupResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -52,6 +56,7 @@ Accessor: `client.CustomerGroups` · Source: `Api/CustomerGroups.cs` · 5 operat
 
 ### UpdateCustomerGroup
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateCustomerGroup(string groupId, UpdateCustomerGroupRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateCustomerGroupResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

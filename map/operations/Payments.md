@@ -8,6 +8,7 @@ Accessor: `client.Payments` · Source: `Api/Payments.cs` · 7 operations
 
 ### CancelPayment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelPayment(string paymentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelPaymentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -18,6 +19,7 @@ Accessor: `client.Payments` · Source: `Api/Payments.cs` · 7 operations
 
 ### CancelPaymentByIdempotencyKey
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelPaymentByIdempotencyKey(CancelPaymentByIdempotencyKeyRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelPaymentByIdempotencyKeyResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.Payments` · Source: `Api/Payments.cs` · 7 operations
 
 ### CompletePayment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CompletePayment(string paymentId, CompletePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CompletePaymentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -40,6 +43,7 @@ Accessor: `client.Payments` · Source: `Api/Payments.cs` · 7 operations
 
 ### CreatePayment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreatePayment(CreatePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreatePaymentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -51,6 +55,7 @@ Accessor: `client.Payments` · Source: `Api/Payments.cs` · 7 operations
 
 ### GetPayment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetPayment(string paymentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetPaymentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -61,6 +66,7 @@ Accessor: `client.Payments` · Source: `Api/Payments.cs` · 7 operations
 
 ### ListPayments
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListPayments(string? beginTime, string? endTime, string? sortOrder, string? cursor, string? locationId, long? total, string? last4, string? cardBrand, int? limit, string? offlineBeginTime, string? offlineEndTime, string? updatedAtBeginTime, string? updatedAtEndTime, ListPaymentsRequestSortField? sortField, bool? isOfflinePayment = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 14 params (`beginTime` … `sortField`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
   - defaults: `isOfflinePayment` = `false`
@@ -75,6 +81,7 @@ Accessor: `client.Payments` · Source: `Api/Payments.cs` · 7 operations
 
 ### UpdatePayment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdatePayment(string paymentId, UpdatePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdatePaymentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

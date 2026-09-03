@@ -8,6 +8,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### BulkDeleteLocationCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkDeleteLocationCustomAttributes(BulkDeleteLocationCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkDeleteLocationCustomAttributesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### BulkUpsertLocationCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkUpsertLocationCustomAttributes(BulkUpsertLocationCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkUpsertLocationCustomAttributesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### CreateLocationCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateLocationCustomAttributeDefinition(CreateLocationCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateLocationCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### DeleteLocationCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteLocationCustomAttribute(string locationId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteLocationCustomAttributeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -51,6 +55,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### DeleteLocationCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteLocationCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteLocationCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -61,6 +66,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### ListLocationCustomAttributeDefinitions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListLocationCustomAttributeDefinitions(VisibilityFilter? visibilityFilter, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `visibilityFilter` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -76,6 +82,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### ListLocationCustomAttributes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListLocationCustomAttributes(string locationId, VisibilityFilter? visibilityFilter, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `visibilityFilter` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -92,6 +99,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### RetrieveLocationCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLocationCustomAttribute(string locationId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
   - defaults: `withDefinition` = `false`
@@ -105,6 +113,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### RetrieveLocationCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLocationCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `version` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `version` ← `version`
@@ -117,6 +126,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### UpdateLocationCustomAttributeDefinition
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateLocationCustomAttributeDefinition(string key, UpdateLocationCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateLocationCustomAttributeDefinitionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -128,6 +138,7 @@ Accessor: `client.LocationCustomAttributes` · Source: `Api/LocationCustomAttrib
 
 ### UpsertLocationCustomAttribute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpsertLocationCustomAttribute(string locationId, string key, UpsertLocationCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpsertLocationCustomAttributeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

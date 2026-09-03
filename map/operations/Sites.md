@@ -8,6 +8,7 @@ Accessor: `client.Sites` · Source: `Api/Sites.cs` · 1 operation
 
 ### ListSites
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListSites(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `ListSitesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

@@ -8,6 +8,7 @@ Accessor: `client.V1Transactions` · Source: `Api/V1Transactions.cs` · 3 operat
 
 ### V1ListOrders
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `V1ListOrders(string locationId, SortOrder? order, int? limit, string? batchToken, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `order` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -23,6 +24,7 @@ Accessor: `client.V1Transactions` · Source: `Api/V1Transactions.cs` · 3 operat
 
 ### V1RetrieveOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `V1RetrieveOrder(string locationId, string orderId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `V1Order`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -33,6 +35,7 @@ Accessor: `client.V1Transactions` · Source: `Api/V1Transactions.cs` · 3 operat
 
 ### V1UpdateOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `V1UpdateOrder(string locationId, string orderId, V1UpdateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `V1Order`
 - **Error**: `SdkException<RawError>` — **Case B**

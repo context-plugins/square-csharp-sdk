@@ -8,6 +8,7 @@ Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
 
 ### BatchRetrieveOrders
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BatchRetrieveOrders(BatchRetrieveOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchRetrieveOrdersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
 
 ### CalculateOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CalculateOrder(CalculateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CalculateOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
 
 ### CloneOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CloneOrder(CloneOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CloneOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
 
 ### CreateOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateOrder(CreateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -52,6 +56,7 @@ Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
 
 ### PayOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `PayOrder(string orderId, PayOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `PayOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -63,6 +68,7 @@ Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
 
 ### RetrieveOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveOrder(string orderId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -73,6 +79,7 @@ Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
 
 ### SearchOrders
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchOrders(SearchOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchOrdersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -84,6 +91,7 @@ Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
 
 ### UpdateOrder
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateOrder(string orderId, UpdateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateOrderResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

@@ -8,6 +8,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### CancelTerminalAction
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelTerminalActionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -18,6 +19,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### CancelTerminalCheckout
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelTerminalCheckoutResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -28,6 +30,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### CancelTerminalRefund
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelTerminalRefundResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -38,6 +41,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### CreateTerminalAction
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateTerminalAction(CreateTerminalActionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateTerminalActionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -49,6 +53,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### CreateTerminalCheckout
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateTerminalCheckout(CreateTerminalCheckoutRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateTerminalCheckoutResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -60,6 +65,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### CreateTerminalRefund
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateTerminalRefund(CreateTerminalRefundRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateTerminalRefundResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -71,6 +77,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### DismissTerminalAction
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DismissTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DismissTerminalActionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -81,6 +88,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### DismissTerminalCheckout
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DismissTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DismissTerminalCheckoutResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -91,6 +99,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### DismissTerminalRefund
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DismissTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DismissTerminalRefundResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -101,6 +110,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### GetTerminalAction
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetTerminalActionResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -111,6 +121,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### GetTerminalCheckout
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetTerminalCheckoutResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -121,6 +132,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### GetTerminalRefund
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetTerminalRefundResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -131,6 +143,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### SearchTerminalActions
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchTerminalActions(SearchTerminalActionsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchTerminalActionsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -142,6 +155,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### SearchTerminalCheckouts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchTerminalCheckouts(SearchTerminalCheckoutsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchTerminalCheckoutsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -153,6 +167,7 @@ Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
 
 ### SearchTerminalRefunds
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchTerminalRefunds(SearchTerminalRefundsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchTerminalRefundsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

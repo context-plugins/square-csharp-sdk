@@ -8,6 +8,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### BulkRetrieveBookings
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkRetrieveBookings(BulkRetrieveBookingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkRetrieveBookingsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### BulkRetrieveTeamMemberBookingProfiles
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkRetrieveTeamMemberBookingProfiles(BulkRetrieveTeamMemberBookingProfilesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkRetrieveTeamMemberBookingProfilesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### CancelBooking
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CancelBooking(string bookingId, CancelBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CancelBookingResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### CreateBooking
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateBooking(CreateBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateBookingResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -52,6 +56,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### ListBookings
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListBookings(int? limit, string? cursor, string? customerId, string? teamMemberId, string? locationId, string? startAtMin, string? startAtMax, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 7 params (`limit` … `startAtMax`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `limit` ← `limit`, `cursor` ← `cursor`, `customer_id` ← `customerId`, `team_member_id` ← `teamMemberId`, `location_id` ← `locationId`, `start_at_min` ← `startAtMin`, `start_at_max` ← `startAtMax`
@@ -64,6 +69,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### ListLocationBookingProfiles
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListLocationBookingProfiles(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `limit` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -77,6 +83,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### ListTeamMemberBookingProfiles
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListTeamMemberBookingProfiles(int? limit, string? cursor, string? locationId, bool? bookableOnly = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `limit` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -92,6 +99,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### RetrieveBooking
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveBooking(string bookingId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveBookingResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -102,6 +110,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### RetrieveBusinessBookingProfile
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveBusinessBookingProfile(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveBusinessBookingProfileResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -112,6 +121,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### RetrieveLocationBookingProfile
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLocationBookingProfile(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveLocationBookingProfileResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -122,6 +132,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### RetrieveTeamMemberBookingProfile
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveTeamMemberBookingProfile(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveTeamMemberBookingProfileResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -132,6 +143,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### SearchAvailability
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchAvailability(SearchAvailabilityRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchAvailabilityResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -143,6 +155,7 @@ Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
 
 ### UpdateBooking
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateBooking(string bookingId, UpdateBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateBookingResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

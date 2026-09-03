@@ -8,6 +8,7 @@ Accessor: `client.Channels` · Source: `Api/Channels.cs` · 3 operations
 
 ### BulkRetrieveChannels
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkRetrieveChannels(BulkRetrieveChannelsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkRetrieveChannelsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Channels` · Source: `Api/Channels.cs` · 3 operations
 
 ### ListChannels
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListChannels(ReferenceType? referenceType, string? referenceId, ChannelStatus? status, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 5 params (`referenceType` … `limit`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `reference_type` ← `referenceType`, `reference_id` ← `referenceId`, `status` ← `status`, `cursor` ← `cursor`, `limit` ← `limit`
@@ -33,6 +35,7 @@ Accessor: `client.Channels` · Source: `Api/Channels.cs` · 3 operations
 
 ### RetrieveChannel
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveChannel(string channelId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveChannelResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

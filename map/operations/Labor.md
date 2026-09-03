@@ -8,6 +8,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### BulkPublishScheduledShifts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkPublishScheduledShifts(BulkPublishScheduledShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkPublishScheduledShiftsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### CreateBreakType
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateBreakType(CreateBreakTypeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateBreakTypeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### CreateScheduledShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateScheduledShift(CreateScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateScheduledShiftResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### CreateShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateShift(CreateShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateShiftResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -52,6 +56,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### CreateTimecard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateTimecard(CreateTimecardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateTimecardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -63,6 +68,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### DeleteBreakType
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteBreakType(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteBreakTypeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -73,6 +79,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### DeleteShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteShiftResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -83,6 +90,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### DeleteTimecard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteTimecard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteTimecardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -93,6 +101,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### GetBreakType
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetBreakType(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetBreakTypeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -103,6 +112,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### GetEmployeeWage
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetEmployeeWage(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetEmployeeWageResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -113,6 +123,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### GetShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetShiftResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -123,6 +134,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### GetTeamMemberWage
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetTeamMemberWage(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetTeamMemberWageResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -133,6 +145,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### ListBreakTypes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListBreakTypes(string? locationId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `locationId` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -147,6 +160,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### ListEmployeeWages
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListEmployeeWages(string? employeeId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `employeeId` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -161,6 +175,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### ListTeamMemberWages
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListTeamMemberWages(string? teamMemberId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `teamMemberId` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -175,6 +190,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### ListWorkweekConfigs
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListWorkweekConfigs(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `limit` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -188,6 +204,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### PublishScheduledShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `PublishScheduledShift(string id, PublishScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `PublishScheduledShiftResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -199,6 +216,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### RetrieveScheduledShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveScheduledShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveScheduledShiftResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -209,6 +227,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### RetrieveTimecard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveTimecard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveTimecardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -219,6 +238,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### SearchScheduledShifts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchScheduledShifts(SearchScheduledShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchScheduledShiftsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -230,6 +250,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### SearchShifts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchShifts(SearchShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchShiftsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -241,6 +262,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### SearchTimecards
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchTimecards(SearchTimecardsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchTimecardsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -252,6 +274,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### UpdateBreakType
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateBreakType(string id, UpdateBreakTypeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateBreakTypeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -263,6 +286,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### UpdateScheduledShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateScheduledShift(string id, UpdateScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateScheduledShiftResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -274,6 +298,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### UpdateShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateShift(string id, UpdateShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateShiftResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -285,6 +310,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### UpdateTimecard
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateTimecard(string id, UpdateTimecardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateTimecardResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -296,6 +322,7 @@ Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
 
 ### UpdateWorkweekConfig
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateWorkweekConfig(string id, UpdateWorkweekConfigRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateWorkweekConfigResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

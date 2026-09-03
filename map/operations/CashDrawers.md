@@ -8,6 +8,7 @@ Accessor: `client.CashDrawers` · Source: `Api/CashDrawers.cs` · 3 operations
 
 ### ListCashDrawerShiftEvents
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCashDrawerShiftEvents(string shiftId, string locationId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `limit` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -21,6 +22,7 @@ Accessor: `client.CashDrawers` · Source: `Api/CashDrawers.cs` · 3 operations
 
 ### ListCashDrawerShifts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListCashDrawerShifts(string locationId, SortOrder? sortOrder, string? beginTime, string? endTime, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 5 params (`sortOrder` … `cursor`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `location_id` ← `locationId`, `sort_order` ← `sortOrder`, `begin_time` ← `beginTime`, `end_time` ← `endTime`, `limit` ← `limit`, `cursor` ← `cursor`
@@ -34,6 +36,7 @@ Accessor: `client.CashDrawers` · Source: `Api/CashDrawers.cs` · 3 operations
 
 ### RetrieveCashDrawerShift
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveCashDrawerShift(string shiftId, string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Query params (wire ← C#)**: `location_id` ← `locationId`
 - **Returns**: `RetrieveCashDrawerShiftResponse`

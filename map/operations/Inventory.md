@@ -8,6 +8,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### BatchChangeInventory
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BatchChangeInventory(BatchChangeInventoryRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchChangeInventoryResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### BatchRetrieveInventoryChanges
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BatchRetrieveInventoryChanges(BatchRetrieveInventoryChangesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchRetrieveInventoryChangesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### BatchRetrieveInventoryCounts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BatchRetrieveInventoryCounts(BatchRetrieveInventoryCountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchRetrieveInventoryCountsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### CreateInventoryAdjustmentReason
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateInventoryAdjustmentReason(CreateInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateInventoryAdjustmentReasonResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -52,6 +56,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### DeleteInventoryAdjustmentReason
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteInventoryAdjustmentReason(DeleteInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteInventoryAdjustmentReasonResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -63,6 +68,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### DeprecatedBatchChangeInventory
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeprecatedBatchChangeInventory(BatchChangeInventoryRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchChangeInventoryResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -74,6 +80,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### DeprecatedBatchRetrieveInventoryChanges
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeprecatedBatchRetrieveInventoryChanges(BatchRetrieveInventoryChangesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchRetrieveInventoryChangesResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -85,6 +92,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### DeprecatedBatchRetrieveInventoryCounts
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeprecatedBatchRetrieveInventoryCounts(BatchRetrieveInventoryCountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BatchRetrieveInventoryCountsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -96,6 +104,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### DeprecatedRetrieveInventoryAdjustment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeprecatedRetrieveInventoryAdjustment(string adjustmentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveInventoryAdjustmentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -106,6 +115,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### DeprecatedRetrieveInventoryPhysicalCount
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeprecatedRetrieveInventoryPhysicalCount(string physicalCountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveInventoryPhysicalCountResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -116,6 +126,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### ListInventoryAdjustmentReasons
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListInventoryAdjustmentReasons(bool? includeDeleted = false, bool? includeSystemCodes = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - defaults: `includeDeleted` = `false`, `includeSystemCodes` = `false`
 - **Query params (wire ← C#)**: `include_deleted` ← `includeDeleted`, `include_system_codes` ← `includeSystemCodes`
@@ -128,6 +139,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### RestoreInventoryAdjustmentReason
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RestoreInventoryAdjustmentReason(RestoreInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RestoreInventoryAdjustmentReasonResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -139,6 +151,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### RetrieveInventoryAdjustment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveInventoryAdjustment(string adjustmentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveInventoryAdjustmentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -149,6 +162,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### RetrieveInventoryAdjustmentReason
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveInventoryAdjustmentReason(RetrieveInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveInventoryAdjustmentReasonResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -160,6 +174,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### RetrieveInventoryChanges
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveInventoryChanges(string catalogObjectId, string? locationIds, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `locationIds` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -173,6 +188,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### RetrieveInventoryCount
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveInventoryCount(string catalogObjectId, string? locationIds, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `locationIds` — nullable, no default → **must pass explicitly**
   - `cursor` — nullable, no default → **must pass explicitly**
@@ -186,6 +202,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### RetrieveInventoryPhysicalCount
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveInventoryPhysicalCount(string physicalCountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveInventoryPhysicalCountResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -196,6 +213,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### UpdateInventoryAdjustment
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateInventoryAdjustment(UpdateInventoryAdjustmentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateInventoryAdjustmentResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -207,6 +225,7 @@ Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
 
 ### UpdateInventoryAdjustmentReason
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateInventoryAdjustmentReason(UpdateInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateInventoryAdjustmentReasonResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

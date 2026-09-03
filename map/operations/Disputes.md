@@ -8,6 +8,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### AcceptDispute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `AcceptDispute(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `AcceptDisputeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -18,6 +19,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### CreateDisputeEvidenceFile
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateDisputeEvidenceFile(string disputeId, CreateDisputeEvidenceFileRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `request` — nullable, no default → **must pass explicitly**
   - `imageFile` — nullable, no default → **must pass explicitly**
@@ -31,6 +33,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### CreateDisputeEvidenceText
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateDisputeEvidenceText(string disputeId, CreateDisputeEvidenceTextRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateDisputeEvidenceTextResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -42,6 +45,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### DeleteDisputeEvidence
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeleteDisputeEvidence(string disputeId, string evidenceId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeleteDisputeEvidenceResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -52,6 +56,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### ListDisputeEvidence
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListDisputeEvidence(string disputeId, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `cursor` ← `cursor`
@@ -64,6 +69,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### ListDisputes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListDisputes(string? cursor, DisputeState? states, string? locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
   - `states` — nullable, no default → **must pass explicitly**
@@ -79,6 +85,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### RetrieveDispute
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveDispute(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveDisputeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -89,6 +96,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### RetrieveDisputeEvidence
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveDisputeEvidence(string disputeId, string evidenceId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveDisputeEvidenceResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -99,6 +107,7 @@ Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
 
 ### SubmitEvidence
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SubmitEvidence(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SubmitEvidenceResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

@@ -37,7 +37,7 @@ public record DeviceCode
     public string? DeviceId { get; init; }
 
     [JsonPropertyName("product_type")]
-    public required ProductType ProductType { get; init; }
+    public string ProductType { get; } = "TERMINAL_API";
 
     /// <summary>
     /// The location assigned to this code.

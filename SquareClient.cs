@@ -11,9 +11,13 @@ namespace Square;
 /// </summary>
 public sealed class SquareClient
 {
+    private readonly RawClient _rawClient;
+    private readonly Server _server;
+    private readonly AuthSchemes _auth;
+
     public SquareClient(HttpClient httpClient, SquareClientOptions options)
     {
-        var server = new Server(options.Environment, options.Server);
+        _server = new Server(options.Environment, options.Server);
         var queryParameterFactory = new QueryParameterFactory([]);
         var templateParamsFactory = new TemplateParamsFactory([]);
         var urlFactory = new UriFactory(queryParameterFactory, templateParamsFactory);
@@ -27,7 +31,7 @@ public sealed class SquareClient
                     new HeaderParam("X-APIMatic-Runtime", RuntimeEnvironment.Runtime)]);
         var resiliencePipelineFactory = new ResiliencePipelineFactory(options.Retry);
         var httpLogger = new HttpLogger(options.Logging, "SquareClient");
-        var rawClient =
+        _rawClient =
             new RawClient(httpClient,
                 urlFactory,
                 httpStatusPolicy,
@@ -35,135 +39,99 @@ public sealed class SquareClient
                 resiliencePipelineFactory,
                 httpLogger,
                 options.Hooks);
-        var auth = new AuthSchemes(options, server, rawClient, urlFactory);
-        ApplePay = new ApplePay(rawClient, server, auth);
-        BankAccounts = new BankAccounts(rawClient, server, auth);
-        BookingCustomAttributes = new BookingCustomAttributes(rawClient, server, auth);
-        Bookings = new Bookings(rawClient, server, auth);
-        Cards = new Cards(rawClient, server, auth);
-        CashDrawers = new CashDrawers(rawClient, server, auth);
-        Catalog = new Catalog(rawClient, server, auth);
-        Channels = new Channels(rawClient, server, auth);
-        CheckoutApi = new CheckoutApi(rawClient, server, auth);
-        CustomerCustomAttributes = new CustomerCustomAttributes(rawClient, server, auth);
-        CustomerGroups = new CustomerGroups(rawClient, server, auth);
-        CustomerSegments = new CustomerSegments(rawClient, server, auth);
-        Customers = new Customers(rawClient, server, auth);
-        Devices = new Devices(rawClient, server, auth);
-        Disputes = new Disputes(rawClient, server, auth);
-        Employees = new Employees(rawClient, server, auth);
-        Events = new Events(rawClient, server, auth);
-        GiftCardActivities = new GiftCardActivities(rawClient, server, auth);
-        GiftCards = new GiftCards(rawClient, server, auth);
-        Inventory = new Inventory(rawClient, server, auth);
-        Invoices = new Invoices(rawClient, server, auth);
-        Labor = new Labor(rawClient, server, auth);
-        LocationCustomAttributes = new LocationCustomAttributes(rawClient, server, auth);
-        Locations = new Locations(rawClient, server, auth);
-        Loyalty = new Loyalty(rawClient, server, auth);
-        MerchantCustomAttributes = new MerchantCustomAttributes(rawClient, server, auth);
-        Merchants = new Merchants(rawClient, server, auth);
-        OAuth = new OAuth(rawClient, server, auth);
-        OrderCustomAttributes = new OrderCustomAttributes(rawClient, server, auth);
-        Orders = new Orders(rawClient, server, auth);
-        Payments = new Payments(rawClient, server, auth);
-        Payouts = new Payouts(rawClient, server, auth);
-        Refunds = new Refunds(rawClient, server, auth);
-        Sites = new Sites(rawClient, server, auth);
-        Snippets = new Snippets(rawClient, server, auth);
-        Subscriptions = new Subscriptions(rawClient, server, auth);
-        Team = new Team(rawClient, server, auth);
-        Terminal = new Terminal(rawClient, server, auth);
-        Transactions = new Transactions(rawClient, server, auth);
-        TransferOrderApi = new TransferOrderApi(rawClient, server, auth);
-        V1Transactions = new V1Transactions(rawClient, server, auth);
-        Vendors = new Vendors(rawClient, server, auth);
-        WebhookSubscriptions = new WebhookSubscriptions(rawClient, server, auth);
+        _auth = new AuthSchemes(options, _server, _rawClient, urlFactory);
     }
 
-    public ApplePay ApplePay { get; }
+    public ApplePay ApplePay => field ??= new ApplePay(_rawClient, _server, _auth);
 
-    public BankAccounts BankAccounts { get; }
+    public BankAccounts BankAccounts => field ??= new BankAccounts(_rawClient, _server, _auth);
 
-    public BookingCustomAttributes BookingCustomAttributes { get; }
+    public BookingCustomAttributes BookingCustomAttributes =>
+        field ??= new BookingCustomAttributes(_rawClient, _server, _auth);
 
-    public Bookings Bookings { get; }
+    public Bookings Bookings => field ??= new Bookings(_rawClient, _server, _auth);
 
-    public Cards Cards { get; }
+    public Cards Cards => field ??= new Cards(_rawClient, _server, _auth);
 
-    public CashDrawers CashDrawers { get; }
+    public CashDrawers CashDrawers => field ??= new CashDrawers(_rawClient, _server, _auth);
 
-    public Catalog Catalog { get; }
+    public Catalog Catalog => field ??= new Catalog(_rawClient, _server, _auth);
 
-    public Channels Channels { get; }
+    public Channels Channels => field ??= new Channels(_rawClient, _server, _auth);
 
-    public CheckoutApi CheckoutApi { get; }
+    public CheckoutApi CheckoutApi => field ??= new CheckoutApi(_rawClient, _server, _auth);
 
-    public CustomerCustomAttributes CustomerCustomAttributes { get; }
+    public CustomerCustomAttributes CustomerCustomAttributes =>
+        field ??= new CustomerCustomAttributes(_rawClient, _server, _auth);
 
-    public CustomerGroups CustomerGroups { get; }
+    public CustomerGroups CustomerGroups => field ??= new CustomerGroups(_rawClient, _server, _auth);
 
-    public CustomerSegments CustomerSegments { get; }
+    public CustomerSegments CustomerSegments => field ??= new CustomerSegments(_rawClient, _server, _auth);
 
-    public Customers Customers { get; }
+    public Customers Customers => field ??= new Customers(_rawClient, _server, _auth);
 
-    public Devices Devices { get; }
+    public Devices Devices => field ??= new Devices(_rawClient, _server, _auth);
 
-    public Disputes Disputes { get; }
+    public Disputes Disputes => field ??= new Disputes(_rawClient, _server, _auth);
 
-    public Employees Employees { get; }
+    public Employees Employees => field ??= new Employees(_rawClient, _server, _auth);
 
-    public Events Events { get; }
+    public Events Events => field ??= new Events(_rawClient, _server, _auth);
 
-    public GiftCardActivities GiftCardActivities { get; }
+    public GiftCardActivities GiftCardActivities =>
+        field ??= new GiftCardActivities(_rawClient, _server, _auth);
 
-    public GiftCards GiftCards { get; }
+    public GiftCards GiftCards => field ??= new GiftCards(_rawClient, _server, _auth);
 
-    public Inventory Inventory { get; }
+    public Inventory Inventory => field ??= new Inventory(_rawClient, _server, _auth);
 
-    public Invoices Invoices { get; }
+    public Invoices Invoices => field ??= new Invoices(_rawClient, _server, _auth);
 
-    public Labor Labor { get; }
+    public Labor Labor => field ??= new Labor(_rawClient, _server, _auth);
 
-    public LocationCustomAttributes LocationCustomAttributes { get; }
+    public LocationCustomAttributes LocationCustomAttributes =>
+        field ??= new LocationCustomAttributes(_rawClient, _server, _auth);
 
-    public Locations Locations { get; }
+    public Locations Locations => field ??= new Locations(_rawClient, _server, _auth);
 
-    public Loyalty Loyalty { get; }
+    public Loyalty Loyalty => field ??= new Loyalty(_rawClient, _server, _auth);
 
-    public MerchantCustomAttributes MerchantCustomAttributes { get; }
+    public MerchantCustomAttributes MerchantCustomAttributes =>
+        field ??= new MerchantCustomAttributes(_rawClient, _server, _auth);
 
-    public Merchants Merchants { get; }
+    public Merchants Merchants => field ??= new Merchants(_rawClient, _server, _auth);
 
-    public OAuth OAuth { get; }
+    public OAuth OAuth => field ??= new OAuth(_rawClient, _server, _auth);
 
-    public OrderCustomAttributes OrderCustomAttributes { get; }
+    public OrderCustomAttributes OrderCustomAttributes =>
+        field ??= new OrderCustomAttributes(_rawClient, _server, _auth);
 
-    public Orders Orders { get; }
+    public Orders Orders => field ??= new Orders(_rawClient, _server, _auth);
 
-    public Payments Payments { get; }
+    public Payments Payments => field ??= new Payments(_rawClient, _server, _auth);
 
-    public Payouts Payouts { get; }
+    public Payouts Payouts => field ??= new Payouts(_rawClient, _server, _auth);
 
-    public Refunds Refunds { get; }
+    public Refunds Refunds => field ??= new Refunds(_rawClient, _server, _auth);
 
-    public Sites Sites { get; }
+    public Sites Sites => field ??= new Sites(_rawClient, _server, _auth);
 
-    public Snippets Snippets { get; }
+    public Snippets Snippets => field ??= new Snippets(_rawClient, _server, _auth);
 
-    public Subscriptions Subscriptions { get; }
+    public Subscriptions Subscriptions => field ??= new Subscriptions(_rawClient, _server, _auth);
 
-    public Team Team { get; }
+    public Team Team => field ??= new Team(_rawClient, _server, _auth);
 
-    public Terminal Terminal { get; }
+    public Terminal Terminal => field ??= new Terminal(_rawClient, _server, _auth);
 
-    public Transactions Transactions { get; }
+    public Transactions Transactions => field ??= new Transactions(_rawClient, _server, _auth);
 
-    public TransferOrderApi TransferOrderApi { get; }
+    public TransferOrderApi TransferOrderApi => field ??= new TransferOrderApi(_rawClient, _server, _auth);
 
-    public V1Transactions V1Transactions { get; }
+    public V1Transactions V1Transactions => field ??= new V1Transactions(_rawClient, _server, _auth);
 
-    public Vendors Vendors { get; }
+    public Vendors Vendors => field ??= new Vendors(_rawClient, _server, _auth);
 
-    public WebhookSubscriptions WebhookSubscriptions { get; }
+    public WebhookSubscriptions WebhookSubscriptions =>
+        field ??= new WebhookSubscriptions(_rawClient, _server, _auth);
 }

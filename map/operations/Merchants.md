@@ -8,6 +8,7 @@ Accessor: `client.Merchants` · Source: `Api/Merchants.cs` · 2 operations
 
 ### ListMerchants
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListMerchants(int? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `cursor` ← `cursor`
@@ -20,6 +21,7 @@ Accessor: `client.Merchants` · Source: `Api/Merchants.cs` · 2 operations
 
 ### RetrieveMerchant
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveMerchant(string merchantId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveMerchantResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

@@ -8,6 +8,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### BulkCreateTeamMembers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkCreateTeamMembers(BulkCreateTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkCreateTeamMembersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### BulkUpdateTeamMembers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `BulkUpdateTeamMembers(BulkUpdateTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `BulkUpdateTeamMembersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### CreateJob
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateJob(CreateJobRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateJobResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -41,6 +44,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### CreateTeamMember
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateTeamMember(CreateTeamMemberRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateTeamMemberResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -52,6 +56,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### ListJobs
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListJobs(string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
 - **Query params (wire ← C#)**: `cursor` ← `cursor`
@@ -64,6 +69,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### RetrieveJob
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveJob(string jobId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveJobResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -74,6 +80,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### RetrieveTeamMember
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveTeamMember(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveTeamMemberResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -84,6 +91,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### RetrieveWageSetting
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveWageSetting(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveWageSettingResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -94,6 +102,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### SearchTeamMembers
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `SearchTeamMembers(SearchTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `SearchTeamMembersResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -105,6 +114,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### UpdateJob
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateJob(string jobId, UpdateJobRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateJobResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -116,6 +126,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### UpdateTeamMember
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateTeamMember(string teamMemberId, UpdateTeamMemberRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateTeamMemberResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -127,6 +138,7 @@ Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
 
 ### UpdateWageSetting
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateWageSetting(string teamMemberId, UpdateWageSettingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateWageSettingResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

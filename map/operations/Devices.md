@@ -8,6 +8,7 @@ Accessor: `client.Devices` · Source: `Api/Devices.cs` · 5 operations
 
 ### CreateDeviceCode
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateDeviceCode(CreateDeviceCodeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateDeviceCodeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.Devices` · Source: `Api/Devices.cs` · 5 operations
 
 ### GetDevice
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetDevice(string deviceId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetDeviceResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -29,6 +31,7 @@ Accessor: `client.Devices` · Source: `Api/Devices.cs` · 5 operations
 
 ### GetDeviceCode
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `GetDeviceCode(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `GetDeviceCodeResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -39,6 +42,7 @@ Accessor: `client.Devices` · Source: `Api/Devices.cs` · 5 operations
 
 ### ListDeviceCodes
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListDeviceCodes(string? cursor, string? locationId, ProductType? productType, DeviceCodeStatus? status, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 4 params (`cursor` … `status`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `cursor` ← `cursor`, `location_id` ← `locationId`, `product_type` ← `productType`, `status` ← `status`
@@ -53,6 +57,7 @@ Accessor: `client.Devices` · Source: `Api/Devices.cs` · 5 operations
 
 ### ListDevices
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListDevices(string? cursor, SortOrder? sortOrder, int? limit, string? locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - 4 params (`cursor` … `locationId`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
 - **Query params (wire ← C#)**: `cursor` ← `cursor`, `sort_order` ← `sortOrder`, `limit` ← `limit`, `location_id` ← `locationId`

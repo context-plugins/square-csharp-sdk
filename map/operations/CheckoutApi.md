@@ -8,6 +8,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### CreateCheckout
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreateCheckout(string locationId, CreateCheckoutRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreateCheckoutResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -19,6 +20,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### CreatePaymentLink
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `CreatePaymentLink(CreatePaymentLinkRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `CreatePaymentLinkResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -30,6 +32,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### DeletePaymentLink
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `DeletePaymentLink(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `DeletePaymentLinkResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -40,6 +43,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### ListPaymentLinks
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `ListPaymentLinks(string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
   - `cursor` — nullable, no default → **must pass explicitly**
   - `limit` — nullable, no default → **must pass explicitly**
@@ -53,6 +57,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### RetrieveLocationSettings
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveLocationSettings(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveLocationSettingsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -63,6 +68,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### RetrieveMerchantSettings
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrieveMerchantSettings(RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrieveMerchantSettingsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -73,6 +79,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### RetrievePaymentLink
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `RetrievePaymentLink(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `RetrievePaymentLinkResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -83,6 +90,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### UpdateLocationSettings
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateLocationSettings(string locationId, UpdateLocationSettingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateLocationSettingsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -94,6 +102,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### UpdateMerchantSettings
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdateMerchantSettings(UpdateMerchantSettingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdateMerchantSettingsResponse`
 - **Error**: `SdkException<RawError>` — **Case B**
@@ -105,6 +114,7 @@ Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
 
 ### UpdatePaymentLink
 
+- **Auth**: `options.Oauth2`
 - **Signature**: `UpdatePaymentLink(string id, UpdatePaymentLinkRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
 - **Returns**: `UpdatePaymentLinkResponse`
 - **Error**: `SdkException<RawError>` — **Case B**

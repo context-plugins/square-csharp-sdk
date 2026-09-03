@@ -213,6 +213,13 @@ Namespaces by content type (add `using` accordingly):
 
 **API key (header `Authorization`).** Set `options.Oauth2ClientSecret = "<api_key>"`; sent as the `Authorization` request header.
 
+Operation blocks name their credential in an **Auth** bullet; an operation whose spec declares no scheme carries no such bullet.
+
+- `AND` — every credential listed must be set for the call to be fully authenticated.
+- `OR` — the first credential you set that applies successfully is the one sent, in the order listed.
+
+A credential you never set is skipped rather than throwing, and the request is sent anyway — so an authentication failure can mean no credential was sent rather than a bad one. Under `OR`, if every credential you did set fails to apply, `AuthSchemeException` is thrown.
+
 **Environments.** `options.Environment` selects the target environment (`Servers/ServerEnvironment.cs`):
 
 | Environment | Value | Hosting |
