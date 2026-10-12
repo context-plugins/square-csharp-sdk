@@ -2,32 +2,34 @@
 
 # Employees — operations
 
-Accessor: `client.Employees` · Source: `Api/Employees.cs` · 2 operations
+Accessor: `client.Employees` · Source: `src/Square/Api/Employees.cs` · 2 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### ListEmployees
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListEmployees(string? locationId, EmployeeStatus? status, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 4 params (`locationId` … `cursor`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `location_id` ← `locationId`, `status` ← `status`, `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListEmployees(ListEmployeesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `location_id` ← `LocationId`, `status` ← `Status`, `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListEmployeesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `EmployeeStatus` | `Models/Enums/EmployeeStatus.cs` |
-| `ListEmployeesResponse` | `Models/ListEmployeesResponse.cs` |
+| `ListEmployeesRequest` | `src/Square/Requests/Employees/ListEmployeesRequest.cs` |
+| `EmployeeStatus` | `src/Square/Models/Enums/EmployeeStatus.cs` |
+| `ListEmployeesResponse` | `src/Square/Models/ListEmployeesResponse.cs` |
 
 ### RetrieveEmployee
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveEmployee(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveEmployee(RetrieveEmployeeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `RetrieveEmployeeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveEmployeeResponse` | `Models/RetrieveEmployeeResponse.cs` |
+| `RetrieveEmployeeRequest` | `src/Square/Requests/Employees/RetrieveEmployeeRequest.cs` |
+| `RetrieveEmployeeResponse` | `src/Square/Models/RetrieveEmployeeResponse.cs` |
 

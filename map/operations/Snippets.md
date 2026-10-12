@@ -2,41 +2,47 @@
 
 # Snippets — operations
 
-Accessor: `client.Snippets` · Source: `Api/Snippets.cs` · 3 operations
+Accessor: `client.Snippets` · Source: `src/Square/Api/Snippets.cs` · 3 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### DeleteSnippet
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteSnippet(string siteId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteSnippet(DeleteSnippetRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SiteId`
 - **Returns**: `DeleteSnippetResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteSnippetResponse` | `Models/DeleteSnippetResponse.cs` |
+| `DeleteSnippetRequest` | `src/Square/Requests/Snippets/DeleteSnippetRequest.cs` |
+| `DeleteSnippetResponse` | `src/Square/Models/DeleteSnippetResponse.cs` |
 
 ### RetrieveSnippet
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveSnippet(string siteId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveSnippet(RetrieveSnippetRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SiteId`
 - **Returns**: `RetrieveSnippetResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveSnippetResponse` | `Models/RetrieveSnippetResponse.cs` |
+| `RetrieveSnippetRequest` | `src/Square/Requests/Snippets/RetrieveSnippetRequest.cs` |
+| `RetrieveSnippetResponse` | `src/Square/Models/RetrieveSnippetResponse.cs` |
 
 ### UpsertSnippet
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpsertSnippet(string siteId, UpsertSnippetRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpsertSnippet(UpsertSnippetOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SiteId`, `Body`
 - **Returns**: `UpsertSnippetResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpsertSnippetRequest` | `Models/UpsertSnippetRequest.cs` |
-| `UpsertSnippetResponse` | `Models/UpsertSnippetResponse.cs` |
+| `UpsertSnippetOperationRequest` | `src/Square/Requests/Snippets/UpsertSnippetOperationRequest.cs` |
+| `UpsertSnippetRequest` | `src/Square/Models/UpsertSnippetRequest.cs` |
+| `UpsertSnippetResponse` | `src/Square/Models/UpsertSnippetResponse.cs` |
 

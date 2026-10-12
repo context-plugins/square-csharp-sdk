@@ -2,90 +2,104 @@
 
 # Vendors — operations
 
-Accessor: `client.Vendors` · Source: `Api/Vendors.cs` · 7 operations
+Accessor: `client.Vendors` · Source: `src/Square/Api/Vendors.cs` · 7 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkCreateVendors
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkCreateVendors(BulkCreateVendorsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkCreateVendors(BulkCreateVendorsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkCreateVendorsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkCreateVendorsRequest` | `Models/BulkCreateVendorsRequest.cs` |
-| `BulkCreateVendorsResponse` | `Models/BulkCreateVendorsResponse.cs` |
+| `BulkCreateVendorsOperationRequest` | `src/Square/Requests/Vendors/BulkCreateVendorsOperationRequest.cs` |
+| `BulkCreateVendorsRequest` | `src/Square/Models/BulkCreateVendorsRequest.cs` |
+| `BulkCreateVendorsResponse` | `src/Square/Models/BulkCreateVendorsResponse.cs` |
 
 ### BulkRetrieveVendors
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkRetrieveVendors(BulkRetrieveVendorsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkRetrieveVendors(BulkRetrieveVendorsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkRetrieveVendorsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkRetrieveVendorsRequest` | `Models/BulkRetrieveVendorsRequest.cs` |
-| `BulkRetrieveVendorsResponse` | `Models/BulkRetrieveVendorsResponse.cs` |
+| `BulkRetrieveVendorsOperationRequest` | `src/Square/Requests/Vendors/BulkRetrieveVendorsOperationRequest.cs` |
+| `BulkRetrieveVendorsRequest` | `src/Square/Models/BulkRetrieveVendorsRequest.cs` |
+| `BulkRetrieveVendorsResponse` | `src/Square/Models/BulkRetrieveVendorsResponse.cs` |
 
 ### BulkUpdateVendors
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkUpdateVendors(BulkUpdateVendorsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkUpdateVendors(BulkUpdateVendorsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkUpdateVendorsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkUpdateVendorsRequest` | `Models/BulkUpdateVendorsRequest.cs` |
-| `BulkUpdateVendorsResponse` | `Models/BulkUpdateVendorsResponse.cs` |
+| `BulkUpdateVendorsOperationRequest` | `src/Square/Requests/Vendors/BulkUpdateVendorsOperationRequest.cs` |
+| `BulkUpdateVendorsRequest` | `src/Square/Models/BulkUpdateVendorsRequest.cs` |
+| `BulkUpdateVendorsResponse` | `src/Square/Models/BulkUpdateVendorsResponse.cs` |
 
 ### CreateVendor
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateVendor(CreateVendorRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateVendor(CreateVendorOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateVendorResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateVendorRequest` | `Models/CreateVendorRequest.cs` |
-| `CreateVendorResponse` | `Models/CreateVendorResponse.cs` |
+| `CreateVendorOperationRequest` | `src/Square/Requests/Vendors/CreateVendorOperationRequest.cs` |
+| `CreateVendorRequest` | `src/Square/Models/CreateVendorRequest.cs` |
+| `CreateVendorResponse` | `src/Square/Models/CreateVendorResponse.cs` |
 
 ### RetrieveVendor
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveVendor(string vendorId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveVendor(RetrieveVendorRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `VendorId`
 - **Returns**: `RetrieveVendorResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveVendorResponse` | `Models/RetrieveVendorResponse.cs` |
+| `RetrieveVendorRequest` | `src/Square/Requests/Vendors/RetrieveVendorRequest.cs` |
+| `RetrieveVendorResponse` | `src/Square/Models/RetrieveVendorResponse.cs` |
 
 ### SearchVendors
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchVendors(SearchVendorsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchVendors(SearchVendorsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchVendorsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchVendorsRequest` | `Models/SearchVendorsRequest.cs` |
-| `SearchVendorsResponse` | `Models/SearchVendorsResponse.cs` |
+| `SearchVendorsOperationRequest` | `src/Square/Requests/Vendors/SearchVendorsOperationRequest.cs` |
+| `SearchVendorsRequest` | `src/Square/Models/SearchVendorsRequest.cs` |
+| `SearchVendorsResponse` | `src/Square/Models/SearchVendorsResponse.cs` |
 
 ### UpdateVendor
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateVendor(string vendorId, UpdateVendorRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateVendor(UpdateVendorOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `VendorId`, `Body`
 - **Returns**: `UpdateVendorResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateVendorRequest` | `Models/UpdateVendorRequest.cs` |
-| `UpdateVendorResponse` | `Models/UpdateVendorResponse.cs` |
+| `UpdateVendorOperationRequest` | `src/Square/Requests/Vendors/UpdateVendorOperationRequest.cs` |
+| `UpdateVendorRequest` | `src/Square/Models/UpdateVendorRequest.cs` |
+| `UpdateVendorResponse` | `src/Square/Models/UpdateVendorResponse.cs` |
 

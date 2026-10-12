@@ -2,56 +2,61 @@
 
 # Cards — operations
 
-Accessor: `client.Cards` · Source: `Api/Cards.cs` · 4 operations
+Accessor: `client.Cards` · Source: `src/Square/Api/Cards.cs` · 4 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CreateCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateCard(CreateCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateCard(CreateCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateCardRequest` | `Models/CreateCardRequest.cs` |
-| `CreateCardResponse` | `Models/CreateCardResponse.cs` |
+| `CreateCardOperationRequest` | `src/Square/Requests/Cards/CreateCardOperationRequest.cs` |
+| `CreateCardRequest` | `src/Square/Models/CreateCardRequest.cs` |
+| `CreateCardResponse` | `src/Square/Models/CreateCardResponse.cs` |
 
 ### DisableCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DisableCard(string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DisableCard(DisableCardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CardId`
 - **Returns**: `DisableCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DisableCardResponse` | `Models/DisableCardResponse.cs` |
+| `DisableCardRequest` | `src/Square/Requests/Cards/DisableCardRequest.cs` |
+| `DisableCardResponse` | `src/Square/Models/DisableCardResponse.cs` |
 
 ### ListCards
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListCards(string? cursor, string? customerId, string? referenceId, SortOrder? sortOrder, bool? includeDisabled = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 4 params (`cursor` … `sortOrder`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-  - defaults: `includeDisabled` = `false`
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `customer_id` ← `customerId`, `include_disabled` ← `includeDisabled`, `reference_id` ← `referenceId`, `sort_order` ← `sortOrder`
+- **Signature**: `ListCards(ListCardsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `customer_id` ← `CustomerId`, `include_disabled` ← `IncludeDisabled`, `reference_id` ← `ReferenceId`, `sort_order` ← `SortOrder`
 - **Returns**: `ListCardsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SortOrder` | `Models/Enums/SortOrder.cs` |
-| `ListCardsResponse` | `Models/ListCardsResponse.cs` |
+| `ListCardsRequest` | `src/Square/Requests/Cards/ListCardsRequest.cs` |
+| `SortOrder` | `src/Square/Models/Enums/SortOrder.cs` |
+| `ListCardsResponse` | `src/Square/Models/ListCardsResponse.cs` |
 
 ### RetrieveCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveCard(string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveCard(RetrieveCardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CardId`
 - **Returns**: `RetrieveCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveCardResponse` | `Models/RetrieveCardResponse.cs` |
+| `RetrieveCardRequest` | `src/Square/Requests/Cards/RetrieveCardRequest.cs` |
+| `RetrieveCardResponse` | `src/Square/Models/RetrieveCardResponse.cs` |
 

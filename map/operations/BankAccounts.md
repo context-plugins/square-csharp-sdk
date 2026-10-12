@@ -2,65 +2,73 @@
 
 # BankAccounts — operations
 
-Accessor: `client.BankAccounts` · Source: `Api/BankAccounts.cs` · 5 operations
+Accessor: `client.BankAccounts` · Source: `src/Square/Api/BankAccounts.cs` · 5 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CreateBankAccount
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateBankAccount(CreateBankAccountRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateBankAccount(CreateBankAccountOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateBankAccountResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateBankAccountRequest` | `Models/CreateBankAccountRequest.cs` |
-| `CreateBankAccountResponse` | `Models/CreateBankAccountResponse.cs` |
+| `CreateBankAccountOperationRequest` | `src/Square/Requests/BankAccounts/CreateBankAccountOperationRequest.cs` |
+| `CreateBankAccountRequest` | `src/Square/Models/CreateBankAccountRequest.cs` |
+| `CreateBankAccountResponse` | `src/Square/Models/CreateBankAccountResponse.cs` |
 
 ### DisableBankAccount
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DisableBankAccount(string bankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DisableBankAccount(DisableBankAccountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BankAccountId`
 - **Returns**: `DisableBankAccountResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DisableBankAccountResponse` | `Models/DisableBankAccountResponse.cs` |
+| `DisableBankAccountRequest` | `src/Square/Requests/BankAccounts/DisableBankAccountRequest.cs` |
+| `DisableBankAccountResponse` | `src/Square/Models/DisableBankAccountResponse.cs` |
 
 ### GetBankAccount
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetBankAccount(string bankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetBankAccount(GetBankAccountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BankAccountId`
 - **Returns**: `GetBankAccountResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetBankAccountResponse` | `Models/GetBankAccountResponse.cs` |
+| `GetBankAccountRequest` | `src/Square/Requests/BankAccounts/GetBankAccountRequest.cs` |
+| `GetBankAccountResponse` | `src/Square/Models/GetBankAccountResponse.cs` |
 
 ### GetBankAccountByV1Id
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetBankAccountByV1Id(string v1BankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetBankAccountByV1Id(GetBankAccountByV1IdRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `V1BankAccountId`
 - **Returns**: `GetBankAccountByV1IdResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetBankAccountByV1IdResponse` | `Models/GetBankAccountByV1IdResponse.cs` |
+| `GetBankAccountByV1IdRequest` | `src/Square/Requests/BankAccounts/GetBankAccountByV1IdRequest.cs` |
+| `GetBankAccountByV1IdResponse` | `src/Square/Models/GetBankAccountByV1IdResponse.cs` |
 
 ### ListBankAccounts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListBankAccounts(string? cursor, int? limit, string? locationId, string? customerId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 4 params (`cursor` … `customerId`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `limit` ← `limit`, `location_id` ← `locationId`, `customer_id` ← `customerId`
+- **Signature**: `ListBankAccounts(ListBankAccountsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `limit` ← `Limit`, `location_id` ← `LocationId`, `customer_id` ← `CustomerId`
 - **Returns**: `ListBankAccountsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListBankAccountsResponse` | `Models/ListBankAccountsResponse.cs` |
+| `ListBankAccountsRequest` | `src/Square/Requests/BankAccounts/ListBankAccountsRequest.cs` |
+| `ListBankAccountsResponse` | `src/Square/Models/ListBankAccountsResponse.cs` |
 

@@ -2,44 +2,48 @@
 
 # Refunds — operations
 
-Accessor: `client.Refunds` · Source: `Api/Refunds.cs` · 3 operations
+Accessor: `client.Refunds` · Source: `src/Square/Api/Refunds.cs` · 3 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### GetPaymentRefund
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetPaymentRefund(string refundId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetPaymentRefund(GetPaymentRefundRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `RefundId`
 - **Returns**: `GetPaymentRefundResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetPaymentRefundResponse` | `Models/GetPaymentRefundResponse.cs` |
+| `GetPaymentRefundRequest` | `src/Square/Requests/Refunds/GetPaymentRefundRequest.cs` |
+| `GetPaymentRefundResponse` | `src/Square/Models/GetPaymentRefundResponse.cs` |
 
 ### ListPaymentRefunds
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListPaymentRefunds(string? beginTime, string? endTime, string? sortOrder, string? cursor, string? locationId, string? status, string? sourceType, int? limit, string? updatedAtBeginTime, string? updatedAtEndTime, ListPaymentRefundsRequestSortField? sortField, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 11 params (`beginTime` … `sortField`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `begin_time` ← `beginTime`, `end_time` ← `endTime`, `sort_order` ← `sortOrder`, `cursor` ← `cursor`, `location_id` ← `locationId`, `status` ← `status`, `source_type` ← `sourceType`, `limit` ← `limit`, `updated_at_begin_time` ← `updatedAtBeginTime`, `updated_at_end_time` ← `updatedAtEndTime`, `sort_field` ← `sortField`
+- **Signature**: `ListPaymentRefunds(ListPaymentRefundsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `begin_time` ← `BeginTime`, `end_time` ← `EndTime`, `sort_order` ← `SortOrder`, `cursor` ← `Cursor`, `location_id` ← `LocationId`, `status` ← `Status`, `source_type` ← `SourceType`, `limit` ← `Limit`, `updated_at_begin_time` ← `UpdatedAtBeginTime`, `updated_at_end_time` ← `UpdatedAtEndTime`, `sort_field` ← `SortField`
 - **Returns**: `ListPaymentRefundsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListPaymentRefundsRequestSortField` | `Models/Enums/ListPaymentRefundsRequestSortField.cs` |
-| `ListPaymentRefundsResponse` | `Models/ListPaymentRefundsResponse.cs` |
+| `ListPaymentRefundsRequest` | `src/Square/Requests/Refunds/ListPaymentRefundsRequest.cs` |
+| `ListPaymentRefundsRequestSortField` | `src/Square/Models/Enums/ListPaymentRefundsRequestSortField.cs` |
+| `ListPaymentRefundsResponse` | `src/Square/Models/ListPaymentRefundsResponse.cs` |
 
 ### RefundPayment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RefundPayment(RefundPaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RefundPayment(RefundPaymentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `RefundPaymentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RefundPaymentRequest` | `Models/RefundPaymentRequest.cs` |
-| `RefundPaymentResponse` | `Models/RefundPaymentResponse.cs` |
+| `RefundPaymentOperationRequest` | `src/Square/Requests/Refunds/RefundPaymentOperationRequest.cs` |
+| `RefundPaymentRequest` | `src/Square/Models/RefundPaymentRequest.cs` |
+| `RefundPaymentResponse` | `src/Square/Models/RefundPaymentResponse.cs` |
 

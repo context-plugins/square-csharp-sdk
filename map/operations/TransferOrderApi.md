@@ -2,103 +2,118 @@
 
 # TransferOrderApi — operations
 
-Accessor: `client.TransferOrderApi` · Source: `Api/TransferOrderApi.cs` · 8 operations
+Accessor: `client.TransferOrderApi` · Source: `src/Square/Api/TransferOrderApi.cs` · 8 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CancelTransferOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelTransferOrder(string transferOrderId, CancelTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelTransferOrder(CancelTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TransferOrderId`, `Body`
 - **Returns**: `CancelTransferOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelTransferOrderRequest` | `Models/CancelTransferOrderRequest.cs` |
-| `CancelTransferOrderResponse` | `Models/CancelTransferOrderResponse.cs` |
+| `CancelTransferOrderOperationRequest` | `src/Square/Requests/TransferOrderApi/CancelTransferOrderOperationRequest.cs` |
+| `CancelTransferOrderRequest` | `src/Square/Models/CancelTransferOrderRequest.cs` |
+| `CancelTransferOrderResponse` | `src/Square/Models/CancelTransferOrderResponse.cs` |
 
 ### CreateTransferOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateTransferOrder(CreateTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateTransferOrder(CreateTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateTransferOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateTransferOrderRequest` | `Models/CreateTransferOrderRequest.cs` |
-| `CreateTransferOrderResponse` | `Models/CreateTransferOrderResponse.cs` |
+| `CreateTransferOrderOperationRequest` | `src/Square/Requests/TransferOrderApi/CreateTransferOrderOperationRequest.cs` |
+| `CreateTransferOrderRequest` | `src/Square/Models/CreateTransferOrderRequest.cs` |
+| `CreateTransferOrderResponse` | `src/Square/Models/CreateTransferOrderResponse.cs` |
 
 ### DeleteTransferOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteTransferOrder(string transferOrderId, long? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `version` ← `version`
+- **Signature**: `DeleteTransferOrder(DeleteTransferOrderRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TransferOrderId`
+- **Query params (wire ← C#)**: `version` ← `Version`
 - **Returns**: `DeleteTransferOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteTransferOrderResponse` | `Models/DeleteTransferOrderResponse.cs` |
+| `DeleteTransferOrderRequest` | `src/Square/Requests/TransferOrderApi/DeleteTransferOrderRequest.cs` |
+| `DeleteTransferOrderResponse` | `src/Square/Models/DeleteTransferOrderResponse.cs` |
 
 ### ReceiveTransferOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ReceiveTransferOrder(string transferOrderId, ReceiveTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `ReceiveTransferOrder(ReceiveTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TransferOrderId`, `Body`
 - **Returns**: `ReceiveTransferOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ReceiveTransferOrderRequest` | `Models/ReceiveTransferOrderRequest.cs` |
-| `ReceiveTransferOrderResponse` | `Models/ReceiveTransferOrderResponse.cs` |
+| `ReceiveTransferOrderOperationRequest` | `src/Square/Requests/TransferOrderApi/ReceiveTransferOrderOperationRequest.cs` |
+| `ReceiveTransferOrderRequest` | `src/Square/Models/ReceiveTransferOrderRequest.cs` |
+| `ReceiveTransferOrderResponse` | `src/Square/Models/ReceiveTransferOrderResponse.cs` |
 
 ### RetrieveTransferOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveTransferOrder(string transferOrderId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveTransferOrder(RetrieveTransferOrderRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TransferOrderId`
 - **Returns**: `RetrieveTransferOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveTransferOrderResponse` | `Models/RetrieveTransferOrderResponse.cs` |
+| `RetrieveTransferOrderRequest` | `src/Square/Requests/TransferOrderApi/RetrieveTransferOrderRequest.cs` |
+| `RetrieveTransferOrderResponse` | `src/Square/Models/RetrieveTransferOrderResponse.cs` |
 
 ### SearchTransferOrders
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchTransferOrders(SearchTransferOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchTransferOrders(SearchTransferOrdersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchTransferOrdersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchTransferOrdersRequest` | `Models/SearchTransferOrdersRequest.cs` |
-| `SearchTransferOrdersResponse` | `Models/SearchTransferOrdersResponse.cs` |
+| `SearchTransferOrdersOperationRequest` | `src/Square/Requests/TransferOrderApi/SearchTransferOrdersOperationRequest.cs` |
+| `SearchTransferOrdersRequest` | `src/Square/Models/SearchTransferOrdersRequest.cs` |
+| `SearchTransferOrdersResponse` | `src/Square/Models/SearchTransferOrdersResponse.cs` |
 
 ### StartTransferOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `StartTransferOrder(string transferOrderId, StartTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `StartTransferOrder(StartTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TransferOrderId`, `Body`
 - **Returns**: `StartTransferOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `StartTransferOrderRequest` | `Models/StartTransferOrderRequest.cs` |
-| `StartTransferOrderResponse` | `Models/StartTransferOrderResponse.cs` |
+| `StartTransferOrderOperationRequest` | `src/Square/Requests/TransferOrderApi/StartTransferOrderOperationRequest.cs` |
+| `StartTransferOrderRequest` | `src/Square/Models/StartTransferOrderRequest.cs` |
+| `StartTransferOrderResponse` | `src/Square/Models/StartTransferOrderResponse.cs` |
 
 ### UpdateTransferOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateTransferOrder(string transferOrderId, UpdateTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateTransferOrder(UpdateTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TransferOrderId`, `Body`
 - **Returns**: `UpdateTransferOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateTransferOrderRequest` | `Models/UpdateTransferOrderRequest.cs` |
-| `UpdateTransferOrderResponse` | `Models/UpdateTransferOrderResponse.cs` |
+| `UpdateTransferOrderOperationRequest` | `src/Square/Requests/TransferOrderApi/UpdateTransferOrderOperationRequest.cs` |
+| `UpdateTransferOrderRequest` | `src/Square/Models/UpdateTransferOrderRequest.cs` |
+| `UpdateTransferOrderResponse` | `src/Square/Models/UpdateTransferOrderResponse.cs` |
 

@@ -2,149 +2,160 @@
 
 # MerchantCustomAttributes — operations
 
-Accessor: `client.MerchantCustomAttributes` · Source: `Api/MerchantCustomAttributes.cs` · 11 operations
+Accessor: `client.MerchantCustomAttributes` · Source: `src/Square/Api/MerchantCustomAttributes.cs` · 11 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkDeleteMerchantCustomAttributes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkDeleteMerchantCustomAttributes(BulkDeleteMerchantCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkDeleteMerchantCustomAttributes(BulkDeleteMerchantCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkDeleteMerchantCustomAttributesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkDeleteMerchantCustomAttributesRequest` | `Models/BulkDeleteMerchantCustomAttributesRequest.cs` |
-| `BulkDeleteMerchantCustomAttributesResponse` | `Models/BulkDeleteMerchantCustomAttributesResponse.cs` |
+| `BulkDeleteMerchantCustomAttributesOperationRequest` | `src/Square/Requests/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributesOperationRequest.cs` |
+| `BulkDeleteMerchantCustomAttributesRequest` | `src/Square/Models/BulkDeleteMerchantCustomAttributesRequest.cs` |
+| `BulkDeleteMerchantCustomAttributesResponse` | `src/Square/Models/BulkDeleteMerchantCustomAttributesResponse.cs` |
 
 ### BulkUpsertMerchantCustomAttributes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkUpsertMerchantCustomAttributes(BulkUpsertMerchantCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkUpsertMerchantCustomAttributes(BulkUpsertMerchantCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkUpsertMerchantCustomAttributesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkUpsertMerchantCustomAttributesRequest` | `Models/BulkUpsertMerchantCustomAttributesRequest.cs` |
-| `BulkUpsertMerchantCustomAttributesResponse` | `Models/BulkUpsertMerchantCustomAttributesResponse.cs` |
+| `BulkUpsertMerchantCustomAttributesOperationRequest` | `src/Square/Requests/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributesOperationRequest.cs` |
+| `BulkUpsertMerchantCustomAttributesRequest` | `src/Square/Models/BulkUpsertMerchantCustomAttributesRequest.cs` |
+| `BulkUpsertMerchantCustomAttributesResponse` | `src/Square/Models/BulkUpsertMerchantCustomAttributesResponse.cs` |
 
 ### CreateMerchantCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateMerchantCustomAttributeDefinition(CreateMerchantCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateMerchantCustomAttributeDefinition(CreateMerchantCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateMerchantCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateMerchantCustomAttributeDefinitionRequest` | `Models/CreateMerchantCustomAttributeDefinitionRequest.cs` |
-| `CreateMerchantCustomAttributeDefinitionResponse` | `Models/CreateMerchantCustomAttributeDefinitionResponse.cs` |
+| `CreateMerchantCustomAttributeDefinitionOperationRequest` | `src/Square/Requests/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinitionOperationRequest.cs` |
+| `CreateMerchantCustomAttributeDefinitionRequest` | `src/Square/Models/CreateMerchantCustomAttributeDefinitionRequest.cs` |
+| `CreateMerchantCustomAttributeDefinitionResponse` | `src/Square/Models/CreateMerchantCustomAttributeDefinitionResponse.cs` |
 
 ### DeleteMerchantCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteMerchantCustomAttribute(string merchantId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteMerchantCustomAttribute(DeleteMerchantCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `MerchantId`, `Key`
 - **Returns**: `DeleteMerchantCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteMerchantCustomAttributeResponse` | `Models/DeleteMerchantCustomAttributeResponse.cs` |
+| `DeleteMerchantCustomAttributeRequest` | `src/Square/Requests/MerchantCustomAttributes/DeleteMerchantCustomAttributeRequest.cs` |
+| `DeleteMerchantCustomAttributeResponse` | `src/Square/Models/DeleteMerchantCustomAttributeResponse.cs` |
 
 ### DeleteMerchantCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteMerchantCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteMerchantCustomAttributeDefinition(DeleteMerchantCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`
 - **Returns**: `DeleteMerchantCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteMerchantCustomAttributeDefinitionResponse` | `Models/DeleteMerchantCustomAttributeDefinitionResponse.cs` |
+| `DeleteMerchantCustomAttributeDefinitionRequest` | `src/Square/Requests/MerchantCustomAttributes/DeleteMerchantCustomAttributeDefinitionRequest.cs` |
+| `DeleteMerchantCustomAttributeDefinitionResponse` | `src/Square/Models/DeleteMerchantCustomAttributeDefinitionResponse.cs` |
 
 ### ListMerchantCustomAttributeDefinitions
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListMerchantCustomAttributeDefinitions(VisibilityFilter? visibilityFilter, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `visibilityFilter` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `visibility_filter` ← `visibilityFilter`, `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListMerchantCustomAttributeDefinitions(ListMerchantCustomAttributeDefinitionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `visibility_filter` ← `VisibilityFilter`, `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListMerchantCustomAttributeDefinitionsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `VisibilityFilter` | `Models/Enums/VisibilityFilter.cs` |
-| `ListMerchantCustomAttributeDefinitionsResponse` | `Models/ListMerchantCustomAttributeDefinitionsResponse.cs` |
+| `ListMerchantCustomAttributeDefinitionsRequest` | `src/Square/Requests/MerchantCustomAttributes/ListMerchantCustomAttributeDefinitionsRequest.cs` |
+| `VisibilityFilter` | `src/Square/Models/Enums/VisibilityFilter.cs` |
+| `ListMerchantCustomAttributeDefinitionsResponse` | `src/Square/Models/ListMerchantCustomAttributeDefinitionsResponse.cs` |
 
 ### ListMerchantCustomAttributes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListMerchantCustomAttributes(string merchantId, VisibilityFilter? visibilityFilter, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `visibilityFilter` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - defaults: `withDefinitions` = `false`
-- **Query params (wire ← C#)**: `visibility_filter` ← `visibilityFilter`, `limit` ← `limit`, `cursor` ← `cursor`, `with_definitions` ← `withDefinitions`
+- **Signature**: `ListMerchantCustomAttributes(ListMerchantCustomAttributesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `MerchantId`
+- **Query params (wire ← C#)**: `visibility_filter` ← `VisibilityFilter`, `limit` ← `Limit`, `cursor` ← `Cursor`, `with_definitions` ← `WithDefinitions`
 - **Returns**: `ListMerchantCustomAttributesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `VisibilityFilter` | `Models/Enums/VisibilityFilter.cs` |
-| `ListMerchantCustomAttributesResponse` | `Models/ListMerchantCustomAttributesResponse.cs` |
+| `ListMerchantCustomAttributesRequest` | `src/Square/Requests/MerchantCustomAttributes/ListMerchantCustomAttributesRequest.cs` |
+| `VisibilityFilter` | `src/Square/Models/Enums/VisibilityFilter.cs` |
+| `ListMerchantCustomAttributesResponse` | `src/Square/Models/ListMerchantCustomAttributesResponse.cs` |
 
 ### RetrieveMerchantCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveMerchantCustomAttribute(string merchantId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-  - defaults: `withDefinition` = `false`
-- **Query params (wire ← C#)**: `with_definition` ← `withDefinition`, `version` ← `version`
+- **Signature**: `RetrieveMerchantCustomAttribute(RetrieveMerchantCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `MerchantId`, `Key`
+- **Query params (wire ← C#)**: `with_definition` ← `WithDefinition`, `version` ← `Version`
 - **Returns**: `RetrieveMerchantCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveMerchantCustomAttributeResponse` | `Models/RetrieveMerchantCustomAttributeResponse.cs` |
+| `RetrieveMerchantCustomAttributeRequest` | `src/Square/Requests/MerchantCustomAttributes/RetrieveMerchantCustomAttributeRequest.cs` |
+| `RetrieveMerchantCustomAttributeResponse` | `src/Square/Models/RetrieveMerchantCustomAttributeResponse.cs` |
 
 ### RetrieveMerchantCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveMerchantCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `version` ← `version`
+- **Signature**: `RetrieveMerchantCustomAttributeDefinition(RetrieveMerchantCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`
+- **Query params (wire ← C#)**: `version` ← `Version`
 - **Returns**: `RetrieveMerchantCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveMerchantCustomAttributeDefinitionResponse` | `Models/RetrieveMerchantCustomAttributeDefinitionResponse.cs` |
+| `RetrieveMerchantCustomAttributeDefinitionRequest` | `src/Square/Requests/MerchantCustomAttributes/RetrieveMerchantCustomAttributeDefinitionRequest.cs` |
+| `RetrieveMerchantCustomAttributeDefinitionResponse` | `src/Square/Models/RetrieveMerchantCustomAttributeDefinitionResponse.cs` |
 
 ### UpdateMerchantCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateMerchantCustomAttributeDefinition(string key, UpdateMerchantCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateMerchantCustomAttributeDefinition(UpdateMerchantCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`, `Body`
 - **Returns**: `UpdateMerchantCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateMerchantCustomAttributeDefinitionRequest` | `Models/UpdateMerchantCustomAttributeDefinitionRequest.cs` |
-| `UpdateMerchantCustomAttributeDefinitionResponse` | `Models/UpdateMerchantCustomAttributeDefinitionResponse.cs` |
+| `UpdateMerchantCustomAttributeDefinitionOperationRequest` | `src/Square/Requests/MerchantCustomAttributes/UpdateMerchantCustomAttributeDefinitionOperationRequest.cs` |
+| `UpdateMerchantCustomAttributeDefinitionRequest` | `src/Square/Models/UpdateMerchantCustomAttributeDefinitionRequest.cs` |
+| `UpdateMerchantCustomAttributeDefinitionResponse` | `src/Square/Models/UpdateMerchantCustomAttributeDefinitionResponse.cs` |
 
 ### UpsertMerchantCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpsertMerchantCustomAttribute(string merchantId, string key, UpsertMerchantCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpsertMerchantCustomAttribute(UpsertMerchantCustomAttributeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `MerchantId`, `Key`, `Body`
 - **Returns**: `UpsertMerchantCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpsertMerchantCustomAttributeRequest` | `Models/UpsertMerchantCustomAttributeRequest.cs` |
-| `UpsertMerchantCustomAttributeResponse` | `Models/UpsertMerchantCustomAttributeResponse.cs` |
+| `UpsertMerchantCustomAttributeOperationRequest` | `src/Square/Requests/MerchantCustomAttributes/UpsertMerchantCustomAttributeOperationRequest.cs` |
+| `UpsertMerchantCustomAttributeRequest` | `src/Square/Models/UpsertMerchantCustomAttributeRequest.cs` |
+| `UpsertMerchantCustomAttributeResponse` | `src/Square/Models/UpsertMerchantCustomAttributeResponse.cs` |
 

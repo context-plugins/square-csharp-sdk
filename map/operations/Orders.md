@@ -2,102 +2,118 @@
 
 # Orders — operations
 
-Accessor: `client.Orders` · Source: `Api/Orders.cs` · 8 operations
+Accessor: `client.Orders` · Source: `src/Square/Api/Orders.cs` · 8 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BatchRetrieveOrders
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BatchRetrieveOrders(BatchRetrieveOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BatchRetrieveOrders(BatchRetrieveOrdersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchRetrieveOrdersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchRetrieveOrdersRequest` | `Models/BatchRetrieveOrdersRequest.cs` |
-| `BatchRetrieveOrdersResponse` | `Models/BatchRetrieveOrdersResponse.cs` |
+| `BatchRetrieveOrdersOperationRequest` | `src/Square/Requests/Orders/BatchRetrieveOrdersOperationRequest.cs` |
+| `BatchRetrieveOrdersRequest` | `src/Square/Models/BatchRetrieveOrdersRequest.cs` |
+| `BatchRetrieveOrdersResponse` | `src/Square/Models/BatchRetrieveOrdersResponse.cs` |
 
 ### CalculateOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CalculateOrder(CalculateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CalculateOrder(CalculateOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CalculateOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CalculateOrderRequest` | `Models/CalculateOrderRequest.cs` |
-| `CalculateOrderResponse` | `Models/CalculateOrderResponse.cs` |
+| `CalculateOrderOperationRequest` | `src/Square/Requests/Orders/CalculateOrderOperationRequest.cs` |
+| `CalculateOrderRequest` | `src/Square/Models/CalculateOrderRequest.cs` |
+| `CalculateOrderResponse` | `src/Square/Models/CalculateOrderResponse.cs` |
 
 ### CloneOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CloneOrder(CloneOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CloneOrder(CloneOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CloneOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CloneOrderRequest` | `Models/CloneOrderRequest.cs` |
-| `CloneOrderResponse` | `Models/CloneOrderResponse.cs` |
+| `CloneOrderOperationRequest` | `src/Square/Requests/Orders/CloneOrderOperationRequest.cs` |
+| `CloneOrderRequest` | `src/Square/Models/CloneOrderRequest.cs` |
+| `CloneOrderResponse` | `src/Square/Models/CloneOrderResponse.cs` |
 
 ### CreateOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateOrder(CreateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateOrder(CreateOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateOrderRequest` | `Models/CreateOrderRequest.cs` |
-| `CreateOrderResponse` | `Models/CreateOrderResponse.cs` |
+| `CreateOrderOperationRequest` | `src/Square/Requests/Orders/CreateOrderOperationRequest.cs` |
+| `CreateOrderRequest` | `src/Square/Models/CreateOrderRequest.cs` |
+| `CreateOrderResponse` | `src/Square/Models/CreateOrderResponse.cs` |
 
 ### PayOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `PayOrder(string orderId, PayOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `PayOrder(PayOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `OrderId`, `Body`
 - **Returns**: `PayOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `PayOrderRequest` | `Models/PayOrderRequest.cs` |
-| `PayOrderResponse` | `Models/PayOrderResponse.cs` |
+| `PayOrderOperationRequest` | `src/Square/Requests/Orders/PayOrderOperationRequest.cs` |
+| `PayOrderRequest` | `src/Square/Models/PayOrderRequest.cs` |
+| `PayOrderResponse` | `src/Square/Models/PayOrderResponse.cs` |
 
 ### RetrieveOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveOrder(string orderId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveOrder(RetrieveOrderRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `OrderId`
 - **Returns**: `RetrieveOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveOrderResponse` | `Models/RetrieveOrderResponse.cs` |
+| `RetrieveOrderRequest` | `src/Square/Requests/Orders/RetrieveOrderRequest.cs` |
+| `RetrieveOrderResponse` | `src/Square/Models/RetrieveOrderResponse.cs` |
 
 ### SearchOrders
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchOrders(SearchOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchOrders(SearchOrdersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchOrdersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchOrdersRequest` | `Models/SearchOrdersRequest.cs` |
-| `SearchOrdersResponse` | `Models/SearchOrdersResponse.cs` |
+| `SearchOrdersOperationRequest` | `src/Square/Requests/Orders/SearchOrdersOperationRequest.cs` |
+| `SearchOrdersRequest` | `src/Square/Models/SearchOrdersRequest.cs` |
+| `SearchOrdersResponse` | `src/Square/Models/SearchOrdersResponse.cs` |
 
 ### UpdateOrder
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateOrder(string orderId, UpdateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateOrder(UpdateOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `OrderId`, `Body`
 - **Returns**: `UpdateOrderResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateOrderRequest` | `Models/UpdateOrderRequest.cs` |
-| `UpdateOrderResponse` | `Models/UpdateOrderResponse.cs` |
+| `UpdateOrderOperationRequest` | `src/Square/Requests/Orders/UpdateOrderOperationRequest.cs` |
+| `UpdateOrderRequest` | `src/Square/Models/UpdateOrderRequest.cs` |
+| `UpdateOrderResponse` | `src/Square/Models/UpdateOrderResponse.cs` |
 

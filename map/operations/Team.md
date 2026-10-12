@@ -2,149 +2,171 @@
 
 # Team — operations
 
-Accessor: `client.Team` · Source: `Api/Team.cs` · 12 operations
+Accessor: `client.Team` · Source: `src/Square/Api/Team.cs` · 12 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkCreateTeamMembers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkCreateTeamMembers(BulkCreateTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkCreateTeamMembers(BulkCreateTeamMembersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkCreateTeamMembersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkCreateTeamMembersRequest` | `Models/BulkCreateTeamMembersRequest.cs` |
-| `BulkCreateTeamMembersResponse` | `Models/BulkCreateTeamMembersResponse.cs` |
+| `BulkCreateTeamMembersOperationRequest` | `src/Square/Requests/Team/BulkCreateTeamMembersOperationRequest.cs` |
+| `BulkCreateTeamMembersRequest` | `src/Square/Models/BulkCreateTeamMembersRequest.cs` |
+| `BulkCreateTeamMembersResponse` | `src/Square/Models/BulkCreateTeamMembersResponse.cs` |
 
 ### BulkUpdateTeamMembers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkUpdateTeamMembers(BulkUpdateTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkUpdateTeamMembers(BulkUpdateTeamMembersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkUpdateTeamMembersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkUpdateTeamMembersRequest` | `Models/BulkUpdateTeamMembersRequest.cs` |
-| `BulkUpdateTeamMembersResponse` | `Models/BulkUpdateTeamMembersResponse.cs` |
+| `BulkUpdateTeamMembersOperationRequest` | `src/Square/Requests/Team/BulkUpdateTeamMembersOperationRequest.cs` |
+| `BulkUpdateTeamMembersRequest` | `src/Square/Models/BulkUpdateTeamMembersRequest.cs` |
+| `BulkUpdateTeamMembersResponse` | `src/Square/Models/BulkUpdateTeamMembersResponse.cs` |
 
 ### CreateJob
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateJob(CreateJobRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateJob(CreateJobOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateJobResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateJobRequest` | `Models/CreateJobRequest.cs` |
-| `CreateJobResponse` | `Models/CreateJobResponse.cs` |
+| `CreateJobOperationRequest` | `src/Square/Requests/Team/CreateJobOperationRequest.cs` |
+| `CreateJobRequest` | `src/Square/Models/CreateJobRequest.cs` |
+| `CreateJobResponse` | `src/Square/Models/CreateJobResponse.cs` |
 
 ### CreateTeamMember
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateTeamMember(CreateTeamMemberRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateTeamMember(CreateTeamMemberOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateTeamMemberResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateTeamMemberRequest` | `Models/CreateTeamMemberRequest.cs` |
-| `CreateTeamMemberResponse` | `Models/CreateTeamMemberResponse.cs` |
+| `CreateTeamMemberOperationRequest` | `src/Square/Requests/Team/CreateTeamMemberOperationRequest.cs` |
+| `CreateTeamMemberRequest` | `src/Square/Models/CreateTeamMemberRequest.cs` |
+| `CreateTeamMemberResponse` | `src/Square/Models/CreateTeamMemberResponse.cs` |
 
 ### ListJobs
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListJobs(string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `cursor` ← `cursor`
+- **Signature**: `ListJobs(ListJobsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`
 - **Returns**: `ListJobsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListJobsResponse` | `Models/ListJobsResponse.cs` |
+| `ListJobsRequest` | `src/Square/Requests/Team/ListJobsRequest.cs` |
+| `ListJobsResponse` | `src/Square/Models/ListJobsResponse.cs` |
 
 ### RetrieveJob
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveJob(string jobId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveJob(RetrieveJobRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `JobId`
 - **Returns**: `RetrieveJobResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveJobResponse` | `Models/RetrieveJobResponse.cs` |
+| `RetrieveJobRequest` | `src/Square/Requests/Team/RetrieveJobRequest.cs` |
+| `RetrieveJobResponse` | `src/Square/Models/RetrieveJobResponse.cs` |
 
 ### RetrieveTeamMember
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveTeamMember(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveTeamMember(RetrieveTeamMemberRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TeamMemberId`
 - **Returns**: `RetrieveTeamMemberResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveTeamMemberResponse` | `Models/RetrieveTeamMemberResponse.cs` |
+| `RetrieveTeamMemberRequest` | `src/Square/Requests/Team/RetrieveTeamMemberRequest.cs` |
+| `RetrieveTeamMemberResponse` | `src/Square/Models/RetrieveTeamMemberResponse.cs` |
 
 ### RetrieveWageSetting
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveWageSetting(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveWageSetting(RetrieveWageSettingRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TeamMemberId`
 - **Returns**: `RetrieveWageSettingResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveWageSettingResponse` | `Models/RetrieveWageSettingResponse.cs` |
+| `RetrieveWageSettingRequest` | `src/Square/Requests/Team/RetrieveWageSettingRequest.cs` |
+| `RetrieveWageSettingResponse` | `src/Square/Models/RetrieveWageSettingResponse.cs` |
 
 ### SearchTeamMembers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchTeamMembers(SearchTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchTeamMembers(SearchTeamMembersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchTeamMembersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchTeamMembersRequest` | `Models/SearchTeamMembersRequest.cs` |
-| `SearchTeamMembersResponse` | `Models/SearchTeamMembersResponse.cs` |
+| `SearchTeamMembersOperationRequest` | `src/Square/Requests/Team/SearchTeamMembersOperationRequest.cs` |
+| `SearchTeamMembersRequest` | `src/Square/Models/SearchTeamMembersRequest.cs` |
+| `SearchTeamMembersResponse` | `src/Square/Models/SearchTeamMembersResponse.cs` |
 
 ### UpdateJob
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateJob(string jobId, UpdateJobRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateJob(UpdateJobOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `JobId`, `Body`
 - **Returns**: `UpdateJobResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateJobRequest` | `Models/UpdateJobRequest.cs` |
-| `UpdateJobResponse` | `Models/UpdateJobResponse.cs` |
+| `UpdateJobOperationRequest` | `src/Square/Requests/Team/UpdateJobOperationRequest.cs` |
+| `UpdateJobRequest` | `src/Square/Models/UpdateJobRequest.cs` |
+| `UpdateJobResponse` | `src/Square/Models/UpdateJobResponse.cs` |
 
 ### UpdateTeamMember
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateTeamMember(string teamMemberId, UpdateTeamMemberRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateTeamMember(UpdateTeamMemberOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TeamMemberId`, `Body`
 - **Returns**: `UpdateTeamMemberResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateTeamMemberRequest` | `Models/UpdateTeamMemberRequest.cs` |
-| `UpdateTeamMemberResponse` | `Models/UpdateTeamMemberResponse.cs` |
+| `UpdateTeamMemberOperationRequest` | `src/Square/Requests/Team/UpdateTeamMemberOperationRequest.cs` |
+| `UpdateTeamMemberRequest` | `src/Square/Models/UpdateTeamMemberRequest.cs` |
+| `UpdateTeamMemberResponse` | `src/Square/Models/UpdateTeamMemberResponse.cs` |
 
 ### UpdateWageSetting
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateWageSetting(string teamMemberId, UpdateWageSettingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateWageSetting(UpdateWageSettingOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TeamMemberId`, `Body`
 - **Returns**: `UpdateWageSettingResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateWageSettingRequest` | `Models/UpdateWageSettingRequest.cs` |
-| `UpdateWageSettingResponse` | `Models/UpdateWageSettingResponse.cs` |
+| `UpdateWageSettingOperationRequest` | `src/Square/Requests/Team/UpdateWageSettingOperationRequest.cs` |
+| `UpdateWageSettingRequest` | `src/Square/Models/UpdateWageSettingRequest.cs` |
+| `UpdateWageSettingResponse` | `src/Square/Models/UpdateWageSettingResponse.cs` |
 

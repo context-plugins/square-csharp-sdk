@@ -2,31 +2,33 @@
 
 # Merchants — operations
 
-Accessor: `client.Merchants` · Source: `Api/Merchants.cs` · 2 operations
+Accessor: `client.Merchants` · Source: `src/Square/Api/Merchants.cs` · 2 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### ListMerchants
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListMerchants(int? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `cursor` ← `cursor`
+- **Signature**: `ListMerchants(ListMerchantsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`
 - **Returns**: `ListMerchantsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListMerchantsResponse` | `Models/ListMerchantsResponse.cs` |
+| `ListMerchantsRequest` | `src/Square/Requests/Merchants/ListMerchantsRequest.cs` |
+| `ListMerchantsResponse` | `src/Square/Models/ListMerchantsResponse.cs` |
 
 ### RetrieveMerchant
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveMerchant(string merchantId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveMerchant(RetrieveMerchantRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `MerchantId`
 - **Returns**: `RetrieveMerchantResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveMerchantResponse` | `Models/RetrieveMerchantResponse.cs` |
+| `RetrieveMerchantRequest` | `src/Square/Requests/Merchants/RetrieveMerchantRequest.cs` |
+| `RetrieveMerchantResponse` | `src/Square/Models/RetrieveMerchantResponse.cs` |
 

@@ -2,133 +2,144 @@
 
 # CustomerCustomAttributes — operations
 
-Accessor: `client.CustomerCustomAttributes` · Source: `Api/CustomerCustomAttributes.cs` · 10 operations
+Accessor: `client.CustomerCustomAttributes` · Source: `src/Square/Api/CustomerCustomAttributes.cs` · 10 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkUpsertCustomerCustomAttributes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkUpsertCustomerCustomAttributes(BulkUpsertCustomerCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkUpsertCustomerCustomAttributes(BulkUpsertCustomerCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkUpsertCustomerCustomAttributesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkUpsertCustomerCustomAttributesRequest` | `Models/BulkUpsertCustomerCustomAttributesRequest.cs` |
-| `BulkUpsertCustomerCustomAttributesResponse` | `Models/BulkUpsertCustomerCustomAttributesResponse.cs` |
+| `BulkUpsertCustomerCustomAttributesOperationRequest` | `src/Square/Requests/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributesOperationRequest.cs` |
+| `BulkUpsertCustomerCustomAttributesRequest` | `src/Square/Models/BulkUpsertCustomerCustomAttributesRequest.cs` |
+| `BulkUpsertCustomerCustomAttributesResponse` | `src/Square/Models/BulkUpsertCustomerCustomAttributesResponse.cs` |
 
 ### CreateCustomerCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateCustomerCustomAttributeDefinition(CreateCustomerCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateCustomerCustomAttributeDefinition(CreateCustomerCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateCustomerCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateCustomerCustomAttributeDefinitionRequest` | `Models/CreateCustomerCustomAttributeDefinitionRequest.cs` |
-| `CreateCustomerCustomAttributeDefinitionResponse` | `Models/CreateCustomerCustomAttributeDefinitionResponse.cs` |
+| `CreateCustomerCustomAttributeDefinitionOperationRequest` | `src/Square/Requests/CustomerCustomAttributes/CreateCustomerCustomAttributeDefinitionOperationRequest.cs` |
+| `CreateCustomerCustomAttributeDefinitionRequest` | `src/Square/Models/CreateCustomerCustomAttributeDefinitionRequest.cs` |
+| `CreateCustomerCustomAttributeDefinitionResponse` | `src/Square/Models/CreateCustomerCustomAttributeDefinitionResponse.cs` |
 
 ### DeleteCustomerCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteCustomerCustomAttribute(string customerId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteCustomerCustomAttribute(DeleteCustomerCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`, `Key`
 - **Returns**: `DeleteCustomerCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteCustomerCustomAttributeResponse` | `Models/DeleteCustomerCustomAttributeResponse.cs` |
+| `DeleteCustomerCustomAttributeRequest` | `src/Square/Requests/CustomerCustomAttributes/DeleteCustomerCustomAttributeRequest.cs` |
+| `DeleteCustomerCustomAttributeResponse` | `src/Square/Models/DeleteCustomerCustomAttributeResponse.cs` |
 
 ### DeleteCustomerCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteCustomerCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteCustomerCustomAttributeDefinition(DeleteCustomerCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`
 - **Returns**: `DeleteCustomerCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteCustomerCustomAttributeDefinitionResponse` | `Models/DeleteCustomerCustomAttributeDefinitionResponse.cs` |
+| `DeleteCustomerCustomAttributeDefinitionRequest` | `src/Square/Requests/CustomerCustomAttributes/DeleteCustomerCustomAttributeDefinitionRequest.cs` |
+| `DeleteCustomerCustomAttributeDefinitionResponse` | `src/Square/Models/DeleteCustomerCustomAttributeDefinitionResponse.cs` |
 
 ### ListCustomerCustomAttributeDefinitions
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListCustomerCustomAttributeDefinitions(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListCustomerCustomAttributeDefinitions(ListCustomerCustomAttributeDefinitionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListCustomerCustomAttributeDefinitionsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListCustomerCustomAttributeDefinitionsResponse` | `Models/ListCustomerCustomAttributeDefinitionsResponse.cs` |
+| `ListCustomerCustomAttributeDefinitionsRequest` | `src/Square/Requests/CustomerCustomAttributes/ListCustomerCustomAttributeDefinitionsRequest.cs` |
+| `ListCustomerCustomAttributeDefinitionsResponse` | `src/Square/Models/ListCustomerCustomAttributeDefinitionsResponse.cs` |
 
 ### ListCustomerCustomAttributes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListCustomerCustomAttributes(string customerId, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - defaults: `withDefinitions` = `false`
-- **Query params (wire ← C#)**: `limit` ← `limit`, `cursor` ← `cursor`, `with_definitions` ← `withDefinitions`
+- **Signature**: `ListCustomerCustomAttributes(ListCustomerCustomAttributesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`
+- **Query params (wire ← C#)**: `limit` ← `Limit`, `cursor` ← `Cursor`, `with_definitions` ← `WithDefinitions`
 - **Returns**: `ListCustomerCustomAttributesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListCustomerCustomAttributesResponse` | `Models/ListCustomerCustomAttributesResponse.cs` |
+| `ListCustomerCustomAttributesRequest` | `src/Square/Requests/CustomerCustomAttributes/ListCustomerCustomAttributesRequest.cs` |
+| `ListCustomerCustomAttributesResponse` | `src/Square/Models/ListCustomerCustomAttributesResponse.cs` |
 
 ### RetrieveCustomerCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveCustomerCustomAttribute(string customerId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-  - defaults: `withDefinition` = `false`
-- **Query params (wire ← C#)**: `with_definition` ← `withDefinition`, `version` ← `version`
+- **Signature**: `RetrieveCustomerCustomAttribute(RetrieveCustomerCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`, `Key`
+- **Query params (wire ← C#)**: `with_definition` ← `WithDefinition`, `version` ← `Version`
 - **Returns**: `RetrieveCustomerCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveCustomerCustomAttributeResponse` | `Models/RetrieveCustomerCustomAttributeResponse.cs` |
+| `RetrieveCustomerCustomAttributeRequest` | `src/Square/Requests/CustomerCustomAttributes/RetrieveCustomerCustomAttributeRequest.cs` |
+| `RetrieveCustomerCustomAttributeResponse` | `src/Square/Models/RetrieveCustomerCustomAttributeResponse.cs` |
 
 ### RetrieveCustomerCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveCustomerCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `version` ← `version`
+- **Signature**: `RetrieveCustomerCustomAttributeDefinition(RetrieveCustomerCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`
+- **Query params (wire ← C#)**: `version` ← `Version`
 - **Returns**: `RetrieveCustomerCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveCustomerCustomAttributeDefinitionResponse` | `Models/RetrieveCustomerCustomAttributeDefinitionResponse.cs` |
+| `RetrieveCustomerCustomAttributeDefinitionRequest` | `src/Square/Requests/CustomerCustomAttributes/RetrieveCustomerCustomAttributeDefinitionRequest.cs` |
+| `RetrieveCustomerCustomAttributeDefinitionResponse` | `src/Square/Models/RetrieveCustomerCustomAttributeDefinitionResponse.cs` |
 
 ### UpdateCustomerCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateCustomerCustomAttributeDefinition(string key, UpdateCustomerCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateCustomerCustomAttributeDefinition(UpdateCustomerCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`, `Body`
 - **Returns**: `UpdateCustomerCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateCustomerCustomAttributeDefinitionRequest` | `Models/UpdateCustomerCustomAttributeDefinitionRequest.cs` |
-| `UpdateCustomerCustomAttributeDefinitionResponse` | `Models/UpdateCustomerCustomAttributeDefinitionResponse.cs` |
+| `UpdateCustomerCustomAttributeDefinitionOperationRequest` | `src/Square/Requests/CustomerCustomAttributes/UpdateCustomerCustomAttributeDefinitionOperationRequest.cs` |
+| `UpdateCustomerCustomAttributeDefinitionRequest` | `src/Square/Models/UpdateCustomerCustomAttributeDefinitionRequest.cs` |
+| `UpdateCustomerCustomAttributeDefinitionResponse` | `src/Square/Models/UpdateCustomerCustomAttributeDefinitionResponse.cs` |
 
 ### UpsertCustomerCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpsertCustomerCustomAttribute(string customerId, string key, UpsertCustomerCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpsertCustomerCustomAttribute(UpsertCustomerCustomAttributeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`, `Key`, `Body`
 - **Returns**: `UpsertCustomerCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpsertCustomerCustomAttributeRequest` | `Models/UpsertCustomerCustomAttributeRequest.cs` |
-| `UpsertCustomerCustomAttributeResponse` | `Models/UpsertCustomerCustomAttributeResponse.cs` |
+| `UpsertCustomerCustomAttributeOperationRequest` | `src/Square/Requests/CustomerCustomAttributes/UpsertCustomerCustomAttributeOperationRequest.cs` |
+| `UpsertCustomerCustomAttributeRequest` | `src/Square/Models/UpsertCustomerCustomAttributeRequest.cs` |
+| `UpsertCustomerCustomAttributeResponse` | `src/Square/Models/UpsertCustomerCustomAttributeResponse.cs` |
 

@@ -2,220 +2,251 @@
 
 # Loyalty — operations
 
-Accessor: `client.Loyalty` · Source: `Api/Loyalty.cs` · 18 operations
+Accessor: `client.Loyalty` · Source: `src/Square/Api/Loyalty.cs` · 18 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### AccumulateLoyaltyPoints
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `AccumulateLoyaltyPoints(string accountId, AccumulateLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `AccumulateLoyaltyPoints(AccumulateLoyaltyPointsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `AccountId`, `Body`
 - **Returns**: `AccumulateLoyaltyPointsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `AccumulateLoyaltyPointsRequest` | `Models/AccumulateLoyaltyPointsRequest.cs` |
-| `AccumulateLoyaltyPointsResponse` | `Models/AccumulateLoyaltyPointsResponse.cs` |
+| `AccumulateLoyaltyPointsOperationRequest` | `src/Square/Requests/Loyalty/AccumulateLoyaltyPointsOperationRequest.cs` |
+| `AccumulateLoyaltyPointsRequest` | `src/Square/Models/AccumulateLoyaltyPointsRequest.cs` |
+| `AccumulateLoyaltyPointsResponse` | `src/Square/Models/AccumulateLoyaltyPointsResponse.cs` |
 
 ### AdjustLoyaltyPoints
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `AdjustLoyaltyPoints(string accountId, AdjustLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `AdjustLoyaltyPoints(AdjustLoyaltyPointsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `AccountId`, `Body`
 - **Returns**: `AdjustLoyaltyPointsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `AdjustLoyaltyPointsRequest` | `Models/AdjustLoyaltyPointsRequest.cs` |
-| `AdjustLoyaltyPointsResponse` | `Models/AdjustLoyaltyPointsResponse.cs` |
+| `AdjustLoyaltyPointsOperationRequest` | `src/Square/Requests/Loyalty/AdjustLoyaltyPointsOperationRequest.cs` |
+| `AdjustLoyaltyPointsRequest` | `src/Square/Models/AdjustLoyaltyPointsRequest.cs` |
+| `AdjustLoyaltyPointsResponse` | `src/Square/Models/AdjustLoyaltyPointsResponse.cs` |
 
 ### CalculateLoyaltyPoints
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CalculateLoyaltyPoints(string programId, CalculateLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CalculateLoyaltyPoints(CalculateLoyaltyPointsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ProgramId`, `Body`
 - **Returns**: `CalculateLoyaltyPointsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CalculateLoyaltyPointsRequest` | `Models/CalculateLoyaltyPointsRequest.cs` |
-| `CalculateLoyaltyPointsResponse` | `Models/CalculateLoyaltyPointsResponse.cs` |
+| `CalculateLoyaltyPointsOperationRequest` | `src/Square/Requests/Loyalty/CalculateLoyaltyPointsOperationRequest.cs` |
+| `CalculateLoyaltyPointsRequest` | `src/Square/Models/CalculateLoyaltyPointsRequest.cs` |
+| `CalculateLoyaltyPointsResponse` | `src/Square/Models/CalculateLoyaltyPointsResponse.cs` |
 
 ### CancelLoyaltyPromotion
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelLoyaltyPromotion(string promotionId, string programId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelLoyaltyPromotion(CancelLoyaltyPromotionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PromotionId`, `ProgramId`
 - **Returns**: `CancelLoyaltyPromotionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelLoyaltyPromotionResponse` | `Models/CancelLoyaltyPromotionResponse.cs` |
+| `CancelLoyaltyPromotionRequest` | `src/Square/Requests/Loyalty/CancelLoyaltyPromotionRequest.cs` |
+| `CancelLoyaltyPromotionResponse` | `src/Square/Models/CancelLoyaltyPromotionResponse.cs` |
 
 ### CreateLoyaltyAccount
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateLoyaltyAccount(CreateLoyaltyAccountRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateLoyaltyAccount(CreateLoyaltyAccountOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateLoyaltyAccountResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateLoyaltyAccountRequest` | `Models/CreateLoyaltyAccountRequest.cs` |
-| `CreateLoyaltyAccountResponse` | `Models/CreateLoyaltyAccountResponse.cs` |
+| `CreateLoyaltyAccountOperationRequest` | `src/Square/Requests/Loyalty/CreateLoyaltyAccountOperationRequest.cs` |
+| `CreateLoyaltyAccountRequest` | `src/Square/Models/CreateLoyaltyAccountRequest.cs` |
+| `CreateLoyaltyAccountResponse` | `src/Square/Models/CreateLoyaltyAccountResponse.cs` |
 
 ### CreateLoyaltyPromotion
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateLoyaltyPromotion(string programId, CreateLoyaltyPromotionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateLoyaltyPromotion(CreateLoyaltyPromotionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ProgramId`, `Body`
 - **Returns**: `CreateLoyaltyPromotionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateLoyaltyPromotionRequest` | `Models/CreateLoyaltyPromotionRequest.cs` |
-| `CreateLoyaltyPromotionResponse` | `Models/CreateLoyaltyPromotionResponse.cs` |
+| `CreateLoyaltyPromotionOperationRequest` | `src/Square/Requests/Loyalty/CreateLoyaltyPromotionOperationRequest.cs` |
+| `CreateLoyaltyPromotionRequest` | `src/Square/Models/CreateLoyaltyPromotionRequest.cs` |
+| `CreateLoyaltyPromotionResponse` | `src/Square/Models/CreateLoyaltyPromotionResponse.cs` |
 
 ### CreateLoyaltyReward
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateLoyaltyReward(CreateLoyaltyRewardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateLoyaltyReward(CreateLoyaltyRewardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateLoyaltyRewardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateLoyaltyRewardRequest` | `Models/CreateLoyaltyRewardRequest.cs` |
-| `CreateLoyaltyRewardResponse` | `Models/CreateLoyaltyRewardResponse.cs` |
+| `CreateLoyaltyRewardOperationRequest` | `src/Square/Requests/Loyalty/CreateLoyaltyRewardOperationRequest.cs` |
+| `CreateLoyaltyRewardRequest` | `src/Square/Models/CreateLoyaltyRewardRequest.cs` |
+| `CreateLoyaltyRewardResponse` | `src/Square/Models/CreateLoyaltyRewardResponse.cs` |
 
 ### DeleteLoyaltyReward
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteLoyaltyReward(string rewardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteLoyaltyReward(DeleteLoyaltyRewardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `RewardId`
 - **Returns**: `DeleteLoyaltyRewardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteLoyaltyRewardResponse` | `Models/DeleteLoyaltyRewardResponse.cs` |
+| `DeleteLoyaltyRewardRequest` | `src/Square/Requests/Loyalty/DeleteLoyaltyRewardRequest.cs` |
+| `DeleteLoyaltyRewardResponse` | `src/Square/Models/DeleteLoyaltyRewardResponse.cs` |
 
 ### ListLoyaltyPrograms
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListLoyaltyPrograms(RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `ListLoyaltyPrograms(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `ListLoyaltyProgramsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListLoyaltyProgramsResponse` | `Models/ListLoyaltyProgramsResponse.cs` |
+| `ListLoyaltyProgramsResponse` | `src/Square/Models/ListLoyaltyProgramsResponse.cs` |
 
 ### ListLoyaltyPromotions
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListLoyaltyPromotions(string programId, LoyaltyPromotionStatus? status, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `status` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `status` ← `status`, `cursor` ← `cursor`, `limit` ← `limit`
+- **Signature**: `ListLoyaltyPromotions(ListLoyaltyPromotionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ProgramId`
+- **Query params (wire ← C#)**: `status` ← `Status`, `cursor` ← `Cursor`, `limit` ← `Limit`
 - **Returns**: `ListLoyaltyPromotionsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `LoyaltyPromotionStatus` | `Models/Enums/LoyaltyPromotionStatus.cs` |
-| `ListLoyaltyPromotionsResponse` | `Models/ListLoyaltyPromotionsResponse.cs` |
+| `ListLoyaltyPromotionsRequest` | `src/Square/Requests/Loyalty/ListLoyaltyPromotionsRequest.cs` |
+| `LoyaltyPromotionStatus` | `src/Square/Models/Enums/LoyaltyPromotionStatus.cs` |
+| `ListLoyaltyPromotionsResponse` | `src/Square/Models/ListLoyaltyPromotionsResponse.cs` |
 
 ### RedeemLoyaltyReward
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RedeemLoyaltyReward(string rewardId, RedeemLoyaltyRewardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RedeemLoyaltyReward(RedeemLoyaltyRewardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `RewardId`, `Body`
 - **Returns**: `RedeemLoyaltyRewardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RedeemLoyaltyRewardRequest` | `Models/RedeemLoyaltyRewardRequest.cs` |
-| `RedeemLoyaltyRewardResponse` | `Models/RedeemLoyaltyRewardResponse.cs` |
+| `RedeemLoyaltyRewardOperationRequest` | `src/Square/Requests/Loyalty/RedeemLoyaltyRewardOperationRequest.cs` |
+| `RedeemLoyaltyRewardRequest` | `src/Square/Models/RedeemLoyaltyRewardRequest.cs` |
+| `RedeemLoyaltyRewardResponse` | `src/Square/Models/RedeemLoyaltyRewardResponse.cs` |
 
 ### RetrieveLoyaltyAccount
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveLoyaltyAccount(string accountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveLoyaltyAccount(RetrieveLoyaltyAccountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `AccountId`
 - **Returns**: `RetrieveLoyaltyAccountResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveLoyaltyAccountResponse` | `Models/RetrieveLoyaltyAccountResponse.cs` |
+| `RetrieveLoyaltyAccountRequest` | `src/Square/Requests/Loyalty/RetrieveLoyaltyAccountRequest.cs` |
+| `RetrieveLoyaltyAccountResponse` | `src/Square/Models/RetrieveLoyaltyAccountResponse.cs` |
 
 ### RetrieveLoyaltyProgram
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveLoyaltyProgram(string programId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveLoyaltyProgram(RetrieveLoyaltyProgramRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ProgramId`
 - **Returns**: `RetrieveLoyaltyProgramResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveLoyaltyProgramResponse` | `Models/RetrieveLoyaltyProgramResponse.cs` |
+| `RetrieveLoyaltyProgramRequest` | `src/Square/Requests/Loyalty/RetrieveLoyaltyProgramRequest.cs` |
+| `RetrieveLoyaltyProgramResponse` | `src/Square/Models/RetrieveLoyaltyProgramResponse.cs` |
 
 ### RetrieveLoyaltyPromotion
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveLoyaltyPromotion(string promotionId, string programId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveLoyaltyPromotion(RetrieveLoyaltyPromotionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PromotionId`, `ProgramId`
 - **Returns**: `RetrieveLoyaltyPromotionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveLoyaltyPromotionResponse` | `Models/RetrieveLoyaltyPromotionResponse.cs` |
+| `RetrieveLoyaltyPromotionRequest` | `src/Square/Requests/Loyalty/RetrieveLoyaltyPromotionRequest.cs` |
+| `RetrieveLoyaltyPromotionResponse` | `src/Square/Models/RetrieveLoyaltyPromotionResponse.cs` |
 
 ### RetrieveLoyaltyReward
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveLoyaltyReward(string rewardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveLoyaltyReward(RetrieveLoyaltyRewardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `RewardId`
 - **Returns**: `RetrieveLoyaltyRewardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveLoyaltyRewardResponse` | `Models/RetrieveLoyaltyRewardResponse.cs` |
+| `RetrieveLoyaltyRewardRequest` | `src/Square/Requests/Loyalty/RetrieveLoyaltyRewardRequest.cs` |
+| `RetrieveLoyaltyRewardResponse` | `src/Square/Models/RetrieveLoyaltyRewardResponse.cs` |
 
 ### SearchLoyaltyAccounts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchLoyaltyAccounts(SearchLoyaltyAccountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchLoyaltyAccounts(SearchLoyaltyAccountsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchLoyaltyAccountsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchLoyaltyAccountsRequest` | `Models/SearchLoyaltyAccountsRequest.cs` |
-| `SearchLoyaltyAccountsResponse` | `Models/SearchLoyaltyAccountsResponse.cs` |
+| `SearchLoyaltyAccountsOperationRequest` | `src/Square/Requests/Loyalty/SearchLoyaltyAccountsOperationRequest.cs` |
+| `SearchLoyaltyAccountsRequest` | `src/Square/Models/SearchLoyaltyAccountsRequest.cs` |
+| `SearchLoyaltyAccountsResponse` | `src/Square/Models/SearchLoyaltyAccountsResponse.cs` |
 
 ### SearchLoyaltyEvents
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchLoyaltyEvents(SearchLoyaltyEventsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchLoyaltyEvents(SearchLoyaltyEventsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchLoyaltyEventsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchLoyaltyEventsRequest` | `Models/SearchLoyaltyEventsRequest.cs` |
-| `SearchLoyaltyEventsResponse` | `Models/SearchLoyaltyEventsResponse.cs` |
+| `SearchLoyaltyEventsOperationRequest` | `src/Square/Requests/Loyalty/SearchLoyaltyEventsOperationRequest.cs` |
+| `SearchLoyaltyEventsRequest` | `src/Square/Models/SearchLoyaltyEventsRequest.cs` |
+| `SearchLoyaltyEventsResponse` | `src/Square/Models/SearchLoyaltyEventsResponse.cs` |
 
 ### SearchLoyaltyRewards
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchLoyaltyRewards(SearchLoyaltyRewardsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchLoyaltyRewards(SearchLoyaltyRewardsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchLoyaltyRewardsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchLoyaltyRewardsRequest` | `Models/SearchLoyaltyRewardsRequest.cs` |
-| `SearchLoyaltyRewardsResponse` | `Models/SearchLoyaltyRewardsResponse.cs` |
+| `SearchLoyaltyRewardsOperationRequest` | `src/Square/Requests/Loyalty/SearchLoyaltyRewardsOperationRequest.cs` |
+| `SearchLoyaltyRewardsRequest` | `src/Square/Models/SearchLoyaltyRewardsRequest.cs` |
+| `SearchLoyaltyRewardsResponse` | `src/Square/Models/SearchLoyaltyRewardsResponse.cs` |
 

@@ -2,152 +2,173 @@
 
 # Subscriptions — operations
 
-Accessor: `client.Subscriptions` · Source: `Api/Subscriptions.cs` · 12 operations
+Accessor: `client.Subscriptions` · Source: `src/Square/Api/Subscriptions.cs` · 12 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkSwapPlan
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkSwapPlan(BulkSwapPlanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkSwapPlan(BulkSwapPlanOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkSwapPlanResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkSwapPlanRequest` | `Models/BulkSwapPlanRequest.cs` |
-| `BulkSwapPlanResponse` | `Models/BulkSwapPlanResponse.cs` |
+| `BulkSwapPlanOperationRequest` | `src/Square/Requests/Subscriptions/BulkSwapPlanOperationRequest.cs` |
+| `BulkSwapPlanRequest` | `src/Square/Models/BulkSwapPlanRequest.cs` |
+| `BulkSwapPlanResponse` | `src/Square/Models/BulkSwapPlanResponse.cs` |
 
 ### CancelSubscription
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelSubscription(string subscriptionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelSubscription(CancelSubscriptionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`
 - **Returns**: `CancelSubscriptionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelSubscriptionResponse` | `Models/CancelSubscriptionResponse.cs` |
+| `CancelSubscriptionRequest` | `src/Square/Requests/Subscriptions/CancelSubscriptionRequest.cs` |
+| `CancelSubscriptionResponse` | `src/Square/Models/CancelSubscriptionResponse.cs` |
 
 ### ChangeBillingAnchorDate
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ChangeBillingAnchorDate(string subscriptionId, ChangeBillingAnchorDateRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `ChangeBillingAnchorDate(ChangeBillingAnchorDateOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`, `Body`
 - **Returns**: `ChangeBillingAnchorDateResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ChangeBillingAnchorDateRequest` | `Models/ChangeBillingAnchorDateRequest.cs` |
-| `ChangeBillingAnchorDateResponse` | `Models/ChangeBillingAnchorDateResponse.cs` |
+| `ChangeBillingAnchorDateOperationRequest` | `src/Square/Requests/Subscriptions/ChangeBillingAnchorDateOperationRequest.cs` |
+| `ChangeBillingAnchorDateRequest` | `src/Square/Models/ChangeBillingAnchorDateRequest.cs` |
+| `ChangeBillingAnchorDateResponse` | `src/Square/Models/ChangeBillingAnchorDateResponse.cs` |
 
 ### CreateSubscription
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateSubscription(CreateSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateSubscription(CreateSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateSubscriptionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateSubscriptionRequest` | `Models/CreateSubscriptionRequest.cs` |
-| `CreateSubscriptionResponse` | `Models/CreateSubscriptionResponse.cs` |
+| `CreateSubscriptionOperationRequest` | `src/Square/Requests/Subscriptions/CreateSubscriptionOperationRequest.cs` |
+| `CreateSubscriptionRequest` | `src/Square/Models/CreateSubscriptionRequest.cs` |
+| `CreateSubscriptionResponse` | `src/Square/Models/CreateSubscriptionResponse.cs` |
 
 ### DeleteSubscriptionAction
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteSubscriptionAction(string subscriptionId, string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteSubscriptionAction(DeleteSubscriptionActionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`, `ActionId`
 - **Returns**: `DeleteSubscriptionActionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteSubscriptionActionResponse` | `Models/DeleteSubscriptionActionResponse.cs` |
+| `DeleteSubscriptionActionRequest` | `src/Square/Requests/Subscriptions/DeleteSubscriptionActionRequest.cs` |
+| `DeleteSubscriptionActionResponse` | `src/Square/Models/DeleteSubscriptionActionResponse.cs` |
 
 ### ListSubscriptionEvents
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListSubscriptionEvents(string subscriptionId, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `limit` ← `limit`
+- **Signature**: `ListSubscriptionEvents(ListSubscriptionEventsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `limit` ← `Limit`
 - **Returns**: `ListSubscriptionEventsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListSubscriptionEventsResponse` | `Models/ListSubscriptionEventsResponse.cs` |
+| `ListSubscriptionEventsRequest` | `src/Square/Requests/Subscriptions/ListSubscriptionEventsRequest.cs` |
+| `ListSubscriptionEventsResponse` | `src/Square/Models/ListSubscriptionEventsResponse.cs` |
 
 ### PauseSubscription
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `PauseSubscription(string subscriptionId, PauseSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `PauseSubscription(PauseSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`, `Body`
 - **Returns**: `PauseSubscriptionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `PauseSubscriptionRequest` | `Models/PauseSubscriptionRequest.cs` |
-| `PauseSubscriptionResponse` | `Models/PauseSubscriptionResponse.cs` |
+| `PauseSubscriptionOperationRequest` | `src/Square/Requests/Subscriptions/PauseSubscriptionOperationRequest.cs` |
+| `PauseSubscriptionRequest` | `src/Square/Models/PauseSubscriptionRequest.cs` |
+| `PauseSubscriptionResponse` | `src/Square/Models/PauseSubscriptionResponse.cs` |
 
 ### ResumeSubscription
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ResumeSubscription(string subscriptionId, ResumeSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `ResumeSubscription(ResumeSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`, `Body`
 - **Returns**: `ResumeSubscriptionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ResumeSubscriptionRequest` | `Models/ResumeSubscriptionRequest.cs` |
-| `ResumeSubscriptionResponse` | `Models/ResumeSubscriptionResponse.cs` |
+| `ResumeSubscriptionOperationRequest` | `src/Square/Requests/Subscriptions/ResumeSubscriptionOperationRequest.cs` |
+| `ResumeSubscriptionRequest` | `src/Square/Models/ResumeSubscriptionRequest.cs` |
+| `ResumeSubscriptionResponse` | `src/Square/Models/ResumeSubscriptionResponse.cs` |
 
 ### RetrieveSubscription
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveSubscription(string subscriptionId, string? include, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `include` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `include` ← `include`
+- **Signature**: `RetrieveSubscription(RetrieveSubscriptionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`
+- **Query params (wire ← C#)**: `include` ← `Include`
 - **Returns**: `RetrieveSubscriptionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveSubscriptionResponse` | `Models/RetrieveSubscriptionResponse.cs` |
+| `RetrieveSubscriptionRequest` | `src/Square/Requests/Subscriptions/RetrieveSubscriptionRequest.cs` |
+| `RetrieveSubscriptionResponse` | `src/Square/Models/RetrieveSubscriptionResponse.cs` |
 
 ### SearchSubscriptions
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchSubscriptions(SearchSubscriptionsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchSubscriptions(SearchSubscriptionsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchSubscriptionsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchSubscriptionsRequest` | `Models/SearchSubscriptionsRequest.cs` |
-| `SearchSubscriptionsResponse` | `Models/SearchSubscriptionsResponse.cs` |
+| `SearchSubscriptionsOperationRequest` | `src/Square/Requests/Subscriptions/SearchSubscriptionsOperationRequest.cs` |
+| `SearchSubscriptionsRequest` | `src/Square/Models/SearchSubscriptionsRequest.cs` |
+| `SearchSubscriptionsResponse` | `src/Square/Models/SearchSubscriptionsResponse.cs` |
 
 ### SwapPlan
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SwapPlan(string subscriptionId, SwapPlanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SwapPlan(SwapPlanOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`, `Body`
 - **Returns**: `SwapPlanResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SwapPlanRequest` | `Models/SwapPlanRequest.cs` |
-| `SwapPlanResponse` | `Models/SwapPlanResponse.cs` |
+| `SwapPlanOperationRequest` | `src/Square/Requests/Subscriptions/SwapPlanOperationRequest.cs` |
+| `SwapPlanRequest` | `src/Square/Models/SwapPlanRequest.cs` |
+| `SwapPlanResponse` | `src/Square/Models/SwapPlanResponse.cs` |
 
 ### UpdateSubscription
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateSubscription(string subscriptionId, UpdateSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateSubscription(UpdateSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `SubscriptionId`, `Body`
 - **Returns**: `UpdateSubscriptionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateSubscriptionRequest` | `Models/UpdateSubscriptionRequest.cs` |
-| `UpdateSubscriptionResponse` | `Models/UpdateSubscriptionResponse.cs` |
+| `UpdateSubscriptionOperationRequest` | `src/Square/Requests/Subscriptions/UpdateSubscriptionOperationRequest.cs` |
+| `UpdateSubscriptionRequest` | `src/Square/Models/UpdateSubscriptionRequest.cs` |
+| `UpdateSubscriptionResponse` | `src/Square/Models/UpdateSubscriptionResponse.cs` |
 

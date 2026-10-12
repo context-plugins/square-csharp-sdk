@@ -2,45 +2,49 @@
 
 # Channels — operations
 
-Accessor: `client.Channels` · Source: `Api/Channels.cs` · 3 operations
+Accessor: `client.Channels` · Source: `src/Square/Api/Channels.cs` · 3 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkRetrieveChannels
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkRetrieveChannels(BulkRetrieveChannelsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkRetrieveChannels(BulkRetrieveChannelsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkRetrieveChannelsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkRetrieveChannelsRequest` | `Models/BulkRetrieveChannelsRequest.cs` |
-| `BulkRetrieveChannelsResponse` | `Models/BulkRetrieveChannelsResponse.cs` |
+| `BulkRetrieveChannelsOperationRequest` | `src/Square/Requests/Channels/BulkRetrieveChannelsOperationRequest.cs` |
+| `BulkRetrieveChannelsRequest` | `src/Square/Models/BulkRetrieveChannelsRequest.cs` |
+| `BulkRetrieveChannelsResponse` | `src/Square/Models/BulkRetrieveChannelsResponse.cs` |
 
 ### ListChannels
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListChannels(ReferenceType? referenceType, string? referenceId, ChannelStatus? status, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 5 params (`referenceType` … `limit`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `reference_type` ← `referenceType`, `reference_id` ← `referenceId`, `status` ← `status`, `cursor` ← `cursor`, `limit` ← `limit`
+- **Signature**: `ListChannels(ListChannelsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `reference_type` ← `ReferenceType`, `reference_id` ← `ReferenceId`, `status` ← `Status`, `cursor` ← `Cursor`, `limit` ← `Limit`
 - **Returns**: `ListChannelsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ReferenceType` | `Models/Enums/ReferenceType.cs` |
-| `ChannelStatus` | `Models/Enums/ChannelStatus.cs` |
-| `ListChannelsResponse` | `Models/ListChannelsResponse.cs` |
+| `ListChannelsRequest` | `src/Square/Requests/Channels/ListChannelsRequest.cs` |
+| `ReferenceType` | `src/Square/Models/Enums/ReferenceType.cs` |
+| `ChannelStatus` | `src/Square/Models/Enums/ChannelStatus.cs` |
+| `ListChannelsResponse` | `src/Square/Models/ListChannelsResponse.cs` |
 
 ### RetrieveChannel
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveChannel(string channelId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveChannel(RetrieveChannelRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ChannelId`
 - **Returns**: `RetrieveChannelResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveChannelResponse` | `Models/RetrieveChannelResponse.cs` |
+| `RetrieveChannelRequest` | `src/Square/Requests/Channels/RetrieveChannelRequest.cs` |
+| `RetrieveChannelResponse` | `src/Square/Models/RetrieveChannelResponse.cs` |
 

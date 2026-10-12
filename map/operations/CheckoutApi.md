@@ -2,125 +2,140 @@
 
 # CheckoutApi — operations
 
-Accessor: `client.CheckoutApi` · Source: `Api/CheckoutApi.cs` · 10 operations
+Accessor: `client.CheckoutApi` · Source: `src/Square/Api/CheckoutApi.cs` · 10 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CreateCheckout
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateCheckout(string locationId, CreateCheckoutRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateCheckout(CreateCheckoutOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`, `Body`
 - **Returns**: `CreateCheckoutResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateCheckoutRequest` | `Models/CreateCheckoutRequest.cs` |
-| `CreateCheckoutResponse` | `Models/CreateCheckoutResponse.cs` |
+| `CreateCheckoutOperationRequest` | `src/Square/Requests/CheckoutApi/CreateCheckoutOperationRequest.cs` |
+| `CreateCheckoutRequest` | `src/Square/Models/CreateCheckoutRequest.cs` |
+| `CreateCheckoutResponse` | `src/Square/Models/CreateCheckoutResponse.cs` |
 
 ### CreatePaymentLink
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreatePaymentLink(CreatePaymentLinkRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreatePaymentLink(CreatePaymentLinkOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreatePaymentLinkResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreatePaymentLinkRequest` | `Models/CreatePaymentLinkRequest.cs` |
-| `CreatePaymentLinkResponse` | `Models/CreatePaymentLinkResponse.cs` |
+| `CreatePaymentLinkOperationRequest` | `src/Square/Requests/CheckoutApi/CreatePaymentLinkOperationRequest.cs` |
+| `CreatePaymentLinkRequest` | `src/Square/Models/CreatePaymentLinkRequest.cs` |
+| `CreatePaymentLinkResponse` | `src/Square/Models/CreatePaymentLinkResponse.cs` |
 
 ### DeletePaymentLink
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeletePaymentLink(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeletePaymentLink(DeletePaymentLinkRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `DeletePaymentLinkResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeletePaymentLinkResponse` | `Models/DeletePaymentLinkResponse.cs` |
+| `DeletePaymentLinkRequest` | `src/Square/Requests/CheckoutApi/DeletePaymentLinkRequest.cs` |
+| `DeletePaymentLinkResponse` | `src/Square/Models/DeletePaymentLinkResponse.cs` |
 
 ### ListPaymentLinks
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListPaymentLinks(string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `limit` ← `limit`
+- **Signature**: `ListPaymentLinks(ListPaymentLinksRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `limit` ← `Limit`
 - **Returns**: `ListPaymentLinksResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListPaymentLinksResponse` | `Models/ListPaymentLinksResponse.cs` |
+| `ListPaymentLinksRequest` | `src/Square/Requests/CheckoutApi/ListPaymentLinksRequest.cs` |
+| `ListPaymentLinksResponse` | `src/Square/Models/ListPaymentLinksResponse.cs` |
 
 ### RetrieveLocationSettings
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveLocationSettings(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveLocationSettings(RetrieveLocationSettingsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`
 - **Returns**: `RetrieveLocationSettingsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveLocationSettingsResponse` | `Models/RetrieveLocationSettingsResponse.cs` |
+| `RetrieveLocationSettingsRequest` | `src/Square/Requests/CheckoutApi/RetrieveLocationSettingsRequest.cs` |
+| `RetrieveLocationSettingsResponse` | `src/Square/Models/RetrieveLocationSettingsResponse.cs` |
 
 ### RetrieveMerchantSettings
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveMerchantSettings(RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveMerchantSettings(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `RetrieveMerchantSettingsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveMerchantSettingsResponse` | `Models/RetrieveMerchantSettingsResponse.cs` |
+| `RetrieveMerchantSettingsResponse` | `src/Square/Models/RetrieveMerchantSettingsResponse.cs` |
 
 ### RetrievePaymentLink
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrievePaymentLink(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrievePaymentLink(RetrievePaymentLinkRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `RetrievePaymentLinkResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrievePaymentLinkResponse` | `Models/RetrievePaymentLinkResponse.cs` |
+| `RetrievePaymentLinkRequest` | `src/Square/Requests/CheckoutApi/RetrievePaymentLinkRequest.cs` |
+| `RetrievePaymentLinkResponse` | `src/Square/Models/RetrievePaymentLinkResponse.cs` |
 
 ### UpdateLocationSettings
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateLocationSettings(string locationId, UpdateLocationSettingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateLocationSettings(UpdateLocationSettingsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`, `Body`
 - **Returns**: `UpdateLocationSettingsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateLocationSettingsRequest` | `Models/UpdateLocationSettingsRequest.cs` |
-| `UpdateLocationSettingsResponse` | `Models/UpdateLocationSettingsResponse.cs` |
+| `UpdateLocationSettingsOperationRequest` | `src/Square/Requests/CheckoutApi/UpdateLocationSettingsOperationRequest.cs` |
+| `UpdateLocationSettingsRequest` | `src/Square/Models/UpdateLocationSettingsRequest.cs` |
+| `UpdateLocationSettingsResponse` | `src/Square/Models/UpdateLocationSettingsResponse.cs` |
 
 ### UpdateMerchantSettings
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateMerchantSettings(UpdateMerchantSettingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateMerchantSettings(UpdateMerchantSettingsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `UpdateMerchantSettingsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateMerchantSettingsRequest` | `Models/UpdateMerchantSettingsRequest.cs` |
-| `UpdateMerchantSettingsResponse` | `Models/UpdateMerchantSettingsResponse.cs` |
+| `UpdateMerchantSettingsOperationRequest` | `src/Square/Requests/CheckoutApi/UpdateMerchantSettingsOperationRequest.cs` |
+| `UpdateMerchantSettingsRequest` | `src/Square/Models/UpdateMerchantSettingsRequest.cs` |
+| `UpdateMerchantSettingsResponse` | `src/Square/Models/UpdateMerchantSettingsResponse.cs` |
 
 ### UpdatePaymentLink
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdatePaymentLink(string id, UpdatePaymentLinkRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdatePaymentLink(UpdatePaymentLinkOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`, `Body`
 - **Returns**: `UpdatePaymentLinkResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdatePaymentLinkRequest` | `Models/UpdatePaymentLinkRequest.cs` |
-| `UpdatePaymentLinkResponse` | `Models/UpdatePaymentLinkResponse.cs` |
+| `UpdatePaymentLinkOperationRequest` | `src/Square/Requests/CheckoutApi/UpdatePaymentLinkOperationRequest.cs` |
+| `UpdatePaymentLinkRequest` | `src/Square/Models/UpdatePaymentLinkRequest.cs` |
+| `UpdatePaymentLinkResponse` | `src/Square/Models/UpdatePaymentLinkResponse.cs` |
 

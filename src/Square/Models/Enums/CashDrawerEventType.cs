@@ -1,0 +1,127 @@
+using System;
+using System.Text.Json.Serialization;
+using Square.Core.Enum;
+
+namespace Square.Models.Enums;
+
+/// <summary>
+/// The types of events on a CashDrawerShift.
+/// Each event type represents an employee action on the actual cash drawer
+/// represented by a CashDrawerShift.
+/// </summary>
+[JsonConverter(typeof(StringEnumConverter<CashDrawerEventType>))]
+public sealed record CashDrawerEventType : OpenStringEnum<CashDrawerEventType>
+{
+    private CashDrawerEventType(string value) : base(value)
+    {
+    }
+
+    /// <summary>
+    /// Triggered when a no sale occurs on a cash drawer.
+    /// A CashDrawerEvent of this type must have a zero money amount.
+    /// </summary>
+    public static readonly CashDrawerEventType NoSale = new("NO_SALE");
+
+    /// <summary>
+    /// Triggered when a cash tender payment occurs on a cash drawer.
+    /// A CashDrawerEvent of this type can must not have a negative amount.
+    /// </summary>
+    public static readonly CashDrawerEventType CashTenderPayment = new("CASH_TENDER_PAYMENT");
+
+    /// <summary>
+    /// Triggered when a check, gift card, or other non-cash payment occurs
+    /// on a cash drawer.
+    /// A CashDrawerEvent of this type must have a zero money amount.
+    /// </summary>
+    public static readonly CashDrawerEventType OtherTenderPayment = new("OTHER_TENDER_PAYMENT");
+
+    /// <summary>
+    /// Triggered when a split tender bill is cancelled after cash has been
+    /// tendered.
+    /// A CASH_TENDER_CANCELLED_PAYMENT should have a corresponding CASH_TENDER_PAYMENT.
+    /// A CashDrawerEvent of this type must not have a negative amount.
+    /// </summary>
+    public static readonly CashDrawerEventType CashTenderCancelledPayment = new("CASH_TENDER_CANCELLED_PAYMENT");
+
+    /// <summary>
+    /// Triggered when a split tender bill is cancelled after a non-cash tender
+    /// has been tendered. An OTHER_TENDER_CANCELLED_PAYMENT should have a corresponding
+    /// OTHER_TENDER_PAYMENT. A CashDrawerEvent of this type must have a zero money
+    /// amount.
+    /// </summary>
+    public static readonly CashDrawerEventType OtherTenderCancelledPayment = new("OTHER_TENDER_CANCELLED_PAYMENT");
+
+    /// <summary>
+    /// Triggered when a cash tender refund occurs.
+    /// A CashDrawerEvent of this type must not have a negative amount.
+    /// </summary>
+    public static readonly CashDrawerEventType CashTenderRefund = new("CASH_TENDER_REFUND");
+
+    /// <summary>
+    /// Triggered when an other tender refund occurs.
+    /// A CashDrawerEvent of this type must have a zero money amount.
+    /// </summary>
+    public static readonly CashDrawerEventType OtherTenderRefund = new("OTHER_TENDER_REFUND");
+
+    /// <summary>
+    /// Triggered when money unrelated to a payment is added to the cash drawer.
+    /// For example, an employee adds coins to the drawer.
+    /// A CashDrawerEvent of this type must not have a negative amount.
+    /// </summary>
+    public static readonly CashDrawerEventType PaidIn = new("PAID_IN");
+
+    /// <summary>
+    /// Triggered when money is removed from the drawer for other reasons
+    /// than making change.
+    /// For example, an employee pays a delivery person with cash from the cash drawer.
+    /// A CashDrawerEvent of this type must not have a negative amount.
+    /// </summary>
+    public static readonly CashDrawerEventType PaidOut = new("PAID_OUT");
+
+    public TResult Match<TResult>(Func<TResult> onNoSale,
+        Func<TResult> onCashTenderPayment,
+        Func<TResult> onOtherTenderPayment,
+        Func<TResult> onCashTenderCancelledPayment,
+        Func<TResult> onOtherTenderCancelledPayment,
+        Func<TResult> onCashTenderRefund,
+        Func<TResult> onOtherTenderRefund,
+        Func<TResult> onPaidIn,
+        Func<TResult> onPaidOut,
+        Func<string, TResult> otherwise) =>
+        this switch
+        {
+            _ when this == NoSale => onNoSale(),
+            _ when this == CashTenderPayment => onCashTenderPayment(),
+            _ when this == OtherTenderPayment => onOtherTenderPayment(),
+            _ when this == CashTenderCancelledPayment => onCashTenderCancelledPayment(),
+            _ when this == OtherTenderCancelledPayment => onOtherTenderCancelledPayment(),
+            _ when this == CashTenderRefund => onCashTenderRefund(),
+            _ when this == OtherTenderRefund => onOtherTenderRefund(),
+            _ when this == PaidIn => onPaidIn(),
+            _ when this == PaidOut => onPaidOut(),
+            _ => otherwise(Value)
+        };
+
+    public void Match(Action onNoSale,
+        Action onCashTenderPayment,
+        Action onOtherTenderPayment,
+        Action onCashTenderCancelledPayment,
+        Action onOtherTenderCancelledPayment,
+        Action onCashTenderRefund,
+        Action onOtherTenderRefund,
+        Action onPaidIn,
+        Action onPaidOut,
+        Action<string> otherwise)
+    {
+        if (this == NoSale) onNoSale();
+        else if (this == CashTenderPayment) onCashTenderPayment();
+        else if (this == OtherTenderPayment) onOtherTenderPayment();
+        else if (this == CashTenderCancelledPayment) onCashTenderCancelledPayment();
+        else if (this == OtherTenderCancelledPayment) onOtherTenderCancelledPayment();
+        else if (this == CashTenderRefund) onCashTenderRefund();
+        else if (this == OtherTenderRefund) onOtherTenderRefund();
+        else if (this == PaidIn) onPaidIn();
+        else if (this == PaidOut) onPaidOut();
+        else otherwise(Value);
+    }
+}

@@ -2,166 +2,180 @@
 
 # Bookings — operations
 
-Accessor: `client.Bookings` · Source: `Api/Bookings.cs` · 13 operations
+Accessor: `client.Bookings` · Source: `src/Square/Api/Bookings.cs` · 13 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkRetrieveBookings
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkRetrieveBookings(BulkRetrieveBookingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkRetrieveBookings(BulkRetrieveBookingsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkRetrieveBookingsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkRetrieveBookingsRequest` | `Models/BulkRetrieveBookingsRequest.cs` |
-| `BulkRetrieveBookingsResponse` | `Models/BulkRetrieveBookingsResponse.cs` |
+| `BulkRetrieveBookingsOperationRequest` | `src/Square/Requests/Bookings/BulkRetrieveBookingsOperationRequest.cs` |
+| `BulkRetrieveBookingsRequest` | `src/Square/Models/BulkRetrieveBookingsRequest.cs` |
+| `BulkRetrieveBookingsResponse` | `src/Square/Models/BulkRetrieveBookingsResponse.cs` |
 
 ### BulkRetrieveTeamMemberBookingProfiles
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkRetrieveTeamMemberBookingProfiles(BulkRetrieveTeamMemberBookingProfilesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkRetrieveTeamMemberBookingProfiles(BulkRetrieveTeamMemberBookingProfilesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkRetrieveTeamMemberBookingProfilesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkRetrieveTeamMemberBookingProfilesRequest` | `Models/BulkRetrieveTeamMemberBookingProfilesRequest.cs` |
-| `BulkRetrieveTeamMemberBookingProfilesResponse` | `Models/BulkRetrieveTeamMemberBookingProfilesResponse.cs` |
+| `BulkRetrieveTeamMemberBookingProfilesOperationRequest` | `src/Square/Requests/Bookings/BulkRetrieveTeamMemberBookingProfilesOperationRequest.cs` |
+| `BulkRetrieveTeamMemberBookingProfilesRequest` | `src/Square/Models/BulkRetrieveTeamMemberBookingProfilesRequest.cs` |
+| `BulkRetrieveTeamMemberBookingProfilesResponse` | `src/Square/Models/BulkRetrieveTeamMemberBookingProfilesResponse.cs` |
 
 ### CancelBooking
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelBooking(string bookingId, CancelBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelBooking(CancelBookingOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BookingId`, `Body`
 - **Returns**: `CancelBookingResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelBookingRequest` | `Models/CancelBookingRequest.cs` |
-| `CancelBookingResponse` | `Models/CancelBookingResponse.cs` |
+| `CancelBookingOperationRequest` | `src/Square/Requests/Bookings/CancelBookingOperationRequest.cs` |
+| `CancelBookingRequest` | `src/Square/Models/CancelBookingRequest.cs` |
+| `CancelBookingResponse` | `src/Square/Models/CancelBookingResponse.cs` |
 
 ### CreateBooking
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateBooking(CreateBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateBooking(CreateBookingOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateBookingResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateBookingRequest` | `Models/CreateBookingRequest.cs` |
-| `CreateBookingResponse` | `Models/CreateBookingResponse.cs` |
+| `CreateBookingOperationRequest` | `src/Square/Requests/Bookings/CreateBookingOperationRequest.cs` |
+| `CreateBookingRequest` | `src/Square/Models/CreateBookingRequest.cs` |
+| `CreateBookingResponse` | `src/Square/Models/CreateBookingResponse.cs` |
 
 ### ListBookings
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListBookings(int? limit, string? cursor, string? customerId, string? teamMemberId, string? locationId, string? startAtMin, string? startAtMax, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 7 params (`limit` … `startAtMax`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `limit` ← `limit`, `cursor` ← `cursor`, `customer_id` ← `customerId`, `team_member_id` ← `teamMemberId`, `location_id` ← `locationId`, `start_at_min` ← `startAtMin`, `start_at_max` ← `startAtMax`
+- **Signature**: `ListBookings(ListBookingsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `limit` ← `Limit`, `cursor` ← `Cursor`, `customer_id` ← `CustomerId`, `team_member_id` ← `TeamMemberId`, `location_id` ← `LocationId`, `start_at_min` ← `StartAtMin`, `start_at_max` ← `StartAtMax`
 - **Returns**: `ListBookingsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListBookingsResponse` | `Models/ListBookingsResponse.cs` |
+| `ListBookingsRequest` | `src/Square/Requests/Bookings/ListBookingsRequest.cs` |
+| `ListBookingsResponse` | `src/Square/Models/ListBookingsResponse.cs` |
 
 ### ListLocationBookingProfiles
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListLocationBookingProfiles(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListLocationBookingProfiles(ListLocationBookingProfilesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListLocationBookingProfilesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListLocationBookingProfilesResponse` | `Models/ListLocationBookingProfilesResponse.cs` |
+| `ListLocationBookingProfilesRequest` | `src/Square/Requests/Bookings/ListLocationBookingProfilesRequest.cs` |
+| `ListLocationBookingProfilesResponse` | `src/Square/Models/ListLocationBookingProfilesResponse.cs` |
 
 ### ListTeamMemberBookingProfiles
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListTeamMemberBookingProfiles(int? limit, string? cursor, string? locationId, bool? bookableOnly = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - `locationId` — nullable, no default → **must pass explicitly**
-  - defaults: `bookableOnly` = `false`
-- **Query params (wire ← C#)**: `bookable_only` ← `bookableOnly`, `limit` ← `limit`, `cursor` ← `cursor`, `location_id` ← `locationId`
+- **Signature**: `ListTeamMemberBookingProfiles(ListTeamMemberBookingProfilesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `bookable_only` ← `BookableOnly`, `limit` ← `Limit`, `cursor` ← `Cursor`, `location_id` ← `LocationId`
 - **Returns**: `ListTeamMemberBookingProfilesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListTeamMemberBookingProfilesResponse` | `Models/ListTeamMemberBookingProfilesResponse.cs` |
+| `ListTeamMemberBookingProfilesRequest` | `src/Square/Requests/Bookings/ListTeamMemberBookingProfilesRequest.cs` |
+| `ListTeamMemberBookingProfilesResponse` | `src/Square/Models/ListTeamMemberBookingProfilesResponse.cs` |
 
 ### RetrieveBooking
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveBooking(string bookingId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveBooking(RetrieveBookingRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BookingId`
 - **Returns**: `RetrieveBookingResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveBookingResponse` | `Models/RetrieveBookingResponse.cs` |
+| `RetrieveBookingRequest` | `src/Square/Requests/Bookings/RetrieveBookingRequest.cs` |
+| `RetrieveBookingResponse` | `src/Square/Models/RetrieveBookingResponse.cs` |
 
 ### RetrieveBusinessBookingProfile
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveBusinessBookingProfile(RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveBusinessBookingProfile(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `RetrieveBusinessBookingProfileResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveBusinessBookingProfileResponse` | `Models/RetrieveBusinessBookingProfileResponse.cs` |
+| `RetrieveBusinessBookingProfileResponse` | `src/Square/Models/RetrieveBusinessBookingProfileResponse.cs` |
 
 ### RetrieveLocationBookingProfile
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveLocationBookingProfile(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveLocationBookingProfile(RetrieveLocationBookingProfileRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`
 - **Returns**: `RetrieveLocationBookingProfileResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveLocationBookingProfileResponse` | `Models/RetrieveLocationBookingProfileResponse.cs` |
+| `RetrieveLocationBookingProfileRequest` | `src/Square/Requests/Bookings/RetrieveLocationBookingProfileRequest.cs` |
+| `RetrieveLocationBookingProfileResponse` | `src/Square/Models/RetrieveLocationBookingProfileResponse.cs` |
 
 ### RetrieveTeamMemberBookingProfile
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveTeamMemberBookingProfile(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveTeamMemberBookingProfile(RetrieveTeamMemberBookingProfileRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TeamMemberId`
 - **Returns**: `RetrieveTeamMemberBookingProfileResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveTeamMemberBookingProfileResponse` | `Models/RetrieveTeamMemberBookingProfileResponse.cs` |
+| `RetrieveTeamMemberBookingProfileRequest` | `src/Square/Requests/Bookings/RetrieveTeamMemberBookingProfileRequest.cs` |
+| `RetrieveTeamMemberBookingProfileResponse` | `src/Square/Models/RetrieveTeamMemberBookingProfileResponse.cs` |
 
 ### SearchAvailability
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchAvailability(SearchAvailabilityRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchAvailability(SearchAvailabilityOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchAvailabilityResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchAvailabilityRequest` | `Models/SearchAvailabilityRequest.cs` |
-| `SearchAvailabilityResponse` | `Models/SearchAvailabilityResponse.cs` |
+| `SearchAvailabilityOperationRequest` | `src/Square/Requests/Bookings/SearchAvailabilityOperationRequest.cs` |
+| `SearchAvailabilityRequest` | `src/Square/Models/SearchAvailabilityRequest.cs` |
+| `SearchAvailabilityResponse` | `src/Square/Models/SearchAvailabilityResponse.cs` |
 
 ### UpdateBooking
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateBooking(string bookingId, UpdateBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateBooking(UpdateBookingOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BookingId`, `Body`
 - **Returns**: `UpdateBookingResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateBookingRequest` | `Models/UpdateBookingRequest.cs` |
-| `UpdateBookingResponse` | `Models/UpdateBookingResponse.cs` |
+| `UpdateBookingOperationRequest` | `src/Square/Requests/Bookings/UpdateBookingOperationRequest.cs` |
+| `UpdateBookingRequest` | `src/Square/Models/UpdateBookingRequest.cs` |
+| `UpdateBookingResponse` | `src/Square/Models/UpdateBookingResponse.cs` |
 

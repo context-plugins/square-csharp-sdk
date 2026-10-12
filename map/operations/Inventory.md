@@ -2,236 +2,268 @@
 
 # Inventory — operations
 
-Accessor: `client.Inventory` · Source: `Api/Inventory.cs` · 19 operations
+Accessor: `client.Inventory` · Source: `src/Square/Api/Inventory.cs` · 19 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BatchChangeInventory
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BatchChangeInventory(BatchChangeInventoryRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BatchChangeInventory(BatchChangeInventoryOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchChangeInventoryResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchChangeInventoryRequest` | `Models/BatchChangeInventoryRequest.cs` |
-| `BatchChangeInventoryResponse` | `Models/BatchChangeInventoryResponse.cs` |
+| `BatchChangeInventoryOperationRequest` | `src/Square/Requests/Inventory/BatchChangeInventoryOperationRequest.cs` |
+| `BatchChangeInventoryRequest` | `src/Square/Models/BatchChangeInventoryRequest.cs` |
+| `BatchChangeInventoryResponse` | `src/Square/Models/BatchChangeInventoryResponse.cs` |
 
 ### BatchRetrieveInventoryChanges
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BatchRetrieveInventoryChanges(BatchRetrieveInventoryChangesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BatchRetrieveInventoryChanges(BatchRetrieveInventoryChangesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchRetrieveInventoryChangesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchRetrieveInventoryChangesRequest` | `Models/BatchRetrieveInventoryChangesRequest.cs` |
-| `BatchRetrieveInventoryChangesResponse` | `Models/BatchRetrieveInventoryChangesResponse.cs` |
+| `BatchRetrieveInventoryChangesOperationRequest` | `src/Square/Requests/Inventory/BatchRetrieveInventoryChangesOperationRequest.cs` |
+| `BatchRetrieveInventoryChangesRequest` | `src/Square/Models/BatchRetrieveInventoryChangesRequest.cs` |
+| `BatchRetrieveInventoryChangesResponse` | `src/Square/Models/BatchRetrieveInventoryChangesResponse.cs` |
 
 ### BatchRetrieveInventoryCounts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BatchRetrieveInventoryCounts(BatchRetrieveInventoryCountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BatchRetrieveInventoryCounts(BatchRetrieveInventoryCountsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchRetrieveInventoryCountsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchRetrieveInventoryCountsRequest` | `Models/BatchRetrieveInventoryCountsRequest.cs` |
-| `BatchRetrieveInventoryCountsResponse` | `Models/BatchRetrieveInventoryCountsResponse.cs` |
+| `BatchRetrieveInventoryCountsOperationRequest` | `src/Square/Requests/Inventory/BatchRetrieveInventoryCountsOperationRequest.cs` |
+| `BatchRetrieveInventoryCountsRequest` | `src/Square/Models/BatchRetrieveInventoryCountsRequest.cs` |
+| `BatchRetrieveInventoryCountsResponse` | `src/Square/Models/BatchRetrieveInventoryCountsResponse.cs` |
 
 ### CreateInventoryAdjustmentReason
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateInventoryAdjustmentReason(CreateInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateInventoryAdjustmentReason(CreateInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateInventoryAdjustmentReasonResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateInventoryAdjustmentReasonRequest` | `Models/CreateInventoryAdjustmentReasonRequest.cs` |
-| `CreateInventoryAdjustmentReasonResponse` | `Models/CreateInventoryAdjustmentReasonResponse.cs` |
+| `CreateInventoryAdjustmentReasonOperationRequest` | `src/Square/Requests/Inventory/CreateInventoryAdjustmentReasonOperationRequest.cs` |
+| `CreateInventoryAdjustmentReasonRequest` | `src/Square/Models/CreateInventoryAdjustmentReasonRequest.cs` |
+| `CreateInventoryAdjustmentReasonResponse` | `src/Square/Models/CreateInventoryAdjustmentReasonResponse.cs` |
 
 ### DeleteInventoryAdjustmentReason
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteInventoryAdjustmentReason(DeleteInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteInventoryAdjustmentReason(DeleteInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `DeleteInventoryAdjustmentReasonResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteInventoryAdjustmentReasonRequest` | `Models/DeleteInventoryAdjustmentReasonRequest.cs` |
-| `DeleteInventoryAdjustmentReasonResponse` | `Models/DeleteInventoryAdjustmentReasonResponse.cs` |
+| `DeleteInventoryAdjustmentReasonOperationRequest` | `src/Square/Requests/Inventory/DeleteInventoryAdjustmentReasonOperationRequest.cs` |
+| `DeleteInventoryAdjustmentReasonRequest` | `src/Square/Models/DeleteInventoryAdjustmentReasonRequest.cs` |
+| `DeleteInventoryAdjustmentReasonResponse` | `src/Square/Models/DeleteInventoryAdjustmentReasonResponse.cs` |
 
 ### DeprecatedBatchChangeInventory
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeprecatedBatchChangeInventory(BatchChangeInventoryRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeprecatedBatchChangeInventory(DeprecatedBatchChangeInventoryRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchChangeInventoryResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchChangeInventoryRequest` | `Models/BatchChangeInventoryRequest.cs` |
-| `BatchChangeInventoryResponse` | `Models/BatchChangeInventoryResponse.cs` |
+| `DeprecatedBatchChangeInventoryRequest` | `src/Square/Requests/Inventory/DeprecatedBatchChangeInventoryRequest.cs` |
+| `BatchChangeInventoryRequest` | `src/Square/Models/BatchChangeInventoryRequest.cs` |
+| `BatchChangeInventoryResponse` | `src/Square/Models/BatchChangeInventoryResponse.cs` |
 
 ### DeprecatedBatchRetrieveInventoryChanges
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeprecatedBatchRetrieveInventoryChanges(BatchRetrieveInventoryChangesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeprecatedBatchRetrieveInventoryChanges(DeprecatedBatchRetrieveInventoryChangesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchRetrieveInventoryChangesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchRetrieveInventoryChangesRequest` | `Models/BatchRetrieveInventoryChangesRequest.cs` |
-| `BatchRetrieveInventoryChangesResponse` | `Models/BatchRetrieveInventoryChangesResponse.cs` |
+| `DeprecatedBatchRetrieveInventoryChangesRequest` | `src/Square/Requests/Inventory/DeprecatedBatchRetrieveInventoryChangesRequest.cs` |
+| `BatchRetrieveInventoryChangesRequest` | `src/Square/Models/BatchRetrieveInventoryChangesRequest.cs` |
+| `BatchRetrieveInventoryChangesResponse` | `src/Square/Models/BatchRetrieveInventoryChangesResponse.cs` |
 
 ### DeprecatedBatchRetrieveInventoryCounts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeprecatedBatchRetrieveInventoryCounts(BatchRetrieveInventoryCountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeprecatedBatchRetrieveInventoryCounts(DeprecatedBatchRetrieveInventoryCountsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchRetrieveInventoryCountsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchRetrieveInventoryCountsRequest` | `Models/BatchRetrieveInventoryCountsRequest.cs` |
-| `BatchRetrieveInventoryCountsResponse` | `Models/BatchRetrieveInventoryCountsResponse.cs` |
+| `DeprecatedBatchRetrieveInventoryCountsRequest` | `src/Square/Requests/Inventory/DeprecatedBatchRetrieveInventoryCountsRequest.cs` |
+| `BatchRetrieveInventoryCountsRequest` | `src/Square/Models/BatchRetrieveInventoryCountsRequest.cs` |
+| `BatchRetrieveInventoryCountsResponse` | `src/Square/Models/BatchRetrieveInventoryCountsResponse.cs` |
 
 ### DeprecatedRetrieveInventoryAdjustment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeprecatedRetrieveInventoryAdjustment(string adjustmentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeprecatedRetrieveInventoryAdjustment(DeprecatedRetrieveInventoryAdjustmentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `AdjustmentId`
 - **Returns**: `RetrieveInventoryAdjustmentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveInventoryAdjustmentResponse` | `Models/RetrieveInventoryAdjustmentResponse.cs` |
+| `DeprecatedRetrieveInventoryAdjustmentRequest` | `src/Square/Requests/Inventory/DeprecatedRetrieveInventoryAdjustmentRequest.cs` |
+| `RetrieveInventoryAdjustmentResponse` | `src/Square/Models/RetrieveInventoryAdjustmentResponse.cs` |
 
 ### DeprecatedRetrieveInventoryPhysicalCount
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeprecatedRetrieveInventoryPhysicalCount(string physicalCountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeprecatedRetrieveInventoryPhysicalCount(DeprecatedRetrieveInventoryPhysicalCountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PhysicalCountId`
 - **Returns**: `RetrieveInventoryPhysicalCountResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveInventoryPhysicalCountResponse` | `Models/RetrieveInventoryPhysicalCountResponse.cs` |
+| `DeprecatedRetrieveInventoryPhysicalCountRequest` | `src/Square/Requests/Inventory/DeprecatedRetrieveInventoryPhysicalCountRequest.cs` |
+| `RetrieveInventoryPhysicalCountResponse` | `src/Square/Models/RetrieveInventoryPhysicalCountResponse.cs` |
 
 ### ListInventoryAdjustmentReasons
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListInventoryAdjustmentReasons(bool? includeDeleted = false, bool? includeSystemCodes = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - defaults: `includeDeleted` = `false`, `includeSystemCodes` = `false`
-- **Query params (wire ← C#)**: `include_deleted` ← `includeDeleted`, `include_system_codes` ← `includeSystemCodes`
+- **Signature**: `ListInventoryAdjustmentReasons(ListInventoryAdjustmentReasonsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `include_deleted` ← `IncludeDeleted`, `include_system_codes` ← `IncludeSystemCodes`
 - **Returns**: `ListInventoryAdjustmentReasonsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListInventoryAdjustmentReasonsResponse` | `Models/ListInventoryAdjustmentReasonsResponse.cs` |
+| `ListInventoryAdjustmentReasonsRequest` | `src/Square/Requests/Inventory/ListInventoryAdjustmentReasonsRequest.cs` |
+| `ListInventoryAdjustmentReasonsResponse` | `src/Square/Models/ListInventoryAdjustmentReasonsResponse.cs` |
 
 ### RestoreInventoryAdjustmentReason
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RestoreInventoryAdjustmentReason(RestoreInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RestoreInventoryAdjustmentReason(RestoreInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `RestoreInventoryAdjustmentReasonResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RestoreInventoryAdjustmentReasonRequest` | `Models/RestoreInventoryAdjustmentReasonRequest.cs` |
-| `RestoreInventoryAdjustmentReasonResponse` | `Models/RestoreInventoryAdjustmentReasonResponse.cs` |
+| `RestoreInventoryAdjustmentReasonOperationRequest` | `src/Square/Requests/Inventory/RestoreInventoryAdjustmentReasonOperationRequest.cs` |
+| `RestoreInventoryAdjustmentReasonRequest` | `src/Square/Models/RestoreInventoryAdjustmentReasonRequest.cs` |
+| `RestoreInventoryAdjustmentReasonResponse` | `src/Square/Models/RestoreInventoryAdjustmentReasonResponse.cs` |
 
 ### RetrieveInventoryAdjustment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveInventoryAdjustment(string adjustmentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveInventoryAdjustment(RetrieveInventoryAdjustmentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `AdjustmentId`
 - **Returns**: `RetrieveInventoryAdjustmentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveInventoryAdjustmentResponse` | `Models/RetrieveInventoryAdjustmentResponse.cs` |
+| `RetrieveInventoryAdjustmentRequest` | `src/Square/Requests/Inventory/RetrieveInventoryAdjustmentRequest.cs` |
+| `RetrieveInventoryAdjustmentResponse` | `src/Square/Models/RetrieveInventoryAdjustmentResponse.cs` |
 
 ### RetrieveInventoryAdjustmentReason
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveInventoryAdjustmentReason(RetrieveInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveInventoryAdjustmentReason(RetrieveInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `RetrieveInventoryAdjustmentReasonResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveInventoryAdjustmentReasonRequest` | `Models/RetrieveInventoryAdjustmentReasonRequest.cs` |
-| `RetrieveInventoryAdjustmentReasonResponse` | `Models/RetrieveInventoryAdjustmentReasonResponse.cs` |
+| `RetrieveInventoryAdjustmentReasonOperationRequest` | `src/Square/Requests/Inventory/RetrieveInventoryAdjustmentReasonOperationRequest.cs` |
+| `RetrieveInventoryAdjustmentReasonRequest` | `src/Square/Models/RetrieveInventoryAdjustmentReasonRequest.cs` |
+| `RetrieveInventoryAdjustmentReasonResponse` | `src/Square/Models/RetrieveInventoryAdjustmentReasonResponse.cs` |
 
 ### RetrieveInventoryChanges
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveInventoryChanges(string catalogObjectId, string? locationIds, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `locationIds` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `location_ids` ← `locationIds`, `cursor` ← `cursor`
+- **Signature**: `RetrieveInventoryChanges(RetrieveInventoryChangesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CatalogObjectId`
+- **Query params (wire ← C#)**: `location_ids` ← `LocationIds`, `cursor` ← `Cursor`
 - **Returns**: `RetrieveInventoryChangesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveInventoryChangesResponse` | `Models/RetrieveInventoryChangesResponse.cs` |
+| `RetrieveInventoryChangesRequest` | `src/Square/Requests/Inventory/RetrieveInventoryChangesRequest.cs` |
+| `RetrieveInventoryChangesResponse` | `src/Square/Models/RetrieveInventoryChangesResponse.cs` |
 
 ### RetrieveInventoryCount
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveInventoryCount(string catalogObjectId, string? locationIds, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `locationIds` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `location_ids` ← `locationIds`, `cursor` ← `cursor`
+- **Signature**: `RetrieveInventoryCount(RetrieveInventoryCountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CatalogObjectId`
+- **Query params (wire ← C#)**: `location_ids` ← `LocationIds`, `cursor` ← `Cursor`
 - **Returns**: `RetrieveInventoryCountResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveInventoryCountResponse` | `Models/RetrieveInventoryCountResponse.cs` |
+| `RetrieveInventoryCountRequest` | `src/Square/Requests/Inventory/RetrieveInventoryCountRequest.cs` |
+| `RetrieveInventoryCountResponse` | `src/Square/Models/RetrieveInventoryCountResponse.cs` |
 
 ### RetrieveInventoryPhysicalCount
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveInventoryPhysicalCount(string physicalCountId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveInventoryPhysicalCount(RetrieveInventoryPhysicalCountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PhysicalCountId`
 - **Returns**: `RetrieveInventoryPhysicalCountResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveInventoryPhysicalCountResponse` | `Models/RetrieveInventoryPhysicalCountResponse.cs` |
+| `RetrieveInventoryPhysicalCountRequest` | `src/Square/Requests/Inventory/RetrieveInventoryPhysicalCountRequest.cs` |
+| `RetrieveInventoryPhysicalCountResponse` | `src/Square/Models/RetrieveInventoryPhysicalCountResponse.cs` |
 
 ### UpdateInventoryAdjustment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateInventoryAdjustment(UpdateInventoryAdjustmentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateInventoryAdjustment(UpdateInventoryAdjustmentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `UpdateInventoryAdjustmentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateInventoryAdjustmentRequest` | `Models/UpdateInventoryAdjustmentRequest.cs` |
-| `UpdateInventoryAdjustmentResponse` | `Models/UpdateInventoryAdjustmentResponse.cs` |
+| `UpdateInventoryAdjustmentOperationRequest` | `src/Square/Requests/Inventory/UpdateInventoryAdjustmentOperationRequest.cs` |
+| `UpdateInventoryAdjustmentRequest` | `src/Square/Models/UpdateInventoryAdjustmentRequest.cs` |
+| `UpdateInventoryAdjustmentResponse` | `src/Square/Models/UpdateInventoryAdjustmentResponse.cs` |
 
 ### UpdateInventoryAdjustmentReason
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateInventoryAdjustmentReason(UpdateInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateInventoryAdjustmentReason(UpdateInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `UpdateInventoryAdjustmentReasonResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateInventoryAdjustmentReasonRequest` | `Models/UpdateInventoryAdjustmentReasonRequest.cs` |
-| `UpdateInventoryAdjustmentReasonResponse` | `Models/UpdateInventoryAdjustmentReasonResponse.cs` |
+| `UpdateInventoryAdjustmentReasonOperationRequest` | `src/Square/Requests/Inventory/UpdateInventoryAdjustmentReasonOperationRequest.cs` |
+| `UpdateInventoryAdjustmentReasonRequest` | `src/Square/Models/UpdateInventoryAdjustmentReasonRequest.cs` |
+| `UpdateInventoryAdjustmentReasonResponse` | `src/Square/Models/UpdateInventoryAdjustmentReasonResponse.cs` |
 

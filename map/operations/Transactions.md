@@ -2,54 +2,61 @@
 
 # Transactions — operations
 
-Accessor: `client.Transactions` · Source: `Api/Transactions.cs` · 4 operations
+Accessor: `client.Transactions` · Source: `src/Square/Api/Transactions.cs` · 4 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CaptureTransaction
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CaptureTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CaptureTransaction(CaptureTransactionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`, `TransactionId`
 - **Returns**: `CaptureTransactionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CaptureTransactionResponse` | `Models/CaptureTransactionResponse.cs` |
+| `CaptureTransactionRequest` | `src/Square/Requests/Transactions/CaptureTransactionRequest.cs` |
+| `CaptureTransactionResponse` | `src/Square/Models/CaptureTransactionResponse.cs` |
 
 ### ListTransactions
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListTransactions(string locationId, string? beginTime, string? endTime, SortOrder? sortOrder, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 4 params (`beginTime` … `cursor`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `begin_time` ← `beginTime`, `end_time` ← `endTime`, `sort_order` ← `sortOrder`, `cursor` ← `cursor`
+- **Signature**: `ListTransactions(ListTransactionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`
+- **Query params (wire ← C#)**: `begin_time` ← `BeginTime`, `end_time` ← `EndTime`, `sort_order` ← `SortOrder`, `cursor` ← `Cursor`
 - **Returns**: `ListTransactionsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SortOrder` | `Models/Enums/SortOrder.cs` |
-| `ListTransactionsResponse` | `Models/ListTransactionsResponse.cs` |
+| `ListTransactionsRequest` | `src/Square/Requests/Transactions/ListTransactionsRequest.cs` |
+| `SortOrder` | `src/Square/Models/Enums/SortOrder.cs` |
+| `ListTransactionsResponse` | `src/Square/Models/ListTransactionsResponse.cs` |
 
 ### RetrieveTransaction
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveTransaction(RetrieveTransactionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`, `TransactionId`
 - **Returns**: `RetrieveTransactionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveTransactionResponse` | `Models/RetrieveTransactionResponse.cs` |
+| `RetrieveTransactionRequest` | `src/Square/Requests/Transactions/RetrieveTransactionRequest.cs` |
+| `RetrieveTransactionResponse` | `src/Square/Models/RetrieveTransactionResponse.cs` |
 
 ### VoidTransaction
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `VoidTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `VoidTransaction(VoidTransactionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`, `TransactionId`
 - **Returns**: `VoidTransactionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `VoidTransactionResponse` | `Models/VoidTransactionResponse.cs` |
+| `VoidTransactionRequest` | `src/Square/Requests/Transactions/VoidTransactionRequest.cs` |
+| `VoidTransactionResponse` | `src/Square/Models/VoidTransactionResponse.cs` |
 

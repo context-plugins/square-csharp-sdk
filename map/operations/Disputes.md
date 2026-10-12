@@ -2,117 +2,128 @@
 
 # Disputes — operations
 
-Accessor: `client.Disputes` · Source: `Api/Disputes.cs` · 9 operations
+Accessor: `client.Disputes` · Source: `src/Square/Api/Disputes.cs` · 9 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### AcceptDispute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `AcceptDispute(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `AcceptDispute(AcceptDisputeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DisputeId`
 - **Returns**: `AcceptDisputeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `AcceptDisputeResponse` | `Models/AcceptDisputeResponse.cs` |
+| `AcceptDisputeRequest` | `src/Square/Requests/Disputes/AcceptDisputeRequest.cs` |
+| `AcceptDisputeResponse` | `src/Square/Models/AcceptDisputeResponse.cs` |
 
 ### CreateDisputeEvidenceFile
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateDisputeEvidenceFile(string disputeId, CreateDisputeEvidenceFileRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `request` — nullable, no default → **must pass explicitly**
-  - `imageFile` — nullable, no default → **must pass explicitly**
+- **Signature**: `CreateDisputeEvidenceFile(CreateDisputeEvidenceFileOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DisputeId`
 - **Returns**: `CreateDisputeEvidenceFileResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateDisputeEvidenceFileRequest` | `Models/CreateDisputeEvidenceFileRequest.cs` |
-| `CreateDisputeEvidenceFileResponse` | `Models/CreateDisputeEvidenceFileResponse.cs` |
+| `CreateDisputeEvidenceFileOperationRequest` | `src/Square/Requests/Disputes/CreateDisputeEvidenceFileOperationRequest.cs` |
+| `CreateDisputeEvidenceFileRequest` | `src/Square/Models/CreateDisputeEvidenceFileRequest.cs` |
+| `CreateDisputeEvidenceFileResponse` | `src/Square/Models/CreateDisputeEvidenceFileResponse.cs` |
 
 ### CreateDisputeEvidenceText
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateDisputeEvidenceText(string disputeId, CreateDisputeEvidenceTextRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateDisputeEvidenceText(CreateDisputeEvidenceTextOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DisputeId`, `Body`
 - **Returns**: `CreateDisputeEvidenceTextResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateDisputeEvidenceTextRequest` | `Models/CreateDisputeEvidenceTextRequest.cs` |
-| `CreateDisputeEvidenceTextResponse` | `Models/CreateDisputeEvidenceTextResponse.cs` |
+| `CreateDisputeEvidenceTextOperationRequest` | `src/Square/Requests/Disputes/CreateDisputeEvidenceTextOperationRequest.cs` |
+| `CreateDisputeEvidenceTextRequest` | `src/Square/Models/CreateDisputeEvidenceTextRequest.cs` |
+| `CreateDisputeEvidenceTextResponse` | `src/Square/Models/CreateDisputeEvidenceTextResponse.cs` |
 
 ### DeleteDisputeEvidence
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteDisputeEvidence(string disputeId, string evidenceId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteDisputeEvidence(DeleteDisputeEvidenceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DisputeId`, `EvidenceId`
 - **Returns**: `DeleteDisputeEvidenceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteDisputeEvidenceResponse` | `Models/DeleteDisputeEvidenceResponse.cs` |
+| `DeleteDisputeEvidenceRequest` | `src/Square/Requests/Disputes/DeleteDisputeEvidenceRequest.cs` |
+| `DeleteDisputeEvidenceResponse` | `src/Square/Models/DeleteDisputeEvidenceResponse.cs` |
 
 ### ListDisputeEvidence
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListDisputeEvidence(string disputeId, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `cursor` ← `cursor`
+- **Signature**: `ListDisputeEvidence(ListDisputeEvidenceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DisputeId`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`
 - **Returns**: `ListDisputeEvidenceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListDisputeEvidenceResponse` | `Models/ListDisputeEvidenceResponse.cs` |
+| `ListDisputeEvidenceRequest` | `src/Square/Requests/Disputes/ListDisputeEvidenceRequest.cs` |
+| `ListDisputeEvidenceResponse` | `src/Square/Models/ListDisputeEvidenceResponse.cs` |
 
 ### ListDisputes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListDisputes(string? cursor, DisputeState? states, string? locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - `states` — nullable, no default → **must pass explicitly**
-  - `locationId` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `states` ← `states`, `location_id` ← `locationId`
+- **Signature**: `ListDisputes(ListDisputesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `states` ← `States`, `location_id` ← `LocationId`
 - **Returns**: `ListDisputesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DisputeState` | `Models/Enums/DisputeState.cs` |
-| `ListDisputesResponse` | `Models/ListDisputesResponse.cs` |
+| `ListDisputesRequest` | `src/Square/Requests/Disputes/ListDisputesRequest.cs` |
+| `DisputeState` | `src/Square/Models/Enums/DisputeState.cs` |
+| `ListDisputesResponse` | `src/Square/Models/ListDisputesResponse.cs` |
 
 ### RetrieveDispute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveDispute(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveDispute(RetrieveDisputeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DisputeId`
 - **Returns**: `RetrieveDisputeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveDisputeResponse` | `Models/RetrieveDisputeResponse.cs` |
+| `RetrieveDisputeRequest` | `src/Square/Requests/Disputes/RetrieveDisputeRequest.cs` |
+| `RetrieveDisputeResponse` | `src/Square/Models/RetrieveDisputeResponse.cs` |
 
 ### RetrieveDisputeEvidence
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveDisputeEvidence(string disputeId, string evidenceId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveDisputeEvidence(RetrieveDisputeEvidenceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DisputeId`, `EvidenceId`
 - **Returns**: `RetrieveDisputeEvidenceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveDisputeEvidenceResponse` | `Models/RetrieveDisputeEvidenceResponse.cs` |
+| `RetrieveDisputeEvidenceRequest` | `src/Square/Requests/Disputes/RetrieveDisputeEvidenceRequest.cs` |
+| `RetrieveDisputeEvidenceResponse` | `src/Square/Models/RetrieveDisputeEvidenceResponse.cs` |
 
 ### SubmitEvidence
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SubmitEvidence(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SubmitEvidence(SubmitEvidenceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DisputeId`
 - **Returns**: `SubmitEvidenceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SubmitEvidenceResponse` | `Models/SubmitEvidenceResponse.cs` |
+| `SubmitEvidenceRequest` | `src/Square/Requests/Disputes/SubmitEvidenceRequest.cs` |
+| `SubmitEvidenceResponse` | `src/Square/Models/SubmitEvidenceResponse.cs` |
 

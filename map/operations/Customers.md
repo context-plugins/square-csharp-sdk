@@ -2,176 +2,200 @@
 
 # Customers — operations
 
-Accessor: `client.Customers` · Source: `Api/Customers.cs` · 14 operations
+Accessor: `client.Customers` · Source: `src/Square/Api/Customers.cs` · 14 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### AddGroupToCustomer
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `AddGroupToCustomer(string customerId, string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `AddGroupToCustomer(AddGroupToCustomerRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`, `GroupId`
 - **Returns**: `AddGroupToCustomerResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `AddGroupToCustomerResponse` | `Models/AddGroupToCustomerResponse.cs` |
+| `AddGroupToCustomerRequest` | `src/Square/Requests/Customers/AddGroupToCustomerRequest.cs` |
+| `AddGroupToCustomerResponse` | `src/Square/Models/AddGroupToCustomerResponse.cs` |
 
 ### BulkCreateCustomers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkCreateCustomers(BulkCreateCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkCreateCustomers(BulkCreateCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkCreateCustomersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkCreateCustomersRequest` | `Models/BulkCreateCustomersRequest.cs` |
-| `BulkCreateCustomersResponse` | `Models/BulkCreateCustomersResponse.cs` |
+| `BulkCreateCustomersOperationRequest` | `src/Square/Requests/Customers/BulkCreateCustomersOperationRequest.cs` |
+| `BulkCreateCustomersRequest` | `src/Square/Models/BulkCreateCustomersRequest.cs` |
+| `BulkCreateCustomersResponse` | `src/Square/Models/BulkCreateCustomersResponse.cs` |
 
 ### BulkDeleteCustomers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkDeleteCustomers(BulkDeleteCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkDeleteCustomers(BulkDeleteCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkDeleteCustomersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkDeleteCustomersRequest` | `Models/BulkDeleteCustomersRequest.cs` |
-| `BulkDeleteCustomersResponse` | `Models/BulkDeleteCustomersResponse.cs` |
+| `BulkDeleteCustomersOperationRequest` | `src/Square/Requests/Customers/BulkDeleteCustomersOperationRequest.cs` |
+| `BulkDeleteCustomersRequest` | `src/Square/Models/BulkDeleteCustomersRequest.cs` |
+| `BulkDeleteCustomersResponse` | `src/Square/Models/BulkDeleteCustomersResponse.cs` |
 
 ### BulkRetrieveCustomers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkRetrieveCustomers(BulkRetrieveCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkRetrieveCustomers(BulkRetrieveCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkRetrieveCustomersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkRetrieveCustomersRequest` | `Models/BulkRetrieveCustomersRequest.cs` |
-| `BulkRetrieveCustomersResponse` | `Models/BulkRetrieveCustomersResponse.cs` |
+| `BulkRetrieveCustomersOperationRequest` | `src/Square/Requests/Customers/BulkRetrieveCustomersOperationRequest.cs` |
+| `BulkRetrieveCustomersRequest` | `src/Square/Models/BulkRetrieveCustomersRequest.cs` |
+| `BulkRetrieveCustomersResponse` | `src/Square/Models/BulkRetrieveCustomersResponse.cs` |
 
 ### BulkUpdateCustomers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkUpdateCustomers(BulkUpdateCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkUpdateCustomers(BulkUpdateCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkUpdateCustomersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkUpdateCustomersRequest` | `Models/BulkUpdateCustomersRequest.cs` |
-| `BulkUpdateCustomersResponse` | `Models/BulkUpdateCustomersResponse.cs` |
+| `BulkUpdateCustomersOperationRequest` | `src/Square/Requests/Customers/BulkUpdateCustomersOperationRequest.cs` |
+| `BulkUpdateCustomersRequest` | `src/Square/Models/BulkUpdateCustomersRequest.cs` |
+| `BulkUpdateCustomersResponse` | `src/Square/Models/BulkUpdateCustomersResponse.cs` |
 
 ### CreateCustomer
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateCustomer(CreateCustomerRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateCustomer(CreateCustomerOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateCustomerResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateCustomerRequest` | `Models/CreateCustomerRequest.cs` |
-| `CreateCustomerResponse` | `Models/CreateCustomerResponse.cs` |
+| `CreateCustomerOperationRequest` | `src/Square/Requests/Customers/CreateCustomerOperationRequest.cs` |
+| `CreateCustomerRequest` | `src/Square/Models/CreateCustomerRequest.cs` |
+| `CreateCustomerResponse` | `src/Square/Models/CreateCustomerResponse.cs` |
 
 ### CreateCustomerCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateCustomerCard(string customerId, CreateCustomerCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateCustomerCard(CreateCustomerCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`, `Body`
 - **Returns**: `CreateCustomerCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateCustomerCardRequest` | `Models/CreateCustomerCardRequest.cs` |
-| `CreateCustomerCardResponse` | `Models/CreateCustomerCardResponse.cs` |
+| `CreateCustomerCardOperationRequest` | `src/Square/Requests/Customers/CreateCustomerCardOperationRequest.cs` |
+| `CreateCustomerCardRequest` | `src/Square/Models/CreateCustomerCardRequest.cs` |
+| `CreateCustomerCardResponse` | `src/Square/Models/CreateCustomerCardResponse.cs` |
 
 ### DeleteCustomer
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteCustomer(string customerId, long? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `version` ← `version`
+- **Signature**: `DeleteCustomer(DeleteCustomerRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`
+- **Query params (wire ← C#)**: `version` ← `Version`
 - **Returns**: `DeleteCustomerResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteCustomerResponse` | `Models/DeleteCustomerResponse.cs` |
+| `DeleteCustomerRequest` | `src/Square/Requests/Customers/DeleteCustomerRequest.cs` |
+| `DeleteCustomerResponse` | `src/Square/Models/DeleteCustomerResponse.cs` |
 
 ### DeleteCustomerCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteCustomerCard(string customerId, string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteCustomerCard(DeleteCustomerCardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`, `CardId`
 - **Returns**: `DeleteCustomerCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteCustomerCardResponse` | `Models/DeleteCustomerCardResponse.cs` |
+| `DeleteCustomerCardRequest` | `src/Square/Requests/Customers/DeleteCustomerCardRequest.cs` |
+| `DeleteCustomerCardResponse` | `src/Square/Models/DeleteCustomerCardResponse.cs` |
 
 ### ListCustomers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListCustomers(string? cursor, int? limit, CustomerSortField? sortField, SortOrder? sortOrder, bool? count = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 4 params (`cursor` … `sortOrder`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-  - defaults: `count` = `false`
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `limit` ← `limit`, `sort_field` ← `sortField`, `sort_order` ← `sortOrder`, `count` ← `count`
+- **Signature**: `ListCustomers(ListCustomersRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `limit` ← `Limit`, `sort_field` ← `SortField`, `sort_order` ← `SortOrder`, `count` ← `Count`
 - **Returns**: `ListCustomersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CustomerSortField` | `Models/Enums/CustomerSortField.cs` |
-| `SortOrder` | `Models/Enums/SortOrder.cs` |
-| `ListCustomersResponse` | `Models/ListCustomersResponse.cs` |
+| `ListCustomersRequest` | `src/Square/Requests/Customers/ListCustomersRequest.cs` |
+| `CustomerSortField` | `src/Square/Models/Enums/CustomerSortField.cs` |
+| `SortOrder` | `src/Square/Models/Enums/SortOrder.cs` |
+| `ListCustomersResponse` | `src/Square/Models/ListCustomersResponse.cs` |
 
 ### RemoveGroupFromCustomer
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RemoveGroupFromCustomer(string customerId, string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RemoveGroupFromCustomer(RemoveGroupFromCustomerRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`, `GroupId`
 - **Returns**: `RemoveGroupFromCustomerResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RemoveGroupFromCustomerResponse` | `Models/RemoveGroupFromCustomerResponse.cs` |
+| `RemoveGroupFromCustomerRequest` | `src/Square/Requests/Customers/RemoveGroupFromCustomerRequest.cs` |
+| `RemoveGroupFromCustomerResponse` | `src/Square/Models/RemoveGroupFromCustomerResponse.cs` |
 
 ### RetrieveCustomer
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveCustomer(string customerId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveCustomer(RetrieveCustomerRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`
 - **Returns**: `RetrieveCustomerResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveCustomerResponse` | `Models/RetrieveCustomerResponse.cs` |
+| `RetrieveCustomerRequest` | `src/Square/Requests/Customers/RetrieveCustomerRequest.cs` |
+| `RetrieveCustomerResponse` | `src/Square/Models/RetrieveCustomerResponse.cs` |
 
 ### SearchCustomers
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchCustomers(SearchCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchCustomers(SearchCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchCustomersResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchCustomersRequest` | `Models/SearchCustomersRequest.cs` |
-| `SearchCustomersResponse` | `Models/SearchCustomersResponse.cs` |
+| `SearchCustomersOperationRequest` | `src/Square/Requests/Customers/SearchCustomersOperationRequest.cs` |
+| `SearchCustomersRequest` | `src/Square/Models/SearchCustomersRequest.cs` |
+| `SearchCustomersResponse` | `src/Square/Models/SearchCustomersResponse.cs` |
 
 ### UpdateCustomer
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateCustomer(string customerId, UpdateCustomerRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateCustomer(UpdateCustomerOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CustomerId`, `Body`
 - **Returns**: `UpdateCustomerResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateCustomerRequest` | `Models/UpdateCustomerRequest.cs` |
-| `UpdateCustomerResponse` | `Models/UpdateCustomerResponse.cs` |
+| `UpdateCustomerOperationRequest` | `src/Square/Requests/Customers/UpdateCustomerOperationRequest.cs` |
+| `UpdateCustomerRequest` | `src/Square/Models/UpdateCustomerRequest.cs` |
+| `UpdateCustomerResponse` | `src/Square/Models/UpdateCustomerResponse.cs` |
 

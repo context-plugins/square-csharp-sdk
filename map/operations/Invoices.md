@@ -2,130 +2,145 @@
 
 # Invoices — operations
 
-Accessor: `client.Invoices` · Source: `Api/Invoices.cs` · 10 operations
+Accessor: `client.Invoices` · Source: `src/Square/Api/Invoices.cs` · 10 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CancelInvoice
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelInvoice(string invoiceId, CancelInvoiceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelInvoice(CancelInvoiceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `InvoiceId`, `Body`
 - **Returns**: `CancelInvoiceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelInvoiceRequest` | `Models/CancelInvoiceRequest.cs` |
-| `CancelInvoiceResponse` | `Models/CancelInvoiceResponse.cs` |
+| `CancelInvoiceOperationRequest` | `src/Square/Requests/Invoices/CancelInvoiceOperationRequest.cs` |
+| `CancelInvoiceRequest` | `src/Square/Models/CancelInvoiceRequest.cs` |
+| `CancelInvoiceResponse` | `src/Square/Models/CancelInvoiceResponse.cs` |
 
 ### CreateInvoice
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateInvoice(CreateInvoiceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateInvoice(CreateInvoiceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateInvoiceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateInvoiceRequest` | `Models/CreateInvoiceRequest.cs` |
-| `CreateInvoiceResponse` | `Models/CreateInvoiceResponse.cs` |
+| `CreateInvoiceOperationRequest` | `src/Square/Requests/Invoices/CreateInvoiceOperationRequest.cs` |
+| `CreateInvoiceRequest` | `src/Square/Models/CreateInvoiceRequest.cs` |
+| `CreateInvoiceResponse` | `src/Square/Models/CreateInvoiceResponse.cs` |
 
 ### CreateInvoiceAttachment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateInvoiceAttachment(string invoiceId, CreateInvoiceAttachmentRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `request` — nullable, no default → **must pass explicitly**
-  - `imageFile` — nullable, no default → **must pass explicitly**
+- **Signature**: `CreateInvoiceAttachment(CreateInvoiceAttachmentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `InvoiceId`
 - **Returns**: `CreateInvoiceAttachmentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateInvoiceAttachmentRequest` | `Models/CreateInvoiceAttachmentRequest.cs` |
-| `CreateInvoiceAttachmentResponse` | `Models/CreateInvoiceAttachmentResponse.cs` |
+| `CreateInvoiceAttachmentOperationRequest` | `src/Square/Requests/Invoices/CreateInvoiceAttachmentOperationRequest.cs` |
+| `CreateInvoiceAttachmentRequest` | `src/Square/Models/CreateInvoiceAttachmentRequest.cs` |
+| `CreateInvoiceAttachmentResponse` | `src/Square/Models/CreateInvoiceAttachmentResponse.cs` |
 
 ### DeleteInvoice
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteInvoice(string invoiceId, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `version` ← `version`
+- **Signature**: `DeleteInvoice(DeleteInvoiceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `InvoiceId`
+- **Query params (wire ← C#)**: `version` ← `Version`
 - **Returns**: `DeleteInvoiceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteInvoiceResponse` | `Models/DeleteInvoiceResponse.cs` |
+| `DeleteInvoiceRequest` | `src/Square/Requests/Invoices/DeleteInvoiceRequest.cs` |
+| `DeleteInvoiceResponse` | `src/Square/Models/DeleteInvoiceResponse.cs` |
 
 ### DeleteInvoiceAttachment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteInvoiceAttachment(string invoiceId, string attachmentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteInvoiceAttachment(DeleteInvoiceAttachmentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `InvoiceId`, `AttachmentId`
 - **Returns**: `DeleteInvoiceAttachmentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteInvoiceAttachmentResponse` | `Models/DeleteInvoiceAttachmentResponse.cs` |
+| `DeleteInvoiceAttachmentRequest` | `src/Square/Requests/Invoices/DeleteInvoiceAttachmentRequest.cs` |
+| `DeleteInvoiceAttachmentResponse` | `src/Square/Models/DeleteInvoiceAttachmentResponse.cs` |
 
 ### GetInvoice
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetInvoice(string invoiceId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetInvoice(GetInvoiceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `InvoiceId`
 - **Returns**: `GetInvoiceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetInvoiceResponse` | `Models/GetInvoiceResponse.cs` |
+| `GetInvoiceRequest` | `src/Square/Requests/Invoices/GetInvoiceRequest.cs` |
+| `GetInvoiceResponse` | `src/Square/Models/GetInvoiceResponse.cs` |
 
 ### ListInvoices
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListInvoices(string locationId, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `location_id` ← `locationId`, `cursor` ← `cursor`, `limit` ← `limit`
+- **Signature**: `ListInvoices(ListInvoicesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`
+- **Query params (wire ← C#)**: `location_id` ← `LocationId`, `cursor` ← `Cursor`, `limit` ← `Limit`
 - **Returns**: `ListInvoicesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListInvoicesResponse` | `Models/ListInvoicesResponse.cs` |
+| `ListInvoicesRequest` | `src/Square/Requests/Invoices/ListInvoicesRequest.cs` |
+| `ListInvoicesResponse` | `src/Square/Models/ListInvoicesResponse.cs` |
 
 ### PublishInvoice
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `PublishInvoice(string invoiceId, PublishInvoiceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `PublishInvoice(PublishInvoiceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `InvoiceId`, `Body`
 - **Returns**: `PublishInvoiceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `PublishInvoiceRequest` | `Models/PublishInvoiceRequest.cs` |
-| `PublishInvoiceResponse` | `Models/PublishInvoiceResponse.cs` |
+| `PublishInvoiceOperationRequest` | `src/Square/Requests/Invoices/PublishInvoiceOperationRequest.cs` |
+| `PublishInvoiceRequest` | `src/Square/Models/PublishInvoiceRequest.cs` |
+| `PublishInvoiceResponse` | `src/Square/Models/PublishInvoiceResponse.cs` |
 
 ### SearchInvoices
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchInvoices(SearchInvoicesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchInvoices(SearchInvoicesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchInvoicesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchInvoicesRequest` | `Models/SearchInvoicesRequest.cs` |
-| `SearchInvoicesResponse` | `Models/SearchInvoicesResponse.cs` |
+| `SearchInvoicesOperationRequest` | `src/Square/Requests/Invoices/SearchInvoicesOperationRequest.cs` |
+| `SearchInvoicesRequest` | `src/Square/Models/SearchInvoicesRequest.cs` |
+| `SearchInvoicesResponse` | `src/Square/Models/SearchInvoicesResponse.cs` |
 
 ### UpdateInvoice
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateInvoice(string invoiceId, UpdateInvoiceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateInvoice(UpdateInvoiceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `InvoiceId`, `Body`
 - **Returns**: `UpdateInvoiceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateInvoiceRequest` | `Models/UpdateInvoiceRequest.cs` |
-| `UpdateInvoiceResponse` | `Models/UpdateInvoiceResponse.cs` |
+| `UpdateInvoiceOperationRequest` | `src/Square/Requests/Invoices/UpdateInvoiceOperationRequest.cs` |
+| `UpdateInvoiceRequest` | `src/Square/Models/UpdateInvoiceRequest.cs` |
+| `UpdateInvoiceResponse` | `src/Square/Models/UpdateInvoiceResponse.cs` |
 

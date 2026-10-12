@@ -2,91 +2,103 @@
 
 # GiftCards — operations
 
-Accessor: `client.GiftCards` · Source: `Api/GiftCards.cs` · 7 operations
+Accessor: `client.GiftCards` · Source: `src/Square/Api/GiftCards.cs` · 7 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CreateGiftCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateGiftCard(CreateGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateGiftCard(CreateGiftCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateGiftCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateGiftCardRequest` | `Models/CreateGiftCardRequest.cs` |
-| `CreateGiftCardResponse` | `Models/CreateGiftCardResponse.cs` |
+| `CreateGiftCardOperationRequest` | `src/Square/Requests/GiftCards/CreateGiftCardOperationRequest.cs` |
+| `CreateGiftCardRequest` | `src/Square/Models/CreateGiftCardRequest.cs` |
+| `CreateGiftCardResponse` | `src/Square/Models/CreateGiftCardResponse.cs` |
 
 ### LinkCustomerToGiftCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `LinkCustomerToGiftCard(string giftCardId, LinkCustomerToGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `LinkCustomerToGiftCard(LinkCustomerToGiftCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `GiftCardId`, `Body`
 - **Returns**: `LinkCustomerToGiftCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `LinkCustomerToGiftCardRequest` | `Models/LinkCustomerToGiftCardRequest.cs` |
-| `LinkCustomerToGiftCardResponse` | `Models/LinkCustomerToGiftCardResponse.cs` |
+| `LinkCustomerToGiftCardOperationRequest` | `src/Square/Requests/GiftCards/LinkCustomerToGiftCardOperationRequest.cs` |
+| `LinkCustomerToGiftCardRequest` | `src/Square/Models/LinkCustomerToGiftCardRequest.cs` |
+| `LinkCustomerToGiftCardResponse` | `src/Square/Models/LinkCustomerToGiftCardResponse.cs` |
 
 ### ListGiftCards
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListGiftCards(string? type, string? state, int? limit, string? cursor, string? customerId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 5 params (`type` … `customerId`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `type` ← `type`, `state` ← `state`, `limit` ← `limit`, `cursor` ← `cursor`, `customer_id` ← `customerId`
+- **Signature**: `ListGiftCards(ListGiftCardsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `type` ← `Type`, `state` ← `State`, `limit` ← `Limit`, `cursor` ← `Cursor`, `customer_id` ← `CustomerId`
 - **Returns**: `ListGiftCardsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListGiftCardsResponse` | `Models/ListGiftCardsResponse.cs` |
+| `ListGiftCardsRequest` | `src/Square/Requests/GiftCards/ListGiftCardsRequest.cs` |
+| `ListGiftCardsResponse` | `src/Square/Models/ListGiftCardsResponse.cs` |
 
 ### RetrieveGiftCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveGiftCard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveGiftCard(RetrieveGiftCardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `RetrieveGiftCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveGiftCardResponse` | `Models/RetrieveGiftCardResponse.cs` |
+| `RetrieveGiftCardRequest` | `src/Square/Requests/GiftCards/RetrieveGiftCardRequest.cs` |
+| `RetrieveGiftCardResponse` | `src/Square/Models/RetrieveGiftCardResponse.cs` |
 
 ### RetrieveGiftCardFromGan
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveGiftCardFromGan(RetrieveGiftCardFromGanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveGiftCardFromGan(RetrieveGiftCardFromGanOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `RetrieveGiftCardFromGanResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveGiftCardFromGanRequest` | `Models/RetrieveGiftCardFromGanRequest.cs` |
-| `RetrieveGiftCardFromGanResponse` | `Models/RetrieveGiftCardFromGanResponse.cs` |
+| `RetrieveGiftCardFromGanOperationRequest` | `src/Square/Requests/GiftCards/RetrieveGiftCardFromGanOperationRequest.cs` |
+| `RetrieveGiftCardFromGanRequest` | `src/Square/Models/RetrieveGiftCardFromGanRequest.cs` |
+| `RetrieveGiftCardFromGanResponse` | `src/Square/Models/RetrieveGiftCardFromGanResponse.cs` |
 
 ### RetrieveGiftCardFromNonce
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveGiftCardFromNonce(RetrieveGiftCardFromNonceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveGiftCardFromNonce(RetrieveGiftCardFromNonceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `RetrieveGiftCardFromNonceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveGiftCardFromNonceRequest` | `Models/RetrieveGiftCardFromNonceRequest.cs` |
-| `RetrieveGiftCardFromNonceResponse` | `Models/RetrieveGiftCardFromNonceResponse.cs` |
+| `RetrieveGiftCardFromNonceOperationRequest` | `src/Square/Requests/GiftCards/RetrieveGiftCardFromNonceOperationRequest.cs` |
+| `RetrieveGiftCardFromNonceRequest` | `src/Square/Models/RetrieveGiftCardFromNonceRequest.cs` |
+| `RetrieveGiftCardFromNonceResponse` | `src/Square/Models/RetrieveGiftCardFromNonceResponse.cs` |
 
 ### UnlinkCustomerFromGiftCard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UnlinkCustomerFromGiftCard(string giftCardId, UnlinkCustomerFromGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UnlinkCustomerFromGiftCard(UnlinkCustomerFromGiftCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `GiftCardId`, `Body`
 - **Returns**: `UnlinkCustomerFromGiftCardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UnlinkCustomerFromGiftCardRequest` | `Models/UnlinkCustomerFromGiftCardRequest.cs` |
-| `UnlinkCustomerFromGiftCardResponse` | `Models/UnlinkCustomerFromGiftCardResponse.cs` |
+| `UnlinkCustomerFromGiftCardOperationRequest` | `src/Square/Requests/GiftCards/UnlinkCustomerFromGiftCardOperationRequest.cs` |
+| `UnlinkCustomerFromGiftCardRequest` | `src/Square/Models/UnlinkCustomerFromGiftCardRequest.cs` |
+| `UnlinkCustomerFromGiftCardResponse` | `src/Square/Models/UnlinkCustomerFromGiftCardResponse.cs` |
 

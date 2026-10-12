@@ -2,70 +2,76 @@
 
 # Devices — operations
 
-Accessor: `client.Devices` · Source: `Api/Devices.cs` · 5 operations
+Accessor: `client.Devices` · Source: `src/Square/Api/Devices.cs` · 5 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CreateDeviceCode
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateDeviceCode(CreateDeviceCodeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateDeviceCode(CreateDeviceCodeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateDeviceCodeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateDeviceCodeRequest` | `Models/CreateDeviceCodeRequest.cs` |
-| `CreateDeviceCodeResponse` | `Models/CreateDeviceCodeResponse.cs` |
+| `CreateDeviceCodeOperationRequest` | `src/Square/Requests/Devices/CreateDeviceCodeOperationRequest.cs` |
+| `CreateDeviceCodeRequest` | `src/Square/Models/CreateDeviceCodeRequest.cs` |
+| `CreateDeviceCodeResponse` | `src/Square/Models/CreateDeviceCodeResponse.cs` |
 
 ### GetDevice
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetDevice(string deviceId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetDevice(GetDeviceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `DeviceId`
 - **Returns**: `GetDeviceResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetDeviceResponse` | `Models/GetDeviceResponse.cs` |
+| `GetDeviceRequest` | `src/Square/Requests/Devices/GetDeviceRequest.cs` |
+| `GetDeviceResponse` | `src/Square/Models/GetDeviceResponse.cs` |
 
 ### GetDeviceCode
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetDeviceCode(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetDeviceCode(GetDeviceCodeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `GetDeviceCodeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetDeviceCodeResponse` | `Models/GetDeviceCodeResponse.cs` |
+| `GetDeviceCodeRequest` | `src/Square/Requests/Devices/GetDeviceCodeRequest.cs` |
+| `GetDeviceCodeResponse` | `src/Square/Models/GetDeviceCodeResponse.cs` |
 
 ### ListDeviceCodes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListDeviceCodes(string? cursor, string? locationId, ProductType? productType, DeviceCodeStatus? status, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 4 params (`cursor` … `status`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `location_id` ← `locationId`, `product_type` ← `productType`, `status` ← `status`
+- **Signature**: `ListDeviceCodes(ListDeviceCodesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `location_id` ← `LocationId`, `product_type` ← `ProductType`, `status` ← `Status`
 - **Returns**: `ListDeviceCodesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ProductType` | `Models/Enums/ProductType.cs` |
-| `DeviceCodeStatus` | `Models/Enums/DeviceCodeStatus.cs` |
-| `ListDeviceCodesResponse` | `Models/ListDeviceCodesResponse.cs` |
+| `ListDeviceCodesRequest` | `src/Square/Requests/Devices/ListDeviceCodesRequest.cs` |
+| `ProductType` | `src/Square/Models/Enums/ProductType.cs` |
+| `DeviceCodeStatus` | `src/Square/Models/Enums/DeviceCodeStatus.cs` |
+| `ListDeviceCodesResponse` | `src/Square/Models/ListDeviceCodesResponse.cs` |
 
 ### ListDevices
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListDevices(string? cursor, SortOrder? sortOrder, int? limit, string? locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 4 params (`cursor` … `locationId`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `sort_order` ← `sortOrder`, `limit` ← `limit`, `location_id` ← `locationId`
+- **Signature**: `ListDevices(ListDevicesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `sort_order` ← `SortOrder`, `limit` ← `Limit`, `location_id` ← `LocationId`
 - **Returns**: `ListDevicesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SortOrder` | `Models/Enums/SortOrder.cs` |
-| `ListDevicesResponse` | `Models/ListDevicesResponse.cs` |
+| `ListDevicesRequest` | `src/Square/Requests/Devices/ListDevicesRequest.cs` |
+| `SortOrder` | `src/Square/Models/Enums/SortOrder.cs` |
+| `ListDevicesResponse` | `src/Square/Models/ListDevicesResponse.cs` |
 

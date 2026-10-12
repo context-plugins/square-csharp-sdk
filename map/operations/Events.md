@@ -2,54 +2,56 @@
 
 # Events — operations
 
-Accessor: `client.Events` · Source: `Api/Events.cs` · 4 operations
+Accessor: `client.Events` · Source: `src/Square/Api/Events.cs` · 4 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### DisableEvents
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DisableEvents(RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DisableEvents(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `DisableEventsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DisableEventsResponse` | `Models/DisableEventsResponse.cs` |
+| `DisableEventsResponse` | `src/Square/Models/DisableEventsResponse.cs` |
 
 ### EnableEvents
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `EnableEvents(RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `EnableEvents(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `EnableEventsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `EnableEventsResponse` | `Models/EnableEventsResponse.cs` |
+| `EnableEventsResponse` | `src/Square/Models/EnableEventsResponse.cs` |
 
 ### ListEventTypes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListEventTypes(string? apiVersion, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `apiVersion` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `api_version` ← `apiVersion`
+- **Signature**: `ListEventTypes(ListEventTypesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `api_version` ← `ApiVersion`
 - **Returns**: `ListEventTypesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListEventTypesResponse` | `Models/ListEventTypesResponse.cs` |
+| `ListEventTypesRequest` | `src/Square/Requests/Events/ListEventTypesRequest.cs` |
+| `ListEventTypesResponse` | `src/Square/Models/ListEventTypesResponse.cs` |
 
 ### SearchEvents
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchEvents(SearchEventsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchEvents(SearchEventsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchEventsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchEventsRequest` | `Models/SearchEventsRequest.cs` |
-| `SearchEventsResponse` | `Models/SearchEventsResponse.cs` |
+| `SearchEventsOperationRequest` | `src/Square/Requests/Events/SearchEventsOperationRequest.cs` |
+| `SearchEventsRequest` | `src/Square/Models/SearchEventsRequest.cs` |
+| `SearchEventsResponse` | `src/Square/Models/SearchEventsResponse.cs` |
 

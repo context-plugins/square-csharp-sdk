@@ -2,178 +2,208 @@
 
 # Terminal — operations
 
-Accessor: `client.Terminal` · Source: `Api/Terminal.cs` · 15 operations
+Accessor: `client.Terminal` · Source: `src/Square/Api/Terminal.cs` · 15 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CancelTerminalAction
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelTerminalAction(CancelTerminalActionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ActionId`
 - **Returns**: `CancelTerminalActionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelTerminalActionResponse` | `Models/CancelTerminalActionResponse.cs` |
+| `CancelTerminalActionRequest` | `src/Square/Requests/Terminal/CancelTerminalActionRequest.cs` |
+| `CancelTerminalActionResponse` | `src/Square/Models/CancelTerminalActionResponse.cs` |
 
 ### CancelTerminalCheckout
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelTerminalCheckout(CancelTerminalCheckoutRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CheckoutId`
 - **Returns**: `CancelTerminalCheckoutResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelTerminalCheckoutResponse` | `Models/CancelTerminalCheckoutResponse.cs` |
+| `CancelTerminalCheckoutRequest` | `src/Square/Requests/Terminal/CancelTerminalCheckoutRequest.cs` |
+| `CancelTerminalCheckoutResponse` | `src/Square/Models/CancelTerminalCheckoutResponse.cs` |
 
 ### CancelTerminalRefund
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelTerminalRefund(CancelTerminalRefundRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TerminalRefundId`
 - **Returns**: `CancelTerminalRefundResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelTerminalRefundResponse` | `Models/CancelTerminalRefundResponse.cs` |
+| `CancelTerminalRefundRequest` | `src/Square/Requests/Terminal/CancelTerminalRefundRequest.cs` |
+| `CancelTerminalRefundResponse` | `src/Square/Models/CancelTerminalRefundResponse.cs` |
 
 ### CreateTerminalAction
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateTerminalAction(CreateTerminalActionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateTerminalAction(CreateTerminalActionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateTerminalActionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateTerminalActionRequest` | `Models/CreateTerminalActionRequest.cs` |
-| `CreateTerminalActionResponse` | `Models/CreateTerminalActionResponse.cs` |
+| `CreateTerminalActionOperationRequest` | `src/Square/Requests/Terminal/CreateTerminalActionOperationRequest.cs` |
+| `CreateTerminalActionRequest` | `src/Square/Models/CreateTerminalActionRequest.cs` |
+| `CreateTerminalActionResponse` | `src/Square/Models/CreateTerminalActionResponse.cs` |
 
 ### CreateTerminalCheckout
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateTerminalCheckout(CreateTerminalCheckoutRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateTerminalCheckout(CreateTerminalCheckoutOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateTerminalCheckoutResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateTerminalCheckoutRequest` | `Models/CreateTerminalCheckoutRequest.cs` |
-| `CreateTerminalCheckoutResponse` | `Models/CreateTerminalCheckoutResponse.cs` |
+| `CreateTerminalCheckoutOperationRequest` | `src/Square/Requests/Terminal/CreateTerminalCheckoutOperationRequest.cs` |
+| `CreateTerminalCheckoutRequest` | `src/Square/Models/CreateTerminalCheckoutRequest.cs` |
+| `CreateTerminalCheckoutResponse` | `src/Square/Models/CreateTerminalCheckoutResponse.cs` |
 
 ### CreateTerminalRefund
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateTerminalRefund(CreateTerminalRefundRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateTerminalRefund(CreateTerminalRefundOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateTerminalRefundResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateTerminalRefundRequest` | `Models/CreateTerminalRefundRequest.cs` |
-| `CreateTerminalRefundResponse` | `Models/CreateTerminalRefundResponse.cs` |
+| `CreateTerminalRefundOperationRequest` | `src/Square/Requests/Terminal/CreateTerminalRefundOperationRequest.cs` |
+| `CreateTerminalRefundRequest` | `src/Square/Models/CreateTerminalRefundRequest.cs` |
+| `CreateTerminalRefundResponse` | `src/Square/Models/CreateTerminalRefundResponse.cs` |
 
 ### DismissTerminalAction
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DismissTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DismissTerminalAction(DismissTerminalActionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ActionId`
 - **Returns**: `DismissTerminalActionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DismissTerminalActionResponse` | `Models/DismissTerminalActionResponse.cs` |
+| `DismissTerminalActionRequest` | `src/Square/Requests/Terminal/DismissTerminalActionRequest.cs` |
+| `DismissTerminalActionResponse` | `src/Square/Models/DismissTerminalActionResponse.cs` |
 
 ### DismissTerminalCheckout
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DismissTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DismissTerminalCheckout(DismissTerminalCheckoutRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CheckoutId`
 - **Returns**: `DismissTerminalCheckoutResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DismissTerminalCheckoutResponse` | `Models/DismissTerminalCheckoutResponse.cs` |
+| `DismissTerminalCheckoutRequest` | `src/Square/Requests/Terminal/DismissTerminalCheckoutRequest.cs` |
+| `DismissTerminalCheckoutResponse` | `src/Square/Models/DismissTerminalCheckoutResponse.cs` |
 
 ### DismissTerminalRefund
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DismissTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DismissTerminalRefund(DismissTerminalRefundRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TerminalRefundId`
 - **Returns**: `DismissTerminalRefundResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DismissTerminalRefundResponse` | `Models/DismissTerminalRefundResponse.cs` |
+| `DismissTerminalRefundRequest` | `src/Square/Requests/Terminal/DismissTerminalRefundRequest.cs` |
+| `DismissTerminalRefundResponse` | `src/Square/Models/DismissTerminalRefundResponse.cs` |
 
 ### GetTerminalAction
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetTerminalAction(GetTerminalActionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ActionId`
 - **Returns**: `GetTerminalActionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetTerminalActionResponse` | `Models/GetTerminalActionResponse.cs` |
+| `GetTerminalActionRequest` | `src/Square/Requests/Terminal/GetTerminalActionRequest.cs` |
+| `GetTerminalActionResponse` | `src/Square/Models/GetTerminalActionResponse.cs` |
 
 ### GetTerminalCheckout
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetTerminalCheckout(GetTerminalCheckoutRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `CheckoutId`
 - **Returns**: `GetTerminalCheckoutResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetTerminalCheckoutResponse` | `Models/GetTerminalCheckoutResponse.cs` |
+| `GetTerminalCheckoutRequest` | `src/Square/Requests/Terminal/GetTerminalCheckoutRequest.cs` |
+| `GetTerminalCheckoutResponse` | `src/Square/Models/GetTerminalCheckoutResponse.cs` |
 
 ### GetTerminalRefund
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetTerminalRefund(GetTerminalRefundRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `TerminalRefundId`
 - **Returns**: `GetTerminalRefundResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetTerminalRefundResponse` | `Models/GetTerminalRefundResponse.cs` |
+| `GetTerminalRefundRequest` | `src/Square/Requests/Terminal/GetTerminalRefundRequest.cs` |
+| `GetTerminalRefundResponse` | `src/Square/Models/GetTerminalRefundResponse.cs` |
 
 ### SearchTerminalActions
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchTerminalActions(SearchTerminalActionsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchTerminalActions(SearchTerminalActionsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchTerminalActionsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchTerminalActionsRequest` | `Models/SearchTerminalActionsRequest.cs` |
-| `SearchTerminalActionsResponse` | `Models/SearchTerminalActionsResponse.cs` |
+| `SearchTerminalActionsOperationRequest` | `src/Square/Requests/Terminal/SearchTerminalActionsOperationRequest.cs` |
+| `SearchTerminalActionsRequest` | `src/Square/Models/SearchTerminalActionsRequest.cs` |
+| `SearchTerminalActionsResponse` | `src/Square/Models/SearchTerminalActionsResponse.cs` |
 
 ### SearchTerminalCheckouts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchTerminalCheckouts(SearchTerminalCheckoutsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchTerminalCheckouts(SearchTerminalCheckoutsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchTerminalCheckoutsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchTerminalCheckoutsRequest` | `Models/SearchTerminalCheckoutsRequest.cs` |
-| `SearchTerminalCheckoutsResponse` | `Models/SearchTerminalCheckoutsResponse.cs` |
+| `SearchTerminalCheckoutsOperationRequest` | `src/Square/Requests/Terminal/SearchTerminalCheckoutsOperationRequest.cs` |
+| `SearchTerminalCheckoutsRequest` | `src/Square/Models/SearchTerminalCheckoutsRequest.cs` |
+| `SearchTerminalCheckoutsResponse` | `src/Square/Models/SearchTerminalCheckoutsResponse.cs` |
 
 ### SearchTerminalRefunds
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchTerminalRefunds(SearchTerminalRefundsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchTerminalRefunds(SearchTerminalRefundsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchTerminalRefundsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchTerminalRefundsRequest` | `Models/SearchTerminalRefundsRequest.cs` |
-| `SearchTerminalRefundsResponse` | `Models/SearchTerminalRefundsResponse.cs` |
+| `SearchTerminalRefundsOperationRequest` | `src/Square/Requests/Terminal/SearchTerminalRefundsOperationRequest.cs` |
+| `SearchTerminalRefundsRequest` | `src/Square/Models/SearchTerminalRefundsRequest.cs` |
+| `SearchTerminalRefundsResponse` | `src/Square/Models/SearchTerminalRefundsResponse.cs` |
 

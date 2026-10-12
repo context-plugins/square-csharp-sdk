@@ -2,53 +2,59 @@
 
 # Locations — operations
 
-Accessor: `client.Locations` · Source: `Api/Locations.cs` · 4 operations
+Accessor: `client.Locations` · Source: `src/Square/Api/Locations.cs` · 4 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CreateLocation
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateLocation(CreateLocationRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateLocation(CreateLocationOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateLocationResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateLocationRequest` | `Models/CreateLocationRequest.cs` |
-| `CreateLocationResponse` | `Models/CreateLocationResponse.cs` |
+| `CreateLocationOperationRequest` | `src/Square/Requests/Locations/CreateLocationOperationRequest.cs` |
+| `CreateLocationRequest` | `src/Square/Models/CreateLocationRequest.cs` |
+| `CreateLocationResponse` | `src/Square/Models/CreateLocationResponse.cs` |
 
 ### ListLocations
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListLocations(RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `ListLocations(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `ListLocationsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListLocationsResponse` | `Models/ListLocationsResponse.cs` |
+| `ListLocationsResponse` | `src/Square/Models/ListLocationsResponse.cs` |
 
 ### RetrieveLocation
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveLocation(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveLocation(RetrieveLocationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`
 - **Returns**: `RetrieveLocationResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveLocationResponse` | `Models/RetrieveLocationResponse.cs` |
+| `RetrieveLocationRequest` | `src/Square/Requests/Locations/RetrieveLocationRequest.cs` |
+| `RetrieveLocationResponse` | `src/Square/Models/RetrieveLocationResponse.cs` |
 
 ### UpdateLocation
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateLocation(string locationId, UpdateLocationRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateLocation(UpdateLocationOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`, `Body`
 - **Returns**: `UpdateLocationResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateLocationRequest` | `Models/UpdateLocationRequest.cs` |
-| `UpdateLocationResponse` | `Models/UpdateLocationResponse.cs` |
+| `UpdateLocationOperationRequest` | `src/Square/Requests/Locations/UpdateLocationOperationRequest.cs` |
+| `UpdateLocationRequest` | `src/Square/Models/UpdateLocationRequest.cs` |
+| `UpdateLocationResponse` | `src/Square/Models/UpdateLocationResponse.cs` |
 

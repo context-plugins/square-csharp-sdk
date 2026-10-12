@@ -2,49 +2,50 @@
 
 # Payouts — operations
 
-Accessor: `client.Payouts` · Source: `Api/Payouts.cs` · 3 operations
+Accessor: `client.Payouts` · Source: `src/Square/Api/Payouts.cs` · 3 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### GetPayout
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetPayout(string payoutId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetPayout(GetPayoutRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PayoutId`
 - **Returns**: `GetPayoutResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetPayoutResponse` | `Models/GetPayoutResponse.cs` |
+| `GetPayoutRequest` | `src/Square/Requests/Payouts/GetPayoutRequest.cs` |
+| `GetPayoutResponse` | `src/Square/Models/GetPayoutResponse.cs` |
 
 ### ListPayoutEntries
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListPayoutEntries(string payoutId, SortOrder? sortOrder, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `sortOrder` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `sort_order` ← `sortOrder`, `cursor` ← `cursor`, `limit` ← `limit`
+- **Signature**: `ListPayoutEntries(ListPayoutEntriesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PayoutId`
+- **Query params (wire ← C#)**: `sort_order` ← `SortOrder`, `cursor` ← `Cursor`, `limit` ← `Limit`
 - **Returns**: `ListPayoutEntriesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SortOrder` | `Models/Enums/SortOrder.cs` |
-| `ListPayoutEntriesResponse` | `Models/ListPayoutEntriesResponse.cs` |
+| `ListPayoutEntriesRequest` | `src/Square/Requests/Payouts/ListPayoutEntriesRequest.cs` |
+| `SortOrder` | `src/Square/Models/Enums/SortOrder.cs` |
+| `ListPayoutEntriesResponse` | `src/Square/Models/ListPayoutEntriesResponse.cs` |
 
 ### ListPayouts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListPayouts(string? locationId, PayoutStatus? status, string? beginTime, string? endTime, SortOrder? sortOrder, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 7 params (`locationId` … `limit`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `location_id` ← `locationId`, `status` ← `status`, `begin_time` ← `beginTime`, `end_time` ← `endTime`, `sort_order` ← `sortOrder`, `cursor` ← `cursor`, `limit` ← `limit`
+- **Signature**: `ListPayouts(ListPayoutsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `location_id` ← `LocationId`, `status` ← `Status`, `begin_time` ← `BeginTime`, `end_time` ← `EndTime`, `sort_order` ← `SortOrder`, `cursor` ← `Cursor`, `limit` ← `Limit`
 - **Returns**: `ListPayoutsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `PayoutStatus` | `Models/Enums/PayoutStatus.cs` |
-| `SortOrder` | `Models/Enums/SortOrder.cs` |
-| `ListPayoutsResponse` | `Models/ListPayoutsResponse.cs` |
+| `ListPayoutsRequest` | `src/Square/Requests/Payouts/ListPayoutsRequest.cs` |
+| `PayoutStatus` | `src/Square/Models/Enums/PayoutStatus.cs` |
+| `SortOrder` | `src/Square/Models/Enums/SortOrder.cs` |
+| `ListPayoutsResponse` | `src/Square/Models/ListPayoutsResponse.cs` |
 

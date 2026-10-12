@@ -1,13 +1,15 @@
 # Reference
 
-> Source: [SquareClient](SquareClient.cs)
+Every operation below is shown in its throwing form. On an error status it throws `ApiException<TError>` — the status code, headers, content type and the operation's error type, `RawError` (the raw body) when the spec declares none — and where an operation offers an `…AsResult` sibling, that sibling returns `ApiResult<TResponse, TError>` instead. A request that produces no usable response surfaces as `SdkConnectionException` or `SdkTimeoutException`, a body that does not match the documented response type as `ResponseDeserializationException`, and a credential that cannot be applied as `AuthSchemeException`; all of them derive from `SdkException` and name the failed call. See [README → Error Handling](README.md#error-handling).
+
+> Source: [SquareClient](src/Square/SquareClient.cs)
 
 ## ApplePay
 
-> Source: [ApplePay](Api/ApplePay.cs)
+> Source: [ApplePay](src/Square/Api/ApplePay.cs)
 
 <details>
-<summary><code>Task&lt;RegisterDomainResponse&gt; RegisterDomain(RegisterDomainRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RegisterDomainResponse&gt; RegisterDomain(RegisterDomainOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -43,10 +45,13 @@ To learn more about the Web Payments SDK and how to add Apple Pay, see [Take an 
 ```csharp
 try
 {
-    var response = await client.ApplePay.RegisterDomain(body);
+    var response = await client.ApplePay.RegisterDomain(new RegisterDomainOperationRequest
+    {
+        Body = new RegisterDomainRequest { DomainName = "some example string" },
+    });
     // TODO: Handle 'response' of type RegisterDomainResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -55,14 +60,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[RegisterDomainRequest](Models/RegisterDomainRequest.cs)</code> | - |
+<code>[RegisterDomainOperationRequest](src/Square/Requests/ApplePay/RegisterDomainOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -72,9 +75,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RegisterDomainResponse](Models/RegisterDomainResponse.cs)</code>
+**OnSuccess**: <code>[RegisterDomainResponse](src/Square/Models/RegisterDomainResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -86,10 +89,10 @@ catch (SdkException<RawError> ex)
 
 ## BankAccounts
 
-> Source: [BankAccounts](Api/BankAccounts.cs)
+> Source: [BankAccounts](src/Square/Api/BankAccounts.cs)
 
 <details>
-<summary><code>Task&lt;CreateBankAccountResponse&gt; CreateBankAccount(CreateBankAccountRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateBankAccountResponse&gt; CreateBankAccount(CreateBankAccountOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -112,10 +115,17 @@ Store a bank account on file for a square account
 ```csharp
 try
 {
-    var response = await client.BankAccounts.CreateBankAccount(body);
+    var response = await client.BankAccounts.CreateBankAccount(new CreateBankAccountOperationRequest
+    {
+        Body = new CreateBankAccountRequest
+        {
+            IdempotencyKey = "some example string",
+            SourceId = "some example string",
+        },
+    });
     // TODO: Handle 'response' of type CreateBankAccountResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -124,14 +134,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateBankAccountRequest](Models/CreateBankAccountRequest.cs)</code> | - |
+<code>[CreateBankAccountOperationRequest](src/Square/Requests/BankAccounts/CreateBankAccountOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -141,9 +149,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateBankAccountResponse](Models/CreateBankAccountResponse.cs)</code>
+**OnSuccess**: <code>[CreateBankAccountResponse](src/Square/Models/CreateBankAccountResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -154,7 +162,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DisableBankAccountResponse&gt; DisableBankAccount(string bankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DisableBankAccountResponse&gt; DisableBankAccount(DisableBankAccountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -177,10 +185,13 @@ Disable a bank account.
 ```csharp
 try
 {
-    var response = await client.BankAccounts.DisableBankAccount(bankAccountId);
+    var response = await client.BankAccounts.DisableBankAccount(new DisableBankAccountRequest
+    {
+        BankAccountId = "some example string",
+    });
     // TODO: Handle 'response' of type DisableBankAccountResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -189,14 +200,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bankAccountId</code> | <code>string</code> | The ID of the bank account to disable. |
+<code>[DisableBankAccountRequest](src/Square/Requests/BankAccounts/DisableBankAccountRequest.cs)</code>
 
 </dd>
 </dl>
@@ -206,9 +215,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DisableBankAccountResponse](Models/DisableBankAccountResponse.cs)</code>
+**OnSuccess**: <code>[DisableBankAccountResponse](src/Square/Models/DisableBankAccountResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -219,7 +228,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetBankAccountResponse&gt; GetBankAccount(string bankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetBankAccountResponse&gt; GetBankAccount(GetBankAccountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -242,10 +251,13 @@ Retrieve details of a [BankAccount](entity:BankAccount) bank account linked to a
 ```csharp
 try
 {
-    var response = await client.BankAccounts.GetBankAccount(bankAccountId);
+    var response = await client.BankAccounts.GetBankAccount(new GetBankAccountRequest
+    {
+        BankAccountId = "some example string",
+    });
     // TODO: Handle 'response' of type GetBankAccountResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -254,14 +266,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bankAccountId</code> | <code>string</code> | Square-issued ID of the desired `BankAccount`. |
+<code>[GetBankAccountRequest](src/Square/Requests/BankAccounts/GetBankAccountRequest.cs)</code>
 
 </dd>
 </dl>
@@ -271,9 +281,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetBankAccountResponse](Models/GetBankAccountResponse.cs)</code>
+**OnSuccess**: <code>[GetBankAccountResponse](src/Square/Models/GetBankAccountResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -284,7 +294,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetBankAccountByV1IdResponse&gt; GetBankAccountByV1Id(string v1BankAccountId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetBankAccountByV1IdResponse&gt; GetBankAccountByV1Id(GetBankAccountByV1IdRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -307,10 +317,13 @@ Returns details of a [BankAccount](entity:BankAccount) identified by V1 bank acc
 ```csharp
 try
 {
-    var response = await client.BankAccounts.GetBankAccountByV1Id(v1BankAccountId);
+    var response = await client.BankAccounts.GetBankAccountByV1Id(new GetBankAccountByV1IdRequest
+    {
+        V1BankAccountId = "some example string",
+    });
     // TODO: Handle 'response' of type GetBankAccountByV1IdResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -319,14 +332,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>v1BankAccountId</code> | <code>string</code> | Connect V1 ID of the desired `BankAccount`. For more information, see <br>[Retrieve a bank account by using an ID issued by V1 Bank Accounts API](https://developer.squareup.com/docs/bank-accounts-api#retrieve-a-bank-account-by-using-an-id-issued-by-v1-bank-accounts-api). |
+<code>[GetBankAccountByV1IdRequest](src/Square/Requests/BankAccounts/GetBankAccountByV1IdRequest.cs)</code>
 
 </dd>
 </dl>
@@ -336,9 +347,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetBankAccountByV1IdResponse](Models/GetBankAccountByV1IdResponse.cs)</code>
+**OnSuccess**: <code>[GetBankAccountByV1IdResponse](src/Square/Models/GetBankAccountByV1IdResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -349,7 +360,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListBankAccountsResponse&gt; ListBankAccounts(string? cursor, int? limit, string? locationId, string? customerId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListBankAccountsResponse&gt; ListBankAccounts(ListBankAccountsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -372,10 +383,10 @@ Returns a list of [BankAccount](entity:BankAccount) objects linked to a Square a
 ```csharp
 try
 {
-    var response = await client.BankAccounts.ListBankAccounts(cursor, limit, locationId, customerId);
+    var response = await client.BankAccounts.ListBankAccounts(new ListBankAccountsRequest());
     // TODO: Handle 'response' of type ListBankAccountsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -384,17 +395,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | The pagination cursor returned by a previous call to this endpoint.<br>Use it in the next `ListBankAccounts` request to retrieve the next set<br>of results.<br><br>See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information. |
-| <code>limit</code> | <code>int?</code> | Upper limit on the number of bank accounts to return in the response.<br>Currently, 1000 is the largest supported limit. You can specify a limit<br>of up to 1000 bank accounts. This is also the default limit. |
-| <code>locationId</code> | <code>string?</code> | Location ID. You can specify this optional filter<br>to retrieve only the linked bank accounts belonging to a specific location. |
-| <code>customerId</code> | <code>string?</code> | Customer ID. You can specify this optional filter<br>to retrieve only the linked bank accounts belonging to a specific customer. |
+<code>[ListBankAccountsRequest](src/Square/Requests/BankAccounts/ListBankAccountsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -404,9 +410,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListBankAccountsResponse](Models/ListBankAccountsResponse.cs)</code>
+**OnSuccess**: <code>[ListBankAccountsResponse](src/Square/Models/ListBankAccountsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -418,10 +424,10 @@ catch (SdkException<RawError> ex)
 
 ## BookingCustomAttributes
 
-> Source: [BookingCustomAttributes](Api/BookingCustomAttributes.cs)
+> Source: [BookingCustomAttributes](src/Square/Api/BookingCustomAttributes.cs)
 
 <details>
-<summary><code>Task&lt;BulkDeleteBookingCustomAttributesResponse&gt; BulkDeleteBookingCustomAttributes(BulkDeleteBookingCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkDeleteBookingCustomAttributesResponse&gt; BulkDeleteBookingCustomAttributes(BulkDeleteBookingCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -450,10 +456,24 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.BulkDeleteBookingCustomAttributes(body);
+    var response = await client.BookingCustomAttributes.BulkDeleteBookingCustomAttributes(
+        new BulkDeleteBookingCustomAttributesOperationRequest
+        {
+            Body = new BulkDeleteBookingCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BookingCustomAttributeDeleteRequest>
+                {
+                    ["key"] = new BookingCustomAttributeDeleteRequest
+                    {
+                        BookingId = "some example string",
+                        Key = "some example string",
+                    },
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkDeleteBookingCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -462,14 +482,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkDeleteBookingCustomAttributesRequest](Models/BulkDeleteBookingCustomAttributesRequest.cs)</code> | - |
+<code>[BulkDeleteBookingCustomAttributesOperationRequest](src/Square/Requests/BookingCustomAttributes/BulkDeleteBookingCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -479,9 +497,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkDeleteBookingCustomAttributesResponse](Models/BulkDeleteBookingCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkDeleteBookingCustomAttributesResponse](src/Square/Models/BulkDeleteBookingCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -492,7 +510,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkUpsertBookingCustomAttributesResponse&gt; BulkUpsertBookingCustomAttributes(BulkUpsertBookingCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkUpsertBookingCustomAttributesResponse&gt; BulkUpsertBookingCustomAttributes(BulkUpsertBookingCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -521,10 +539,24 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.BulkUpsertBookingCustomAttributes(body);
+    var response = await client.BookingCustomAttributes.BulkUpsertBookingCustomAttributes(
+        new BulkUpsertBookingCustomAttributesOperationRequest
+        {
+            Body = new BulkUpsertBookingCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BookingCustomAttributeUpsertRequest>
+                {
+                    ["key"] = new BookingCustomAttributeUpsertRequest
+                    {
+                        BookingId = "some example string",
+                        CustomAttribute = new CustomAttribute(),
+                    },
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkUpsertBookingCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -533,14 +565,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkUpsertBookingCustomAttributesRequest](Models/BulkUpsertBookingCustomAttributesRequest.cs)</code> | - |
+<code>[BulkUpsertBookingCustomAttributesOperationRequest](src/Square/Requests/BookingCustomAttributes/BulkUpsertBookingCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -550,9 +580,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkUpsertBookingCustomAttributesResponse](Models/BulkUpsertBookingCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkUpsertBookingCustomAttributesResponse](src/Square/Models/BulkUpsertBookingCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -563,7 +593,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateBookingCustomAttributeDefinitionResponse&gt; CreateBookingCustomAttributeDefinition(CreateBookingCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateBookingCustomAttributeDefinitionResponse&gt; CreateBookingCustomAttributeDefinition(CreateBookingCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -592,10 +622,17 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.CreateBookingCustomAttributeDefinition(body);
+    var response = await client.BookingCustomAttributes.CreateBookingCustomAttributeDefinition(
+        new CreateBookingCustomAttributeDefinitionOperationRequest
+        {
+            Body = new CreateBookingCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type CreateBookingCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -604,14 +641,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateBookingCustomAttributeDefinitionRequest](Models/CreateBookingCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[CreateBookingCustomAttributeDefinitionOperationRequest](src/Square/Requests/BookingCustomAttributes/CreateBookingCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -621,9 +656,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateBookingCustomAttributeDefinitionResponse](Models/CreateBookingCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[CreateBookingCustomAttributeDefinitionResponse](src/Square/Models/CreateBookingCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -634,7 +669,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteBookingCustomAttributeResponse&gt; DeleteBookingCustomAttribute(string bookingId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteBookingCustomAttributeResponse&gt; DeleteBookingCustomAttribute(DeleteBookingCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -663,10 +698,11 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.DeleteBookingCustomAttribute(bookingId, key);
+    var response = await client.BookingCustomAttributes.DeleteBookingCustomAttribute(
+        new DeleteBookingCustomAttributeRequest { BookingId = "some example string", Key = "some example string" });
     // TODO: Handle 'response' of type DeleteBookingCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -675,15 +711,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bookingId</code> | <code>string</code> | The ID of the target [booking](entity:Booking). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to delete. This key must match the `key` of a custom<br>attribute definition in the Square seller account. If the requesting application is not the<br>definition owner, you must use the qualified key. |
+<code>[DeleteBookingCustomAttributeRequest](src/Square/Requests/BookingCustomAttributes/DeleteBookingCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -693,9 +726,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteBookingCustomAttributeResponse](Models/DeleteBookingCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[DeleteBookingCustomAttributeResponse](src/Square/Models/DeleteBookingCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -706,7 +739,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteBookingCustomAttributeDefinitionResponse&gt; DeleteBookingCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteBookingCustomAttributeDefinitionResponse&gt; DeleteBookingCustomAttributeDefinition(DeleteBookingCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -735,10 +768,11 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.DeleteBookingCustomAttributeDefinition(key);
+    var response = await client.BookingCustomAttributes.DeleteBookingCustomAttributeDefinition(
+        new DeleteBookingCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type DeleteBookingCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -747,14 +781,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to delete. |
+<code>[DeleteBookingCustomAttributeDefinitionRequest](src/Square/Requests/BookingCustomAttributes/DeleteBookingCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -764,9 +796,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteBookingCustomAttributeDefinitionResponse](Models/DeleteBookingCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[DeleteBookingCustomAttributeDefinitionResponse](src/Square/Models/DeleteBookingCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -777,7 +809,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListBookingCustomAttributeDefinitionsResponse&gt; ListBookingCustomAttributeDefinitions(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListBookingCustomAttributeDefinitionsResponse&gt; ListBookingCustomAttributeDefinitions(ListBookingCustomAttributeDefinitionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -803,10 +835,11 @@ To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ`
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.ListBookingCustomAttributeDefinitions(limit, cursor);
+    var response = await client.BookingCustomAttributes.ListBookingCustomAttributeDefinitions(
+        new ListBookingCustomAttributeDefinitionsRequest());
     // TODO: Handle 'response' of type ListBookingCustomAttributeDefinitionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -815,15 +848,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory.<br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.<br>The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListBookingCustomAttributeDefinitionsRequest](src/Square/Requests/BookingCustomAttributes/ListBookingCustomAttributeDefinitionsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -833,9 +863,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListBookingCustomAttributeDefinitionsResponse](Models/ListBookingCustomAttributeDefinitionsResponse.cs)</code>
+**OnSuccess**: <code>[ListBookingCustomAttributeDefinitionsResponse](src/Square/Models/ListBookingCustomAttributeDefinitionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -846,7 +876,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListBookingCustomAttributesResponse&gt; ListBookingCustomAttributes(string bookingId, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListBookingCustomAttributesResponse&gt; ListBookingCustomAttributes(ListBookingCustomAttributesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -872,10 +902,11 @@ To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ`
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.ListBookingCustomAttributes(bookingId, limit, cursor);
+    var response = await client.BookingCustomAttributes.ListBookingCustomAttributes(
+        new ListBookingCustomAttributesRequest { BookingId = "some example string" });
     // TODO: Handle 'response' of type ListBookingCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -884,17 +915,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bookingId</code> | <code>string</code> | The ID of the target [booking](entity:Booking). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory.<br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.<br>The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request. For more<br>information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>withDefinitions</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of each<br>custom attribute. Set this parameter to `true` to get the name and description of each custom<br>attribute, information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[ListBookingCustomAttributesRequest](src/Square/Requests/BookingCustomAttributes/ListBookingCustomAttributesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -904,9 +930,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListBookingCustomAttributesResponse](Models/ListBookingCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[ListBookingCustomAttributesResponse](src/Square/Models/ListBookingCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -917,7 +943,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveBookingCustomAttributeResponse&gt; RetrieveBookingCustomAttribute(string bookingId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveBookingCustomAttributeResponse&gt; RetrieveBookingCustomAttribute(RetrieveBookingCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -943,10 +969,11 @@ To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ`
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.RetrieveBookingCustomAttribute(bookingId, key, version);
+    var response = await client.BookingCustomAttributes.RetrieveBookingCustomAttribute(
+        new RetrieveBookingCustomAttributeRequest { BookingId = "some example string", Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveBookingCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -955,17 +982,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bookingId</code> | <code>string</code> | The ID of the target [booking](entity:Booking). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to retrieve. This key must match the `key` of a custom<br>attribute definition in the Square seller account. If the requesting application is not the<br>definition owner, you must use the qualified key. |
-| <code>version</code> | <code>int?</code> | The current version of the custom attribute, which is used for strongly consistent reads to<br>guarantee that you receive the most up-to-date data. When included in the request, Square<br>returns the specified version or a higher version if one exists. If the specified version is<br>higher than the current version, Square returns a `BAD_REQUEST` error. |
-| <code>withDefinition</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of<br>the custom attribute. Set this parameter to `true` to get the name and description of the custom<br>attribute, information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[RetrieveBookingCustomAttributeRequest](src/Square/Requests/BookingCustomAttributes/RetrieveBookingCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -975,9 +997,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveBookingCustomAttributeResponse](Models/RetrieveBookingCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveBookingCustomAttributeResponse](src/Square/Models/RetrieveBookingCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -988,7 +1010,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveBookingCustomAttributeDefinitionResponse&gt; RetrieveBookingCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveBookingCustomAttributeDefinitionResponse&gt; RetrieveBookingCustomAttributeDefinition(RetrieveBookingCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1014,10 +1036,11 @@ To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ`
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.RetrieveBookingCustomAttributeDefinition(key, version);
+    var response = await client.BookingCustomAttributes.RetrieveBookingCustomAttributeDefinition(
+        new RetrieveBookingCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveBookingCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1026,15 +1049,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to retrieve. If the requesting application<br>is not the definition owner, you must use the qualified key. |
-| <code>version</code> | <code>int?</code> | The current version of the custom attribute definition, which is used for strongly consistent<br>reads to guarantee that you receive the most up-to-date data. When included in the request,<br>Square returns the specified version or a higher version if one exists. If the specified version<br>is higher than the current version, Square returns a `BAD_REQUEST` error. |
+<code>[RetrieveBookingCustomAttributeDefinitionRequest](src/Square/Requests/BookingCustomAttributes/RetrieveBookingCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1044,9 +1064,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveBookingCustomAttributeDefinitionResponse](Models/RetrieveBookingCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveBookingCustomAttributeDefinitionResponse](src/Square/Models/RetrieveBookingCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1057,7 +1077,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateBookingCustomAttributeDefinitionResponse&gt; UpdateBookingCustomAttributeDefinition(string key, UpdateBookingCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateBookingCustomAttributeDefinitionResponse&gt; UpdateBookingCustomAttributeDefinition(UpdateBookingCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1086,10 +1106,18 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.UpdateBookingCustomAttributeDefinition(key, body);
+    var response = await client.BookingCustomAttributes.UpdateBookingCustomAttributeDefinition(
+        new UpdateBookingCustomAttributeDefinitionOperationRequest
+        {
+            Key = "some example string",
+            Body = new UpdateBookingCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type UpdateBookingCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1098,15 +1126,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to update. |
-| <code>body</code> | <code>[UpdateBookingCustomAttributeDefinitionRequest](Models/UpdateBookingCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[UpdateBookingCustomAttributeDefinitionOperationRequest](src/Square/Requests/BookingCustomAttributes/UpdateBookingCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1116,9 +1141,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateBookingCustomAttributeDefinitionResponse](Models/UpdateBookingCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[UpdateBookingCustomAttributeDefinitionResponse](src/Square/Models/UpdateBookingCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1129,7 +1154,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpsertBookingCustomAttributeResponse&gt; UpsertBookingCustomAttribute(string bookingId, string key, UpsertBookingCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpsertBookingCustomAttributeResponse&gt; UpsertBookingCustomAttribute(UpsertBookingCustomAttributeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1158,10 +1183,16 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.BookingCustomAttributes.UpsertBookingCustomAttribute(bookingId, key, body);
+    var response = await client.BookingCustomAttributes.UpsertBookingCustomAttribute(
+        new UpsertBookingCustomAttributeOperationRequest
+        {
+            BookingId = "some example string",
+            Key = "some example string",
+            Body = new UpsertBookingCustomAttributeRequest { CustomAttribute = new CustomAttribute() },
+        });
     // TODO: Handle 'response' of type UpsertBookingCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1170,16 +1201,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bookingId</code> | <code>string</code> | The ID of the target [booking](entity:Booking). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to create or update. This key must match the `key` of a<br>custom attribute definition in the Square seller account. If the requesting application is not<br>the definition owner, you must use the qualified key. |
-| <code>body</code> | <code>[UpsertBookingCustomAttributeRequest](Models/UpsertBookingCustomAttributeRequest.cs)</code> | - |
+<code>[UpsertBookingCustomAttributeOperationRequest](src/Square/Requests/BookingCustomAttributes/UpsertBookingCustomAttributeOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1189,9 +1216,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpsertBookingCustomAttributeResponse](Models/UpsertBookingCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[UpsertBookingCustomAttributeResponse](src/Square/Models/UpsertBookingCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1203,10 +1230,10 @@ catch (SdkException<RawError> ex)
 
 ## Bookings
 
-> Source: [Bookings](Api/Bookings.cs)
+> Source: [Bookings](src/Square/Api/Bookings.cs)
 
 <details>
-<summary><code>Task&lt;BulkRetrieveBookingsResponse&gt; BulkRetrieveBookings(BulkRetrieveBookingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkRetrieveBookingsResponse&gt; BulkRetrieveBookings(BulkRetrieveBookingsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1232,10 +1259,13 @@ To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ`
 ```csharp
 try
 {
-    var response = await client.Bookings.BulkRetrieveBookings(body);
+    var response = await client.Bookings.BulkRetrieveBookings(new BulkRetrieveBookingsOperationRequest
+    {
+        Body = new BulkRetrieveBookingsRequest { BookingIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type BulkRetrieveBookingsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1244,14 +1274,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkRetrieveBookingsRequest](Models/BulkRetrieveBookingsRequest.cs)</code> | - |
+<code>[BulkRetrieveBookingsOperationRequest](src/Square/Requests/Bookings/BulkRetrieveBookingsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1261,9 +1289,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkRetrieveBookingsResponse](Models/BulkRetrieveBookingsResponse.cs)</code>
+**OnSuccess**: <code>[BulkRetrieveBookingsResponse](src/Square/Models/BulkRetrieveBookingsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1274,7 +1302,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkRetrieveTeamMemberBookingProfilesResponse&gt; BulkRetrieveTeamMemberBookingProfiles(BulkRetrieveTeamMemberBookingProfilesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkRetrieveTeamMemberBookingProfilesResponse&gt; BulkRetrieveTeamMemberBookingProfiles(BulkRetrieveTeamMemberBookingProfilesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1297,10 +1325,14 @@ Retrieves one or more team members' booking profiles.
 ```csharp
 try
 {
-    var response = await client.Bookings.BulkRetrieveTeamMemberBookingProfiles(body);
+    var response = await client.Bookings.BulkRetrieveTeamMemberBookingProfiles(
+        new BulkRetrieveTeamMemberBookingProfilesOperationRequest
+        {
+            Body = new BulkRetrieveTeamMemberBookingProfilesRequest { TeamMemberIds = ["some example string"] },
+        });
     // TODO: Handle 'response' of type BulkRetrieveTeamMemberBookingProfilesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1309,14 +1341,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkRetrieveTeamMemberBookingProfilesRequest](Models/BulkRetrieveTeamMemberBookingProfilesRequest.cs)</code> | - |
+<code>[BulkRetrieveTeamMemberBookingProfilesOperationRequest](src/Square/Requests/Bookings/BulkRetrieveTeamMemberBookingProfilesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1326,9 +1356,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkRetrieveTeamMemberBookingProfilesResponse](Models/BulkRetrieveTeamMemberBookingProfilesResponse.cs)</code>
+**OnSuccess**: <code>[BulkRetrieveTeamMemberBookingProfilesResponse](src/Square/Models/BulkRetrieveTeamMemberBookingProfilesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1339,7 +1369,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CancelBookingResponse&gt; CancelBooking(string bookingId, CancelBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelBookingResponse&gt; CancelBooking(CancelBookingOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1368,10 +1398,14 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.Bookings.CancelBooking(bookingId, body);
+    var response = await client.Bookings.CancelBooking(new CancelBookingOperationRequest
+    {
+        BookingId = "some example string",
+        Body = new CancelBookingRequest(),
+    });
     // TODO: Handle 'response' of type CancelBookingResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1380,15 +1414,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bookingId</code> | <code>string</code> | The ID of the [Booking](entity:Booking) object representing the to-be-cancelled booking. |
-| <code>body</code> | <code>[CancelBookingRequest](Models/CancelBookingRequest.cs)</code> | - |
+<code>[CancelBookingOperationRequest](src/Square/Requests/Bookings/CancelBookingOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1398,9 +1429,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelBookingResponse](Models/CancelBookingResponse.cs)</code>
+**OnSuccess**: <code>[CancelBookingResponse](src/Square/Models/CancelBookingResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1411,7 +1442,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateBookingResponse&gt; CreateBooking(CreateBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateBookingResponse&gt; CreateBooking(CreateBookingOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1447,10 +1478,13 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.Bookings.CreateBooking(body);
+    var response = await client.Bookings.CreateBooking(new CreateBookingOperationRequest
+    {
+        Body = new CreateBookingRequest { Booking = new Booking() },
+    });
     // TODO: Handle 'response' of type CreateBookingResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1459,14 +1493,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateBookingRequest](Models/CreateBookingRequest.cs)</code> | - |
+<code>[CreateBookingOperationRequest](src/Square/Requests/Bookings/CreateBookingOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1476,9 +1508,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateBookingResponse](Models/CreateBookingResponse.cs)</code>
+**OnSuccess**: <code>[CreateBookingResponse](src/Square/Models/CreateBookingResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1489,7 +1521,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListBookingsResponse&gt; ListBookings(int? limit, string? cursor, string? customerId, string? teamMemberId, string? locationId, string? startAtMin, string? startAtMax, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListBookingsResponse&gt; ListBookings(ListBookingsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1515,16 +1547,10 @@ To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ`
 ```csharp
 try
 {
-    var response = await client.Bookings.ListBookings(limit,
-        cursor,
-        customerId,
-        teamMemberId,
-        locationId,
-        startAtMin,
-        startAtMax);
+    var response = await client.Bookings.ListBookings(new ListBookingsRequest());
     // TODO: Handle 'response' of type ListBookingsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1533,20 +1559,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>limit</code> | <code>int?</code> | The maximum number of results per page to return in a paged response. |
-| <code>cursor</code> | <code>string?</code> | The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results. |
-| <code>customerId</code> | <code>string?</code> | The [customer](entity:Customer) for whom to retrieve bookings. If this is not set, bookings for all customers are retrieved. |
-| <code>teamMemberId</code> | <code>string?</code> | The team member for whom to retrieve bookings. If this is not set, bookings of all members are retrieved. |
-| <code>locationId</code> | <code>string?</code> | The location for which to retrieve bookings. If this is not set, all locations' bookings are retrieved. |
-| <code>startAtMin</code> | <code>string?</code> | The RFC 3339 timestamp specifying the earliest of the start time. If this is not set, the current time is used. |
-| <code>startAtMax</code> | <code>string?</code> | The RFC 3339 timestamp specifying the latest of the start time. If this is not set, the time of 31 days after `start_at_min` is used. |
+<code>[ListBookingsRequest](src/Square/Requests/Bookings/ListBookingsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1556,9 +1574,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListBookingsResponse](Models/ListBookingsResponse.cs)</code>
+**OnSuccess**: <code>[ListBookingsResponse](src/Square/Models/ListBookingsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1569,7 +1587,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListLocationBookingProfilesResponse&gt; ListLocationBookingProfiles(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListLocationBookingProfilesResponse&gt; ListLocationBookingProfiles(ListLocationBookingProfilesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1592,10 +1610,10 @@ Lists location booking profiles of a seller.
 ```csharp
 try
 {
-    var response = await client.Bookings.ListLocationBookingProfiles(limit, cursor);
+    var response = await client.Bookings.ListLocationBookingProfiles(new ListLocationBookingProfilesRequest());
     // TODO: Handle 'response' of type ListLocationBookingProfilesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1604,15 +1622,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a paged response. |
-| <code>cursor</code> | <code>string?</code> | The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results. |
+<code>[ListLocationBookingProfilesRequest](src/Square/Requests/Bookings/ListLocationBookingProfilesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1622,9 +1637,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListLocationBookingProfilesResponse](Models/ListLocationBookingProfilesResponse.cs)</code>
+**OnSuccess**: <code>[ListLocationBookingProfilesResponse](src/Square/Models/ListLocationBookingProfilesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1635,7 +1650,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListTeamMemberBookingProfilesResponse&gt; ListTeamMemberBookingProfiles(int? limit, string? cursor, string? locationId, bool? bookableOnly = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListTeamMemberBookingProfilesResponse&gt; ListTeamMemberBookingProfiles(ListTeamMemberBookingProfilesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1658,10 +1673,10 @@ Lists booking profiles for team members.
 ```csharp
 try
 {
-    var response = await client.Bookings.ListTeamMemberBookingProfiles(limit, cursor, locationId);
+    var response = await client.Bookings.ListTeamMemberBookingProfiles(new ListTeamMemberBookingProfilesRequest());
     // TODO: Handle 'response' of type ListTeamMemberBookingProfilesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1670,17 +1685,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a paged response. |
-| <code>cursor</code> | <code>string?</code> | The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results. |
-| <code>locationId</code> | <code>string?</code> | Indicates whether to include only team members enabled at the given location in the returned result. |
-| <code>bookableOnly</code> | <code>bool?</code> | Indicates whether to include only bookable team members in the returned result (`true`) or not (`false`).<br>**Default**: false |
+<code>[ListTeamMemberBookingProfilesRequest](src/Square/Requests/Bookings/ListTeamMemberBookingProfilesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1690,9 +1700,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListTeamMemberBookingProfilesResponse](Models/ListTeamMemberBookingProfilesResponse.cs)</code>
+**OnSuccess**: <code>[ListTeamMemberBookingProfilesResponse](src/Square/Models/ListTeamMemberBookingProfilesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1703,7 +1713,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveBookingResponse&gt; RetrieveBooking(string bookingId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveBookingResponse&gt; RetrieveBooking(RetrieveBookingRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1729,10 +1739,13 @@ To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ`
 ```csharp
 try
 {
-    var response = await client.Bookings.RetrieveBooking(bookingId);
+    var response = await client.Bookings.RetrieveBooking(new RetrieveBookingRequest
+    {
+        BookingId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveBookingResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1741,14 +1754,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bookingId</code> | <code>string</code> | The ID of the [Booking](entity:Booking) object representing the to-be-retrieved booking. |
+<code>[RetrieveBookingRequest](src/Square/Requests/Bookings/RetrieveBookingRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1758,9 +1769,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveBookingResponse](Models/RetrieveBookingResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveBookingResponse](src/Square/Models/RetrieveBookingResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1771,7 +1782,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveBusinessBookingProfileResponse&gt; RetrieveBusinessBookingProfile(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveBusinessBookingProfileResponse&gt; RetrieveBusinessBookingProfile(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1797,7 +1808,7 @@ try
     var response = await client.Bookings.RetrieveBusinessBookingProfile();
     // TODO: Handle 'response' of type RetrieveBusinessBookingProfileResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1811,9 +1822,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveBusinessBookingProfileResponse](Models/RetrieveBusinessBookingProfileResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveBusinessBookingProfileResponse](src/Square/Models/RetrieveBusinessBookingProfileResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1824,7 +1835,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLocationBookingProfileResponse&gt; RetrieveLocationBookingProfile(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLocationBookingProfileResponse&gt; RetrieveLocationBookingProfile(RetrieveLocationBookingProfileRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1847,10 +1858,13 @@ Retrieves a seller's location booking profile.
 ```csharp
 try
 {
-    var response = await client.Bookings.RetrieveLocationBookingProfile(locationId);
+    var response = await client.Bookings.RetrieveLocationBookingProfile(new RetrieveLocationBookingProfileRequest
+    {
+        LocationId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveLocationBookingProfileResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1859,14 +1873,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location to retrieve the booking profile. |
+<code>[RetrieveLocationBookingProfileRequest](src/Square/Requests/Bookings/RetrieveLocationBookingProfileRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1876,9 +1888,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLocationBookingProfileResponse](Models/RetrieveLocationBookingProfileResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLocationBookingProfileResponse](src/Square/Models/RetrieveLocationBookingProfileResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1889,7 +1901,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveTeamMemberBookingProfileResponse&gt; RetrieveTeamMemberBookingProfile(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveTeamMemberBookingProfileResponse&gt; RetrieveTeamMemberBookingProfile(RetrieveTeamMemberBookingProfileRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1912,10 +1924,13 @@ Retrieves a team member's booking profile.
 ```csharp
 try
 {
-    var response = await client.Bookings.RetrieveTeamMemberBookingProfile(teamMemberId);
+    var response = await client.Bookings.RetrieveTeamMemberBookingProfile(new RetrieveTeamMemberBookingProfileRequest
+    {
+        TeamMemberId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveTeamMemberBookingProfileResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1924,14 +1939,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>teamMemberId</code> | <code>string</code> | The ID of the team member to retrieve. |
+<code>[RetrieveTeamMemberBookingProfileRequest](src/Square/Requests/Bookings/RetrieveTeamMemberBookingProfileRequest.cs)</code>
 
 </dd>
 </dl>
@@ -1941,9 +1954,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveTeamMemberBookingProfileResponse](Models/RetrieveTeamMemberBookingProfileResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveTeamMemberBookingProfileResponse](src/Square/Models/RetrieveTeamMemberBookingProfileResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -1954,7 +1967,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchAvailabilityResponse&gt; SearchAvailability(SearchAvailabilityRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchAvailabilityResponse&gt; SearchAvailability(SearchAvailabilityOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -1980,10 +1993,19 @@ To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ`
 ```csharp
 try
 {
-    var response = await client.Bookings.SearchAvailability(body);
+    var response = await client.Bookings.SearchAvailability(new SearchAvailabilityOperationRequest
+    {
+        Body = new SearchAvailabilityRequest
+        {
+            Query = new SearchAvailabilityQuery
+            {
+                Filter = new SearchAvailabilityFilter { StartAtRange = new TimeRange() },
+            },
+        },
+    });
     // TODO: Handle 'response' of type SearchAvailabilityResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -1992,14 +2014,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchAvailabilityRequest](Models/SearchAvailabilityRequest.cs)</code> | - |
+<code>[SearchAvailabilityOperationRequest](src/Square/Requests/Bookings/SearchAvailabilityOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2009,9 +2029,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchAvailabilityResponse](Models/SearchAvailabilityResponse.cs)</code>
+**OnSuccess**: <code>[SearchAvailabilityResponse](src/Square/Models/SearchAvailabilityResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2022,7 +2042,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateBookingResponse&gt; UpdateBooking(string bookingId, UpdateBookingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateBookingResponse&gt; UpdateBooking(UpdateBookingOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2051,10 +2071,14 @@ or *Appointments Premium*.
 ```csharp
 try
 {
-    var response = await client.Bookings.UpdateBooking(bookingId, body);
+    var response = await client.Bookings.UpdateBooking(new UpdateBookingOperationRequest
+    {
+        BookingId = "some example string",
+        Body = new UpdateBookingRequest { Booking = new Booking() },
+    });
     // TODO: Handle 'response' of type UpdateBookingResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2063,15 +2087,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>bookingId</code> | <code>string</code> | The ID of the [Booking](entity:Booking) object representing the to-be-updated booking. |
-| <code>body</code> | <code>[UpdateBookingRequest](Models/UpdateBookingRequest.cs)</code> | - |
+<code>[UpdateBookingOperationRequest](src/Square/Requests/Bookings/UpdateBookingOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2081,9 +2102,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateBookingResponse](Models/UpdateBookingResponse.cs)</code>
+**OnSuccess**: <code>[UpdateBookingResponse](src/Square/Models/UpdateBookingResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2095,10 +2116,10 @@ catch (SdkException<RawError> ex)
 
 ## Cards
 
-> Source: [Cards](Api/Cards.cs)
+> Source: [Cards](src/Square/Api/Cards.cs)
 
 <details>
-<summary><code>Task&lt;CreateCardResponse&gt; CreateCard(CreateCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateCardResponse&gt; CreateCard(CreateCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2121,10 +2142,18 @@ Adds a card on file to an existing merchant.
 ```csharp
 try
 {
-    var response = await client.Cards.CreateCard(body);
+    var response = await client.Cards.CreateCard(new CreateCardOperationRequest
+    {
+        Body = new CreateCardRequest
+        {
+            IdempotencyKey = "some example string",
+            SourceId = "some example string",
+            Card = new Card(),
+        },
+    });
     // TODO: Handle 'response' of type CreateCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2133,14 +2162,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateCardRequest](Models/CreateCardRequest.cs)</code> | - |
+<code>[CreateCardOperationRequest](src/Square/Requests/Cards/CreateCardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2150,9 +2177,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateCardResponse](Models/CreateCardResponse.cs)</code>
+**OnSuccess**: <code>[CreateCardResponse](src/Square/Models/CreateCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2163,7 +2190,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DisableCardResponse&gt; DisableCard(string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DisableCardResponse&gt; DisableCard(DisableCardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2187,10 +2214,10 @@ Disabling an already disabled card is allowed but has no effect.
 ```csharp
 try
 {
-    var response = await client.Cards.DisableCard(cardId);
+    var response = await client.Cards.DisableCard(new DisableCardRequest { CardId = "some example string" });
     // TODO: Handle 'response' of type DisableCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2199,14 +2226,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cardId</code> | <code>string</code> | Unique ID for the desired Card. |
+<code>[DisableCardRequest](src/Square/Requests/Cards/DisableCardRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2216,9 +2241,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DisableCardResponse](Models/DisableCardResponse.cs)</code>
+**OnSuccess**: <code>[DisableCardResponse](src/Square/Models/DisableCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2229,7 +2254,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListCardsResponse&gt; ListCards(string? cursor, string? customerId, string? referenceId, SortOrder? sortOrder, bool? includeDisabled = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCardsResponse&gt; ListCards(ListCardsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2253,10 +2278,10 @@ A max of 25 cards will be returned.
 ```csharp
 try
 {
-    var response = await client.Cards.ListCards(cursor, customerId, referenceId, sortOrder);
+    var response = await client.Cards.ListCards(new ListCardsRequest());
     // TODO: Handle 'response' of type ListCardsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2265,18 +2290,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this to retrieve the next set of results for your original query.<br><br>See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information. |
-| <code>customerId</code> | <code>string?</code> | Limit results to cards associated with the customer supplied.<br>By default, all cards owned by the merchant are returned. |
-| <code>referenceId</code> | <code>string?</code> | Limit results to cards associated with the reference_id supplied. |
-| <code>sortOrder</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | Sorts the returned list by when the card was created with the specified order.<br>This field defaults to ASC. |
-| <code>includeDisabled</code> | <code>bool?</code> | Includes disabled cards.<br>By default, all enabled cards owned by the merchant are returned.<br>**Default**: false |
+<code>[ListCardsRequest](src/Square/Requests/Cards/ListCardsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2286,9 +2305,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCardsResponse](Models/ListCardsResponse.cs)</code>
+**OnSuccess**: <code>[ListCardsResponse](src/Square/Models/ListCardsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2299,7 +2318,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveCardResponse&gt; RetrieveCard(string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveCardResponse&gt; RetrieveCard(RetrieveCardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2322,10 +2341,10 @@ Retrieves details for a specific Card.
 ```csharp
 try
 {
-    var response = await client.Cards.RetrieveCard(cardId);
+    var response = await client.Cards.RetrieveCard(new RetrieveCardRequest { CardId = "some example string" });
     // TODO: Handle 'response' of type RetrieveCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2334,14 +2353,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cardId</code> | <code>string</code> | Unique ID for the desired Card. |
+<code>[RetrieveCardRequest](src/Square/Requests/Cards/RetrieveCardRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2351,9 +2368,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveCardResponse](Models/RetrieveCardResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveCardResponse](src/Square/Models/RetrieveCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2365,10 +2382,10 @@ catch (SdkException<RawError> ex)
 
 ## CashDrawers
 
-> Source: [CashDrawers](Api/CashDrawers.cs)
+> Source: [CashDrawers](src/Square/Api/CashDrawers.cs)
 
 <details>
-<summary><code>Task&lt;ListCashDrawerShiftEventsResponse&gt; ListCashDrawerShiftEvents(string shiftId, string locationId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCashDrawerShiftEventsResponse&gt; ListCashDrawerShiftEvents(ListCashDrawerShiftEventsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2391,10 +2408,14 @@ Provides a paginated list of events for a single cash drawer shift.
 ```csharp
 try
 {
-    var response = await client.CashDrawers.ListCashDrawerShiftEvents(shiftId, locationId, limit, cursor);
+    var response = await client.CashDrawers.ListCashDrawerShiftEvents(new ListCashDrawerShiftEventsRequest
+    {
+        ShiftId = "some example string",
+        LocationId = "some example string",
+    });
     // TODO: Handle 'response' of type ListCashDrawerShiftEventsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2403,17 +2424,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>shiftId</code> | <code>string</code> | The shift ID. |
-| <code>locationId</code> | <code>string</code> | The ID of the location to list cash drawer shifts for. |
-| <code>limit</code> | <code>int?</code> | Number of resources to be returned in a page of results (200 by<br>default, 1000 max). |
-| <code>cursor</code> | <code>string?</code> | Opaque cursor for fetching the next page of results. |
+<code>[ListCashDrawerShiftEventsRequest](src/Square/Requests/CashDrawers/ListCashDrawerShiftEventsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2423,9 +2439,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCashDrawerShiftEventsResponse](Models/ListCashDrawerShiftEventsResponse.cs)</code>
+**OnSuccess**: <code>[ListCashDrawerShiftEventsResponse](src/Square/Models/ListCashDrawerShiftEventsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2436,7 +2452,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListCashDrawerShiftsResponse&gt; ListCashDrawerShifts(string locationId, SortOrder? sortOrder, string? beginTime, string? endTime, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCashDrawerShiftsResponse&gt; ListCashDrawerShifts(ListCashDrawerShiftsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2460,15 +2476,13 @@ in a date range.
 ```csharp
 try
 {
-    var response = await client.CashDrawers.ListCashDrawerShifts(locationId,
-        sortOrder,
-        beginTime,
-        endTime,
-        limit,
-        cursor);
+    var response = await client.CashDrawers.ListCashDrawerShifts(new ListCashDrawerShiftsRequest
+    {
+        LocationId = "some example string",
+    });
     // TODO: Handle 'response' of type ListCashDrawerShiftsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2477,19 +2491,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location to query for a list of cash drawer shifts. |
-| <code>sortOrder</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | The order in which cash drawer shifts are listed in the response,<br>based on their opened_at field. Default value: ASC |
-| <code>beginTime</code> | <code>string?</code> | The inclusive start time of the query on opened_at, in ISO 8601 format. |
-| <code>endTime</code> | <code>string?</code> | The exclusive end date of the query on opened_at, in ISO 8601 format. |
-| <code>limit</code> | <code>int?</code> | Number of cash drawer shift events in a page of results (200 by<br>default, 1000 max). |
-| <code>cursor</code> | <code>string?</code> | Opaque cursor for fetching the next page of results. |
+<code>[ListCashDrawerShiftsRequest](src/Square/Requests/CashDrawers/ListCashDrawerShiftsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2499,9 +2506,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCashDrawerShiftsResponse](Models/ListCashDrawerShiftsResponse.cs)</code>
+**OnSuccess**: <code>[ListCashDrawerShiftsResponse](src/Square/Models/ListCashDrawerShiftsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2512,7 +2519,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveCashDrawerShiftResponse&gt; RetrieveCashDrawerShift(string shiftId, string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveCashDrawerShiftResponse&gt; RetrieveCashDrawerShift(RetrieveCashDrawerShiftRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2536,10 +2543,14 @@ Provides the summary details for a single cash drawer shift. See
 ```csharp
 try
 {
-    var response = await client.CashDrawers.RetrieveCashDrawerShift(shiftId, locationId);
+    var response = await client.CashDrawers.RetrieveCashDrawerShift(new RetrieveCashDrawerShiftRequest
+    {
+        ShiftId = "some example string",
+        LocationId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveCashDrawerShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2548,15 +2559,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>shiftId</code> | <code>string</code> | The shift ID. |
-| <code>locationId</code> | <code>string</code> | The ID of the location to retrieve cash drawer shifts from. |
+<code>[RetrieveCashDrawerShiftRequest](src/Square/Requests/CashDrawers/RetrieveCashDrawerShiftRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2566,9 +2574,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveCashDrawerShiftResponse](Models/RetrieveCashDrawerShiftResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveCashDrawerShiftResponse](src/Square/Models/RetrieveCashDrawerShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2580,10 +2588,10 @@ catch (SdkException<RawError> ex)
 
 ## Catalog
 
-> Source: [Catalog](Api/Catalog.cs)
+> Source: [Catalog](src/Square/Api/Catalog.cs)
 
 <details>
-<summary><code>Task&lt;BatchDeleteCatalogObjectsResponse&gt; BatchDeleteCatalogObjects(BatchDeleteCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchDeleteCatalogObjectsResponse&gt; BatchDeleteCatalogObjects(BatchDeleteCatalogObjectsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2619,10 +2627,13 @@ delete requests are rejected with the `429` error code.
 ```csharp
 try
 {
-    var response = await client.Catalog.BatchDeleteCatalogObjects(body);
+    var response = await client.Catalog.BatchDeleteCatalogObjects(new BatchDeleteCatalogObjectsOperationRequest
+    {
+        Body = new BatchDeleteCatalogObjectsRequest { ObjectIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type BatchDeleteCatalogObjectsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2631,14 +2642,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchDeleteCatalogObjectsRequest](Models/BatchDeleteCatalogObjectsRequest.cs)</code> | - |
+<code>[BatchDeleteCatalogObjectsOperationRequest](src/Square/Requests/Catalog/BatchDeleteCatalogObjectsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2648,9 +2657,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchDeleteCatalogObjectsResponse](Models/BatchDeleteCatalogObjectsResponse.cs)</code>
+**OnSuccess**: <code>[BatchDeleteCatalogObjectsResponse](src/Square/Models/BatchDeleteCatalogObjectsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2661,7 +2670,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BatchRetrieveCatalogObjectsResponse&gt; BatchRetrieveCatalogObjects(BatchRetrieveCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchRetrieveCatalogObjectsResponse&gt; BatchRetrieveCatalogObjects(BatchRetrieveCatalogObjectsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2689,10 +2698,13 @@ any [CatalogTax](entity:CatalogTax) objects that apply to it.
 ```csharp
 try
 {
-    var response = await client.Catalog.BatchRetrieveCatalogObjects(body);
+    var response = await client.Catalog.BatchRetrieveCatalogObjects(new BatchRetrieveCatalogObjectsOperationRequest
+    {
+        Body = new BatchRetrieveCatalogObjectsRequest { ObjectIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type BatchRetrieveCatalogObjectsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2701,14 +2713,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchRetrieveCatalogObjectsRequest](Models/BatchRetrieveCatalogObjectsRequest.cs)</code> | - |
+<code>[BatchRetrieveCatalogObjectsOperationRequest](src/Square/Requests/Catalog/BatchRetrieveCatalogObjectsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2718,9 +2728,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchRetrieveCatalogObjectsResponse](Models/BatchRetrieveCatalogObjectsResponse.cs)</code>
+**OnSuccess**: <code>[BatchRetrieveCatalogObjectsResponse](src/Square/Models/BatchRetrieveCatalogObjectsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2731,7 +2741,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BatchUpsertCatalogObjectsResponse&gt; BatchUpsertCatalogObjects(BatchUpsertCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchUpsertCatalogObjectsResponse&gt; BatchUpsertCatalogObjects(BatchUpsertCatalogObjectsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2772,10 +2782,22 @@ and parallel writes to the same seller will contend with each other, producing `
 ```csharp
 try
 {
-    var response = await client.Catalog.BatchUpsertCatalogObjects(body);
+    var response = await client.Catalog.BatchUpsertCatalogObjects(new BatchUpsertCatalogObjectsOperationRequest
+    {
+        Body = new BatchUpsertCatalogObjectsRequest
+        {
+            IdempotencyKey = "some example string",
+            Batches = [
+                new CatalogObjectBatch
+                {
+                    Objects = [new CatalogObject { Type = CatalogObjectType.Item, Id = "some example string" }],
+                },
+            ],
+        },
+    });
     // TODO: Handle 'response' of type BatchUpsertCatalogObjectsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2784,14 +2806,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchUpsertCatalogObjectsRequest](Models/BatchUpsertCatalogObjectsRequest.cs)</code> | - |
+<code>[BatchUpsertCatalogObjectsOperationRequest](src/Square/Requests/Catalog/BatchUpsertCatalogObjectsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2801,9 +2821,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchUpsertCatalogObjectsResponse](Models/BatchUpsertCatalogObjectsResponse.cs)</code>
+**OnSuccess**: <code>[BatchUpsertCatalogObjectsResponse](src/Square/Models/BatchUpsertCatalogObjectsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2814,7 +2834,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CatalogInfoResponse&gt; CatalogInfo(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CatalogInfoResponse&gt; CatalogInfo(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2841,7 +2861,7 @@ try
     var response = await client.Catalog.CatalogInfo();
     // TODO: Handle 'response' of type CatalogInfoResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2855,9 +2875,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CatalogInfoResponse](Models/CatalogInfoResponse.cs)</code>
+**OnSuccess**: <code>[CatalogInfoResponse](src/Square/Models/CatalogInfoResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2868,7 +2888,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateCatalogImageResponse&gt; CreateCatalogImage(CreateCatalogImageRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateCatalogImageResponse&gt; CreateCatalogImage(CreateCatalogImageOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2896,10 +2916,10 @@ JPEG, PJPEG, PNG, or GIF format. The maximum file size is 15MB.
 ```csharp
 try
 {
-    var response = await client.Catalog.CreateCatalogImage(request, imageFile);
+    var response = await client.Catalog.CreateCatalogImage(new CreateCatalogImageOperationRequest());
     // TODO: Handle 'response' of type CreateCatalogImageResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2908,15 +2928,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>request</code> | <code>[CreateCatalogImageRequest?](Models/CreateCatalogImageRequest.cs)</code> | - |
-| <code>imageFile</code> | <code>BinaryContent?</code> | - |
+<code>[CreateCatalogImageOperationRequest](src/Square/Requests/Catalog/CreateCatalogImageOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -2926,9 +2943,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateCatalogImageResponse](Models/CreateCatalogImageResponse.cs)</code>
+**OnSuccess**: <code>[CreateCatalogImageResponse](src/Square/Models/CreateCatalogImageResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -2939,7 +2956,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteCatalogObjectResponse&gt; DeleteCatalogObject(string objectId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteCatalogObjectResponse&gt; DeleteCatalogObject(DeleteCatalogObjectRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -2971,10 +2988,13 @@ delete requests are rejected with the `429` error code.
 ```csharp
 try
 {
-    var response = await client.Catalog.DeleteCatalogObject(objectId);
+    var response = await client.Catalog.DeleteCatalogObject(new DeleteCatalogObjectRequest
+    {
+        ObjectId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteCatalogObjectResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -2983,14 +3003,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>objectId</code> | <code>string</code> | The ID of the catalog object to be deleted. When an object is deleted, other<br>objects in the graph that depend on that object will be deleted as well (for example, deleting a<br>catalog item will delete its catalog item variations). |
+<code>[DeleteCatalogObjectRequest](src/Square/Requests/Catalog/DeleteCatalogObjectRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3000,9 +3018,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteCatalogObjectResponse](Models/DeleteCatalogObjectResponse.cs)</code>
+**OnSuccess**: <code>[DeleteCatalogObjectResponse](src/Square/Models/DeleteCatalogObjectResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3013,7 +3031,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListCatalogResponse&gt; ListCatalog(string? cursor, string? types, long? catalogVersion, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCatalogResponse&gt; ListCatalog(ListCatalogRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3045,10 +3063,10 @@ and set the `include_deleted_objects` attribute value to `true`.
 ```csharp
 try
 {
-    var response = await client.Catalog.ListCatalog(cursor, types, catalogVersion);
+    var response = await client.Catalog.ListCatalog(new ListCatalogRequest());
     // TODO: Handle 'response' of type ListCatalogResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3057,16 +3075,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | The pagination cursor returned in the previous response. Leave unset for an initial request.<br>The page size is currently set to be 100.<br>See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information. |
-| <code>types</code> | <code>string?</code> | An optional case-insensitive, comma-separated list of object types to retrieve.<br><br>The valid values are defined in the [CatalogObjectType](entity:CatalogObjectType) enum, for example,<br>`ITEM`, `ITEM_VARIATION`, `CATEGORY`, `DISCOUNT`, `TAX`,<br>`MODIFIER`, `MODIFIER_LIST`, `IMAGE`, etc.<br><br>If this is unspecified, the operation returns objects of all the top level types at the version<br>of the Square API used to make the request. Object types that are nested onto other object types<br>are not included in the defaults.<br><br>At the current API version the default object types are:<br>ITEM, CATEGORY, TAX, DISCOUNT, MODIFIER_LIST, <br>PRICING_RULE, PRODUCT_SET, TIME_PERIOD, MEASUREMENT_UNIT,<br>SUBSCRIPTION_PLAN, ITEM_OPTION, CUSTOM_ATTRIBUTE_DEFINITION, QUICK_AMOUNT_SETTINGS. |
-| <code>catalogVersion</code> | <code>long?</code> | The specific version of the catalog objects to be included in the response.<br>This allows you to retrieve historical versions of objects. The specified version value is matched against<br>the [CatalogObject](entity:CatalogObject)s' `version` attribute.  If not included, results will be from the<br>current version of the catalog. |
+<code>[ListCatalogRequest](src/Square/Requests/Catalog/ListCatalogRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3076,9 +3090,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCatalogResponse](Models/ListCatalogResponse.cs)</code>
+**OnSuccess**: <code>[ListCatalogResponse](src/Square/Models/ListCatalogResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3089,7 +3103,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveCatalogObjectResponse&gt; RetrieveCatalogObject(string objectId, long? catalogVersion, bool? includeRelatedObjects = false, bool? includeCategoryPathToRoot = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveCatalogObjectResponse&gt; RetrieveCatalogObject(RetrieveCatalogObjectRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3118,10 +3132,13 @@ any [CatalogTax](entity:CatalogTax) objects that apply to it.
 ```csharp
 try
 {
-    var response = await client.Catalog.RetrieveCatalogObject(objectId, catalogVersion);
+    var response = await client.Catalog.RetrieveCatalogObject(new RetrieveCatalogObjectRequest
+    {
+        ObjectId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveCatalogObjectResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3130,17 +3147,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>objectId</code> | <code>string</code> | The object ID of any type of catalog objects to be retrieved. |
-| <code>catalogVersion</code> | <code>long?</code> | Requests objects as of a specific version of the catalog. This allows you to retrieve historical<br>versions of objects. The value to retrieve a specific version of an object can be found<br>in the version field of [CatalogObject](entity:CatalogObject)s. If not included, results will<br>be from the current version of the catalog. |
-| <code>includeRelatedObjects</code> | <code>bool?</code> | If `true`, the response will include additional objects that are related to the<br>requested objects. Related objects are defined as any objects referenced by ID by the results in the `objects` field<br>of the response. These objects are put in the `related_objects` field. Setting this to `true` is<br>helpful when the objects are needed for immediate display to a user.<br>This process only goes one level deep. Objects referenced by the related objects will not be included. For example,<br><br>if the `objects` field of the response contains a CatalogItem, its associated<br>CatalogCategory objects, CatalogTax objects, CatalogImage objects and<br>CatalogModifierLists will be returned in the `related_objects` field of the<br>response. If the `objects` field of the response contains a CatalogItemVariation,<br>its parent CatalogItem will be returned in the `related_objects` field of<br>the response.<br><br>Default value: `false`<br>**Default**: false |
-| <code>includeCategoryPathToRoot</code> | <code>bool?</code> | Specifies whether or not to include the `path_to_root` list for each returned category instance. The `path_to_root` list consists<br>of `CategoryPathToRootNode` objects and specifies the path that starts with the immediate parent category of the returned category<br>and ends with its root category. If the returned category is a top-level category, the `path_to_root` list is empty and is not returned<br>in the response payload.<br>**Default**: false |
+<code>[RetrieveCatalogObjectRequest](src/Square/Requests/Catalog/RetrieveCatalogObjectRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3150,9 +3162,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveCatalogObjectResponse](Models/RetrieveCatalogObjectResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveCatalogObjectResponse](src/Square/Models/RetrieveCatalogObjectResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3163,7 +3175,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchCatalogItemsResponse&gt; SearchCatalogItems(SearchCatalogItemsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchCatalogItemsResponse&gt; SearchCatalogItems(SearchCatalogItemsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3195,10 +3207,13 @@ endpoint in the following aspects:
 ```csharp
 try
 {
-    var response = await client.Catalog.SearchCatalogItems(body);
+    var response = await client.Catalog.SearchCatalogItems(new SearchCatalogItemsOperationRequest
+    {
+        Body = new SearchCatalogItemsRequest(),
+    });
     // TODO: Handle 'response' of type SearchCatalogItemsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3207,14 +3222,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchCatalogItemsRequest](Models/SearchCatalogItemsRequest.cs)</code> | - |
+<code>[SearchCatalogItemsOperationRequest](src/Square/Requests/Catalog/SearchCatalogItemsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3224,9 +3237,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchCatalogItemsResponse](Models/SearchCatalogItemsResponse.cs)</code>
+**OnSuccess**: <code>[SearchCatalogItemsResponse](src/Square/Models/SearchCatalogItemsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3237,7 +3250,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchCatalogObjectsResponse&gt; SearchCatalogObjects(SearchCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchCatalogObjectsResponse&gt; SearchCatalogObjects(SearchCatalogObjectsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3274,10 +3287,13 @@ the previous version.
 ```csharp
 try
 {
-    var response = await client.Catalog.SearchCatalogObjects(body);
+    var response = await client.Catalog.SearchCatalogObjects(new SearchCatalogObjectsOperationRequest
+    {
+        Body = new SearchCatalogObjectsRequest(),
+    });
     // TODO: Handle 'response' of type SearchCatalogObjectsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3286,14 +3302,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchCatalogObjectsRequest](Models/SearchCatalogObjectsRequest.cs)</code> | - |
+<code>[SearchCatalogObjectsOperationRequest](src/Square/Requests/Catalog/SearchCatalogObjectsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3303,9 +3317,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchCatalogObjectsResponse](Models/SearchCatalogObjectsResponse.cs)</code>
+**OnSuccess**: <code>[SearchCatalogObjectsResponse](src/Square/Models/SearchCatalogObjectsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3316,7 +3330,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateCatalogImageResponse&gt; UpdateCatalogImage(string imageId, UpdateCatalogImageRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateCatalogImageResponse&gt; UpdateCatalogImage(UpdateCatalogImageOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3342,10 +3356,13 @@ JPEG, PJPEG, PNG, or GIF format. The maximum file size is 15MB.
 ```csharp
 try
 {
-    var response = await client.Catalog.UpdateCatalogImage(imageId, request, imageFile);
+    var response = await client.Catalog.UpdateCatalogImage(new UpdateCatalogImageOperationRequest
+    {
+        ImageId = "some example string",
+    });
     // TODO: Handle 'response' of type UpdateCatalogImageResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3354,16 +3371,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>imageId</code> | <code>string</code> | The ID of the `CatalogImage` object to update the encapsulated image file. |
-| <code>request</code> | <code>[UpdateCatalogImageRequest?](Models/UpdateCatalogImageRequest.cs)</code> | - |
-| <code>imageFile</code> | <code>BinaryContent?</code> | - |
+<code>[UpdateCatalogImageOperationRequest](src/Square/Requests/Catalog/UpdateCatalogImageOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3373,9 +3386,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateCatalogImageResponse](Models/UpdateCatalogImageResponse.cs)</code>
+**OnSuccess**: <code>[UpdateCatalogImageResponse](src/Square/Models/UpdateCatalogImageResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3386,7 +3399,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateItemModifierListsResponse&gt; UpdateItemModifierLists(UpdateItemModifierListsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateItemModifierListsResponse&gt; UpdateItemModifierLists(UpdateItemModifierListsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3411,10 +3424,13 @@ to perform an upsert on the entire item.
 ```csharp
 try
 {
-    var response = await client.Catalog.UpdateItemModifierLists(body);
+    var response = await client.Catalog.UpdateItemModifierLists(new UpdateItemModifierListsOperationRequest
+    {
+        Body = new UpdateItemModifierListsRequest { ItemIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type UpdateItemModifierListsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3423,14 +3439,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[UpdateItemModifierListsRequest](Models/UpdateItemModifierListsRequest.cs)</code> | - |
+<code>[UpdateItemModifierListsOperationRequest](src/Square/Requests/Catalog/UpdateItemModifierListsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3440,9 +3454,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateItemModifierListsResponse](Models/UpdateItemModifierListsResponse.cs)</code>
+**OnSuccess**: <code>[UpdateItemModifierListsResponse](src/Square/Models/UpdateItemModifierListsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3453,7 +3467,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateItemTaxesResponse&gt; UpdateItemTaxes(UpdateItemTaxesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateItemTaxesResponse&gt; UpdateItemTaxes(UpdateItemTaxesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3478,10 +3492,13 @@ upsert on the entire item.
 ```csharp
 try
 {
-    var response = await client.Catalog.UpdateItemTaxes(body);
+    var response = await client.Catalog.UpdateItemTaxes(new UpdateItemTaxesOperationRequest
+    {
+        Body = new UpdateItemTaxesRequest { ItemIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type UpdateItemTaxesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3490,14 +3507,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[UpdateItemTaxesRequest](Models/UpdateItemTaxesRequest.cs)</code> | - |
+<code>[UpdateItemTaxesOperationRequest](src/Square/Requests/Catalog/UpdateItemTaxesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3507,9 +3522,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateItemTaxesResponse](Models/UpdateItemTaxesResponse.cs)</code>
+**OnSuccess**: <code>[UpdateItemTaxesResponse](src/Square/Models/UpdateItemTaxesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3520,7 +3535,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpsertCatalogObjectResponse&gt; UpsertCatalogObject(UpsertCatalogObjectRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpsertCatalogObjectResponse&gt; UpsertCatalogObject(UpsertCatalogObjectOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3551,10 +3566,17 @@ update requests are rejected with the `429` error code.
 ```csharp
 try
 {
-    var response = await client.Catalog.UpsertCatalogObject(body);
+    var response = await client.Catalog.UpsertCatalogObject(new UpsertCatalogObjectOperationRequest
+    {
+        Body = new UpsertCatalogObjectRequest
+        {
+            IdempotencyKey = "some example string",
+            Object = new CatalogObject { Type = CatalogObjectType.Item, Id = "some example string" },
+        },
+    });
     // TODO: Handle 'response' of type UpsertCatalogObjectResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3563,14 +3585,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[UpsertCatalogObjectRequest](Models/UpsertCatalogObjectRequest.cs)</code> | - |
+<code>[UpsertCatalogObjectOperationRequest](src/Square/Requests/Catalog/UpsertCatalogObjectOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3580,9 +3600,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpsertCatalogObjectResponse](Models/UpsertCatalogObjectResponse.cs)</code>
+**OnSuccess**: <code>[UpsertCatalogObjectResponse](src/Square/Models/UpsertCatalogObjectResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3594,10 +3614,10 @@ catch (SdkException<RawError> ex)
 
 ## Channels
 
-> Source: [Channels](Api/Channels.cs)
+> Source: [Channels](src/Square/Api/Channels.cs)
 
 <details>
-<summary><code>Task&lt;BulkRetrieveChannelsResponse&gt; BulkRetrieveChannels(BulkRetrieveChannelsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkRetrieveChannelsResponse&gt; BulkRetrieveChannels(BulkRetrieveChannelsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3610,10 +3630,13 @@ catch (SdkException<RawError> ex)
 ```csharp
 try
 {
-    var response = await client.Channels.BulkRetrieveChannels(body);
+    var response = await client.Channels.BulkRetrieveChannels(new BulkRetrieveChannelsOperationRequest
+    {
+        Body = new BulkRetrieveChannelsRequest { ChannelIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type BulkRetrieveChannelsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3622,14 +3645,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkRetrieveChannelsRequest](Models/BulkRetrieveChannelsRequest.cs)</code> | - |
+<code>[BulkRetrieveChannelsOperationRequest](src/Square/Requests/Channels/BulkRetrieveChannelsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3639,9 +3660,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkRetrieveChannelsResponse](Models/BulkRetrieveChannelsResponse.cs)</code>
+**OnSuccess**: <code>[BulkRetrieveChannelsResponse](src/Square/Models/BulkRetrieveChannelsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3652,7 +3673,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListChannelsResponse&gt; ListChannels(ReferenceType? referenceType, string? referenceId, ChannelStatus? status, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListChannelsResponse&gt; ListChannels(ListChannelsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3665,10 +3686,10 @@ catch (SdkException<RawError> ex)
 ```csharp
 try
 {
-    var response = await client.Channels.ListChannels(referenceType, referenceId, status, cursor, limit);
+    var response = await client.Channels.ListChannels(new ListChannelsRequest());
     // TODO: Handle 'response' of type ListChannelsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3677,18 +3698,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>referenceType</code> | <code>[ReferenceType?](Models/Enums/ReferenceType.cs)</code> | Type of reference associated to channel |
-| <code>referenceId</code> | <code>string?</code> | id of reference associated to channel |
-| <code>status</code> | <code>[ChannelStatus?](Models/Enums/ChannelStatus.cs)</code> | Status of channel |
-| <code>cursor</code> | <code>string?</code> | Cursor to fetch the next result |
-| <code>limit</code> | <code>int?</code> | Maximum number of results to return.<br>When not provided the returned results will be cap at 100 channels. |
+<code>[ListChannelsRequest](src/Square/Requests/Channels/ListChannelsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3698,9 +3713,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListChannelsResponse](Models/ListChannelsResponse.cs)</code>
+**OnSuccess**: <code>[ListChannelsResponse](src/Square/Models/ListChannelsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3711,7 +3726,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveChannelResponse&gt; RetrieveChannel(string channelId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveChannelResponse&gt; RetrieveChannel(RetrieveChannelRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3724,10 +3739,13 @@ catch (SdkException<RawError> ex)
 ```csharp
 try
 {
-    var response = await client.Channels.RetrieveChannel(channelId);
+    var response = await client.Channels.RetrieveChannel(new RetrieveChannelRequest
+    {
+        ChannelId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveChannelResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3736,14 +3754,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>channelId</code> | <code>string</code> | A channel id |
+<code>[RetrieveChannelRequest](src/Square/Requests/Channels/RetrieveChannelRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3753,9 +3769,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveChannelResponse](Models/RetrieveChannelResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveChannelResponse](src/Square/Models/RetrieveChannelResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3767,10 +3783,10 @@ catch (SdkException<RawError> ex)
 
 ## CheckoutApi
 
-> Source: [CheckoutApi](Api/CheckoutApi.cs)
+> Source: [CheckoutApi](src/Square/Api/CheckoutApi.cs)
 
 <details>
-<summary><code>Task&lt;CreateCheckoutResponse&gt; CreateCheckout(string locationId, CreateCheckoutRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateCheckoutResponse&gt; CreateCheckout(CreateCheckoutOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3799,10 +3815,14 @@ For more information, see [Checkout API highlights](https://developer.squareup.c
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.CreateCheckout(locationId, body);
+    var response = await client.CheckoutApi.CreateCheckout(new CreateCheckoutOperationRequest
+    {
+        LocationId = "some example string",
+        Body = new CreateCheckoutRequest { IdempotencyKey = "some example string", Order = new CreateOrderRequest() },
+    });
     // TODO: Handle 'response' of type CreateCheckoutResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3811,15 +3831,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the business location to associate the checkout with. |
-| <code>body</code> | <code>[CreateCheckoutRequest](Models/CreateCheckoutRequest.cs)</code> | - |
+<code>[CreateCheckoutOperationRequest](src/Square/Requests/CheckoutApi/CreateCheckoutOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3829,9 +3846,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateCheckoutResponse](Models/CreateCheckoutResponse.cs)</code>
+**OnSuccess**: <code>[CreateCheckoutResponse](src/Square/Models/CreateCheckoutResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3842,7 +3859,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreatePaymentLinkResponse&gt; CreatePaymentLink(CreatePaymentLinkRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreatePaymentLinkResponse&gt; CreatePaymentLink(CreatePaymentLinkOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3865,10 +3882,13 @@ Creates a Square-hosted checkout page. Applications can share the resulting paym
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.CreatePaymentLink(body);
+    var response = await client.CheckoutApi.CreatePaymentLink(new CreatePaymentLinkOperationRequest
+    {
+        Body = new CreatePaymentLinkRequest(),
+    });
     // TODO: Handle 'response' of type CreatePaymentLinkResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3877,14 +3897,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreatePaymentLinkRequest](Models/CreatePaymentLinkRequest.cs)</code> | - |
+<code>[CreatePaymentLinkOperationRequest](src/Square/Requests/CheckoutApi/CreatePaymentLinkOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3894,9 +3912,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreatePaymentLinkResponse](Models/CreatePaymentLinkResponse.cs)</code>
+**OnSuccess**: <code>[CreatePaymentLinkResponse](src/Square/Models/CreatePaymentLinkResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3907,7 +3925,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeletePaymentLinkResponse&gt; DeletePaymentLink(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeletePaymentLinkResponse&gt; DeletePaymentLink(DeletePaymentLinkRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3930,10 +3948,13 @@ Deletes a payment link.
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.DeletePaymentLink(id);
+    var response = await client.CheckoutApi.DeletePaymentLink(new DeletePaymentLinkRequest
+    {
+        Id = "some example string",
+    });
     // TODO: Handle 'response' of type DeletePaymentLinkResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -3942,14 +3963,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of the payment link to delete. |
+<code>[DeletePaymentLinkRequest](src/Square/Requests/CheckoutApi/DeletePaymentLinkRequest.cs)</code>
 
 </dd>
 </dl>
@@ -3959,9 +3978,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeletePaymentLinkResponse](Models/DeletePaymentLinkResponse.cs)</code>
+**OnSuccess**: <code>[DeletePaymentLinkResponse](src/Square/Models/DeletePaymentLinkResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -3972,7 +3991,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListPaymentLinksResponse&gt; ListPaymentLinks(string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListPaymentLinksResponse&gt; ListPaymentLinks(ListPaymentLinksRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -3995,10 +4014,10 @@ Lists all payment links.
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.ListPaymentLinks(cursor, limit);
+    var response = await client.CheckoutApi.ListPaymentLinks(new ListPaymentLinksRequest());
     // TODO: Handle 'response' of type ListPaymentLinksResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4007,15 +4026,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br>If a cursor is not provided, the endpoint returns the first page of the results.<br>For more  information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>limit</code> | <code>int?</code> | A limit on the number of results to return per page. The limit is advisory and<br>the implementation might return more or less results. If the supplied limit is negative, zero, or<br>greater than the maximum limit of 1000, it is ignored.<br><br>Default value: `100` |
+<code>[ListPaymentLinksRequest](src/Square/Requests/CheckoutApi/ListPaymentLinksRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4025,9 +4041,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListPaymentLinksResponse](Models/ListPaymentLinksResponse.cs)</code>
+**OnSuccess**: <code>[ListPaymentLinksResponse](src/Square/Models/ListPaymentLinksResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4038,7 +4054,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLocationSettingsResponse&gt; RetrieveLocationSettings(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLocationSettingsResponse&gt; RetrieveLocationSettings(RetrieveLocationSettingsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4061,10 +4077,13 @@ Retrieves the location-level settings for a Square-hosted checkout page.
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.RetrieveLocationSettings(locationId);
+    var response = await client.CheckoutApi.RetrieveLocationSettings(new RetrieveLocationSettingsRequest
+    {
+        LocationId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveLocationSettingsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4073,14 +4092,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location for which to retrieve settings. |
+<code>[RetrieveLocationSettingsRequest](src/Square/Requests/CheckoutApi/RetrieveLocationSettingsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4090,9 +4107,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLocationSettingsResponse](Models/RetrieveLocationSettingsResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLocationSettingsResponse](src/Square/Models/RetrieveLocationSettingsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4103,7 +4120,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveMerchantSettingsResponse&gt; RetrieveMerchantSettings(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveMerchantSettingsResponse&gt; RetrieveMerchantSettings(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4129,7 +4146,7 @@ try
     var response = await client.CheckoutApi.RetrieveMerchantSettings();
     // TODO: Handle 'response' of type RetrieveMerchantSettingsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4143,9 +4160,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveMerchantSettingsResponse](Models/RetrieveMerchantSettingsResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveMerchantSettingsResponse](src/Square/Models/RetrieveMerchantSettingsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4156,7 +4173,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrievePaymentLinkResponse&gt; RetrievePaymentLink(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrievePaymentLinkResponse&gt; RetrievePaymentLink(RetrievePaymentLinkRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4179,10 +4196,13 @@ Retrieves a payment link.
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.RetrievePaymentLink(id);
+    var response = await client.CheckoutApi.RetrievePaymentLink(new RetrievePaymentLinkRequest
+    {
+        Id = "some example string",
+    });
     // TODO: Handle 'response' of type RetrievePaymentLinkResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4191,14 +4211,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of link to retrieve. |
+<code>[RetrievePaymentLinkRequest](src/Square/Requests/CheckoutApi/RetrievePaymentLinkRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4208,9 +4226,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrievePaymentLinkResponse](Models/RetrievePaymentLinkResponse.cs)</code>
+**OnSuccess**: <code>[RetrievePaymentLinkResponse](src/Square/Models/RetrievePaymentLinkResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4221,7 +4239,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateLocationSettingsResponse&gt; UpdateLocationSettings(string locationId, UpdateLocationSettingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateLocationSettingsResponse&gt; UpdateLocationSettings(UpdateLocationSettingsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4244,10 +4262,14 @@ Updates the location-level settings for a Square-hosted checkout page.
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.UpdateLocationSettings(locationId, body);
+    var response = await client.CheckoutApi.UpdateLocationSettings(new UpdateLocationSettingsOperationRequest
+    {
+        LocationId = "some example string",
+        Body = new UpdateLocationSettingsRequest { LocationSettings = new CheckoutLocationSettings() },
+    });
     // TODO: Handle 'response' of type UpdateLocationSettingsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4256,15 +4278,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location for which to retrieve settings. |
-| <code>body</code> | <code>[UpdateLocationSettingsRequest](Models/UpdateLocationSettingsRequest.cs)</code> | - |
+<code>[UpdateLocationSettingsOperationRequest](src/Square/Requests/CheckoutApi/UpdateLocationSettingsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4274,9 +4293,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateLocationSettingsResponse](Models/UpdateLocationSettingsResponse.cs)</code>
+**OnSuccess**: <code>[UpdateLocationSettingsResponse](src/Square/Models/UpdateLocationSettingsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4287,7 +4306,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateMerchantSettingsResponse&gt; UpdateMerchantSettings(UpdateMerchantSettingsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateMerchantSettingsResponse&gt; UpdateMerchantSettings(UpdateMerchantSettingsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4310,10 +4329,13 @@ Updates the merchant-level settings for a Square-hosted checkout page.
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.UpdateMerchantSettings(body);
+    var response = await client.CheckoutApi.UpdateMerchantSettings(new UpdateMerchantSettingsOperationRequest
+    {
+        Body = new UpdateMerchantSettingsRequest { MerchantSettings = new CheckoutMerchantSettings() },
+    });
     // TODO: Handle 'response' of type UpdateMerchantSettingsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4322,14 +4344,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[UpdateMerchantSettingsRequest](Models/UpdateMerchantSettingsRequest.cs)</code> | - |
+<code>[UpdateMerchantSettingsOperationRequest](src/Square/Requests/CheckoutApi/UpdateMerchantSettingsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4339,9 +4359,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateMerchantSettingsResponse](Models/UpdateMerchantSettingsResponse.cs)</code>
+**OnSuccess**: <code>[UpdateMerchantSettingsResponse](src/Square/Models/UpdateMerchantSettingsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4352,7 +4372,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdatePaymentLinkResponse&gt; UpdatePaymentLink(string id, UpdatePaymentLinkRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdatePaymentLinkResponse&gt; UpdatePaymentLink(UpdatePaymentLinkOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4377,10 +4397,14 @@ You cannot update other fields such as the `order_id`, `version`, `URL`, or `tim
 ```csharp
 try
 {
-    var response = await client.CheckoutApi.UpdatePaymentLink(id, body);
+    var response = await client.CheckoutApi.UpdatePaymentLink(new UpdatePaymentLinkOperationRequest
+    {
+        Id = "some example string",
+        Body = new UpdatePaymentLinkRequest { PaymentLink = new PaymentLink { Version = 1 } },
+    });
     // TODO: Handle 'response' of type UpdatePaymentLinkResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4389,15 +4413,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of the payment link to update. |
-| <code>body</code> | <code>[UpdatePaymentLinkRequest](Models/UpdatePaymentLinkRequest.cs)</code> | - |
+<code>[UpdatePaymentLinkOperationRequest](src/Square/Requests/CheckoutApi/UpdatePaymentLinkOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4407,9 +4428,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdatePaymentLinkResponse](Models/UpdatePaymentLinkResponse.cs)</code>
+**OnSuccess**: <code>[UpdatePaymentLinkResponse](src/Square/Models/UpdatePaymentLinkResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4421,10 +4442,10 @@ catch (SdkException<RawError> ex)
 
 ## CustomerCustomAttributes
 
-> Source: [CustomerCustomAttributes](Api/CustomerCustomAttributes.cs)
+> Source: [CustomerCustomAttributes](src/Square/Api/CustomerCustomAttributes.cs)
 
 <details>
-<summary><code>Task&lt;BulkUpsertCustomerCustomAttributesResponse&gt; BulkUpsertCustomerCustomAttributes(BulkUpsertCustomerCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkUpsertCustomerCustomAttributesResponse&gt; BulkUpsertCustomerCustomAttributes(BulkUpsertCustomerCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4460,10 +4481,24 @@ must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attribut
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.BulkUpsertCustomerCustomAttributes(body);
+    var response = await client.CustomerCustomAttributes.BulkUpsertCustomerCustomAttributes(
+        new BulkUpsertCustomerCustomAttributesOperationRequest
+        {
+            Body = new BulkUpsertCustomerCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BulkUpsertCustomerCustomAttributesRequestCustomerCustomAttributeUpsertRequest>
+                {
+                    ["key"] = new BulkUpsertCustomerCustomAttributesRequestCustomerCustomAttributeUpsertRequest
+                    {
+                        CustomerId = "some example string",
+                        CustomAttribute = new CustomAttribute(),
+                    },
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkUpsertCustomerCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4472,14 +4507,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkUpsertCustomerCustomAttributesRequest](Models/BulkUpsertCustomerCustomAttributesRequest.cs)</code> | - |
+<code>[BulkUpsertCustomerCustomAttributesOperationRequest](src/Square/Requests/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4489,9 +4522,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkUpsertCustomerCustomAttributesResponse](Models/BulkUpsertCustomerCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkUpsertCustomerCustomAttributesResponse](src/Square/Models/BulkUpsertCustomerCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4502,7 +4535,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateCustomerCustomAttributeDefinitionResponse&gt; CreateCustomerCustomAttributeDefinition(CreateCustomerCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateCustomerCustomAttributeDefinitionResponse&gt; CreateCustomerCustomAttributeDefinition(CreateCustomerCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4535,10 +4568,17 @@ Sellers can view all custom attributes in exported customer data, including thos
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.CreateCustomerCustomAttributeDefinition(body);
+    var response = await client.CustomerCustomAttributes.CreateCustomerCustomAttributeDefinition(
+        new CreateCustomerCustomAttributeDefinitionOperationRequest
+        {
+            Body = new CreateCustomerCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type CreateCustomerCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4547,14 +4587,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateCustomerCustomAttributeDefinitionRequest](Models/CreateCustomerCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[CreateCustomerCustomAttributeDefinitionOperationRequest](src/Square/Requests/CustomerCustomAttributes/CreateCustomerCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4564,9 +4602,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateCustomerCustomAttributeDefinitionResponse](Models/CreateCustomerCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[CreateCustomerCustomAttributeDefinitionResponse](src/Square/Models/CreateCustomerCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4577,7 +4615,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteCustomerCustomAttributeResponse&gt; DeleteCustomerCustomAttribute(string customerId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteCustomerCustomAttributeResponse&gt; DeleteCustomerCustomAttribute(DeleteCustomerCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4604,10 +4642,11 @@ To delete a custom attribute owned by another application, the `visibility` sett
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.DeleteCustomerCustomAttribute(customerId, key);
+    var response = await client.CustomerCustomAttributes.DeleteCustomerCustomAttribute(
+        new DeleteCustomerCustomAttributeRequest { CustomerId = "some example string", Key = "some example string" });
     // TODO: Handle 'response' of type DeleteCustomerCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4616,15 +4655,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the target [customer profile](entity:Customer). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to delete. This key must match the `key` of a custom<br>attribute definition in the Square seller account. If the requesting application is not the<br>definition owner, you must use the qualified key. |
+<code>[DeleteCustomerCustomAttributeRequest](src/Square/Requests/CustomerCustomAttributes/DeleteCustomerCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4634,9 +4670,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteCustomerCustomAttributeResponse](Models/DeleteCustomerCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[DeleteCustomerCustomAttributeResponse](src/Square/Models/DeleteCustomerCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4647,7 +4683,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteCustomerCustomAttributeDefinitionResponse&gt; DeleteCustomerCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteCustomerCustomAttributeDefinitionResponse&gt; DeleteCustomerCustomAttributeDefinition(DeleteCustomerCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4675,10 +4711,11 @@ Only the definition owner can delete a custom attribute definition.
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.DeleteCustomerCustomAttributeDefinition(key);
+    var response = await client.CustomerCustomAttributes.DeleteCustomerCustomAttributeDefinition(
+        new DeleteCustomerCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type DeleteCustomerCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4687,14 +4724,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to delete. |
+<code>[DeleteCustomerCustomAttributeDefinitionRequest](src/Square/Requests/CustomerCustomAttributes/DeleteCustomerCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4704,9 +4739,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteCustomerCustomAttributeDefinitionResponse](Models/DeleteCustomerCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[DeleteCustomerCustomAttributeDefinitionResponse](src/Square/Models/DeleteCustomerCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4717,7 +4752,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListCustomerCustomAttributeDefinitionsResponse&gt; ListCustomerCustomAttributeDefinitions(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCustomerCustomAttributeDefinitionsResponse&gt; ListCustomerCustomAttributeDefinitions(ListCustomerCustomAttributeDefinitionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4745,10 +4780,11 @@ seller-defined custom attributes (also known as custom fields) are always set to
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.ListCustomerCustomAttributeDefinitions(limit, cursor);
+    var response = await client.CustomerCustomAttributes.ListCustomerCustomAttributeDefinitions(
+        new ListCustomerCustomAttributeDefinitionsRequest());
     // TODO: Handle 'response' of type ListCustomerCustomAttributeDefinitionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4757,15 +4793,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory.<br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.<br>The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListCustomerCustomAttributeDefinitionsRequest](src/Square/Requests/CustomerCustomAttributes/ListCustomerCustomAttributeDefinitionsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4775,9 +4808,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCustomerCustomAttributeDefinitionsResponse](Models/ListCustomerCustomAttributeDefinitionsResponse.cs)</code>
+**OnSuccess**: <code>[ListCustomerCustomAttributeDefinitionsResponse](src/Square/Models/ListCustomerCustomAttributeDefinitionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4788,7 +4821,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListCustomerCustomAttributesResponse&gt; ListCustomerCustomAttributes(string customerId, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCustomerCustomAttributesResponse&gt; ListCustomerCustomAttributes(ListCustomerCustomAttributesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4818,10 +4851,11 @@ and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.ListCustomerCustomAttributes(customerId, limit, cursor);
+    var response = await client.CustomerCustomAttributes.ListCustomerCustomAttributes(
+        new ListCustomerCustomAttributesRequest { CustomerId = "some example string" });
     // TODO: Handle 'response' of type ListCustomerCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4830,17 +4864,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the target [customer profile](entity:Customer). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory.<br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.<br>The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request. For more<br>information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>withDefinitions</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of each<br>custom attribute. Set this parameter to `true` to get the name and description of each custom<br>attribute, information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[ListCustomerCustomAttributesRequest](src/Square/Requests/CustomerCustomAttributes/ListCustomerCustomAttributesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4850,9 +4879,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCustomerCustomAttributesResponse](Models/ListCustomerCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[ListCustomerCustomAttributesResponse](src/Square/Models/ListCustomerCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4863,7 +4892,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveCustomerCustomAttributeResponse&gt; RetrieveCustomerCustomAttribute(string customerId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveCustomerCustomAttributeResponse&gt; RetrieveCustomerCustomAttribute(RetrieveCustomerCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4893,10 +4922,11 @@ To retrieve a custom attribute owned by another application, the `visibility` se
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.RetrieveCustomerCustomAttribute(customerId, key, version);
+    var response = await client.CustomerCustomAttributes.RetrieveCustomerCustomAttribute(
+        new RetrieveCustomerCustomAttributeRequest { CustomerId = "some example string", Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveCustomerCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4905,17 +4935,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the target [customer profile](entity:Customer). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to retrieve. This key must match the `key` of a custom<br>attribute definition in the Square seller account. If the requesting application is not the<br>definition owner, you must use the qualified key. |
-| <code>version</code> | <code>int?</code> | The current version of the custom attribute, which is used for strongly consistent reads to<br>guarantee that you receive the most up-to-date data. When included in the request, Square<br>returns the specified version or a higher version if one exists. If the specified version is<br>higher than the current version, Square returns a `BAD_REQUEST` error. |
-| <code>withDefinition</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of<br>the custom attribute. Set this parameter to `true` to get the name and description of the custom<br>attribute, information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[RetrieveCustomerCustomAttributeRequest](src/Square/Requests/CustomerCustomAttributes/RetrieveCustomerCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4925,9 +4950,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveCustomerCustomAttributeResponse](Models/RetrieveCustomerCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveCustomerCustomAttributeResponse](src/Square/Models/RetrieveCustomerCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -4938,7 +4963,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveCustomerCustomAttributeDefinitionResponse&gt; RetrieveCustomerCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveCustomerCustomAttributeDefinitionResponse&gt; RetrieveCustomerCustomAttributeDefinition(RetrieveCustomerCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -4965,10 +4990,11 @@ setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note t
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.RetrieveCustomerCustomAttributeDefinition(key, version);
+    var response = await client.CustomerCustomAttributes.RetrieveCustomerCustomAttributeDefinition(
+        new RetrieveCustomerCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveCustomerCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -4977,15 +5003,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to retrieve. If the requesting application<br>is not the definition owner, you must use the qualified key. |
-| <code>version</code> | <code>int?</code> | The current version of the custom attribute definition, which is used for strongly consistent<br>reads to guarantee that you receive the most up-to-date data. When included in the request,<br>Square returns the specified version or a higher version if one exists. If the specified version<br>is higher than the current version, Square returns a `BAD_REQUEST` error. |
+<code>[RetrieveCustomerCustomAttributeDefinitionRequest](src/Square/Requests/CustomerCustomAttributes/RetrieveCustomerCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -4995,9 +5018,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveCustomerCustomAttributeDefinitionResponse](Models/RetrieveCustomerCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveCustomerCustomAttributeDefinitionResponse](src/Square/Models/RetrieveCustomerCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5008,7 +5031,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateCustomerCustomAttributeDefinitionResponse&gt; UpdateCustomerCustomAttributeDefinition(string key, UpdateCustomerCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateCustomerCustomAttributeDefinitionResponse&gt; UpdateCustomerCustomAttributeDefinition(UpdateCustomerCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5037,10 +5060,18 @@ all custom attributes in exported customer data, including those set to `VISIBIL
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.UpdateCustomerCustomAttributeDefinition(key, body);
+    var response = await client.CustomerCustomAttributes.UpdateCustomerCustomAttributeDefinition(
+        new UpdateCustomerCustomAttributeDefinitionOperationRequest
+        {
+            Key = "some example string",
+            Body = new UpdateCustomerCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type UpdateCustomerCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5049,15 +5080,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to update. |
-| <code>body</code> | <code>[UpdateCustomerCustomAttributeDefinitionRequest](Models/UpdateCustomerCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[UpdateCustomerCustomAttributeDefinitionOperationRequest](src/Square/Requests/CustomerCustomAttributes/UpdateCustomerCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5067,9 +5095,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateCustomerCustomAttributeDefinitionResponse](Models/UpdateCustomerCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[UpdateCustomerCustomAttributeDefinitionResponse](src/Square/Models/UpdateCustomerCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5080,7 +5108,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpsertCustomerCustomAttributeResponse&gt; UpsertCustomerCustomAttribute(string customerId, string key, UpsertCustomerCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpsertCustomerCustomAttributeResponse&gt; UpsertCustomerCustomAttribute(UpsertCustomerCustomAttributeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5111,10 +5139,16 @@ must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attribut
 ```csharp
 try
 {
-    var response = await client.CustomerCustomAttributes.UpsertCustomerCustomAttribute(customerId, key, body);
+    var response = await client.CustomerCustomAttributes.UpsertCustomerCustomAttribute(
+        new UpsertCustomerCustomAttributeOperationRequest
+        {
+            CustomerId = "some example string",
+            Key = "some example string",
+            Body = new UpsertCustomerCustomAttributeRequest { CustomAttribute = new CustomAttribute() },
+        });
     // TODO: Handle 'response' of type UpsertCustomerCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5123,16 +5157,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the target [customer profile](entity:Customer). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to create or update. This key must match the `key` of a<br>custom attribute definition in the Square seller account. If the requesting application is not<br>the definition owner, you must use the qualified key. |
-| <code>body</code> | <code>[UpsertCustomerCustomAttributeRequest](Models/UpsertCustomerCustomAttributeRequest.cs)</code> | - |
+<code>[UpsertCustomerCustomAttributeOperationRequest](src/Square/Requests/CustomerCustomAttributes/UpsertCustomerCustomAttributeOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5142,9 +5172,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpsertCustomerCustomAttributeResponse](Models/UpsertCustomerCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[UpsertCustomerCustomAttributeResponse](src/Square/Models/UpsertCustomerCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5156,10 +5186,10 @@ catch (SdkException<RawError> ex)
 
 ## CustomerGroups
 
-> Source: [CustomerGroups](Api/CustomerGroups.cs)
+> Source: [CustomerGroups](src/Square/Api/CustomerGroups.cs)
 
 <details>
-<summary><code>Task&lt;CreateCustomerGroupResponse&gt; CreateCustomerGroup(CreateCustomerGroupRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateCustomerGroupResponse&gt; CreateCustomerGroup(CreateCustomerGroupOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5184,10 +5214,13 @@ The request must include the `name` value of the group.
 ```csharp
 try
 {
-    var response = await client.CustomerGroups.CreateCustomerGroup(body);
+    var response = await client.CustomerGroups.CreateCustomerGroup(new CreateCustomerGroupOperationRequest
+    {
+        Body = new CreateCustomerGroupRequest { Group = new CustomerGroup { Name = "some example string" } },
+    });
     // TODO: Handle 'response' of type CreateCustomerGroupResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5196,14 +5229,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateCustomerGroupRequest](Models/CreateCustomerGroupRequest.cs)</code> | - |
+<code>[CreateCustomerGroupOperationRequest](src/Square/Requests/CustomerGroups/CreateCustomerGroupOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5213,9 +5244,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateCustomerGroupResponse](Models/CreateCustomerGroupResponse.cs)</code>
+**OnSuccess**: <code>[CreateCustomerGroupResponse](src/Square/Models/CreateCustomerGroupResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5226,7 +5257,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteCustomerGroupResponse&gt; DeleteCustomerGroup(string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteCustomerGroupResponse&gt; DeleteCustomerGroup(DeleteCustomerGroupRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5249,10 +5280,13 @@ Deletes a customer group as identified by the `group_id` value.
 ```csharp
 try
 {
-    var response = await client.CustomerGroups.DeleteCustomerGroup(groupId);
+    var response = await client.CustomerGroups.DeleteCustomerGroup(new DeleteCustomerGroupRequest
+    {
+        GroupId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteCustomerGroupResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5261,14 +5295,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>groupId</code> | <code>string</code> | The ID of the customer group to delete. |
+<code>[DeleteCustomerGroupRequest](src/Square/Requests/CustomerGroups/DeleteCustomerGroupRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5278,9 +5310,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteCustomerGroupResponse](Models/DeleteCustomerGroupResponse.cs)</code>
+**OnSuccess**: <code>[DeleteCustomerGroupResponse](src/Square/Models/DeleteCustomerGroupResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5291,7 +5323,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListCustomerGroupsResponse&gt; ListCustomerGroups(string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCustomerGroupsResponse&gt; ListCustomerGroups(ListCustomerGroupsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5314,10 +5346,10 @@ Retrieves the list of customer groups of a business.
 ```csharp
 try
 {
-    var response = await client.CustomerGroups.ListCustomerGroups(cursor, limit);
+    var response = await client.CustomerGroups.ListCustomerGroups(new ListCustomerGroupsRequest());
     // TODO: Handle 'response' of type ListCustomerGroupsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5326,15 +5358,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for your original query.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results.<br>If the limit is less than 1 or greater than 50, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 50.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListCustomerGroupsRequest](src/Square/Requests/CustomerGroups/ListCustomerGroupsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5344,9 +5373,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCustomerGroupsResponse](Models/ListCustomerGroupsResponse.cs)</code>
+**OnSuccess**: <code>[ListCustomerGroupsResponse](src/Square/Models/ListCustomerGroupsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5357,7 +5386,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveCustomerGroupResponse&gt; RetrieveCustomerGroup(string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveCustomerGroupResponse&gt; RetrieveCustomerGroup(RetrieveCustomerGroupRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5380,10 +5409,13 @@ Retrieves a specific customer group as identified by the `group_id` value.
 ```csharp
 try
 {
-    var response = await client.CustomerGroups.RetrieveCustomerGroup(groupId);
+    var response = await client.CustomerGroups.RetrieveCustomerGroup(new RetrieveCustomerGroupRequest
+    {
+        GroupId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveCustomerGroupResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5392,14 +5424,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>groupId</code> | <code>string</code> | The ID of the customer group to retrieve. |
+<code>[RetrieveCustomerGroupRequest](src/Square/Requests/CustomerGroups/RetrieveCustomerGroupRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5409,9 +5439,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveCustomerGroupResponse](Models/RetrieveCustomerGroupResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveCustomerGroupResponse](src/Square/Models/RetrieveCustomerGroupResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5422,7 +5452,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateCustomerGroupResponse&gt; UpdateCustomerGroup(string groupId, UpdateCustomerGroupRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateCustomerGroupResponse&gt; UpdateCustomerGroup(UpdateCustomerGroupOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5445,10 +5475,14 @@ Updates a customer group as identified by the `group_id` value.
 ```csharp
 try
 {
-    var response = await client.CustomerGroups.UpdateCustomerGroup(groupId, body);
+    var response = await client.CustomerGroups.UpdateCustomerGroup(new UpdateCustomerGroupOperationRequest
+    {
+        GroupId = "some example string",
+        Body = new UpdateCustomerGroupRequest { Group = new CustomerGroup { Name = "some example string" } },
+    });
     // TODO: Handle 'response' of type UpdateCustomerGroupResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5457,15 +5491,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>groupId</code> | <code>string</code> | The ID of the customer group to update. |
-| <code>body</code> | <code>[UpdateCustomerGroupRequest](Models/UpdateCustomerGroupRequest.cs)</code> | - |
+<code>[UpdateCustomerGroupOperationRequest](src/Square/Requests/CustomerGroups/UpdateCustomerGroupOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5475,9 +5506,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateCustomerGroupResponse](Models/UpdateCustomerGroupResponse.cs)</code>
+**OnSuccess**: <code>[UpdateCustomerGroupResponse](src/Square/Models/UpdateCustomerGroupResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5489,10 +5520,10 @@ catch (SdkException<RawError> ex)
 
 ## CustomerSegments
 
-> Source: [CustomerSegments](Api/CustomerSegments.cs)
+> Source: [CustomerSegments](src/Square/Api/CustomerSegments.cs)
 
 <details>
-<summary><code>Task&lt;ListCustomerSegmentsResponse&gt; ListCustomerSegments(string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCustomerSegmentsResponse&gt; ListCustomerSegments(ListCustomerSegmentsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5515,10 +5546,10 @@ Retrieves the list of customer segments of a business.
 ```csharp
 try
 {
-    var response = await client.CustomerSegments.ListCustomerSegments(cursor, limit);
+    var response = await client.CustomerSegments.ListCustomerSegments(new ListCustomerSegmentsRequest());
     // TODO: Handle 'response' of type ListCustomerSegmentsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5527,15 +5558,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by previous calls to `ListCustomerSegments`.<br>This cursor is used to retrieve the next set of query results.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results.<br>If the specified limit is less than 1 or greater than 50, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 50.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListCustomerSegmentsRequest](src/Square/Requests/CustomerSegments/ListCustomerSegmentsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5545,9 +5573,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCustomerSegmentsResponse](Models/ListCustomerSegmentsResponse.cs)</code>
+**OnSuccess**: <code>[ListCustomerSegmentsResponse](src/Square/Models/ListCustomerSegmentsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5558,7 +5586,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveCustomerSegmentResponse&gt; RetrieveCustomerSegment(string segmentId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveCustomerSegmentResponse&gt; RetrieveCustomerSegment(RetrieveCustomerSegmentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5581,10 +5609,13 @@ Retrieves a specific customer segment as identified by the `segment_id` value.
 ```csharp
 try
 {
-    var response = await client.CustomerSegments.RetrieveCustomerSegment(segmentId);
+    var response = await client.CustomerSegments.RetrieveCustomerSegment(new RetrieveCustomerSegmentRequest
+    {
+        SegmentId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveCustomerSegmentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5593,14 +5624,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>segmentId</code> | <code>string</code> | The Square-issued ID of the customer segment. |
+<code>[RetrieveCustomerSegmentRequest](src/Square/Requests/CustomerSegments/RetrieveCustomerSegmentRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5610,9 +5639,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveCustomerSegmentResponse](Models/RetrieveCustomerSegmentResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveCustomerSegmentResponse](src/Square/Models/RetrieveCustomerSegmentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5624,10 +5653,10 @@ catch (SdkException<RawError> ex)
 
 ## Customers
 
-> Source: [Customers](Api/Customers.cs)
+> Source: [Customers](src/Square/Api/Customers.cs)
 
 <details>
-<summary><code>Task&lt;AddGroupToCustomerResponse&gt; AddGroupToCustomer(string customerId, string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;AddGroupToCustomerResponse&gt; AddGroupToCustomer(AddGroupToCustomerRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5653,10 +5682,14 @@ and the customer group is identified by the `group_id` value.
 ```csharp
 try
 {
-    var response = await client.Customers.AddGroupToCustomer(customerId, groupId);
+    var response = await client.Customers.AddGroupToCustomer(new AddGroupToCustomerRequest
+    {
+        CustomerId = "some example string",
+        GroupId = "some example string",
+    });
     // TODO: Handle 'response' of type AddGroupToCustomerResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5665,15 +5698,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the customer to add to a group. |
-| <code>groupId</code> | <code>string</code> | The ID of the customer group to add the customer to. |
+<code>[AddGroupToCustomerRequest](src/Square/Requests/Customers/AddGroupToCustomerRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5683,9 +5713,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[AddGroupToCustomerResponse](Models/AddGroupToCustomerResponse.cs)</code>
+**OnSuccess**: <code>[AddGroupToCustomerResponse](src/Square/Models/AddGroupToCustomerResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5696,7 +5726,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkCreateCustomersResponse&gt; BulkCreateCustomers(BulkCreateCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkCreateCustomersResponse&gt; BulkCreateCustomers(BulkCreateCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5729,10 +5759,16 @@ You must provide at least one of the following values in each create request:
 ```csharp
 try
 {
-    var response = await client.Customers.BulkCreateCustomers(body);
+    var response = await client.Customers.BulkCreateCustomers(new BulkCreateCustomersOperationRequest
+    {
+        Body = new BulkCreateCustomersRequest
+        {
+            Customers = new Dictionary<string, BulkCreateCustomerData> { ["key"] = new BulkCreateCustomerData() },
+        },
+    });
     // TODO: Handle 'response' of type BulkCreateCustomersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5741,14 +5777,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkCreateCustomersRequest](Models/BulkCreateCustomersRequest.cs)</code> | - |
+<code>[BulkCreateCustomersOperationRequest](src/Square/Requests/Customers/BulkCreateCustomersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5758,9 +5792,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkCreateCustomersResponse](Models/BulkCreateCustomersResponse.cs)</code>
+**OnSuccess**: <code>[BulkCreateCustomersResponse](src/Square/Models/BulkCreateCustomersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5771,7 +5805,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkDeleteCustomersResponse&gt; BulkDeleteCustomers(BulkDeleteCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkDeleteCustomersResponse&gt; BulkDeleteCustomers(BulkDeleteCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5796,10 +5830,13 @@ The endpoint takes a list of customer IDs and returns a map of responses.
 ```csharp
 try
 {
-    var response = await client.Customers.BulkDeleteCustomers(body);
+    var response = await client.Customers.BulkDeleteCustomers(new BulkDeleteCustomersOperationRequest
+    {
+        Body = new BulkDeleteCustomersRequest { CustomerIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type BulkDeleteCustomersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5808,14 +5845,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkDeleteCustomersRequest](Models/BulkDeleteCustomersRequest.cs)</code> | - |
+<code>[BulkDeleteCustomersOperationRequest](src/Square/Requests/Customers/BulkDeleteCustomersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5825,9 +5860,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkDeleteCustomersResponse](Models/BulkDeleteCustomersResponse.cs)</code>
+**OnSuccess**: <code>[BulkDeleteCustomersResponse](src/Square/Models/BulkDeleteCustomersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5838,7 +5873,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkRetrieveCustomersResponse&gt; BulkRetrieveCustomers(BulkRetrieveCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkRetrieveCustomersResponse&gt; BulkRetrieveCustomers(BulkRetrieveCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5863,10 +5898,13 @@ This endpoint takes a list of customer IDs and returns a map of responses.
 ```csharp
 try
 {
-    var response = await client.Customers.BulkRetrieveCustomers(body);
+    var response = await client.Customers.BulkRetrieveCustomers(new BulkRetrieveCustomersOperationRequest
+    {
+        Body = new BulkRetrieveCustomersRequest { CustomerIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type BulkRetrieveCustomersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5875,14 +5913,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkRetrieveCustomersRequest](Models/BulkRetrieveCustomersRequest.cs)</code> | - |
+<code>[BulkRetrieveCustomersOperationRequest](src/Square/Requests/Customers/BulkRetrieveCustomersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5892,9 +5928,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkRetrieveCustomersResponse](Models/BulkRetrieveCustomersResponse.cs)</code>
+**OnSuccess**: <code>[BulkRetrieveCustomersResponse](src/Square/Models/BulkRetrieveCustomersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5905,7 +5941,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkUpdateCustomersResponse&gt; BulkUpdateCustomers(BulkUpdateCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkUpdateCustomersResponse&gt; BulkUpdateCustomers(BulkUpdateCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -5930,10 +5966,16 @@ This endpoint takes a map of individual update requests and returns a map of res
 ```csharp
 try
 {
-    var response = await client.Customers.BulkUpdateCustomers(body);
+    var response = await client.Customers.BulkUpdateCustomers(new BulkUpdateCustomersOperationRequest
+    {
+        Body = new BulkUpdateCustomersRequest
+        {
+            Customers = new Dictionary<string, BulkUpdateCustomerData> { ["key"] = new BulkUpdateCustomerData() },
+        },
+    });
     // TODO: Handle 'response' of type BulkUpdateCustomersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -5942,14 +5984,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkUpdateCustomersRequest](Models/BulkUpdateCustomersRequest.cs)</code> | - |
+<code>[BulkUpdateCustomersOperationRequest](src/Square/Requests/Customers/BulkUpdateCustomersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -5959,9 +5999,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkUpdateCustomersResponse](Models/BulkUpdateCustomersResponse.cs)</code>
+**OnSuccess**: <code>[BulkUpdateCustomersResponse](src/Square/Models/BulkUpdateCustomersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -5972,7 +6012,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateCustomerResponse&gt; CreateCustomer(CreateCustomerRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateCustomerResponse&gt; CreateCustomer(CreateCustomerOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6004,10 +6044,13 @@ endpoint:
 ```csharp
 try
 {
-    var response = await client.Customers.CreateCustomer(body);
+    var response = await client.Customers.CreateCustomer(new CreateCustomerOperationRequest
+    {
+        Body = new CreateCustomerRequest(),
+    });
     // TODO: Handle 'response' of type CreateCustomerResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6016,14 +6059,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateCustomerRequest](Models/CreateCustomerRequest.cs)</code> | - |
+<code>[CreateCustomerOperationRequest](src/Square/Requests/Customers/CreateCustomerOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6033,9 +6074,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateCustomerResponse](Models/CreateCustomerResponse.cs)</code>
+**OnSuccess**: <code>[CreateCustomerResponse](src/Square/Models/CreateCustomerResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6046,7 +6087,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateCustomerCardResponse&gt; CreateCustomerCard(string customerId, CreateCustomerCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateCustomerCardResponse&gt; CreateCustomerCard(CreateCustomerCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6073,10 +6114,14 @@ with the provided nonce during the _first_ call.
 ```csharp
 try
 {
-    var response = await client.Customers.CreateCustomerCard(customerId, body);
+    var response = await client.Customers.CreateCustomerCard(new CreateCustomerCardOperationRequest
+    {
+        CustomerId = "some example string",
+        Body = new CreateCustomerCardRequest { CardNonce = "some example string" },
+    });
     // TODO: Handle 'response' of type CreateCustomerCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6085,15 +6130,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The Square ID of the customer profile the card is linked to. |
-| <code>body</code> | <code>[CreateCustomerCardRequest](Models/CreateCustomerCardRequest.cs)</code> | - |
+<code>[CreateCustomerCardOperationRequest](src/Square/Requests/Customers/CreateCustomerCardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6103,9 +6145,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateCustomerCardResponse](Models/CreateCustomerCardResponse.cs)</code>
+**OnSuccess**: <code>[CreateCustomerCardResponse](src/Square/Models/CreateCustomerCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6116,7 +6158,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteCustomerResponse&gt; DeleteCustomer(string customerId, long? version, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteCustomerResponse&gt; DeleteCustomer(DeleteCustomerRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6141,10 +6183,13 @@ To delete a customer profile that was created by merging existing profiles, you 
 ```csharp
 try
 {
-    var response = await client.Customers.DeleteCustomer(customerId, version);
+    var response = await client.Customers.DeleteCustomer(new DeleteCustomerRequest
+    {
+        CustomerId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteCustomerResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6153,15 +6198,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the customer to delete. |
-| <code>version</code> | <code>long?</code> | The current version of the customer profile.<br><br>As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile). |
+<code>[DeleteCustomerRequest](src/Square/Requests/Customers/DeleteCustomerRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6171,9 +6213,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteCustomerResponse](Models/DeleteCustomerResponse.cs)</code>
+**OnSuccess**: <code>[DeleteCustomerResponse](src/Square/Models/DeleteCustomerResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6184,7 +6226,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteCustomerCardResponse&gt; DeleteCustomerCard(string customerId, string cardId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteCustomerCardResponse&gt; DeleteCustomerCard(DeleteCustomerCardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6207,10 +6249,14 @@ Removes a card on file from a customer.
 ```csharp
 try
 {
-    var response = await client.Customers.DeleteCustomerCard(customerId, cardId);
+    var response = await client.Customers.DeleteCustomerCard(new DeleteCustomerCardRequest
+    {
+        CustomerId = "some example string",
+        CardId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteCustomerCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6219,15 +6265,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the customer that the card on file belongs to. |
-| <code>cardId</code> | <code>string</code> | The ID of the card on file to delete. |
+<code>[DeleteCustomerCardRequest](src/Square/Requests/Customers/DeleteCustomerCardRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6237,9 +6280,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteCustomerCardResponse](Models/DeleteCustomerCardResponse.cs)</code>
+**OnSuccess**: <code>[DeleteCustomerCardResponse](src/Square/Models/DeleteCustomerCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6250,7 +6293,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListCustomersResponse&gt; ListCustomers(string? cursor, int? limit, CustomerSortField? sortField, SortOrder? sortOrder, bool? count = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListCustomersResponse&gt; ListCustomers(ListCustomersRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6277,10 +6320,10 @@ profiles can take closer to one minute or longer, especially during network inci
 ```csharp
 try
 {
-    var response = await client.Customers.ListCustomers(cursor, limit, sortField, sortOrder);
+    var response = await client.Customers.ListCustomers(new ListCustomersRequest());
     // TODO: Handle 'response' of type ListCustomersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6289,18 +6332,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for your original query.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results.<br>If the specified limit is less than 1 or greater than 100, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>sortField</code> | <code>[CustomerSortField?](Models/Enums/CustomerSortField.cs)</code> | Indicates how customers should be sorted.<br><br>The default value is `DEFAULT`. |
-| <code>sortOrder</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | Indicates whether customers should be sorted in ascending (`ASC`) or<br>descending (`DESC`) order.<br><br>The default value is `ASC`. |
-| <code>count</code> | <code>bool?</code> | Indicates whether to return the total count of customers in the `count` field of the response.<br><br>The default value is `false`.<br>**Default**: false |
+<code>[ListCustomersRequest](src/Square/Requests/Customers/ListCustomersRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6310,9 +6347,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListCustomersResponse](Models/ListCustomersResponse.cs)</code>
+**OnSuccess**: <code>[ListCustomersResponse](src/Square/Models/ListCustomersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6323,7 +6360,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RemoveGroupFromCustomerResponse&gt; RemoveGroupFromCustomer(string customerId, string groupId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RemoveGroupFromCustomerResponse&gt; RemoveGroupFromCustomer(RemoveGroupFromCustomerRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6349,10 +6386,14 @@ and the customer group is identified by the `group_id` value.
 ```csharp
 try
 {
-    var response = await client.Customers.RemoveGroupFromCustomer(customerId, groupId);
+    var response = await client.Customers.RemoveGroupFromCustomer(new RemoveGroupFromCustomerRequest
+    {
+        CustomerId = "some example string",
+        GroupId = "some example string",
+    });
     // TODO: Handle 'response' of type RemoveGroupFromCustomerResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6361,15 +6402,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the customer to remove from the group. |
-| <code>groupId</code> | <code>string</code> | The ID of the customer group to remove the customer from. |
+<code>[RemoveGroupFromCustomerRequest](src/Square/Requests/Customers/RemoveGroupFromCustomerRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6379,9 +6417,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RemoveGroupFromCustomerResponse](Models/RemoveGroupFromCustomerResponse.cs)</code>
+**OnSuccess**: <code>[RemoveGroupFromCustomerResponse](src/Square/Models/RemoveGroupFromCustomerResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6392,7 +6430,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveCustomerResponse&gt; RetrieveCustomer(string customerId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveCustomerResponse&gt; RetrieveCustomer(RetrieveCustomerRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6415,10 +6453,13 @@ Returns details for a single customer.
 ```csharp
 try
 {
-    var response = await client.Customers.RetrieveCustomer(customerId);
+    var response = await client.Customers.RetrieveCustomer(new RetrieveCustomerRequest
+    {
+        CustomerId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveCustomerResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6427,14 +6468,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the customer to retrieve. |
+<code>[RetrieveCustomerRequest](src/Square/Requests/Customers/RetrieveCustomerRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6444,9 +6483,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveCustomerResponse](Models/RetrieveCustomerResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveCustomerResponse](src/Square/Models/RetrieveCustomerResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6457,7 +6496,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchCustomersResponse&gt; SearchCustomers(SearchCustomersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchCustomersResponse&gt; SearchCustomers(SearchCustomersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6488,10 +6527,13 @@ profiles can take closer to one minute or longer, especially during network inci
 ```csharp
 try
 {
-    var response = await client.Customers.SearchCustomers(body);
+    var response = await client.Customers.SearchCustomers(new SearchCustomersOperationRequest
+    {
+        Body = new SearchCustomersRequest(),
+    });
     // TODO: Handle 'response' of type SearchCustomersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6500,14 +6542,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchCustomersRequest](Models/SearchCustomersRequest.cs)</code> | - |
+<code>[SearchCustomersOperationRequest](src/Square/Requests/Customers/SearchCustomersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6517,9 +6557,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchCustomersResponse](Models/SearchCustomersResponse.cs)</code>
+**OnSuccess**: <code>[SearchCustomersResponse](src/Square/Models/SearchCustomersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6530,7 +6570,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateCustomerResponse&gt; UpdateCustomer(string customerId, UpdateCustomerRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateCustomerResponse&gt; UpdateCustomer(UpdateCustomerOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6556,10 +6596,14 @@ To update a customer profile that was created by merging existing profiles, you 
 ```csharp
 try
 {
-    var response = await client.Customers.UpdateCustomer(customerId, body);
+    var response = await client.Customers.UpdateCustomer(new UpdateCustomerOperationRequest
+    {
+        CustomerId = "some example string",
+        Body = new UpdateCustomerRequest(),
+    });
     // TODO: Handle 'response' of type UpdateCustomerResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6568,15 +6612,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>customerId</code> | <code>string</code> | The ID of the customer to update. |
-| <code>body</code> | <code>[UpdateCustomerRequest](Models/UpdateCustomerRequest.cs)</code> | - |
+<code>[UpdateCustomerOperationRequest](src/Square/Requests/Customers/UpdateCustomerOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6586,9 +6627,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateCustomerResponse](Models/UpdateCustomerResponse.cs)</code>
+**OnSuccess**: <code>[UpdateCustomerResponse](src/Square/Models/UpdateCustomerResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6600,10 +6641,10 @@ catch (SdkException<RawError> ex)
 
 ## Devices
 
-> Source: [Devices](Api/Devices.cs)
+> Source: [Devices](src/Square/Api/Devices.cs)
 
 <details>
-<summary><code>Task&lt;CreateDeviceCodeResponse&gt; CreateDeviceCode(CreateDeviceCodeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateDeviceCodeResponse&gt; CreateDeviceCode(CreateDeviceCodeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6627,10 +6668,17 @@ terminal mode.
 ```csharp
 try
 {
-    var response = await client.Devices.CreateDeviceCode(body);
+    var response = await client.Devices.CreateDeviceCode(new CreateDeviceCodeOperationRequest
+    {
+        Body = new CreateDeviceCodeRequest
+        {
+            IdempotencyKey = "some example string",
+            DeviceCode = new DeviceCode { ProductType = ProductType.TerminalApi },
+        },
+    });
     // TODO: Handle 'response' of type CreateDeviceCodeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6639,14 +6687,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateDeviceCodeRequest](Models/CreateDeviceCodeRequest.cs)</code> | - |
+<code>[CreateDeviceCodeOperationRequest](src/Square/Requests/Devices/CreateDeviceCodeOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6656,9 +6702,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateDeviceCodeResponse](Models/CreateDeviceCodeResponse.cs)</code>
+**OnSuccess**: <code>[CreateDeviceCodeResponse](src/Square/Models/CreateDeviceCodeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6669,7 +6715,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetDeviceResponse&gt; GetDevice(string deviceId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetDeviceResponse&gt; GetDevice(GetDeviceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6692,10 +6738,10 @@ Retrieves Device with the associated `device_id`.
 ```csharp
 try
 {
-    var response = await client.Devices.GetDevice(deviceId);
+    var response = await client.Devices.GetDevice(new GetDeviceRequest { DeviceId = "some example string" });
     // TODO: Handle 'response' of type GetDeviceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6704,14 +6750,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>deviceId</code> | <code>string</code> | The unique ID for the desired `Device`. |
+<code>[GetDeviceRequest](src/Square/Requests/Devices/GetDeviceRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6721,9 +6765,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetDeviceResponse](Models/GetDeviceResponse.cs)</code>
+**OnSuccess**: <code>[GetDeviceResponse](src/Square/Models/GetDeviceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6734,7 +6778,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetDeviceCodeResponse&gt; GetDeviceCode(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetDeviceCodeResponse&gt; GetDeviceCode(GetDeviceCodeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6757,10 +6801,10 @@ Retrieves DeviceCode with the associated ID.
 ```csharp
 try
 {
-    var response = await client.Devices.GetDeviceCode(id);
+    var response = await client.Devices.GetDeviceCode(new GetDeviceCodeRequest { Id = "some example string" });
     // TODO: Handle 'response' of type GetDeviceCodeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6769,14 +6813,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The unique identifier for the device code. |
+<code>[GetDeviceCodeRequest](src/Square/Requests/Devices/GetDeviceCodeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6786,9 +6828,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetDeviceCodeResponse](Models/GetDeviceCodeResponse.cs)</code>
+**OnSuccess**: <code>[GetDeviceCodeResponse](src/Square/Models/GetDeviceCodeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6799,7 +6841,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListDeviceCodesResponse&gt; ListDeviceCodes(string? cursor, string? locationId, ProductType? productType, DeviceCodeStatus? status, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListDeviceCodesResponse&gt; ListDeviceCodes(ListDeviceCodesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6822,10 +6864,10 @@ Lists all DeviceCodes associated with the merchant.
 ```csharp
 try
 {
-    var response = await client.Devices.ListDeviceCodes(cursor, locationId, productType, status);
+    var response = await client.Devices.ListDeviceCodes(new ListDeviceCodesRequest());
     // TODO: Handle 'response' of type ListDeviceCodesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6834,17 +6876,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this to retrieve the next set of results for your original query.<br><br>See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information. |
-| <code>locationId</code> | <code>string?</code> | If specified, only returns DeviceCodes of the specified location.<br>Returns DeviceCodes of all locations if empty. |
-| <code>productType</code> | <code>[ProductType?](Models/Enums/ProductType.cs)</code> | If specified, only returns DeviceCodes targeting the specified product type.<br>Returns DeviceCodes of all product types if empty. |
-| <code>status</code> | <code>[DeviceCodeStatus?](Models/Enums/DeviceCodeStatus.cs)</code> | If specified, returns DeviceCodes with the specified statuses.<br>Returns DeviceCodes of status `PAIRED` and `UNPAIRED` if empty. |
+<code>[ListDeviceCodesRequest](src/Square/Requests/Devices/ListDeviceCodesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6854,9 +6891,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListDeviceCodesResponse](Models/ListDeviceCodesResponse.cs)</code>
+**OnSuccess**: <code>[ListDeviceCodesResponse](src/Square/Models/ListDeviceCodesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6867,7 +6904,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListDevicesResponse&gt; ListDevices(string? cursor, SortOrder? sortOrder, int? limit, string? locationId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListDevicesResponse&gt; ListDevices(ListDevicesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6891,10 +6928,10 @@ devices are supported.
 ```csharp
 try
 {
-    var response = await client.Devices.ListDevices(cursor, sortOrder, limit, locationId);
+    var response = await client.Devices.ListDevices(new ListDevicesRequest());
     // TODO: Handle 'response' of type ListDevicesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6903,17 +6940,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br>See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information. |
-| <code>sortOrder</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | The order in which results are listed.<br>- `ASC` - Oldest to newest.<br>- `DESC` - Newest to oldest (default). |
-| <code>limit</code> | <code>int?</code> | The number of results to return in a single page. |
-| <code>locationId</code> | <code>string?</code> | If present, only returns devices at the target location. |
+<code>[ListDevicesRequest](src/Square/Requests/Devices/ListDevicesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6923,9 +6955,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListDevicesResponse](Models/ListDevicesResponse.cs)</code>
+**OnSuccess**: <code>[ListDevicesResponse](src/Square/Models/ListDevicesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -6937,10 +6969,10 @@ catch (SdkException<RawError> ex)
 
 ## Disputes
 
-> Source: [Disputes](Api/Disputes.cs)
+> Source: [Disputes](src/Square/Api/Disputes.cs)
 
 <details>
-<summary><code>Task&lt;AcceptDisputeResponse&gt; AcceptDispute(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;AcceptDisputeResponse&gt; AcceptDispute(AcceptDisputeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -6967,10 +6999,10 @@ does not have sufficient funds, Square debits the associated bank account.
 ```csharp
 try
 {
-    var response = await client.Disputes.AcceptDispute(disputeId);
+    var response = await client.Disputes.AcceptDispute(new AcceptDisputeRequest { DisputeId = "some example string" });
     // TODO: Handle 'response' of type AcceptDisputeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -6979,14 +7011,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>disputeId</code> | <code>string</code> | The ID of the dispute you want to accept. |
+<code>[AcceptDisputeRequest](src/Square/Requests/Disputes/AcceptDisputeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -6996,9 +7026,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[AcceptDisputeResponse](Models/AcceptDisputeResponse.cs)</code>
+**OnSuccess**: <code>[AcceptDisputeResponse](src/Square/Models/AcceptDisputeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7009,7 +7039,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateDisputeEvidenceFileResponse&gt; CreateDisputeEvidenceFile(string disputeId, CreateDisputeEvidenceFileRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateDisputeEvidenceFileResponse&gt; CreateDisputeEvidenceFile(CreateDisputeEvidenceFileOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7033,10 +7063,13 @@ multipart/form-data file uploads in HEIC, HEIF, JPEG, PDF, PNG, and TIFF formats
 ```csharp
 try
 {
-    var response = await client.Disputes.CreateDisputeEvidenceFile(disputeId, request, imageFile);
+    var response = await client.Disputes.CreateDisputeEvidenceFile(new CreateDisputeEvidenceFileOperationRequest
+    {
+        DisputeId = "some example string",
+    });
     // TODO: Handle 'response' of type CreateDisputeEvidenceFileResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7045,16 +7078,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>disputeId</code> | <code>string</code> | The ID of the dispute for which you want to upload evidence. |
-| <code>request</code> | <code>[CreateDisputeEvidenceFileRequest?](Models/CreateDisputeEvidenceFileRequest.cs)</code> | - |
-| <code>imageFile</code> | <code>BinaryContent?</code> | - |
+<code>[CreateDisputeEvidenceFileOperationRequest](src/Square/Requests/Disputes/CreateDisputeEvidenceFileOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7064,9 +7093,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateDisputeEvidenceFileResponse](Models/CreateDisputeEvidenceFileResponse.cs)</code>
+**OnSuccess**: <code>[CreateDisputeEvidenceFileResponse](src/Square/Models/CreateDisputeEvidenceFileResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7077,7 +7106,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateDisputeEvidenceTextResponse&gt; CreateDisputeEvidenceText(string disputeId, CreateDisputeEvidenceTextRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateDisputeEvidenceTextResponse&gt; CreateDisputeEvidenceText(CreateDisputeEvidenceTextOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7100,10 +7129,18 @@ Uploads text to use as evidence for a dispute challenge.
 ```csharp
 try
 {
-    var response = await client.Disputes.CreateDisputeEvidenceText(disputeId, body);
+    var response = await client.Disputes.CreateDisputeEvidenceText(new CreateDisputeEvidenceTextOperationRequest
+    {
+        DisputeId = "some example string",
+        Body = new CreateDisputeEvidenceTextRequest
+        {
+            IdempotencyKey = "some example string",
+            EvidenceText = "some example string",
+        },
+    });
     // TODO: Handle 'response' of type CreateDisputeEvidenceTextResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7112,15 +7149,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>disputeId</code> | <code>string</code> | The ID of the dispute for which you want to upload evidence. |
-| <code>body</code> | <code>[CreateDisputeEvidenceTextRequest](Models/CreateDisputeEvidenceTextRequest.cs)</code> | - |
+<code>[CreateDisputeEvidenceTextOperationRequest](src/Square/Requests/Disputes/CreateDisputeEvidenceTextOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7130,9 +7164,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateDisputeEvidenceTextResponse](Models/CreateDisputeEvidenceTextResponse.cs)</code>
+**OnSuccess**: <code>[CreateDisputeEvidenceTextResponse](src/Square/Models/CreateDisputeEvidenceTextResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7143,7 +7177,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteDisputeEvidenceResponse&gt; DeleteDisputeEvidence(string disputeId, string evidenceId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteDisputeEvidenceResponse&gt; DeleteDisputeEvidence(DeleteDisputeEvidenceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7167,10 +7201,14 @@ Square does not send the bank any evidence that is removed.
 ```csharp
 try
 {
-    var response = await client.Disputes.DeleteDisputeEvidence(disputeId, evidenceId);
+    var response = await client.Disputes.DeleteDisputeEvidence(new DeleteDisputeEvidenceRequest
+    {
+        DisputeId = "some example string",
+        EvidenceId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteDisputeEvidenceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7179,15 +7217,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>disputeId</code> | <code>string</code> | The ID of the dispute from which you want to remove evidence. |
-| <code>evidenceId</code> | <code>string</code> | The ID of the evidence you want to remove. |
+<code>[DeleteDisputeEvidenceRequest](src/Square/Requests/Disputes/DeleteDisputeEvidenceRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7197,9 +7232,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteDisputeEvidenceResponse](Models/DeleteDisputeEvidenceResponse.cs)</code>
+**OnSuccess**: <code>[DeleteDisputeEvidenceResponse](src/Square/Models/DeleteDisputeEvidenceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7210,7 +7245,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListDisputeEvidenceResponse&gt; ListDisputeEvidence(string disputeId, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListDisputeEvidenceResponse&gt; ListDisputeEvidence(ListDisputeEvidenceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7233,10 +7268,13 @@ Returns a list of evidence associated with a dispute.
 ```csharp
 try
 {
-    var response = await client.Disputes.ListDisputeEvidence(disputeId, cursor);
+    var response = await client.Disputes.ListDisputeEvidence(new ListDisputeEvidenceRequest
+    {
+        DisputeId = "some example string",
+    });
     // TODO: Handle 'response' of type ListDisputeEvidenceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7245,15 +7283,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>disputeId</code> | <code>string</code> | The ID of the dispute. |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListDisputeEvidenceRequest](src/Square/Requests/Disputes/ListDisputeEvidenceRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7263,9 +7298,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListDisputeEvidenceResponse](Models/ListDisputeEvidenceResponse.cs)</code>
+**OnSuccess**: <code>[ListDisputeEvidenceResponse](src/Square/Models/ListDisputeEvidenceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7276,7 +7311,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListDisputesResponse&gt; ListDisputes(string? cursor, DisputeState? states, string? locationId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListDisputesResponse&gt; ListDisputes(ListDisputesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7299,10 +7334,10 @@ Returns a list of disputes associated with a particular account.
 ```csharp
 try
 {
-    var response = await client.Disputes.ListDisputes(cursor, states, locationId);
+    var response = await client.Disputes.ListDisputes(new ListDisputesRequest());
     // TODO: Handle 'response' of type ListDisputesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7311,16 +7346,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>states</code> | <code>[DisputeState?](Models/Enums/DisputeState.cs)</code> | The dispute states used to filter the result. If not specified, the endpoint returns all disputes. |
-| <code>locationId</code> | <code>string?</code> | The ID of the location for which to return a list of disputes.<br>If not specified, the endpoint returns disputes associated with all locations. |
+<code>[ListDisputesRequest](src/Square/Requests/Disputes/ListDisputesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7330,9 +7361,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListDisputesResponse](Models/ListDisputesResponse.cs)</code>
+**OnSuccess**: <code>[ListDisputesResponse](src/Square/Models/ListDisputesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7343,7 +7374,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveDisputeResponse&gt; RetrieveDispute(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveDisputeResponse&gt; RetrieveDispute(RetrieveDisputeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7366,10 +7397,13 @@ Returns details about a specific dispute.
 ```csharp
 try
 {
-    var response = await client.Disputes.RetrieveDispute(disputeId);
+    var response = await client.Disputes.RetrieveDispute(new RetrieveDisputeRequest
+    {
+        DisputeId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveDisputeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7378,14 +7412,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>disputeId</code> | <code>string</code> | The ID of the dispute you want more details about. |
+<code>[RetrieveDisputeRequest](src/Square/Requests/Disputes/RetrieveDisputeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7395,9 +7427,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveDisputeResponse](Models/RetrieveDisputeResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveDisputeResponse](src/Square/Models/RetrieveDisputeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7408,7 +7440,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveDisputeEvidenceResponse&gt; RetrieveDisputeEvidence(string disputeId, string evidenceId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveDisputeEvidenceResponse&gt; RetrieveDisputeEvidence(RetrieveDisputeEvidenceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7433,10 +7465,14 @@ You must maintain a copy of any evidence uploaded if you want to reference it la
 ```csharp
 try
 {
-    var response = await client.Disputes.RetrieveDisputeEvidence(disputeId, evidenceId);
+    var response = await client.Disputes.RetrieveDisputeEvidence(new RetrieveDisputeEvidenceRequest
+    {
+        DisputeId = "some example string",
+        EvidenceId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveDisputeEvidenceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7445,15 +7481,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>disputeId</code> | <code>string</code> | The ID of the dispute from which you want to retrieve evidence metadata. |
-| <code>evidenceId</code> | <code>string</code> | The ID of the evidence to retrieve. |
+<code>[RetrieveDisputeEvidenceRequest](src/Square/Requests/Disputes/RetrieveDisputeEvidenceRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7463,9 +7496,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveDisputeEvidenceResponse](Models/RetrieveDisputeEvidenceResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveDisputeEvidenceResponse](src/Square/Models/RetrieveDisputeEvidenceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7476,7 +7509,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SubmitEvidenceResponse&gt; SubmitEvidence(string disputeId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SubmitEvidenceResponse&gt; SubmitEvidence(SubmitEvidenceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7505,10 +7538,13 @@ a dispute after submission.
 ```csharp
 try
 {
-    var response = await client.Disputes.SubmitEvidence(disputeId);
+    var response = await client.Disputes.SubmitEvidence(new SubmitEvidenceRequest
+    {
+        DisputeId = "some example string",
+    });
     // TODO: Handle 'response' of type SubmitEvidenceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7517,14 +7553,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>disputeId</code> | <code>string</code> | The ID of the dispute for which you want to submit evidence. |
+<code>[SubmitEvidenceRequest](src/Square/Requests/Disputes/SubmitEvidenceRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7534,9 +7568,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SubmitEvidenceResponse](Models/SubmitEvidenceResponse.cs)</code>
+**OnSuccess**: <code>[SubmitEvidenceResponse](src/Square/Models/SubmitEvidenceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7548,10 +7582,10 @@ catch (SdkException<RawError> ex)
 
 ## Employees
 
-> Source: [Employees](Api/Employees.cs)
+> Source: [Employees](src/Square/Api/Employees.cs)
 
 <details>
-<summary><code>Task&lt;ListEmployeesResponse&gt; ListEmployees(string? locationId, EmployeeStatus? status, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListEmployeesResponse&gt; ListEmployees(ListEmployeesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7564,10 +7598,10 @@ catch (SdkException<RawError> ex)
 ```csharp
 try
 {
-    var response = await client.Employees.ListEmployees(locationId, status, limit, cursor);
+    var response = await client.Employees.ListEmployees(new ListEmployeesRequest());
     // TODO: Handle 'response' of type ListEmployeesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7576,17 +7610,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string?</code> | - |
-| <code>status</code> | <code>[EmployeeStatus?](Models/Enums/EmployeeStatus.cs)</code> | Specifies the EmployeeStatus to filter the employee by. |
-| <code>limit</code> | <code>int?</code> | The number of employees to be returned on each page. |
-| <code>cursor</code> | <code>string?</code> | The token required to retrieve the specified page of results. |
+<code>[ListEmployeesRequest](src/Square/Requests/Employees/ListEmployeesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7596,9 +7625,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListEmployeesResponse](Models/ListEmployeesResponse.cs)</code>
+**OnSuccess**: <code>[ListEmployeesResponse](src/Square/Models/ListEmployeesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7609,7 +7638,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveEmployeeResponse&gt; RetrieveEmployee(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveEmployeeResponse&gt; RetrieveEmployee(RetrieveEmployeeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7622,10 +7651,10 @@ catch (SdkException<RawError> ex)
 ```csharp
 try
 {
-    var response = await client.Employees.RetrieveEmployee(id);
+    var response = await client.Employees.RetrieveEmployee(new RetrieveEmployeeRequest { Id = "some example string" });
     // TODO: Handle 'response' of type RetrieveEmployeeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7634,14 +7663,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | UUID for the employee that was requested. |
+<code>[RetrieveEmployeeRequest](src/Square/Requests/Employees/RetrieveEmployeeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7651,9 +7678,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveEmployeeResponse](Models/RetrieveEmployeeResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveEmployeeResponse](src/Square/Models/RetrieveEmployeeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7665,10 +7692,10 @@ catch (SdkException<RawError> ex)
 
 ## Events
 
-> Source: [Events](Api/Events.cs)
+> Source: [Events](src/Square/Api/Events.cs)
 
 <details>
-<summary><code>Task&lt;DisableEventsResponse&gt; DisableEvents(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DisableEventsResponse&gt; DisableEvents(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7696,7 +7723,7 @@ try
     var response = await client.Events.DisableEvents();
     // TODO: Handle 'response' of type DisableEventsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7710,9 +7737,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DisableEventsResponse](Models/DisableEventsResponse.cs)</code>
+**OnSuccess**: <code>[DisableEventsResponse](src/Square/Models/DisableEventsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7723,7 +7750,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;EnableEventsResponse&gt; EnableEvents(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;EnableEventsResponse&gt; EnableEvents(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7749,7 +7776,7 @@ try
     var response = await client.Events.EnableEvents();
     // TODO: Handle 'response' of type EnableEventsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7763,9 +7790,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[EnableEventsResponse](Models/EnableEventsResponse.cs)</code>
+**OnSuccess**: <code>[EnableEventsResponse](src/Square/Models/EnableEventsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7776,7 +7803,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListEventTypesResponse&gt; ListEventTypes(string? apiVersion, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListEventTypesResponse&gt; ListEventTypes(ListEventTypesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7799,10 +7826,10 @@ Lists all event types that you can subscribe to as webhooks or query using the E
 ```csharp
 try
 {
-    var response = await client.Events.ListEventTypes(apiVersion);
+    var response = await client.Events.ListEventTypes(new ListEventTypesRequest());
     // TODO: Handle 'response' of type ListEventTypesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7811,14 +7838,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>apiVersion</code> | <code>string?</code> | The API version for which to list event types. Setting this field overrides the default version used by the application. |
+<code>[ListEventTypesRequest](src/Square/Requests/Events/ListEventTypesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7828,9 +7853,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListEventTypesResponse](Models/ListEventTypesResponse.cs)</code>
+**OnSuccess**: <code>[ListEventTypesResponse](src/Square/Models/ListEventTypesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7841,7 +7866,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchEventsResponse&gt; SearchEvents(SearchEventsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchEventsResponse&gt; SearchEvents(SearchEventsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7864,10 +7889,13 @@ Search for Square API events that occur within a 28-day timeframe.
 ```csharp
 try
 {
-    var response = await client.Events.SearchEvents(body);
+    var response = await client.Events.SearchEvents(new SearchEventsOperationRequest
+    {
+        Body = new SearchEventsRequest(),
+    });
     // TODO: Handle 'response' of type SearchEventsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7876,14 +7904,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchEventsRequest](Models/SearchEventsRequest.cs)</code> | - |
+<code>[SearchEventsOperationRequest](src/Square/Requests/Events/SearchEventsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7893,9 +7919,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchEventsResponse](Models/SearchEventsResponse.cs)</code>
+**OnSuccess**: <code>[SearchEventsResponse](src/Square/Models/SearchEventsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7907,10 +7933,10 @@ catch (SdkException<RawError> ex)
 
 ## GiftCardActivities
 
-> Source: [GiftCardActivities](Api/GiftCardActivities.cs)
+> Source: [GiftCardActivities](src/Square/Api/GiftCardActivities.cs)
 
 <details>
-<summary><code>Task&lt;CreateGiftCardActivityResponse&gt; CreateGiftCardActivity(CreateGiftCardActivityRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateGiftCardActivityResponse&gt; CreateGiftCardActivity(CreateGiftCardActivityOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -7934,10 +7960,21 @@ For example, create an `ACTIVATE` activity to activate a gift card with an initi
 ```csharp
 try
 {
-    var response = await client.GiftCardActivities.CreateGiftCardActivity(body);
+    var response = await client.GiftCardActivities.CreateGiftCardActivity(new CreateGiftCardActivityOperationRequest
+    {
+        Body = new CreateGiftCardActivityRequest
+        {
+            IdempotencyKey = "some example string",
+            GiftCardActivity = new GiftCardActivity
+            {
+                Type = GiftCardActivityType.Activate,
+                LocationId = "some example string",
+            },
+        },
+    });
     // TODO: Handle 'response' of type CreateGiftCardActivityResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -7946,14 +7983,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateGiftCardActivityRequest](Models/CreateGiftCardActivityRequest.cs)</code> | - |
+<code>[CreateGiftCardActivityOperationRequest](src/Square/Requests/GiftCardActivities/CreateGiftCardActivityOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -7963,9 +7998,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateGiftCardActivityResponse](Models/CreateGiftCardActivityResponse.cs)</code>
+**OnSuccess**: <code>[CreateGiftCardActivityResponse](src/Square/Models/CreateGiftCardActivityResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -7976,7 +8011,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListGiftCardActivitiesResponse&gt; ListGiftCardActivities(string? giftCardId, string? type, string? locationId, string? beginTime, string? endTime, int? limit, string? cursor, string? sortOrder, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListGiftCardActivitiesResponse&gt; ListGiftCardActivities(ListGiftCardActivitiesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8002,17 +8037,10 @@ for all gift cards in a specific region, or for activities within a time window.
 ```csharp
 try
 {
-    var response = await client.GiftCardActivities.ListGiftCardActivities(giftCardId,
-        type,
-        locationId,
-        beginTime,
-        endTime,
-        limit,
-        cursor,
-        sortOrder);
+    var response = await client.GiftCardActivities.ListGiftCardActivities(new ListGiftCardActivitiesRequest());
     // TODO: Handle 'response' of type ListGiftCardActivitiesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8021,21 +8049,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>giftCardId</code> | <code>string?</code> | If a gift card ID is provided, the endpoint returns activities related <br>to the specified gift card. Otherwise, the endpoint returns all gift card activities for <br>the seller. |
-| <code>type</code> | <code>string?</code> | If a [type](entity:GiftCardActivityType) is provided, the endpoint returns gift card activities of the specified type. <br>Otherwise, the endpoint returns all types of gift card activities. |
-| <code>locationId</code> | <code>string?</code> | If a location ID is provided, the endpoint returns gift card activities for the specified location. <br>Otherwise, the endpoint returns gift card activities for all locations. |
-| <code>beginTime</code> | <code>string?</code> | The timestamp for the beginning of the reporting period, in RFC 3339 format.<br>This start time is inclusive. The default value is the current time minus one year. |
-| <code>endTime</code> | <code>string?</code> | The timestamp for the end of the reporting period, in RFC 3339 format.<br>This end time is inclusive. The default value is the current time. |
-| <code>limit</code> | <code>int?</code> | If a limit is provided, the endpoint returns the specified number <br>of results (or fewer) per page. The maximum value is 100. The default value is 50.<br>For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination). |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br>If a cursor is not provided, the endpoint returns the first page of the results.<br>For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination). |
-| <code>sortOrder</code> | <code>string?</code> | The order in which the endpoint returns the activities, based on `created_at`.<br>- `ASC` - Oldest to newest.<br>- `DESC` - Newest to oldest (default). |
+<code>[ListGiftCardActivitiesRequest](src/Square/Requests/GiftCardActivities/ListGiftCardActivitiesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8045,9 +8064,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListGiftCardActivitiesResponse](Models/ListGiftCardActivitiesResponse.cs)</code>
+**OnSuccess**: <code>[ListGiftCardActivitiesResponse](src/Square/Models/ListGiftCardActivitiesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8059,10 +8078,10 @@ catch (SdkException<RawError> ex)
 
 ## GiftCards
 
-> Source: [GiftCards](Api/GiftCards.cs)
+> Source: [GiftCards](src/Square/Api/GiftCards.cs)
 
 <details>
-<summary><code>Task&lt;CreateGiftCardResponse&gt; CreateGiftCard(CreateGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateGiftCardResponse&gt; CreateGiftCard(CreateGiftCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8089,10 +8108,18 @@ to refund a payment to the new gift card.
 ```csharp
 try
 {
-    var response = await client.GiftCards.CreateGiftCard(body);
+    var response = await client.GiftCards.CreateGiftCard(new CreateGiftCardOperationRequest
+    {
+        Body = new CreateGiftCardRequest
+        {
+            IdempotencyKey = "some example string",
+            LocationId = "some example string",
+            GiftCard = new GiftCard { Type = GiftCardType.Physical },
+        },
+    });
     // TODO: Handle 'response' of type CreateGiftCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8101,14 +8128,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateGiftCardRequest](Models/CreateGiftCardRequest.cs)</code> | - |
+<code>[CreateGiftCardOperationRequest](src/Square/Requests/GiftCards/CreateGiftCardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8118,9 +8143,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateGiftCardResponse](Models/CreateGiftCardResponse.cs)</code>
+**OnSuccess**: <code>[CreateGiftCardResponse](src/Square/Models/CreateGiftCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8131,7 +8156,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;LinkCustomerToGiftCardResponse&gt; LinkCustomerToGiftCard(string giftCardId, LinkCustomerToGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;LinkCustomerToGiftCardResponse&gt; LinkCustomerToGiftCard(LinkCustomerToGiftCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8154,10 +8179,14 @@ Links a customer to a gift card, which is also referred to as adding a card on f
 ```csharp
 try
 {
-    var response = await client.GiftCards.LinkCustomerToGiftCard(giftCardId, body);
+    var response = await client.GiftCards.LinkCustomerToGiftCard(new LinkCustomerToGiftCardOperationRequest
+    {
+        GiftCardId = "some example string",
+        Body = new LinkCustomerToGiftCardRequest { CustomerId = "some example string" },
+    });
     // TODO: Handle 'response' of type LinkCustomerToGiftCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8166,15 +8195,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>giftCardId</code> | <code>string</code> | The ID of the gift card to be linked. |
-| <code>body</code> | <code>[LinkCustomerToGiftCardRequest](Models/LinkCustomerToGiftCardRequest.cs)</code> | - |
+<code>[LinkCustomerToGiftCardOperationRequest](src/Square/Requests/GiftCards/LinkCustomerToGiftCardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8184,9 +8210,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[LinkCustomerToGiftCardResponse](Models/LinkCustomerToGiftCardResponse.cs)</code>
+**OnSuccess**: <code>[LinkCustomerToGiftCardResponse](src/Square/Models/LinkCustomerToGiftCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8197,7 +8223,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListGiftCardsResponse&gt; ListGiftCards(string? type, string? state, int? limit, string? cursor, string? customerId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListGiftCardsResponse&gt; ListGiftCards(ListGiftCardsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8221,10 +8247,10 @@ a subset of the gift cards. Results are sorted by `created_at` in ascending orde
 ```csharp
 try
 {
-    var response = await client.GiftCards.ListGiftCards(type, state, limit, cursor, customerId);
+    var response = await client.GiftCards.ListGiftCards(new ListGiftCardsRequest());
     // TODO: Handle 'response' of type ListGiftCardsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8233,18 +8259,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>type</code> | <code>string?</code> | If a [type](entity:GiftCardType) is provided, the endpoint returns gift cards of the specified type.<br>Otherwise, the endpoint returns gift cards of all types. |
-| <code>state</code> | <code>string?</code> | If a [state](entity:GiftCardStatus) is provided, the endpoint returns the gift cards in the specified state.<br>Otherwise, the endpoint returns the gift cards of all states. |
-| <code>limit</code> | <code>int?</code> | If a limit is provided, the endpoint returns only the specified number of results per page.<br>The maximum value is 200. The default value is 30.<br>For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination). |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br>If a cursor is not provided, the endpoint returns the first page of the results. <br>For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination). |
-| <code>customerId</code> | <code>string?</code> | If a customer ID is provided, the endpoint returns only the gift cards linked to the specified customer. |
+<code>[ListGiftCardsRequest](src/Square/Requests/GiftCards/ListGiftCardsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8254,9 +8274,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListGiftCardsResponse](Models/ListGiftCardsResponse.cs)</code>
+**OnSuccess**: <code>[ListGiftCardsResponse](src/Square/Models/ListGiftCardsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8267,7 +8287,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveGiftCardResponse&gt; RetrieveGiftCard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveGiftCardResponse&gt; RetrieveGiftCard(RetrieveGiftCardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8290,10 +8310,10 @@ Retrieves a gift card using the gift card ID.
 ```csharp
 try
 {
-    var response = await client.GiftCards.RetrieveGiftCard(id);
+    var response = await client.GiftCards.RetrieveGiftCard(new RetrieveGiftCardRequest { Id = "some example string" });
     // TODO: Handle 'response' of type RetrieveGiftCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8302,14 +8322,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of the gift card to retrieve. |
+<code>[RetrieveGiftCardRequest](src/Square/Requests/GiftCards/RetrieveGiftCardRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8319,9 +8337,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveGiftCardResponse](Models/RetrieveGiftCardResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveGiftCardResponse](src/Square/Models/RetrieveGiftCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8332,7 +8350,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveGiftCardFromGanResponse&gt; RetrieveGiftCardFromGan(RetrieveGiftCardFromGanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveGiftCardFromGanResponse&gt; RetrieveGiftCardFromGan(RetrieveGiftCardFromGanOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8355,10 +8373,13 @@ Retrieves a gift card using the gift card account number (GAN).
 ```csharp
 try
 {
-    var response = await client.GiftCards.RetrieveGiftCardFromGan(body);
+    var response = await client.GiftCards.RetrieveGiftCardFromGan(new RetrieveGiftCardFromGanOperationRequest
+    {
+        Body = new RetrieveGiftCardFromGanRequest { Gan = "some example string" },
+    });
     // TODO: Handle 'response' of type RetrieveGiftCardFromGanResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8367,14 +8388,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[RetrieveGiftCardFromGanRequest](Models/RetrieveGiftCardFromGanRequest.cs)</code> | - |
+<code>[RetrieveGiftCardFromGanOperationRequest](src/Square/Requests/GiftCards/RetrieveGiftCardFromGanOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8384,9 +8403,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveGiftCardFromGanResponse](Models/RetrieveGiftCardFromGanResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveGiftCardFromGanResponse](src/Square/Models/RetrieveGiftCardFromGanResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8397,7 +8416,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveGiftCardFromNonceResponse&gt; RetrieveGiftCardFromNonce(RetrieveGiftCardFromNonceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveGiftCardFromNonceResponse&gt; RetrieveGiftCardFromNonce(RetrieveGiftCardFromNonceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8420,10 +8439,13 @@ Retrieves a gift card using a secure payment token that represents the gift card
 ```csharp
 try
 {
-    var response = await client.GiftCards.RetrieveGiftCardFromNonce(body);
+    var response = await client.GiftCards.RetrieveGiftCardFromNonce(new RetrieveGiftCardFromNonceOperationRequest
+    {
+        Body = new RetrieveGiftCardFromNonceRequest { Nonce = "some example string" },
+    });
     // TODO: Handle 'response' of type RetrieveGiftCardFromNonceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8432,14 +8454,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[RetrieveGiftCardFromNonceRequest](Models/RetrieveGiftCardFromNonceRequest.cs)</code> | - |
+<code>[RetrieveGiftCardFromNonceOperationRequest](src/Square/Requests/GiftCards/RetrieveGiftCardFromNonceOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8449,9 +8469,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveGiftCardFromNonceResponse](Models/RetrieveGiftCardFromNonceResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveGiftCardFromNonceResponse](src/Square/Models/RetrieveGiftCardFromNonceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8462,7 +8482,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UnlinkCustomerFromGiftCardResponse&gt; UnlinkCustomerFromGiftCard(string giftCardId, UnlinkCustomerFromGiftCardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UnlinkCustomerFromGiftCardResponse&gt; UnlinkCustomerFromGiftCard(UnlinkCustomerFromGiftCardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8485,10 +8505,14 @@ Unlinks a customer from a gift card, which is also referred to as removing a car
 ```csharp
 try
 {
-    var response = await client.GiftCards.UnlinkCustomerFromGiftCard(giftCardId, body);
+    var response = await client.GiftCards.UnlinkCustomerFromGiftCard(new UnlinkCustomerFromGiftCardOperationRequest
+    {
+        GiftCardId = "some example string",
+        Body = new UnlinkCustomerFromGiftCardRequest { CustomerId = "some example string" },
+    });
     // TODO: Handle 'response' of type UnlinkCustomerFromGiftCardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8497,15 +8521,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>giftCardId</code> | <code>string</code> | The ID of the gift card to be unlinked. |
-| <code>body</code> | <code>[UnlinkCustomerFromGiftCardRequest](Models/UnlinkCustomerFromGiftCardRequest.cs)</code> | - |
+<code>[UnlinkCustomerFromGiftCardOperationRequest](src/Square/Requests/GiftCards/UnlinkCustomerFromGiftCardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8515,9 +8536,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UnlinkCustomerFromGiftCardResponse](Models/UnlinkCustomerFromGiftCardResponse.cs)</code>
+**OnSuccess**: <code>[UnlinkCustomerFromGiftCardResponse](src/Square/Models/UnlinkCustomerFromGiftCardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8529,10 +8550,10 @@ catch (SdkException<RawError> ex)
 
 ## Inventory
 
-> Source: [Inventory](Api/Inventory.cs)
+> Source: [Inventory](src/Square/Api/Inventory.cs)
 
 <details>
-<summary><code>Task&lt;BatchChangeInventoryResponse&gt; BatchChangeInventory(BatchChangeInventoryRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchChangeInventoryResponse&gt; BatchChangeInventory(BatchChangeInventoryOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8559,10 +8580,13 @@ On failure: returns a list of related errors.
 ```csharp
 try
 {
-    var response = await client.Inventory.BatchChangeInventory(body);
+    var response = await client.Inventory.BatchChangeInventory(new BatchChangeInventoryOperationRequest
+    {
+        Body = new BatchChangeInventoryRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type BatchChangeInventoryResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8571,14 +8595,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchChangeInventoryRequest](Models/BatchChangeInventoryRequest.cs)</code> | - |
+<code>[BatchChangeInventoryOperationRequest](src/Square/Requests/Inventory/BatchChangeInventoryOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8588,9 +8610,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchChangeInventoryResponse](Models/BatchChangeInventoryResponse.cs)</code>
+**OnSuccess**: <code>[BatchChangeInventoryResponse](src/Square/Models/BatchChangeInventoryResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8601,7 +8623,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BatchRetrieveInventoryChangesResponse&gt; BatchRetrieveInventoryChanges(BatchRetrieveInventoryChangesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchRetrieveInventoryChangesResponse&gt; BatchRetrieveInventoryChanges(BatchRetrieveInventoryChangesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8631,10 +8653,11 @@ that cannot be handled by other, simpler endpoints.
 ```csharp
 try
 {
-    var response = await client.Inventory.BatchRetrieveInventoryChanges(body);
+    var response = await client.Inventory.BatchRetrieveInventoryChanges(
+        new BatchRetrieveInventoryChangesOperationRequest { Body = new BatchRetrieveInventoryChangesRequest() });
     // TODO: Handle 'response' of type BatchRetrieveInventoryChangesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8643,14 +8666,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchRetrieveInventoryChangesRequest](Models/BatchRetrieveInventoryChangesRequest.cs)</code> | - |
+<code>[BatchRetrieveInventoryChangesOperationRequest](src/Square/Requests/Inventory/BatchRetrieveInventoryChangesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8660,9 +8681,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchRetrieveInventoryChangesResponse](Models/BatchRetrieveInventoryChangesResponse.cs)</code>
+**OnSuccess**: <code>[BatchRetrieveInventoryChangesResponse](src/Square/Models/BatchRetrieveInventoryChangesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8673,7 +8694,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BatchRetrieveInventoryCountsResponse&gt; BatchRetrieveInventoryCounts(BatchRetrieveInventoryCountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchRetrieveInventoryCountsResponse&gt; BatchRetrieveInventoryCounts(BatchRetrieveInventoryCountsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8706,10 +8727,13 @@ in response to receiving a Webhook notification.
 ```csharp
 try
 {
-    var response = await client.Inventory.BatchRetrieveInventoryCounts(body);
+    var response = await client.Inventory.BatchRetrieveInventoryCounts(new BatchRetrieveInventoryCountsOperationRequest
+    {
+        Body = new BatchRetrieveInventoryCountsRequest(),
+    });
     // TODO: Handle 'response' of type BatchRetrieveInventoryCountsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8718,14 +8742,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchRetrieveInventoryCountsRequest](Models/BatchRetrieveInventoryCountsRequest.cs)</code> | - |
+<code>[BatchRetrieveInventoryCountsOperationRequest](src/Square/Requests/Inventory/BatchRetrieveInventoryCountsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8735,9 +8757,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchRetrieveInventoryCountsResponse](Models/BatchRetrieveInventoryCountsResponse.cs)</code>
+**OnSuccess**: <code>[BatchRetrieveInventoryCountsResponse](src/Square/Models/BatchRetrieveInventoryCountsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8748,7 +8770,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateInventoryAdjustmentReasonResponse&gt; CreateInventoryAdjustmentReason(CreateInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateInventoryAdjustmentReasonResponse&gt; CreateInventoryAdjustmentReason(CreateInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8771,10 +8793,21 @@ Creates a custom inventory adjustment reason.
 ```csharp
 try
 {
-    var response = await client.Inventory.CreateInventoryAdjustmentReason(body);
+    var response = await client.Inventory.CreateInventoryAdjustmentReason(
+        new CreateInventoryAdjustmentReasonOperationRequest
+        {
+            Body = new CreateInventoryAdjustmentReasonRequest
+            {
+                IdempotencyKey = "some example string",
+                AdjustmentReason = new InventoryAdjustmentReason
+                {
+                    Id = new InventoryAdjustmentReasonId { Type = InventoryAdjustmentReasonIdType.Received },
+                },
+            },
+        });
     // TODO: Handle 'response' of type CreateInventoryAdjustmentReasonResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8783,14 +8816,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateInventoryAdjustmentReasonRequest](Models/CreateInventoryAdjustmentReasonRequest.cs)</code> | - |
+<code>[CreateInventoryAdjustmentReasonOperationRequest](src/Square/Requests/Inventory/CreateInventoryAdjustmentReasonOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8800,9 +8831,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateInventoryAdjustmentReasonResponse](Models/CreateInventoryAdjustmentReasonResponse.cs)</code>
+**OnSuccess**: <code>[CreateInventoryAdjustmentReasonResponse](src/Square/Models/CreateInventoryAdjustmentReasonResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8813,7 +8844,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteInventoryAdjustmentReasonResponse&gt; DeleteInventoryAdjustmentReason(DeleteInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteInventoryAdjustmentReasonResponse&gt; DeleteInventoryAdjustmentReason(DeleteInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8836,10 +8867,17 @@ Soft deletes a custom inventory adjustment reason.
 ```csharp
 try
 {
-    var response = await client.Inventory.DeleteInventoryAdjustmentReason(body);
+    var response = await client.Inventory.DeleteInventoryAdjustmentReason(
+        new DeleteInventoryAdjustmentReasonOperationRequest
+        {
+            Body = new DeleteInventoryAdjustmentReasonRequest
+            {
+                ReasonId = new InventoryAdjustmentReasonId { Type = InventoryAdjustmentReasonIdType.Received },
+            },
+        });
     // TODO: Handle 'response' of type DeleteInventoryAdjustmentReasonResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8848,14 +8886,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[DeleteInventoryAdjustmentReasonRequest](Models/DeleteInventoryAdjustmentReasonRequest.cs)</code> | - |
+<code>[DeleteInventoryAdjustmentReasonOperationRequest](src/Square/Requests/Inventory/DeleteInventoryAdjustmentReasonOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8865,9 +8901,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteInventoryAdjustmentReasonResponse](Models/DeleteInventoryAdjustmentReasonResponse.cs)</code>
+**OnSuccess**: <code>[DeleteInventoryAdjustmentReasonResponse](src/Square/Models/DeleteInventoryAdjustmentReasonResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8878,7 +8914,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BatchChangeInventoryResponse&gt; DeprecatedBatchChangeInventory(BatchChangeInventoryRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchChangeInventoryResponse&gt; DeprecatedBatchChangeInventory(DeprecatedBatchChangeInventoryRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8902,10 +8938,13 @@ is updated to conform to the standard convention.
 ```csharp
 try
 {
-    var response = await client.Inventory.DeprecatedBatchChangeInventory(body);
+    var response = await client.Inventory.DeprecatedBatchChangeInventory(new DeprecatedBatchChangeInventoryRequest
+    {
+        Body = new BatchChangeInventoryRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type BatchChangeInventoryResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8914,14 +8953,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchChangeInventoryRequest](Models/BatchChangeInventoryRequest.cs)</code> | - |
+<code>[DeprecatedBatchChangeInventoryRequest](src/Square/Requests/Inventory/DeprecatedBatchChangeInventoryRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8931,9 +8968,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchChangeInventoryResponse](Models/BatchChangeInventoryResponse.cs)</code>
+**OnSuccess**: <code>[BatchChangeInventoryResponse](src/Square/Models/BatchChangeInventoryResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -8944,7 +8981,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BatchRetrieveInventoryChangesResponse&gt; DeprecatedBatchRetrieveInventoryChanges(BatchRetrieveInventoryChangesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchRetrieveInventoryChangesResponse&gt; DeprecatedBatchRetrieveInventoryChanges(DeprecatedBatchRetrieveInventoryChangesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -8968,10 +9005,11 @@ is updated to conform to the standard convention.
 ```csharp
 try
 {
-    var response = await client.Inventory.DeprecatedBatchRetrieveInventoryChanges(body);
+    var response = await client.Inventory.DeprecatedBatchRetrieveInventoryChanges(
+        new DeprecatedBatchRetrieveInventoryChangesRequest { Body = new BatchRetrieveInventoryChangesRequest() });
     // TODO: Handle 'response' of type BatchRetrieveInventoryChangesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -8980,14 +9018,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchRetrieveInventoryChangesRequest](Models/BatchRetrieveInventoryChangesRequest.cs)</code> | - |
+<code>[DeprecatedBatchRetrieveInventoryChangesRequest](src/Square/Requests/Inventory/DeprecatedBatchRetrieveInventoryChangesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -8997,9 +9033,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchRetrieveInventoryChangesResponse](Models/BatchRetrieveInventoryChangesResponse.cs)</code>
+**OnSuccess**: <code>[BatchRetrieveInventoryChangesResponse](src/Square/Models/BatchRetrieveInventoryChangesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9010,7 +9046,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BatchRetrieveInventoryCountsResponse&gt; DeprecatedBatchRetrieveInventoryCounts(BatchRetrieveInventoryCountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchRetrieveInventoryCountsResponse&gt; DeprecatedBatchRetrieveInventoryCounts(DeprecatedBatchRetrieveInventoryCountsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9034,10 +9070,11 @@ is updated to conform to the standard convention.
 ```csharp
 try
 {
-    var response = await client.Inventory.DeprecatedBatchRetrieveInventoryCounts(body);
+    var response = await client.Inventory.DeprecatedBatchRetrieveInventoryCounts(
+        new DeprecatedBatchRetrieveInventoryCountsRequest { Body = new BatchRetrieveInventoryCountsRequest() });
     // TODO: Handle 'response' of type BatchRetrieveInventoryCountsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9046,14 +9083,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchRetrieveInventoryCountsRequest](Models/BatchRetrieveInventoryCountsRequest.cs)</code> | - |
+<code>[DeprecatedBatchRetrieveInventoryCountsRequest](src/Square/Requests/Inventory/DeprecatedBatchRetrieveInventoryCountsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9063,9 +9098,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchRetrieveInventoryCountsResponse](Models/BatchRetrieveInventoryCountsResponse.cs)</code>
+**OnSuccess**: <code>[BatchRetrieveInventoryCountsResponse](src/Square/Models/BatchRetrieveInventoryCountsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9076,7 +9111,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveInventoryAdjustmentResponse&gt; DeprecatedRetrieveInventoryAdjustment(string adjustmentId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveInventoryAdjustmentResponse&gt; DeprecatedRetrieveInventoryAdjustment(DeprecatedRetrieveInventoryAdjustmentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9100,10 +9135,11 @@ is updated to conform to the standard convention.
 ```csharp
 try
 {
-    var response = await client.Inventory.DeprecatedRetrieveInventoryAdjustment(adjustmentId);
+    var response = await client.Inventory.DeprecatedRetrieveInventoryAdjustment(
+        new DeprecatedRetrieveInventoryAdjustmentRequest { AdjustmentId = "some example string" });
     // TODO: Handle 'response' of type RetrieveInventoryAdjustmentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9112,14 +9148,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>adjustmentId</code> | <code>string</code> | ID of the [InventoryAdjustment](entity:InventoryAdjustment) to retrieve. |
+<code>[DeprecatedRetrieveInventoryAdjustmentRequest](src/Square/Requests/Inventory/DeprecatedRetrieveInventoryAdjustmentRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9129,9 +9163,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveInventoryAdjustmentResponse](Models/RetrieveInventoryAdjustmentResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveInventoryAdjustmentResponse](src/Square/Models/RetrieveInventoryAdjustmentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9142,7 +9176,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveInventoryPhysicalCountResponse&gt; DeprecatedRetrieveInventoryPhysicalCount(string physicalCountId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveInventoryPhysicalCountResponse&gt; DeprecatedRetrieveInventoryPhysicalCount(DeprecatedRetrieveInventoryPhysicalCountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9166,10 +9200,11 @@ is updated to conform to the standard convention.
 ```csharp
 try
 {
-    var response = await client.Inventory.DeprecatedRetrieveInventoryPhysicalCount(physicalCountId);
+    var response = await client.Inventory.DeprecatedRetrieveInventoryPhysicalCount(
+        new DeprecatedRetrieveInventoryPhysicalCountRequest { PhysicalCountId = "some example string" });
     // TODO: Handle 'response' of type RetrieveInventoryPhysicalCountResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9178,14 +9213,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>physicalCountId</code> | <code>string</code> | ID of the<br>[InventoryPhysicalCount](entity:InventoryPhysicalCount) to retrieve. |
+<code>[DeprecatedRetrieveInventoryPhysicalCountRequest](src/Square/Requests/Inventory/DeprecatedRetrieveInventoryPhysicalCountRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9195,9 +9228,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveInventoryPhysicalCountResponse](Models/RetrieveInventoryPhysicalCountResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveInventoryPhysicalCountResponse](src/Square/Models/RetrieveInventoryPhysicalCountResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9208,7 +9241,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListInventoryAdjustmentReasonsResponse&gt; ListInventoryAdjustmentReasons(bool? includeDeleted = false, bool? includeSystemCodes = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListInventoryAdjustmentReasonsResponse&gt; ListInventoryAdjustmentReasons(ListInventoryAdjustmentReasonsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9232,10 +9265,10 @@ to the seller.
 ```csharp
 try
 {
-    var response = await client.Inventory.ListInventoryAdjustmentReasons();
+    var response = await client.Inventory.ListInventoryAdjustmentReasons(new ListInventoryAdjustmentReasonsRequest());
     // TODO: Handle 'response' of type ListInventoryAdjustmentReasonsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9244,15 +9277,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>includeDeleted</code> | <code>bool?</code> | Indicates whether the response should include deleted custom inventory<br>adjustment reasons. The default value is `false`.<br>**Default**: false |
-| <code>includeSystemCodes</code> | <code>bool?</code> | Indicates whether the response should include Square-generated system<br>inventory adjustment reason codes that cannot be used to write adjustments<br>from the Connect API, such as `SALE`, `RECOUNT`, `TRANSFER`, `IN_TRANSIT`,<br>and `CANCELED_SALE`. The default value is `false`.<br>**Default**: false |
+<code>[ListInventoryAdjustmentReasonsRequest](src/Square/Requests/Inventory/ListInventoryAdjustmentReasonsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9262,9 +9292,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListInventoryAdjustmentReasonsResponse](Models/ListInventoryAdjustmentReasonsResponse.cs)</code>
+**OnSuccess**: <code>[ListInventoryAdjustmentReasonsResponse](src/Square/Models/ListInventoryAdjustmentReasonsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9275,7 +9305,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RestoreInventoryAdjustmentReasonResponse&gt; RestoreInventoryAdjustmentReason(RestoreInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RestoreInventoryAdjustmentReasonResponse&gt; RestoreInventoryAdjustmentReason(RestoreInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9298,10 +9328,17 @@ Restores a soft-deleted custom inventory adjustment reason.
 ```csharp
 try
 {
-    var response = await client.Inventory.RestoreInventoryAdjustmentReason(body);
+    var response = await client.Inventory.RestoreInventoryAdjustmentReason(
+        new RestoreInventoryAdjustmentReasonOperationRequest
+        {
+            Body = new RestoreInventoryAdjustmentReasonRequest
+            {
+                ReasonId = new InventoryAdjustmentReasonId { Type = InventoryAdjustmentReasonIdType.Received },
+            },
+        });
     // TODO: Handle 'response' of type RestoreInventoryAdjustmentReasonResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9310,14 +9347,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[RestoreInventoryAdjustmentReasonRequest](Models/RestoreInventoryAdjustmentReasonRequest.cs)</code> | - |
+<code>[RestoreInventoryAdjustmentReasonOperationRequest](src/Square/Requests/Inventory/RestoreInventoryAdjustmentReasonOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9327,9 +9362,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RestoreInventoryAdjustmentReasonResponse](Models/RestoreInventoryAdjustmentReasonResponse.cs)</code>
+**OnSuccess**: <code>[RestoreInventoryAdjustmentReasonResponse](src/Square/Models/RestoreInventoryAdjustmentReasonResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9340,7 +9375,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveInventoryAdjustmentResponse&gt; RetrieveInventoryAdjustment(string adjustmentId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveInventoryAdjustmentResponse&gt; RetrieveInventoryAdjustment(RetrieveInventoryAdjustmentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9364,10 +9399,13 @@ with the provided `adjustment_id`.
 ```csharp
 try
 {
-    var response = await client.Inventory.RetrieveInventoryAdjustment(adjustmentId);
+    var response = await client.Inventory.RetrieveInventoryAdjustment(new RetrieveInventoryAdjustmentRequest
+    {
+        AdjustmentId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveInventoryAdjustmentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9376,14 +9414,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>adjustmentId</code> | <code>string</code> | ID of the [InventoryAdjustment](entity:InventoryAdjustment) to retrieve. |
+<code>[RetrieveInventoryAdjustmentRequest](src/Square/Requests/Inventory/RetrieveInventoryAdjustmentRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9393,9 +9429,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveInventoryAdjustmentResponse](Models/RetrieveInventoryAdjustmentResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveInventoryAdjustmentResponse](src/Square/Models/RetrieveInventoryAdjustmentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9406,7 +9442,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveInventoryAdjustmentReasonResponse&gt; RetrieveInventoryAdjustmentReason(RetrieveInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveInventoryAdjustmentReasonResponse&gt; RetrieveInventoryAdjustmentReason(RetrieveInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9430,10 +9466,17 @@ Returns the inventory adjustment reason identified by the provided
 ```csharp
 try
 {
-    var response = await client.Inventory.RetrieveInventoryAdjustmentReason(body);
+    var response = await client.Inventory.RetrieveInventoryAdjustmentReason(
+        new RetrieveInventoryAdjustmentReasonOperationRequest
+        {
+            Body = new RetrieveInventoryAdjustmentReasonRequest
+            {
+                ReasonId = new InventoryAdjustmentReasonId { Type = InventoryAdjustmentReasonIdType.Received },
+            },
+        });
     // TODO: Handle 'response' of type RetrieveInventoryAdjustmentReasonResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9442,14 +9485,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[RetrieveInventoryAdjustmentReasonRequest](Models/RetrieveInventoryAdjustmentReasonRequest.cs)</code> | - |
+<code>[RetrieveInventoryAdjustmentReasonOperationRequest](src/Square/Requests/Inventory/RetrieveInventoryAdjustmentReasonOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9459,9 +9500,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveInventoryAdjustmentReasonResponse](Models/RetrieveInventoryAdjustmentReasonResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveInventoryAdjustmentReasonResponse](src/Square/Models/RetrieveInventoryAdjustmentReasonResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9472,7 +9513,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveInventoryChangesResponse&gt; RetrieveInventoryChanges(string catalogObjectId, string? locationIds, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveInventoryChangesResponse&gt; RetrieveInventoryChanges(RetrieveInventoryChangesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9507,10 +9548,13 @@ sophisticated queries, use a batch endpoint.
 ```csharp
 try
 {
-    var response = await client.Inventory.RetrieveInventoryChanges(catalogObjectId, locationIds, cursor);
+    var response = await client.Inventory.RetrieveInventoryChanges(new RetrieveInventoryChangesRequest
+    {
+        CatalogObjectId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveInventoryChangesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9519,16 +9563,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>catalogObjectId</code> | <code>string</code> | ID of the [CatalogObject](entity:CatalogObject) to retrieve. |
-| <code>locationIds</code> | <code>string?</code> | The [Location](entity:Location) IDs to look up as a comma-separated<br>list. An empty list queries all locations. |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this to retrieve the next set of results for the original query.<br><br>See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information. |
+<code>[RetrieveInventoryChangesRequest](src/Square/Requests/Inventory/RetrieveInventoryChangesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9538,9 +9578,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveInventoryChangesResponse](Models/RetrieveInventoryChangesResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveInventoryChangesResponse](src/Square/Models/RetrieveInventoryChangesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9551,7 +9591,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveInventoryCountResponse&gt; RetrieveInventoryCount(string catalogObjectId, string? locationIds, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveInventoryCountResponse&gt; RetrieveInventoryCount(RetrieveInventoryCountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9577,10 +9617,13 @@ For more sophisticated queries, use a batch endpoint.
 ```csharp
 try
 {
-    var response = await client.Inventory.RetrieveInventoryCount(catalogObjectId, locationIds, cursor);
+    var response = await client.Inventory.RetrieveInventoryCount(new RetrieveInventoryCountRequest
+    {
+        CatalogObjectId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveInventoryCountResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9589,16 +9632,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>catalogObjectId</code> | <code>string</code> | ID of the [CatalogObject](entity:CatalogObject) to retrieve. |
-| <code>locationIds</code> | <code>string?</code> | The [Location](entity:Location) IDs to look up as a comma-separated<br>list. An empty list queries all locations. |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this to retrieve the next set of results for the original query.<br><br>See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information. |
+<code>[RetrieveInventoryCountRequest](src/Square/Requests/Inventory/RetrieveInventoryCountRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9608,9 +9647,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveInventoryCountResponse](Models/RetrieveInventoryCountResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveInventoryCountResponse](src/Square/Models/RetrieveInventoryCountResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9621,7 +9660,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveInventoryPhysicalCountResponse&gt; RetrieveInventoryPhysicalCount(string physicalCountId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveInventoryPhysicalCountResponse&gt; RetrieveInventoryPhysicalCount(RetrieveInventoryPhysicalCountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9645,10 +9684,13 @@ object with the provided `physical_count_id`.
 ```csharp
 try
 {
-    var response = await client.Inventory.RetrieveInventoryPhysicalCount(physicalCountId);
+    var response = await client.Inventory.RetrieveInventoryPhysicalCount(new RetrieveInventoryPhysicalCountRequest
+    {
+        PhysicalCountId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveInventoryPhysicalCountResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9657,14 +9699,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>physicalCountId</code> | <code>string</code> | ID of the<br>[InventoryPhysicalCount](entity:InventoryPhysicalCount) to retrieve. |
+<code>[RetrieveInventoryPhysicalCountRequest](src/Square/Requests/Inventory/RetrieveInventoryPhysicalCountRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9674,9 +9714,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveInventoryPhysicalCountResponse](Models/RetrieveInventoryPhysicalCountResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveInventoryPhysicalCountResponse](src/Square/Models/RetrieveInventoryPhysicalCountResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9687,7 +9727,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateInventoryAdjustmentResponse&gt; UpdateInventoryAdjustment(UpdateInventoryAdjustmentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateInventoryAdjustmentResponse&gt; UpdateInventoryAdjustment(UpdateInventoryAdjustmentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9713,10 +9753,17 @@ On failure: returns a list of related errors.
 ```csharp
 try
 {
-    var response = await client.Inventory.UpdateInventoryAdjustment(body);
+    var response = await client.Inventory.UpdateInventoryAdjustment(new UpdateInventoryAdjustmentOperationRequest
+    {
+        Body = new UpdateInventoryAdjustmentRequest
+        {
+            IdempotencyKey = "some example string",
+            Adjustment = new InventoryAdjustment(),
+        },
+    });
     // TODO: Handle 'response' of type UpdateInventoryAdjustmentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9725,14 +9772,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[UpdateInventoryAdjustmentRequest](Models/UpdateInventoryAdjustmentRequest.cs)</code> | - |
+<code>[UpdateInventoryAdjustmentOperationRequest](src/Square/Requests/Inventory/UpdateInventoryAdjustmentOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9742,9 +9787,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateInventoryAdjustmentResponse](Models/UpdateInventoryAdjustmentResponse.cs)</code>
+**OnSuccess**: <code>[UpdateInventoryAdjustmentResponse](src/Square/Models/UpdateInventoryAdjustmentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9755,7 +9800,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateInventoryAdjustmentReasonResponse&gt; UpdateInventoryAdjustmentReason(UpdateInventoryAdjustmentReasonRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateInventoryAdjustmentReasonResponse&gt; UpdateInventoryAdjustmentReason(UpdateInventoryAdjustmentReasonOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9778,10 +9823,21 @@ Updates a custom inventory adjustment reason.
 ```csharp
 try
 {
-    var response = await client.Inventory.UpdateInventoryAdjustmentReason(body);
+    var response = await client.Inventory.UpdateInventoryAdjustmentReason(
+        new UpdateInventoryAdjustmentReasonOperationRequest
+        {
+            Body = new UpdateInventoryAdjustmentReasonRequest
+            {
+                ReasonId = new InventoryAdjustmentReasonId { Type = InventoryAdjustmentReasonIdType.Received },
+                AdjustmentReason = new InventoryAdjustmentReason
+                {
+                    Id = new InventoryAdjustmentReasonId { Type = InventoryAdjustmentReasonIdType.Received },
+                },
+            },
+        });
     // TODO: Handle 'response' of type UpdateInventoryAdjustmentReasonResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9790,14 +9846,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[UpdateInventoryAdjustmentReasonRequest](Models/UpdateInventoryAdjustmentReasonRequest.cs)</code> | - |
+<code>[UpdateInventoryAdjustmentReasonOperationRequest](src/Square/Requests/Inventory/UpdateInventoryAdjustmentReasonOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9807,9 +9861,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateInventoryAdjustmentReasonResponse](Models/UpdateInventoryAdjustmentReasonResponse.cs)</code>
+**OnSuccess**: <code>[UpdateInventoryAdjustmentReasonResponse](src/Square/Models/UpdateInventoryAdjustmentReasonResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9821,10 +9875,10 @@ catch (SdkException<RawError> ex)
 
 ## Invoices
 
-> Source: [Invoices](Api/Invoices.cs)
+> Source: [Invoices](src/Square/Api/Invoices.cs)
 
 <details>
-<summary><code>Task&lt;CancelInvoiceResponse&gt; CancelInvoice(string invoiceId, CancelInvoiceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelInvoiceResponse&gt; CancelInvoice(CancelInvoiceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9850,10 +9904,14 @@ You cannot cancel an invoice in the `DRAFT` state or in a terminal state: `PAID`
 ```csharp
 try
 {
-    var response = await client.Invoices.CancelInvoice(invoiceId, body);
+    var response = await client.Invoices.CancelInvoice(new CancelInvoiceOperationRequest
+    {
+        InvoiceId = "some example string",
+        Body = new CancelInvoiceRequest { Version = 1 },
+    });
     // TODO: Handle 'response' of type CancelInvoiceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9862,15 +9920,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>invoiceId</code> | <code>string</code> | The ID of the [invoice](entity:Invoice) to cancel. |
-| <code>body</code> | <code>[CancelInvoiceRequest](Models/CancelInvoiceRequest.cs)</code> | - |
+<code>[CancelInvoiceOperationRequest](src/Square/Requests/Invoices/CancelInvoiceOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9880,9 +9935,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelInvoiceResponse](Models/CancelInvoiceResponse.cs)</code>
+**OnSuccess**: <code>[CancelInvoiceResponse](src/Square/Models/CancelInvoiceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9893,7 +9948,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateInvoiceResponse&gt; CreateInvoice(CreateInvoiceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateInvoiceResponse&gt; CreateInvoice(CreateInvoiceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9920,10 +9975,13 @@ You must publish the invoice before Square can process it (send it to the custom
 ```csharp
 try
 {
-    var response = await client.Invoices.CreateInvoice(body);
+    var response = await client.Invoices.CreateInvoice(new CreateInvoiceOperationRequest
+    {
+        Body = new CreateInvoiceRequest { Invoice = new Invoice() },
+    });
     // TODO: Handle 'response' of type CreateInvoiceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -9932,14 +9990,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateInvoiceRequest](Models/CreateInvoiceRequest.cs)</code> | - |
+<code>[CreateInvoiceOperationRequest](src/Square/Requests/Invoices/CreateInvoiceOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -9949,9 +10005,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateInvoiceResponse](Models/CreateInvoiceResponse.cs)</code>
+**OnSuccess**: <code>[CreateInvoiceResponse](src/Square/Models/CreateInvoiceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -9962,7 +10018,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateInvoiceAttachmentResponse&gt; CreateInvoiceAttachment(string invoiceId, CreateInvoiceAttachmentRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateInvoiceAttachmentResponse&gt; CreateInvoiceAttachment(CreateInvoiceAttachmentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -9992,10 +10048,13 @@ __NOTE:__ When testing in the Sandbox environment, the total file size is limite
 ```csharp
 try
 {
-    var response = await client.Invoices.CreateInvoiceAttachment(invoiceId, request, imageFile);
+    var response = await client.Invoices.CreateInvoiceAttachment(new CreateInvoiceAttachmentOperationRequest
+    {
+        InvoiceId = "some example string",
+    });
     // TODO: Handle 'response' of type CreateInvoiceAttachmentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10004,16 +10063,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>invoiceId</code> | <code>string</code> | The ID of the [invoice](entity:Invoice) to attach the file to. |
-| <code>request</code> | <code>[CreateInvoiceAttachmentRequest?](Models/CreateInvoiceAttachmentRequest.cs)</code> | - |
-| <code>imageFile</code> | <code>BinaryContent?</code> | - |
+<code>[CreateInvoiceAttachmentOperationRequest](src/Square/Requests/Invoices/CreateInvoiceAttachmentOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10023,9 +10078,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateInvoiceAttachmentResponse](Models/CreateInvoiceAttachmentResponse.cs)</code>
+**OnSuccess**: <code>[CreateInvoiceAttachmentResponse](src/Square/Models/CreateInvoiceAttachmentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10036,7 +10091,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteInvoiceResponse&gt; DeleteInvoice(string invoiceId, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteInvoiceResponse&gt; DeleteInvoice(DeleteInvoiceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10061,10 +10116,10 @@ invoice (you cannot delete a published invoice, including one that is scheduled 
 ```csharp
 try
 {
-    var response = await client.Invoices.DeleteInvoice(invoiceId, version);
+    var response = await client.Invoices.DeleteInvoice(new DeleteInvoiceRequest { InvoiceId = "some example string" });
     // TODO: Handle 'response' of type DeleteInvoiceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10073,15 +10128,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>invoiceId</code> | <code>string</code> | The ID of the invoice to delete. |
-| <code>version</code> | <code>int?</code> | The version of the [invoice](entity:Invoice) to delete.<br>If you do not know the version, you can call [GetInvoice](api-endpoint:Invoices-GetInvoice) or <br>[ListInvoices](api-endpoint:Invoices-ListInvoices). |
+<code>[DeleteInvoiceRequest](src/Square/Requests/Invoices/DeleteInvoiceRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10091,9 +10143,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteInvoiceResponse](Models/DeleteInvoiceResponse.cs)</code>
+**OnSuccess**: <code>[DeleteInvoiceResponse](src/Square/Models/DeleteInvoiceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10104,7 +10156,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteInvoiceAttachmentResponse&gt; DeleteInvoiceAttachment(string invoiceId, string attachmentId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteInvoiceAttachmentResponse&gt; DeleteInvoiceAttachment(DeleteInvoiceAttachmentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10128,10 +10180,14 @@ from invoices in the `DRAFT`, `SCHEDULED`, `UNPAID`, or `PARTIALLY_PAID` state.
 ```csharp
 try
 {
-    var response = await client.Invoices.DeleteInvoiceAttachment(invoiceId, attachmentId);
+    var response = await client.Invoices.DeleteInvoiceAttachment(new DeleteInvoiceAttachmentRequest
+    {
+        InvoiceId = "some example string",
+        AttachmentId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteInvoiceAttachmentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10140,15 +10196,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>invoiceId</code> | <code>string</code> | The ID of the [invoice](entity:Invoice) to delete the attachment from. |
-| <code>attachmentId</code> | <code>string</code> | The ID of the [attachment](entity:InvoiceAttachment) to delete. |
+<code>[DeleteInvoiceAttachmentRequest](src/Square/Requests/Invoices/DeleteInvoiceAttachmentRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10158,9 +10211,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteInvoiceAttachmentResponse](Models/DeleteInvoiceAttachmentResponse.cs)</code>
+**OnSuccess**: <code>[DeleteInvoiceAttachmentResponse](src/Square/Models/DeleteInvoiceAttachmentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10171,7 +10224,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetInvoiceResponse&gt; GetInvoice(string invoiceId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetInvoiceResponse&gt; GetInvoice(GetInvoiceRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10194,10 +10247,10 @@ Retrieves an invoice by invoice ID.
 ```csharp
 try
 {
-    var response = await client.Invoices.GetInvoice(invoiceId);
+    var response = await client.Invoices.GetInvoice(new GetInvoiceRequest { InvoiceId = "some example string" });
     // TODO: Handle 'response' of type GetInvoiceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10206,14 +10259,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>invoiceId</code> | <code>string</code> | The ID of the invoice to retrieve. |
+<code>[GetInvoiceRequest](src/Square/Requests/Invoices/GetInvoiceRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10223,9 +10274,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetInvoiceResponse](Models/GetInvoiceResponse.cs)</code>
+**OnSuccess**: <code>[GetInvoiceResponse](src/Square/Models/GetInvoiceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10236,7 +10287,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListInvoicesResponse&gt; ListInvoices(string locationId, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListInvoicesResponse&gt; ListInvoices(ListInvoicesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10261,10 +10312,10 @@ use in a subsequent request to retrieve the next set of invoices.
 ```csharp
 try
 {
-    var response = await client.Invoices.ListInvoices(locationId, cursor, limit);
+    var response = await client.Invoices.ListInvoices(new ListInvoicesRequest { LocationId = "some example string" });
     // TODO: Handle 'response' of type ListInvoicesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10273,16 +10324,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location for which to list invoices. |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint. <br>Provide this cursor to retrieve the next set of results for your original query.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>limit</code> | <code>int?</code> | The maximum number of invoices to return (200 is the maximum `limit`). <br>If not provided, the server uses a default limit of 100 invoices. |
+<code>[ListInvoicesRequest](src/Square/Requests/Invoices/ListInvoicesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10292,9 +10339,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListInvoicesResponse](Models/ListInvoicesResponse.cs)</code>
+**OnSuccess**: <code>[ListInvoicesResponse](src/Square/Models/ListInvoicesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10305,7 +10352,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;PublishInvoiceResponse&gt; PublishInvoice(string invoiceId, PublishInvoiceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;PublishInvoiceResponse&gt; PublishInvoice(PublishInvoiceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10341,10 +10388,14 @@ and `PAYMENTS_WRITE` are required when publishing invoices configured for card-o
 ```csharp
 try
 {
-    var response = await client.Invoices.PublishInvoice(invoiceId, body);
+    var response = await client.Invoices.PublishInvoice(new PublishInvoiceOperationRequest
+    {
+        InvoiceId = "some example string",
+        Body = new PublishInvoiceRequest { Version = 1 },
+    });
     // TODO: Handle 'response' of type PublishInvoiceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10353,15 +10404,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>invoiceId</code> | <code>string</code> | The ID of the invoice to publish. |
-| <code>body</code> | <code>[PublishInvoiceRequest](Models/PublishInvoiceRequest.cs)</code> | - |
+<code>[PublishInvoiceOperationRequest](src/Square/Requests/Invoices/PublishInvoiceOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10371,9 +10419,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[PublishInvoiceResponse](Models/PublishInvoiceResponse.cs)</code>
+**OnSuccess**: <code>[PublishInvoiceResponse](src/Square/Models/PublishInvoiceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10384,7 +10432,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchInvoicesResponse&gt; SearchInvoices(SearchInvoicesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchInvoicesResponse&gt; SearchInvoices(SearchInvoicesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10413,10 +10461,16 @@ that you use in a subsequent request to retrieve the next set of invoices.
 ```csharp
 try
 {
-    var response = await client.Invoices.SearchInvoices(body);
+    var response = await client.Invoices.SearchInvoices(new SearchInvoicesOperationRequest
+    {
+        Body = new SearchInvoicesRequest
+        {
+            Query = new InvoiceQuery { Filter = new InvoiceFilter { LocationIds = ["some example string"] } },
+        },
+    });
     // TODO: Handle 'response' of type SearchInvoicesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10425,14 +10479,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchInvoicesRequest](Models/SearchInvoicesRequest.cs)</code> | - |
+<code>[SearchInvoicesOperationRequest](src/Square/Requests/Invoices/SearchInvoicesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10442,9 +10494,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchInvoicesResponse](Models/SearchInvoicesResponse.cs)</code>
+**OnSuccess**: <code>[SearchInvoicesResponse](src/Square/Models/SearchInvoicesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10455,7 +10507,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateInvoiceResponse&gt; UpdateInvoice(string invoiceId, UpdateInvoiceRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateInvoiceResponse&gt; UpdateInvoice(UpdateInvoiceOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10481,10 +10533,14 @@ Some restrictions apply to updating invoices. For example, you cannot change the
 ```csharp
 try
 {
-    var response = await client.Invoices.UpdateInvoice(invoiceId, body);
+    var response = await client.Invoices.UpdateInvoice(new UpdateInvoiceOperationRequest
+    {
+        InvoiceId = "some example string",
+        Body = new UpdateInvoiceRequest { Invoice = new Invoice() },
+    });
     // TODO: Handle 'response' of type UpdateInvoiceResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10493,15 +10549,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>invoiceId</code> | <code>string</code> | The ID of the invoice to update. |
-| <code>body</code> | <code>[UpdateInvoiceRequest](Models/UpdateInvoiceRequest.cs)</code> | - |
+<code>[UpdateInvoiceOperationRequest](src/Square/Requests/Invoices/UpdateInvoiceOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10511,9 +10564,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateInvoiceResponse](Models/UpdateInvoiceResponse.cs)</code>
+**OnSuccess**: <code>[UpdateInvoiceResponse](src/Square/Models/UpdateInvoiceResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10525,10 +10578,10 @@ catch (SdkException<RawError> ex)
 
 ## Labor
 
-> Source: [Labor](Api/Labor.cs)
+> Source: [Labor](src/Square/Api/Labor.cs)
 
 <details>
-<summary><code>Task&lt;BulkPublishScheduledShiftsResponse&gt; BulkPublishScheduledShifts(BulkPublishScheduledShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkPublishScheduledShiftsResponse&gt; BulkPublishScheduledShifts(BulkPublishScheduledShiftsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10556,10 +10609,19 @@ The minimum `start_at` and maximum `end_at` timestamps of all shifts in a
 ```csharp
 try
 {
-    var response = await client.Labor.BulkPublishScheduledShifts(body);
+    var response = await client.Labor.BulkPublishScheduledShifts(new BulkPublishScheduledShiftsOperationRequest
+    {
+        Body = new BulkPublishScheduledShiftsRequest
+        {
+            ScheduledShifts = new Dictionary<string, BulkPublishScheduledShiftsData>
+            {
+                ["key"] = new BulkPublishScheduledShiftsData(),
+            },
+        },
+    });
     // TODO: Handle 'response' of type BulkPublishScheduledShiftsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10568,14 +10630,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkPublishScheduledShiftsRequest](Models/BulkPublishScheduledShiftsRequest.cs)</code> | - |
+<code>[BulkPublishScheduledShiftsOperationRequest](src/Square/Requests/Labor/BulkPublishScheduledShiftsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10585,9 +10645,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkPublishScheduledShiftsResponse](Models/BulkPublishScheduledShiftsResponse.cs)</code>
+**OnSuccess**: <code>[BulkPublishScheduledShiftsResponse](src/Square/Models/BulkPublishScheduledShiftsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10598,7 +10658,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateBreakTypeResponse&gt; CreateBreakType(CreateBreakTypeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateBreakTypeResponse&gt; CreateBreakType(CreateBreakTypeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10634,10 +10694,22 @@ is returned.
 ```csharp
 try
 {
-    var response = await client.Labor.CreateBreakType(body);
+    var response = await client.Labor.CreateBreakType(new CreateBreakTypeOperationRequest
+    {
+        Body = new CreateBreakTypeRequest
+        {
+            BreakType = new BreakType
+            {
+                LocationId = "some example string",
+                BreakName = "some example string",
+                ExpectedDuration = "some example string",
+                IsPaid = true,
+            },
+        },
+    });
     // TODO: Handle 'response' of type CreateBreakTypeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10646,14 +10718,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateBreakTypeRequest](Models/CreateBreakTypeRequest.cs)</code> | - |
+<code>[CreateBreakTypeOperationRequest](src/Square/Requests/Labor/CreateBreakTypeOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10663,9 +10733,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateBreakTypeResponse](Models/CreateBreakTypeResponse.cs)</code>
+**OnSuccess**: <code>[CreateBreakTypeResponse](src/Square/Models/CreateBreakTypeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10676,7 +10746,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateScheduledShiftResponse&gt; CreateScheduledShift(CreateScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateScheduledShiftResponse&gt; CreateScheduledShift(CreateScheduledShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10706,10 +10776,13 @@ The following `draft_shift_details` fields are required:
 ```csharp
 try
 {
-    var response = await client.Labor.CreateScheduledShift(body);
+    var response = await client.Labor.CreateScheduledShift(new CreateScheduledShiftOperationRequest
+    {
+        Body = new CreateScheduledShiftRequest { ScheduledShift = new ScheduledShift() },
+    });
     // TODO: Handle 'response' of type CreateScheduledShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10718,14 +10791,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateScheduledShiftRequest](Models/CreateScheduledShiftRequest.cs)</code> | - |
+<code>[CreateScheduledShiftOperationRequest](src/Square/Requests/Labor/CreateScheduledShiftOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10735,9 +10806,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateScheduledShiftResponse](Models/CreateScheduledShiftResponse.cs)</code>
+**OnSuccess**: <code>[CreateScheduledShiftResponse](src/Square/Models/CreateScheduledShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10748,7 +10819,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateShiftResponse&gt; CreateShift(CreateShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateShiftResponse&gt; CreateShift(CreateShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10788,10 +10859,16 @@ the `Shift.end_at`, or both.
 ```csharp
 try
 {
-    var response = await client.Labor.CreateShift(body);
+    var response = await client.Labor.CreateShift(new CreateShiftOperationRequest
+    {
+        Body = new CreateShiftRequest
+        {
+            Shift = new Shift { LocationId = "some example string", StartAt = "some example string" },
+        },
+    });
     // TODO: Handle 'response' of type CreateShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10800,14 +10877,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateShiftRequest](Models/CreateShiftRequest.cs)</code> | - |
+<code>[CreateShiftOperationRequest](src/Square/Requests/Labor/CreateShiftOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10817,9 +10892,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateShiftResponse](Models/CreateShiftResponse.cs)</code>
+**OnSuccess**: <code>[CreateShiftResponse](src/Square/Models/CreateShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10830,7 +10905,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateTimecardResponse&gt; CreateTimecard(CreateTimecardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateTimecardResponse&gt; CreateTimecard(CreateTimecardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10870,10 +10945,21 @@ the `Timecard.end_at`, or both.
 ```csharp
 try
 {
-    var response = await client.Labor.CreateTimecard(body);
+    var response = await client.Labor.CreateTimecard(new CreateTimecardOperationRequest
+    {
+        Body = new CreateTimecardRequest
+        {
+            Timecard = new Timecard
+            {
+                LocationId = "some example string",
+                StartAt = "some example string",
+                TeamMemberId = "some example string",
+            },
+        },
+    });
     // TODO: Handle 'response' of type CreateTimecardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10882,14 +10968,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateTimecardRequest](Models/CreateTimecardRequest.cs)</code> | - |
+<code>[CreateTimecardOperationRequest](src/Square/Requests/Labor/CreateTimecardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10899,9 +10983,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateTimecardResponse](Models/CreateTimecardResponse.cs)</code>
+**OnSuccess**: <code>[CreateTimecardResponse](src/Square/Models/CreateTimecardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10912,7 +10996,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteBreakTypeResponse&gt; DeleteBreakType(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteBreakTypeResponse&gt; DeleteBreakType(DeleteBreakTypeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -10937,10 +11021,10 @@ A `BreakType` can be deleted even if it is referenced from a `Shift`.
 ```csharp
 try
 {
-    var response = await client.Labor.DeleteBreakType(id);
+    var response = await client.Labor.DeleteBreakType(new DeleteBreakTypeRequest { Id = "some example string" });
     // TODO: Handle 'response' of type DeleteBreakTypeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -10949,14 +11033,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `BreakType` being deleted. |
+<code>[DeleteBreakTypeRequest](src/Square/Requests/Labor/DeleteBreakTypeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -10966,9 +11048,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteBreakTypeResponse](Models/DeleteBreakTypeResponse.cs)</code>
+**OnSuccess**: <code>[DeleteBreakTypeResponse](src/Square/Models/DeleteBreakTypeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -10979,7 +11061,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteShiftResponse&gt; DeleteShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteShiftResponse&gt; DeleteShift(DeleteShiftRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11002,10 +11084,10 @@ Deletes a `Shift`.
 ```csharp
 try
 {
-    var response = await client.Labor.DeleteShift(id);
+    var response = await client.Labor.DeleteShift(new DeleteShiftRequest { Id = "some example string" });
     // TODO: Handle 'response' of type DeleteShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11014,14 +11096,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `Shift` being deleted. |
+<code>[DeleteShiftRequest](src/Square/Requests/Labor/DeleteShiftRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11031,9 +11111,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteShiftResponse](Models/DeleteShiftResponse.cs)</code>
+**OnSuccess**: <code>[DeleteShiftResponse](src/Square/Models/DeleteShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11044,7 +11124,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteTimecardResponse&gt; DeleteTimecard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteTimecardResponse&gt; DeleteTimecard(DeleteTimecardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11067,10 +11147,10 @@ Deletes a `Timecard`.
 ```csharp
 try
 {
-    var response = await client.Labor.DeleteTimecard(id);
+    var response = await client.Labor.DeleteTimecard(new DeleteTimecardRequest { Id = "some example string" });
     // TODO: Handle 'response' of type DeleteTimecardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11079,14 +11159,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `Timecard` being deleted. |
+<code>[DeleteTimecardRequest](src/Square/Requests/Labor/DeleteTimecardRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11096,9 +11174,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteTimecardResponse](Models/DeleteTimecardResponse.cs)</code>
+**OnSuccess**: <code>[DeleteTimecardResponse](src/Square/Models/DeleteTimecardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11109,7 +11187,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetBreakTypeResponse&gt; GetBreakType(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetBreakTypeResponse&gt; GetBreakType(GetBreakTypeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11132,10 +11210,10 @@ Returns a single `BreakType` specified by `id`.
 ```csharp
 try
 {
-    var response = await client.Labor.GetBreakType(id);
+    var response = await client.Labor.GetBreakType(new GetBreakTypeRequest { Id = "some example string" });
     // TODO: Handle 'response' of type GetBreakTypeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11144,14 +11222,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `BreakType` being retrieved. |
+<code>[GetBreakTypeRequest](src/Square/Requests/Labor/GetBreakTypeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11161,9 +11237,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetBreakTypeResponse](Models/GetBreakTypeResponse.cs)</code>
+**OnSuccess**: <code>[GetBreakTypeResponse](src/Square/Models/GetBreakTypeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11174,7 +11250,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetEmployeeWageResponse&gt; GetEmployeeWage(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetEmployeeWageResponse&gt; GetEmployeeWage(GetEmployeeWageRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11197,10 +11273,10 @@ Returns a single `EmployeeWage` specified by `id`.
 ```csharp
 try
 {
-    var response = await client.Labor.GetEmployeeWage(id);
+    var response = await client.Labor.GetEmployeeWage(new GetEmployeeWageRequest { Id = "some example string" });
     // TODO: Handle 'response' of type GetEmployeeWageResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11209,14 +11285,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `EmployeeWage` being retrieved. |
+<code>[GetEmployeeWageRequest](src/Square/Requests/Labor/GetEmployeeWageRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11226,9 +11300,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetEmployeeWageResponse](Models/GetEmployeeWageResponse.cs)</code>
+**OnSuccess**: <code>[GetEmployeeWageResponse](src/Square/Models/GetEmployeeWageResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11239,7 +11313,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetShiftResponse&gt; GetShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetShiftResponse&gt; GetShift(GetShiftRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11262,10 +11336,10 @@ Returns a single `Shift` specified by `id`.
 ```csharp
 try
 {
-    var response = await client.Labor.GetShift(id);
+    var response = await client.Labor.GetShift(new GetShiftRequest { Id = "some example string" });
     // TODO: Handle 'response' of type GetShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11274,14 +11348,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `Shift` being retrieved. |
+<code>[GetShiftRequest](src/Square/Requests/Labor/GetShiftRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11291,9 +11363,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetShiftResponse](Models/GetShiftResponse.cs)</code>
+**OnSuccess**: <code>[GetShiftResponse](src/Square/Models/GetShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11304,7 +11376,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetTeamMemberWageResponse&gt; GetTeamMemberWage(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetTeamMemberWageResponse&gt; GetTeamMemberWage(GetTeamMemberWageRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11327,10 +11399,10 @@ Returns a single `TeamMemberWage` specified by `id`.
 ```csharp
 try
 {
-    var response = await client.Labor.GetTeamMemberWage(id);
+    var response = await client.Labor.GetTeamMemberWage(new GetTeamMemberWageRequest { Id = "some example string" });
     // TODO: Handle 'response' of type GetTeamMemberWageResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11339,14 +11411,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `TeamMemberWage` being retrieved. |
+<code>[GetTeamMemberWageRequest](src/Square/Requests/Labor/GetTeamMemberWageRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11356,9 +11426,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetTeamMemberWageResponse](Models/GetTeamMemberWageResponse.cs)</code>
+**OnSuccess**: <code>[GetTeamMemberWageResponse](src/Square/Models/GetTeamMemberWageResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11369,7 +11439,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListBreakTypesResponse&gt; ListBreakTypes(string? locationId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListBreakTypesResponse&gt; ListBreakTypes(ListBreakTypesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11392,10 +11462,10 @@ Returns a paginated list of `BreakType` instances for a business.
 ```csharp
 try
 {
-    var response = await client.Labor.ListBreakTypes(locationId, limit, cursor);
+    var response = await client.Labor.ListBreakTypes(new ListBreakTypesRequest());
     // TODO: Handle 'response' of type ListBreakTypesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11404,16 +11474,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string?</code> | Filter the returned `BreakType` results to only those that are associated with the<br>specified location. |
-| <code>limit</code> | <code>int?</code> | The maximum number of `BreakType` results to return per page. The number can range between 1<br>and 200. The default is 200. |
-| <code>cursor</code> | <code>string?</code> | A pointer to the next page of `BreakType` results to fetch. |
+<code>[ListBreakTypesRequest](src/Square/Requests/Labor/ListBreakTypesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11423,9 +11489,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListBreakTypesResponse](Models/ListBreakTypesResponse.cs)</code>
+**OnSuccess**: <code>[ListBreakTypesResponse](src/Square/Models/ListBreakTypesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11436,7 +11502,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListEmployeeWagesResponse&gt; ListEmployeeWages(string? employeeId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListEmployeeWagesResponse&gt; ListEmployeeWages(ListEmployeeWagesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11459,10 +11525,10 @@ Returns a paginated list of `EmployeeWage` instances for a business.
 ```csharp
 try
 {
-    var response = await client.Labor.ListEmployeeWages(employeeId, limit, cursor);
+    var response = await client.Labor.ListEmployeeWages(new ListEmployeeWagesRequest());
     // TODO: Handle 'response' of type ListEmployeeWagesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11471,16 +11537,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>employeeId</code> | <code>string?</code> | Filter the returned wages to only those that are associated with the specified employee. |
-| <code>limit</code> | <code>int?</code> | The maximum number of `EmployeeWage` results to return per page. The number can range between<br>1 and 200. The default is 200. |
-| <code>cursor</code> | <code>string?</code> | A pointer to the next page of `EmployeeWage` results to fetch. |
+<code>[ListEmployeeWagesRequest](src/Square/Requests/Labor/ListEmployeeWagesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11490,9 +11552,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListEmployeeWagesResponse](Models/ListEmployeeWagesResponse.cs)</code>
+**OnSuccess**: <code>[ListEmployeeWagesResponse](src/Square/Models/ListEmployeeWagesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11503,7 +11565,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListTeamMemberWagesResponse&gt; ListTeamMemberWages(string? teamMemberId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListTeamMemberWagesResponse&gt; ListTeamMemberWages(ListTeamMemberWagesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11526,10 +11588,10 @@ Returns a paginated list of `TeamMemberWage` instances for a business.
 ```csharp
 try
 {
-    var response = await client.Labor.ListTeamMemberWages(teamMemberId, limit, cursor);
+    var response = await client.Labor.ListTeamMemberWages(new ListTeamMemberWagesRequest());
     // TODO: Handle 'response' of type ListTeamMemberWagesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11538,16 +11600,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>teamMemberId</code> | <code>string?</code> | Filter the returned wages to only those that are associated with the<br>specified team member. |
-| <code>limit</code> | <code>int?</code> | The maximum number of `TeamMemberWage` results to return per page. The number can range between<br>1 and 200. The default is 200. |
-| <code>cursor</code> | <code>string?</code> | A pointer to the next page of `EmployeeWage` results to fetch. |
+<code>[ListTeamMemberWagesRequest](src/Square/Requests/Labor/ListTeamMemberWagesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11557,9 +11615,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListTeamMemberWagesResponse](Models/ListTeamMemberWagesResponse.cs)</code>
+**OnSuccess**: <code>[ListTeamMemberWagesResponse](src/Square/Models/ListTeamMemberWagesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11570,7 +11628,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListWorkweekConfigsResponse&gt; ListWorkweekConfigs(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListWorkweekConfigsResponse&gt; ListWorkweekConfigs(ListWorkweekConfigsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11593,10 +11651,10 @@ Returns a list of `WorkweekConfig` instances for a business.
 ```csharp
 try
 {
-    var response = await client.Labor.ListWorkweekConfigs(limit, cursor);
+    var response = await client.Labor.ListWorkweekConfigs(new ListWorkweekConfigsRequest());
     // TODO: Handle 'response' of type ListWorkweekConfigsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11605,15 +11663,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>limit</code> | <code>int?</code> | The maximum number of `WorkweekConfigs` results to return per page. |
-| <code>cursor</code> | <code>string?</code> | A pointer to the next page of `WorkweekConfig` results to fetch. |
+<code>[ListWorkweekConfigsRequest](src/Square/Requests/Labor/ListWorkweekConfigsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11623,9 +11678,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListWorkweekConfigsResponse](Models/ListWorkweekConfigsResponse.cs)</code>
+**OnSuccess**: <code>[ListWorkweekConfigsResponse](src/Square/Models/ListWorkweekConfigsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11636,7 +11691,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;PublishScheduledShiftResponse&gt; PublishScheduledShift(string id, PublishScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;PublishScheduledShiftResponse&gt; PublishScheduledShift(PublishScheduledShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11660,10 +11715,14 @@ Publishes a scheduled shift. When a scheduled shift is published, Square keeps t
 ```csharp
 try
 {
-    var response = await client.Labor.PublishScheduledShift(id, body);
+    var response = await client.Labor.PublishScheduledShift(new PublishScheduledShiftOperationRequest
+    {
+        Id = "some example string",
+        Body = new PublishScheduledShiftRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type PublishScheduledShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11672,15 +11731,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of the scheduled shift to publish. |
-| <code>body</code> | <code>[PublishScheduledShiftRequest](Models/PublishScheduledShiftRequest.cs)</code> | - |
+<code>[PublishScheduledShiftOperationRequest](src/Square/Requests/Labor/PublishScheduledShiftOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11690,9 +11746,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[PublishScheduledShiftResponse](Models/PublishScheduledShiftResponse.cs)</code>
+**OnSuccess**: <code>[PublishScheduledShiftResponse](src/Square/Models/PublishScheduledShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11703,7 +11759,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveScheduledShiftResponse&gt; RetrieveScheduledShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveScheduledShiftResponse&gt; RetrieveScheduledShift(RetrieveScheduledShiftRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11726,10 +11782,13 @@ Retrieves a scheduled shift by ID.
 ```csharp
 try
 {
-    var response = await client.Labor.RetrieveScheduledShift(id);
+    var response = await client.Labor.RetrieveScheduledShift(new RetrieveScheduledShiftRequest
+    {
+        Id = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveScheduledShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11738,14 +11797,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of the scheduled shift to retrieve. |
+<code>[RetrieveScheduledShiftRequest](src/Square/Requests/Labor/RetrieveScheduledShiftRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11755,9 +11812,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveScheduledShiftResponse](Models/RetrieveScheduledShiftResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveScheduledShiftResponse](src/Square/Models/RetrieveScheduledShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11768,7 +11825,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveTimecardResponse&gt; RetrieveTimecard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveTimecardResponse&gt; RetrieveTimecard(RetrieveTimecardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11791,10 +11848,10 @@ Returns a single `Timecard` specified by `id`.
 ```csharp
 try
 {
-    var response = await client.Labor.RetrieveTimecard(id);
+    var response = await client.Labor.RetrieveTimecard(new RetrieveTimecardRequest { Id = "some example string" });
     // TODO: Handle 'response' of type RetrieveTimecardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11803,14 +11860,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `Timecard` being retrieved. |
+<code>[RetrieveTimecardRequest](src/Square/Requests/Labor/RetrieveTimecardRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11820,9 +11875,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveTimecardResponse](Models/RetrieveTimecardResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveTimecardResponse](src/Square/Models/RetrieveTimecardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11833,7 +11888,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchScheduledShiftsResponse&gt; SearchScheduledShifts(SearchScheduledShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchScheduledShiftsResponse&gt; SearchScheduledShifts(SearchScheduledShiftsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11857,10 +11912,13 @@ By default, results are sorted by `start_at` in ascending order.
 ```csharp
 try
 {
-    var response = await client.Labor.SearchScheduledShifts(body);
+    var response = await client.Labor.SearchScheduledShifts(new SearchScheduledShiftsOperationRequest
+    {
+        Body = new SearchScheduledShiftsRequest(),
+    });
     // TODO: Handle 'response' of type SearchScheduledShiftsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11869,14 +11927,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchScheduledShiftsRequest](Models/SearchScheduledShiftsRequest.cs)</code> | - |
+<code>[SearchScheduledShiftsOperationRequest](src/Square/Requests/Labor/SearchScheduledShiftsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11886,9 +11942,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchScheduledShiftsResponse](Models/SearchScheduledShiftsResponse.cs)</code>
+**OnSuccess**: <code>[SearchScheduledShiftsResponse](src/Square/Models/SearchScheduledShiftsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11899,7 +11955,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchShiftsResponse&gt; SearchShifts(SearchShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchShiftsResponse&gt; SearchShifts(SearchShiftsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -11935,10 +11991,13 @@ The list can be sorted by:
 ```csharp
 try
 {
-    var response = await client.Labor.SearchShifts(body);
+    var response = await client.Labor.SearchShifts(new SearchShiftsOperationRequest
+    {
+        Body = new SearchShiftsRequest(),
+    });
     // TODO: Handle 'response' of type SearchShiftsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -11947,14 +12006,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchShiftsRequest](Models/SearchShiftsRequest.cs)</code> | - |
+<code>[SearchShiftsOperationRequest](src/Square/Requests/Labor/SearchShiftsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -11964,9 +12021,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchShiftsResponse](Models/SearchShiftsResponse.cs)</code>
+**OnSuccess**: <code>[SearchShiftsResponse](src/Square/Models/SearchShiftsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -11977,7 +12034,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchTimecardsResponse&gt; SearchTimecards(SearchTimecardsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchTimecardsResponse&gt; SearchTimecards(SearchTimecardsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12013,10 +12070,13 @@ The list can be sorted by:
 ```csharp
 try
 {
-    var response = await client.Labor.SearchTimecards(body);
+    var response = await client.Labor.SearchTimecards(new SearchTimecardsOperationRequest
+    {
+        Body = new SearchTimecardsRequest(),
+    });
     // TODO: Handle 'response' of type SearchTimecardsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12025,14 +12085,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchTimecardsRequest](Models/SearchTimecardsRequest.cs)</code> | - |
+<code>[SearchTimecardsOperationRequest](src/Square/Requests/Labor/SearchTimecardsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12042,9 +12100,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchTimecardsResponse](Models/SearchTimecardsResponse.cs)</code>
+**OnSuccess**: <code>[SearchTimecardsResponse](src/Square/Models/SearchTimecardsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12055,7 +12113,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateBreakTypeResponse&gt; UpdateBreakType(string id, UpdateBreakTypeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateBreakTypeResponse&gt; UpdateBreakType(UpdateBreakTypeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12078,10 +12136,23 @@ Updates an existing `BreakType`.
 ```csharp
 try
 {
-    var response = await client.Labor.UpdateBreakType(id, body);
+    var response = await client.Labor.UpdateBreakType(new UpdateBreakTypeOperationRequest
+    {
+        Id = "some example string",
+        Body = new UpdateBreakTypeRequest
+        {
+            BreakType = new BreakType
+            {
+                LocationId = "some example string",
+                BreakName = "some example string",
+                ExpectedDuration = "some example string",
+                IsPaid = true,
+            },
+        },
+    });
     // TODO: Handle 'response' of type UpdateBreakTypeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12090,15 +12161,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `BreakType` being updated. |
-| <code>body</code> | <code>[UpdateBreakTypeRequest](Models/UpdateBreakTypeRequest.cs)</code> | - |
+<code>[UpdateBreakTypeOperationRequest](src/Square/Requests/Labor/UpdateBreakTypeOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12108,9 +12176,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateBreakTypeResponse](Models/UpdateBreakTypeResponse.cs)</code>
+**OnSuccess**: <code>[UpdateBreakTypeResponse](src/Square/Models/UpdateBreakTypeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12121,7 +12189,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateScheduledShiftResponse&gt; UpdateScheduledShift(string id, UpdateScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateScheduledShiftResponse&gt; UpdateScheduledShift(UpdateScheduledShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12153,10 +12221,14 @@ and then publish the shift.
 ```csharp
 try
 {
-    var response = await client.Labor.UpdateScheduledShift(id, body);
+    var response = await client.Labor.UpdateScheduledShift(new UpdateScheduledShiftOperationRequest
+    {
+        Id = "some example string",
+        Body = new UpdateScheduledShiftRequest { ScheduledShift = new ScheduledShift() },
+    });
     // TODO: Handle 'response' of type UpdateScheduledShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12165,15 +12237,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of the scheduled shift to update. |
-| <code>body</code> | <code>[UpdateScheduledShiftRequest](Models/UpdateScheduledShiftRequest.cs)</code> | - |
+<code>[UpdateScheduledShiftOperationRequest](src/Square/Requests/Labor/UpdateScheduledShiftOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12183,9 +12252,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateScheduledShiftResponse](Models/UpdateScheduledShiftResponse.cs)</code>
+**OnSuccess**: <code>[UpdateScheduledShiftResponse](src/Square/Models/UpdateScheduledShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12196,7 +12265,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateShiftResponse&gt; UpdateShift(string id, UpdateShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateShiftResponse&gt; UpdateShift(UpdateShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12225,10 +12294,17 @@ set on each `Break`.
 ```csharp
 try
 {
-    var response = await client.Labor.UpdateShift(id, body);
+    var response = await client.Labor.UpdateShift(new UpdateShiftOperationRequest
+    {
+        Id = "some example string",
+        Body = new UpdateShiftRequest
+        {
+            Shift = new Shift { LocationId = "some example string", StartAt = "some example string" },
+        },
+    });
     // TODO: Handle 'response' of type UpdateShiftResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12237,15 +12313,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of the object being updated. |
-| <code>body</code> | <code>[UpdateShiftRequest](Models/UpdateShiftRequest.cs)</code> | - |
+<code>[UpdateShiftOperationRequest](src/Square/Requests/Labor/UpdateShiftOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12255,9 +12328,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateShiftResponse](Models/UpdateShiftResponse.cs)</code>
+**OnSuccess**: <code>[UpdateShiftResponse](src/Square/Models/UpdateShiftResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12268,7 +12341,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateTimecardResponse&gt; UpdateTimecard(string id, UpdateTimecardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateTimecardResponse&gt; UpdateTimecard(UpdateTimecardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12297,10 +12370,22 @@ set on each `Break`.
 ```csharp
 try
 {
-    var response = await client.Labor.UpdateTimecard(id, body);
+    var response = await client.Labor.UpdateTimecard(new UpdateTimecardOperationRequest
+    {
+        Id = "some example string",
+        Body = new UpdateTimecardRequest
+        {
+            Timecard = new Timecard
+            {
+                LocationId = "some example string",
+                StartAt = "some example string",
+                TeamMemberId = "some example string",
+            },
+        },
+    });
     // TODO: Handle 'response' of type UpdateTimecardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12309,15 +12394,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The ID of the object being updated. |
-| <code>body</code> | <code>[UpdateTimecardRequest](Models/UpdateTimecardRequest.cs)</code> | - |
+<code>[UpdateTimecardOperationRequest](src/Square/Requests/Labor/UpdateTimecardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12327,9 +12409,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateTimecardResponse](Models/UpdateTimecardResponse.cs)</code>
+**OnSuccess**: <code>[UpdateTimecardResponse](src/Square/Models/UpdateTimecardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12340,7 +12422,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateWorkweekConfigResponse&gt; UpdateWorkweekConfig(string id, UpdateWorkweekConfigRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateWorkweekConfigResponse&gt; UpdateWorkweekConfig(UpdateWorkweekConfigOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12363,10 +12445,21 @@ Updates a `WorkweekConfig`.
 ```csharp
 try
 {
-    var response = await client.Labor.UpdateWorkweekConfig(id, body);
+    var response = await client.Labor.UpdateWorkweekConfig(new UpdateWorkweekConfigOperationRequest
+    {
+        Id = "some example string",
+        Body = new UpdateWorkweekConfigRequest
+        {
+            WorkweekConfig = new WorkweekConfig
+            {
+                StartOfWeek = Weekday.Mon,
+                StartOfDayLocalTime = "some example string",
+            },
+        },
+    });
     // TODO: Handle 'response' of type UpdateWorkweekConfigResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12375,15 +12468,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>id</code> | <code>string</code> | The UUID for the `WorkweekConfig` object being updated. |
-| <code>body</code> | <code>[UpdateWorkweekConfigRequest](Models/UpdateWorkweekConfigRequest.cs)</code> | - |
+<code>[UpdateWorkweekConfigOperationRequest](src/Square/Requests/Labor/UpdateWorkweekConfigOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12393,9 +12483,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateWorkweekConfigResponse](Models/UpdateWorkweekConfigResponse.cs)</code>
+**OnSuccess**: <code>[UpdateWorkweekConfigResponse](src/Square/Models/UpdateWorkweekConfigResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12407,10 +12497,10 @@ catch (SdkException<RawError> ex)
 
 ## LocationCustomAttributes
 
-> Source: [LocationCustomAttributes](Api/LocationCustomAttributes.cs)
+> Source: [LocationCustomAttributes](src/Square/Api/LocationCustomAttributes.cs)
 
 <details>
-<summary><code>Task&lt;BulkDeleteLocationCustomAttributesResponse&gt; BulkDeleteLocationCustomAttributes(BulkDeleteLocationCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkDeleteLocationCustomAttributesResponse&gt; BulkDeleteLocationCustomAttributes(BulkDeleteLocationCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12435,10 +12525,20 @@ To delete a custom attribute owned by another application, the `visibility` sett
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.BulkDeleteLocationCustomAttributes(body);
+    var response = await client.LocationCustomAttributes.BulkDeleteLocationCustomAttributes(
+        new BulkDeleteLocationCustomAttributesOperationRequest
+        {
+            Body = new BulkDeleteLocationCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BulkDeleteLocationCustomAttributesRequestLocationCustomAttributeDeleteRequest>
+                {
+                    ["key"] = new BulkDeleteLocationCustomAttributesRequestLocationCustomAttributeDeleteRequest(),
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkDeleteLocationCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12447,14 +12547,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkDeleteLocationCustomAttributesRequest](Models/BulkDeleteLocationCustomAttributesRequest.cs)</code> | - |
+<code>[BulkDeleteLocationCustomAttributesOperationRequest](src/Square/Requests/LocationCustomAttributes/BulkDeleteLocationCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12464,9 +12562,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkDeleteLocationCustomAttributesResponse](Models/BulkDeleteLocationCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkDeleteLocationCustomAttributesResponse](src/Square/Models/BulkDeleteLocationCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12477,7 +12575,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkUpsertLocationCustomAttributesResponse&gt; BulkUpsertLocationCustomAttributes(BulkUpsertLocationCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkUpsertLocationCustomAttributesResponse&gt; BulkUpsertLocationCustomAttributes(BulkUpsertLocationCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12509,10 +12607,24 @@ must be `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.BulkUpsertLocationCustomAttributes(body);
+    var response = await client.LocationCustomAttributes.BulkUpsertLocationCustomAttributes(
+        new BulkUpsertLocationCustomAttributesOperationRequest
+        {
+            Body = new BulkUpsertLocationCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUpsertRequest>
+                {
+                    ["key"] = new BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUpsertRequest
+                    {
+                        LocationId = "some example string",
+                        CustomAttribute = new CustomAttribute(),
+                    },
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkUpsertLocationCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12521,14 +12633,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkUpsertLocationCustomAttributesRequest](Models/BulkUpsertLocationCustomAttributesRequest.cs)</code> | - |
+<code>[BulkUpsertLocationCustomAttributesOperationRequest](src/Square/Requests/LocationCustomAttributes/BulkUpsertLocationCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12538,9 +12648,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkUpsertLocationCustomAttributesResponse](Models/BulkUpsertLocationCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkUpsertLocationCustomAttributesResponse](src/Square/Models/BulkUpsertLocationCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12551,7 +12661,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateLocationCustomAttributeDefinitionResponse&gt; CreateLocationCustomAttributeDefinition(CreateLocationCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateLocationCustomAttributeDefinitionResponse&gt; CreateLocationCustomAttributeDefinition(CreateLocationCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12580,10 +12690,17 @@ to set the custom attribute for locations.
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.CreateLocationCustomAttributeDefinition(body);
+    var response = await client.LocationCustomAttributes.CreateLocationCustomAttributeDefinition(
+        new CreateLocationCustomAttributeDefinitionOperationRequest
+        {
+            Body = new CreateLocationCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type CreateLocationCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12592,14 +12709,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateLocationCustomAttributeDefinitionRequest](Models/CreateLocationCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[CreateLocationCustomAttributeDefinitionOperationRequest](src/Square/Requests/LocationCustomAttributes/CreateLocationCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12609,9 +12724,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateLocationCustomAttributeDefinitionResponse](Models/CreateLocationCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[CreateLocationCustomAttributeDefinitionResponse](src/Square/Models/CreateLocationCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12622,7 +12737,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteLocationCustomAttributeResponse&gt; DeleteLocationCustomAttribute(string locationId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteLocationCustomAttributeResponse&gt; DeleteLocationCustomAttribute(DeleteLocationCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12647,10 +12762,11 @@ To delete a custom attribute owned by another application, the `visibility` sett
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.DeleteLocationCustomAttribute(locationId, key);
+    var response = await client.LocationCustomAttributes.DeleteLocationCustomAttribute(
+        new DeleteLocationCustomAttributeRequest { LocationId = "some example string", Key = "some example string" });
     // TODO: Handle 'response' of type DeleteLocationCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12659,15 +12775,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the target [location](entity:Location). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to delete. This key must match the `key` of a custom<br>attribute definition in the Square seller account. If the requesting application is not the<br>definition owner, you must use the qualified key. |
+<code>[DeleteLocationCustomAttributeRequest](src/Square/Requests/LocationCustomAttributes/DeleteLocationCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12677,9 +12790,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteLocationCustomAttributeResponse](Models/DeleteLocationCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[DeleteLocationCustomAttributeResponse](src/Square/Models/DeleteLocationCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12690,7 +12803,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteLocationCustomAttributeDefinitionResponse&gt; DeleteLocationCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteLocationCustomAttributeDefinitionResponse&gt; DeleteLocationCustomAttributeDefinition(DeleteLocationCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12716,10 +12829,11 @@ Only the definition owner can delete a custom attribute definition.
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.DeleteLocationCustomAttributeDefinition(key);
+    var response = await client.LocationCustomAttributes.DeleteLocationCustomAttributeDefinition(
+        new DeleteLocationCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type DeleteLocationCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12728,14 +12842,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to delete. |
+<code>[DeleteLocationCustomAttributeDefinitionRequest](src/Square/Requests/LocationCustomAttributes/DeleteLocationCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12745,9 +12857,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteLocationCustomAttributeDefinitionResponse](Models/DeleteLocationCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[DeleteLocationCustomAttributeDefinitionResponse](src/Square/Models/DeleteLocationCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12758,7 +12870,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListLocationCustomAttributeDefinitionsResponse&gt; ListLocationCustomAttributeDefinitions(VisibilityFilter? visibilityFilter, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListLocationCustomAttributeDefinitionsResponse&gt; ListLocationCustomAttributeDefinitions(ListLocationCustomAttributeDefinitionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12784,12 +12896,11 @@ applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.ListLocationCustomAttributeDefinitions(visibilityFilter,
-        limit,
-        cursor);
+    var response = await client.LocationCustomAttributes.ListLocationCustomAttributeDefinitions(
+        new ListLocationCustomAttributeDefinitionsRequest());
     // TODO: Handle 'response' of type ListLocationCustomAttributeDefinitionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12798,16 +12909,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>visibilityFilter</code> | <code>[VisibilityFilter?](Models/Enums/VisibilityFilter.cs)</code> | Filters the `CustomAttributeDefinition` results by their `visibility` values. |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory.<br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.<br>The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListLocationCustomAttributeDefinitionsRequest](src/Square/Requests/LocationCustomAttributes/ListLocationCustomAttributeDefinitionsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12817,9 +12924,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListLocationCustomAttributeDefinitionsResponse](Models/ListLocationCustomAttributeDefinitionsResponse.cs)</code>
+**OnSuccess**: <code>[ListLocationCustomAttributeDefinitionsResponse](src/Square/Models/ListLocationCustomAttributeDefinitionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12830,7 +12937,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListLocationCustomAttributesResponse&gt; ListLocationCustomAttributes(string locationId, VisibilityFilter? visibilityFilter, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListLocationCustomAttributesResponse&gt; ListLocationCustomAttributes(ListLocationCustomAttributesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12858,13 +12965,11 @@ and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.ListLocationCustomAttributes(locationId,
-        visibilityFilter,
-        limit,
-        cursor);
+    var response = await client.LocationCustomAttributes.ListLocationCustomAttributes(
+        new ListLocationCustomAttributesRequest { LocationId = "some example string" });
     // TODO: Handle 'response' of type ListLocationCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12873,18 +12978,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the target [location](entity:Location). |
-| <code>visibilityFilter</code> | <code>[VisibilityFilter?](Models/Enums/VisibilityFilter.cs)</code> | Filters the `CustomAttributeDefinition` results by their `visibility` values. |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory.<br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.<br>The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request. For more<br>information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>withDefinitions</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of each<br>custom attribute. Set this parameter to `true` to get the name and description of each custom<br>attribute, information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[ListLocationCustomAttributesRequest](src/Square/Requests/LocationCustomAttributes/ListLocationCustomAttributesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12894,9 +12993,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListLocationCustomAttributesResponse](Models/ListLocationCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[ListLocationCustomAttributesResponse](src/Square/Models/ListLocationCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12907,7 +13006,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLocationCustomAttributeResponse&gt; RetrieveLocationCustomAttribute(string locationId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLocationCustomAttributeResponse&gt; RetrieveLocationCustomAttribute(RetrieveLocationCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -12934,10 +13033,11 @@ To retrieve a custom attribute owned by another application, the `visibility` se
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.RetrieveLocationCustomAttribute(locationId, key, version);
+    var response = await client.LocationCustomAttributes.RetrieveLocationCustomAttribute(
+        new RetrieveLocationCustomAttributeRequest { LocationId = "some example string", Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveLocationCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -12946,17 +13046,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the target [location](entity:Location). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to retrieve. This key must match the `key` of a custom<br>attribute definition in the Square seller account. If the requesting application is not the<br>definition owner, you must use the qualified key. |
-| <code>version</code> | <code>int?</code> | The current version of the custom attribute, which is used for strongly consistent reads to<br>guarantee that you receive the most up-to-date data. When included in the request, Square<br>returns the specified version or a higher version if one exists. If the specified version is<br>higher than the current version, Square returns a `BAD_REQUEST` error. |
-| <code>withDefinition</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of<br>the custom attribute. Set this parameter to `true` to get the name and description of the custom<br>attribute, information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[RetrieveLocationCustomAttributeRequest](src/Square/Requests/LocationCustomAttributes/RetrieveLocationCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -12966,9 +13061,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLocationCustomAttributeResponse](Models/RetrieveLocationCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLocationCustomAttributeResponse](src/Square/Models/RetrieveLocationCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -12979,7 +13074,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLocationCustomAttributeDefinitionResponse&gt; RetrieveLocationCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLocationCustomAttributeDefinitionResponse&gt; RetrieveLocationCustomAttributeDefinition(RetrieveLocationCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13004,10 +13099,11 @@ setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.RetrieveLocationCustomAttributeDefinition(key, version);
+    var response = await client.LocationCustomAttributes.RetrieveLocationCustomAttributeDefinition(
+        new RetrieveLocationCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveLocationCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13016,15 +13112,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to retrieve. If the requesting application<br>is not the definition owner, you must use the qualified key. |
-| <code>version</code> | <code>int?</code> | The current version of the custom attribute definition, which is used for strongly consistent<br>reads to guarantee that you receive the most up-to-date data. When included in the request,<br>Square returns the specified version or a higher version if one exists. If the specified version<br>is higher than the current version, Square returns a `BAD_REQUEST` error. |
+<code>[RetrieveLocationCustomAttributeDefinitionRequest](src/Square/Requests/LocationCustomAttributes/RetrieveLocationCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13034,9 +13127,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLocationCustomAttributeDefinitionResponse](Models/RetrieveLocationCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLocationCustomAttributeDefinitionResponse](src/Square/Models/RetrieveLocationCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13047,7 +13140,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateLocationCustomAttributeDefinitionResponse&gt; UpdateLocationCustomAttributeDefinition(string key, UpdateLocationCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateLocationCustomAttributeDefinitionResponse&gt; UpdateLocationCustomAttributeDefinition(UpdateLocationCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13073,10 +13166,18 @@ Only the definition owner can update a custom attribute definition.
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.UpdateLocationCustomAttributeDefinition(key, body);
+    var response = await client.LocationCustomAttributes.UpdateLocationCustomAttributeDefinition(
+        new UpdateLocationCustomAttributeDefinitionOperationRequest
+        {
+            Key = "some example string",
+            Body = new UpdateLocationCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type UpdateLocationCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13085,15 +13186,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to update. |
-| <code>body</code> | <code>[UpdateLocationCustomAttributeDefinitionRequest](Models/UpdateLocationCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[UpdateLocationCustomAttributeDefinitionOperationRequest](src/Square/Requests/LocationCustomAttributes/UpdateLocationCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13103,9 +13201,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateLocationCustomAttributeDefinitionResponse](Models/UpdateLocationCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[UpdateLocationCustomAttributeDefinitionResponse](src/Square/Models/UpdateLocationCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13116,7 +13214,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpsertLocationCustomAttributeResponse&gt; UpsertLocationCustomAttribute(string locationId, string key, UpsertLocationCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpsertLocationCustomAttributeResponse&gt; UpsertLocationCustomAttribute(UpsertLocationCustomAttributeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13144,10 +13242,16 @@ must be `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.LocationCustomAttributes.UpsertLocationCustomAttribute(locationId, key, body);
+    var response = await client.LocationCustomAttributes.UpsertLocationCustomAttribute(
+        new UpsertLocationCustomAttributeOperationRequest
+        {
+            LocationId = "some example string",
+            Key = "some example string",
+            Body = new UpsertLocationCustomAttributeRequest { CustomAttribute = new CustomAttribute() },
+        });
     // TODO: Handle 'response' of type UpsertLocationCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13156,16 +13260,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the target [location](entity:Location). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to create or update. This key must match the `key` of a<br>custom attribute definition in the Square seller account. If the requesting application is not<br>the definition owner, you must use the qualified key. |
-| <code>body</code> | <code>[UpsertLocationCustomAttributeRequest](Models/UpsertLocationCustomAttributeRequest.cs)</code> | - |
+<code>[UpsertLocationCustomAttributeOperationRequest](src/Square/Requests/LocationCustomAttributes/UpsertLocationCustomAttributeOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13175,9 +13275,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpsertLocationCustomAttributeResponse](Models/UpsertLocationCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[UpsertLocationCustomAttributeResponse](src/Square/Models/UpsertLocationCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13189,10 +13289,10 @@ catch (SdkException<RawError> ex)
 
 ## Locations
 
-> Source: [Locations](Api/Locations.cs)
+> Source: [Locations](src/Square/Api/Locations.cs)
 
 <details>
-<summary><code>Task&lt;CreateLocationResponse&gt; CreateLocation(CreateLocationRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateLocationResponse&gt; CreateLocation(CreateLocationOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13221,10 +13321,13 @@ each location has a sensible and unique name.
 ```csharp
 try
 {
-    var response = await client.Locations.CreateLocation(body);
+    var response = await client.Locations.CreateLocation(new CreateLocationOperationRequest
+    {
+        Body = new CreateLocationRequest(),
+    });
     // TODO: Handle 'response' of type CreateLocationResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13233,14 +13336,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateLocationRequest](Models/CreateLocationRequest.cs)</code> | - |
+<code>[CreateLocationOperationRequest](src/Square/Requests/Locations/CreateLocationOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13250,9 +13351,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateLocationResponse](Models/CreateLocationResponse.cs)</code>
+**OnSuccess**: <code>[CreateLocationResponse](src/Square/Models/CreateLocationResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13263,7 +13364,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListLocationsResponse&gt; ListLocations(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListLocationsResponse&gt; ListLocations(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13290,7 +13391,7 @@ try
     var response = await client.Locations.ListLocations();
     // TODO: Handle 'response' of type ListLocationsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13304,9 +13405,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListLocationsResponse](Models/ListLocationsResponse.cs)</code>
+**OnSuccess**: <code>[ListLocationsResponse](src/Square/Models/ListLocationsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13317,7 +13418,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLocationResponse&gt; RetrieveLocation(string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLocationResponse&gt; RetrieveLocation(RetrieveLocationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13341,10 +13442,13 @@ as the location ID to retrieve details of the [main location](https://developer.
 ```csharp
 try
 {
-    var response = await client.Locations.RetrieveLocation(locationId);
+    var response = await client.Locations.RetrieveLocation(new RetrieveLocationRequest
+    {
+        LocationId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveLocationResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13353,14 +13457,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location to retrieve. Specify the string<br>"main" to return the main location. |
+<code>[RetrieveLocationRequest](src/Square/Requests/Locations/RetrieveLocationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13370,9 +13472,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLocationResponse](Models/RetrieveLocationResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLocationResponse](src/Square/Models/RetrieveLocationResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13383,7 +13485,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateLocationResponse&gt; UpdateLocation(string locationId, UpdateLocationRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateLocationResponse&gt; UpdateLocation(UpdateLocationOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13406,10 +13508,14 @@ Updates a [location](https://developer.squareup.com/docs/locations-api).
 ```csharp
 try
 {
-    var response = await client.Locations.UpdateLocation(locationId, body);
+    var response = await client.Locations.UpdateLocation(new UpdateLocationOperationRequest
+    {
+        LocationId = "some example string",
+        Body = new UpdateLocationRequest(),
+    });
     // TODO: Handle 'response' of type UpdateLocationResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13418,15 +13524,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location to update. |
-| <code>body</code> | <code>[UpdateLocationRequest](Models/UpdateLocationRequest.cs)</code> | - |
+<code>[UpdateLocationOperationRequest](src/Square/Requests/Locations/UpdateLocationOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13436,9 +13539,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateLocationResponse](Models/UpdateLocationResponse.cs)</code>
+**OnSuccess**: <code>[UpdateLocationResponse](src/Square/Models/UpdateLocationResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13450,10 +13553,10 @@ catch (SdkException<RawError> ex)
 
 ## Loyalty
 
-> Source: [Loyalty](Api/Loyalty.cs)
+> Source: [Loyalty](src/Square/Api/Loyalty.cs)
 
 <details>
-<summary><code>Task&lt;AccumulateLoyaltyPointsResponse&gt; AccumulateLoyaltyPoints(string accountId, AccumulateLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;AccumulateLoyaltyPointsResponse&gt; AccumulateLoyaltyPoints(AccumulateLoyaltyPointsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13489,10 +13592,19 @@ to compute the points earned from the base loyalty program. For information abou
 ```csharp
 try
 {
-    var response = await client.Loyalty.AccumulateLoyaltyPoints(accountId, body);
+    var response = await client.Loyalty.AccumulateLoyaltyPoints(new AccumulateLoyaltyPointsOperationRequest
+    {
+        AccountId = "some example string",
+        Body = new AccumulateLoyaltyPointsRequest
+        {
+            AccumulatePoints = new LoyaltyEventAccumulatePoints(),
+            IdempotencyKey = "some example string",
+            LocationId = "some example string",
+        },
+    });
     // TODO: Handle 'response' of type AccumulateLoyaltyPointsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13501,15 +13613,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>accountId</code> | <code>string</code> | The ID of the target [loyalty account](entity:LoyaltyAccount). |
-| <code>body</code> | <code>[AccumulateLoyaltyPointsRequest](Models/AccumulateLoyaltyPointsRequest.cs)</code> | - |
+<code>[AccumulateLoyaltyPointsOperationRequest](src/Square/Requests/Loyalty/AccumulateLoyaltyPointsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13519,9 +13628,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[AccumulateLoyaltyPointsResponse](Models/AccumulateLoyaltyPointsResponse.cs)</code>
+**OnSuccess**: <code>[AccumulateLoyaltyPointsResponse](src/Square/Models/AccumulateLoyaltyPointsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13532,7 +13641,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;AdjustLoyaltyPointsResponse&gt; AdjustLoyaltyPoints(string accountId, AdjustLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;AdjustLoyaltyPointsResponse&gt; AdjustLoyaltyPoints(AdjustLoyaltyPointsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13559,10 +13668,18 @@ to add points when a buyer pays for the purchase.
 ```csharp
 try
 {
-    var response = await client.Loyalty.AdjustLoyaltyPoints(accountId, body);
+    var response = await client.Loyalty.AdjustLoyaltyPoints(new AdjustLoyaltyPointsOperationRequest
+    {
+        AccountId = "some example string",
+        Body = new AdjustLoyaltyPointsRequest
+        {
+            IdempotencyKey = "some example string",
+            AdjustPoints = new LoyaltyEventAdjustPoints { Points = 1 },
+        },
+    });
     // TODO: Handle 'response' of type AdjustLoyaltyPointsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13571,15 +13688,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>accountId</code> | <code>string</code> | The ID of the target [loyalty account](entity:LoyaltyAccount). |
-| <code>body</code> | <code>[AdjustLoyaltyPointsRequest](Models/AdjustLoyaltyPointsRequest.cs)</code> | - |
+<code>[AdjustLoyaltyPointsOperationRequest](src/Square/Requests/Loyalty/AdjustLoyaltyPointsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13589,9 +13703,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[AdjustLoyaltyPointsResponse](Models/AdjustLoyaltyPointsResponse.cs)</code>
+**OnSuccess**: <code>[AdjustLoyaltyPointsResponse](src/Square/Models/AdjustLoyaltyPointsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13602,7 +13716,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CalculateLoyaltyPointsResponse&gt; CalculateLoyaltyPoints(string programId, CalculateLoyaltyPointsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CalculateLoyaltyPointsResponse&gt; CalculateLoyaltyPoints(CalculateLoyaltyPointsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13639,10 +13753,14 @@ to calculate whether the purchase also qualifies for promotion points. For more 
 ```csharp
 try
 {
-    var response = await client.Loyalty.CalculateLoyaltyPoints(programId, body);
+    var response = await client.Loyalty.CalculateLoyaltyPoints(new CalculateLoyaltyPointsOperationRequest
+    {
+        ProgramId = "some example string",
+        Body = new CalculateLoyaltyPointsRequest(),
+    });
     // TODO: Handle 'response' of type CalculateLoyaltyPointsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13651,15 +13769,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>programId</code> | <code>string</code> | The ID of the [loyalty program](entity:LoyaltyProgram), which defines the rules for accruing points. |
-| <code>body</code> | <code>[CalculateLoyaltyPointsRequest](Models/CalculateLoyaltyPointsRequest.cs)</code> | - |
+<code>[CalculateLoyaltyPointsOperationRequest](src/Square/Requests/Loyalty/CalculateLoyaltyPointsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13669,9 +13784,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CalculateLoyaltyPointsResponse](Models/CalculateLoyaltyPointsResponse.cs)</code>
+**OnSuccess**: <code>[CalculateLoyaltyPointsResponse](src/Square/Models/CalculateLoyaltyPointsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13682,7 +13797,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CancelLoyaltyPromotionResponse&gt; CancelLoyaltyPromotion(string promotionId, string programId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelLoyaltyPromotionResponse&gt; CancelLoyaltyPromotion(CancelLoyaltyPromotionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13710,10 +13825,14 @@ This endpoint sets the loyalty promotion to the `CANCELED` state
 ```csharp
 try
 {
-    var response = await client.Loyalty.CancelLoyaltyPromotion(promotionId, programId);
+    var response = await client.Loyalty.CancelLoyaltyPromotion(new CancelLoyaltyPromotionRequest
+    {
+        PromotionId = "some example string",
+        ProgramId = "some example string",
+    });
     // TODO: Handle 'response' of type CancelLoyaltyPromotionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13722,15 +13841,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>promotionId</code> | <code>string</code> | The ID of the [loyalty promotion](entity:LoyaltyPromotion) to cancel. You can cancel a<br>promotion that has an `ACTIVE` or `SCHEDULED` status. |
-| <code>programId</code> | <code>string</code> | The ID of the base [loyalty program](entity:LoyaltyProgram). |
+<code>[CancelLoyaltyPromotionRequest](src/Square/Requests/Loyalty/CancelLoyaltyPromotionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13740,9 +13856,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelLoyaltyPromotionResponse](Models/CancelLoyaltyPromotionResponse.cs)</code>
+**OnSuccess**: <code>[CancelLoyaltyPromotionResponse](src/Square/Models/CancelLoyaltyPromotionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13753,7 +13869,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateLoyaltyAccountResponse&gt; CreateLoyaltyAccount(CreateLoyaltyAccountRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateLoyaltyAccountResponse&gt; CreateLoyaltyAccount(CreateLoyaltyAccountOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13776,10 +13892,17 @@ Creates a loyalty account. To create a loyalty account, you must provide the `pr
 ```csharp
 try
 {
-    var response = await client.Loyalty.CreateLoyaltyAccount(body);
+    var response = await client.Loyalty.CreateLoyaltyAccount(new CreateLoyaltyAccountOperationRequest
+    {
+        Body = new CreateLoyaltyAccountRequest
+        {
+            LoyaltyAccount = new LoyaltyAccount { ProgramId = "some example string" },
+            IdempotencyKey = "some example string",
+        },
+    });
     // TODO: Handle 'response' of type CreateLoyaltyAccountResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13788,14 +13911,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateLoyaltyAccountRequest](Models/CreateLoyaltyAccountRequest.cs)</code> | - |
+<code>[CreateLoyaltyAccountOperationRequest](src/Square/Requests/Loyalty/CreateLoyaltyAccountOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13805,9 +13926,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateLoyaltyAccountResponse](Models/CreateLoyaltyAccountResponse.cs)</code>
+**OnSuccess**: <code>[CreateLoyaltyAccountResponse](src/Square/Models/CreateLoyaltyAccountResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13818,7 +13939,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateLoyaltyPromotionResponse&gt; CreateLoyaltyPromotion(string programId, CreateLoyaltyPromotionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateLoyaltyPromotionResponse&gt; CreateLoyaltyPromotion(CreateLoyaltyPromotionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13846,10 +13967,23 @@ This endpoint sets the loyalty promotion to the `ACTIVE` or `SCHEDULED` status, 
 ```csharp
 try
 {
-    var response = await client.Loyalty.CreateLoyaltyPromotion(programId, body);
+    var response = await client.Loyalty.CreateLoyaltyPromotion(new CreateLoyaltyPromotionOperationRequest
+    {
+        ProgramId = "some example string",
+        Body = new CreateLoyaltyPromotionRequest
+        {
+            LoyaltyPromotion = new LoyaltyPromotion
+            {
+                Name = "some example string",
+                Incentive = new LoyaltyPromotionIncentive { Type = LoyaltyPromotionIncentiveType.PointsMultiplier },
+                AvailableTime = new LoyaltyPromotionAvailableTimeData { TimePeriods = ["some example string"] },
+            },
+            IdempotencyKey = "some example string",
+        },
+    });
     // TODO: Handle 'response' of type CreateLoyaltyPromotionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13858,15 +13992,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>programId</code> | <code>string</code> | The ID of the [loyalty program](entity:LoyaltyProgram) to associate with the promotion.<br>To get the program ID, call [RetrieveLoyaltyProgram](api-endpoint:Loyalty-RetrieveLoyaltyProgram)<br>using the `main` keyword. |
-| <code>body</code> | <code>[CreateLoyaltyPromotionRequest](Models/CreateLoyaltyPromotionRequest.cs)</code> | - |
+<code>[CreateLoyaltyPromotionOperationRequest](src/Square/Requests/Loyalty/CreateLoyaltyPromotionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13876,9 +14007,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateLoyaltyPromotionResponse](Models/CreateLoyaltyPromotionResponse.cs)</code>
+**OnSuccess**: <code>[CreateLoyaltyPromotionResponse](src/Square/Models/CreateLoyaltyPromotionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13889,7 +14020,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateLoyaltyRewardResponse&gt; CreateLoyaltyReward(CreateLoyaltyRewardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateLoyaltyRewardResponse&gt; CreateLoyaltyReward(CreateLoyaltyRewardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13919,10 +14050,21 @@ not available for the buyer to redeem another reward.
 ```csharp
 try
 {
-    var response = await client.Loyalty.CreateLoyaltyReward(body);
+    var response = await client.Loyalty.CreateLoyaltyReward(new CreateLoyaltyRewardOperationRequest
+    {
+        Body = new CreateLoyaltyRewardRequest
+        {
+            Reward = new LoyaltyReward
+            {
+                LoyaltyAccountId = "some example string",
+                RewardTierId = "some example string",
+            },
+            IdempotencyKey = "some example string",
+        },
+    });
     // TODO: Handle 'response' of type CreateLoyaltyRewardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -13931,14 +14073,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateLoyaltyRewardRequest](Models/CreateLoyaltyRewardRequest.cs)</code> | - |
+<code>[CreateLoyaltyRewardOperationRequest](src/Square/Requests/Loyalty/CreateLoyaltyRewardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -13948,9 +14088,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateLoyaltyRewardResponse](Models/CreateLoyaltyRewardResponse.cs)</code>
+**OnSuccess**: <code>[CreateLoyaltyRewardResponse](src/Square/Models/CreateLoyaltyRewardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -13961,7 +14101,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteLoyaltyRewardResponse&gt; DeleteLoyaltyReward(string rewardId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteLoyaltyRewardResponse&gt; DeleteLoyaltyReward(DeleteLoyaltyRewardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -13992,10 +14132,13 @@ You cannot delete a reward that has reached the terminal state (REDEEMED).
 ```csharp
 try
 {
-    var response = await client.Loyalty.DeleteLoyaltyReward(rewardId);
+    var response = await client.Loyalty.DeleteLoyaltyReward(new DeleteLoyaltyRewardRequest
+    {
+        RewardId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteLoyaltyRewardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14004,14 +14147,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>rewardId</code> | <code>string</code> | The ID of the [loyalty reward](entity:LoyaltyReward) to delete. |
+<code>[DeleteLoyaltyRewardRequest](src/Square/Requests/Loyalty/DeleteLoyaltyRewardRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14021,9 +14162,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteLoyaltyRewardResponse](Models/DeleteLoyaltyRewardResponse.cs)</code>
+**OnSuccess**: <code>[DeleteLoyaltyRewardResponse](src/Square/Models/DeleteLoyaltyRewardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14034,7 +14175,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListLoyaltyProgramsResponse&gt; ListLoyaltyPrograms(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListLoyaltyProgramsResponse&gt; ListLoyaltyPrograms(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14064,7 +14205,7 @@ try
     var response = await client.Loyalty.ListLoyaltyPrograms();
     // TODO: Handle 'response' of type ListLoyaltyProgramsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14078,9 +14219,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListLoyaltyProgramsResponse](Models/ListLoyaltyProgramsResponse.cs)</code>
+**OnSuccess**: <code>[ListLoyaltyProgramsResponse](src/Square/Models/ListLoyaltyProgramsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14091,7 +14232,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListLoyaltyPromotionsResponse&gt; ListLoyaltyPromotions(string programId, LoyaltyPromotionStatus? status, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListLoyaltyPromotionsResponse&gt; ListLoyaltyPromotions(ListLoyaltyPromotionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14115,10 +14256,13 @@ Results are sorted by the `created_at` date in descending order (newest to oldes
 ```csharp
 try
 {
-    var response = await client.Loyalty.ListLoyaltyPromotions(programId, status, cursor, limit);
+    var response = await client.Loyalty.ListLoyaltyPromotions(new ListLoyaltyPromotionsRequest
+    {
+        ProgramId = "some example string",
+    });
     // TODO: Handle 'response' of type ListLoyaltyPromotionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14127,17 +14271,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>programId</code> | <code>string</code> | The ID of the base [loyalty program](entity:LoyaltyProgram). To get the program ID,<br>call [RetrieveLoyaltyProgram](api-endpoint:Loyalty-RetrieveLoyaltyProgram) using the `main` keyword. |
-| <code>status</code> | <code>[LoyaltyPromotionStatus?](Models/Enums/LoyaltyPromotionStatus.cs)</code> | The status to filter the results by. If a status is provided, only loyalty promotions<br>with the specified status are returned. Otherwise, all loyalty promotions associated with<br>the loyalty program are returned. |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response.<br>The minimum value is 1 and the maximum value is 30. The default value is 30.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListLoyaltyPromotionsRequest](src/Square/Requests/Loyalty/ListLoyaltyPromotionsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14147,9 +14286,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListLoyaltyPromotionsResponse](Models/ListLoyaltyPromotionsResponse.cs)</code>
+**OnSuccess**: <code>[ListLoyaltyPromotionsResponse](src/Square/Models/ListLoyaltyPromotionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14160,7 +14299,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RedeemLoyaltyRewardResponse&gt; RedeemLoyaltyReward(string rewardId, RedeemLoyaltyRewardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RedeemLoyaltyRewardResponse&gt; RedeemLoyaltyReward(RedeemLoyaltyRewardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14193,10 +14332,18 @@ to the account.
 ```csharp
 try
 {
-    var response = await client.Loyalty.RedeemLoyaltyReward(rewardId, body);
+    var response = await client.Loyalty.RedeemLoyaltyReward(new RedeemLoyaltyRewardOperationRequest
+    {
+        RewardId = "some example string",
+        Body = new RedeemLoyaltyRewardRequest
+        {
+            IdempotencyKey = "some example string",
+            LocationId = "some example string",
+        },
+    });
     // TODO: Handle 'response' of type RedeemLoyaltyRewardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14205,15 +14352,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>rewardId</code> | <code>string</code> | The ID of the [loyalty reward](entity:LoyaltyReward) to redeem. |
-| <code>body</code> | <code>[RedeemLoyaltyRewardRequest](Models/RedeemLoyaltyRewardRequest.cs)</code> | - |
+<code>[RedeemLoyaltyRewardOperationRequest](src/Square/Requests/Loyalty/RedeemLoyaltyRewardOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14223,9 +14367,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RedeemLoyaltyRewardResponse](Models/RedeemLoyaltyRewardResponse.cs)</code>
+**OnSuccess**: <code>[RedeemLoyaltyRewardResponse](src/Square/Models/RedeemLoyaltyRewardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14236,7 +14380,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLoyaltyAccountResponse&gt; RetrieveLoyaltyAccount(string accountId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLoyaltyAccountResponse&gt; RetrieveLoyaltyAccount(RetrieveLoyaltyAccountRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14259,10 +14403,13 @@ Retrieves a loyalty account.
 ```csharp
 try
 {
-    var response = await client.Loyalty.RetrieveLoyaltyAccount(accountId);
+    var response = await client.Loyalty.RetrieveLoyaltyAccount(new RetrieveLoyaltyAccountRequest
+    {
+        AccountId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveLoyaltyAccountResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14271,14 +14418,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>accountId</code> | <code>string</code> | The ID of the [loyalty account](entity:LoyaltyAccount) to retrieve. |
+<code>[RetrieveLoyaltyAccountRequest](src/Square/Requests/Loyalty/RetrieveLoyaltyAccountRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14288,9 +14433,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLoyaltyAccountResponse](Models/RetrieveLoyaltyAccountResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLoyaltyAccountResponse](src/Square/Models/RetrieveLoyaltyAccountResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14301,7 +14446,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLoyaltyProgramResponse&gt; RetrieveLoyaltyProgram(string programId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLoyaltyProgramResponse&gt; RetrieveLoyaltyProgram(RetrieveLoyaltyProgramRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14326,10 +14471,13 @@ Loyalty programs define how buyers can earn points and redeem points for rewards
 ```csharp
 try
 {
-    var response = await client.Loyalty.RetrieveLoyaltyProgram(programId);
+    var response = await client.Loyalty.RetrieveLoyaltyProgram(new RetrieveLoyaltyProgramRequest
+    {
+        ProgramId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveLoyaltyProgramResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14338,14 +14486,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>programId</code> | <code>string</code> | The ID of the loyalty program or the keyword `main`. Either value can be used to retrieve the single loyalty program that belongs to the seller. |
+<code>[RetrieveLoyaltyProgramRequest](src/Square/Requests/Loyalty/RetrieveLoyaltyProgramRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14355,9 +14501,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLoyaltyProgramResponse](Models/RetrieveLoyaltyProgramResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLoyaltyProgramResponse](src/Square/Models/RetrieveLoyaltyProgramResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14368,7 +14514,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLoyaltyPromotionResponse&gt; RetrieveLoyaltyPromotion(string promotionId, string programId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLoyaltyPromotionResponse&gt; RetrieveLoyaltyPromotion(RetrieveLoyaltyPromotionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14391,10 +14537,14 @@ Retrieves a loyalty promotion.
 ```csharp
 try
 {
-    var response = await client.Loyalty.RetrieveLoyaltyPromotion(promotionId, programId);
+    var response = await client.Loyalty.RetrieveLoyaltyPromotion(new RetrieveLoyaltyPromotionRequest
+    {
+        PromotionId = "some example string",
+        ProgramId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveLoyaltyPromotionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14403,15 +14553,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>promotionId</code> | <code>string</code> | The ID of the [loyalty promotion](entity:LoyaltyPromotion) to retrieve. |
-| <code>programId</code> | <code>string</code> | The ID of the base [loyalty program](entity:LoyaltyProgram). To get the program ID,<br>call [RetrieveLoyaltyProgram](api-endpoint:Loyalty-RetrieveLoyaltyProgram) using the `main` keyword. |
+<code>[RetrieveLoyaltyPromotionRequest](src/Square/Requests/Loyalty/RetrieveLoyaltyPromotionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14421,9 +14568,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLoyaltyPromotionResponse](Models/RetrieveLoyaltyPromotionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLoyaltyPromotionResponse](src/Square/Models/RetrieveLoyaltyPromotionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14434,7 +14581,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveLoyaltyRewardResponse&gt; RetrieveLoyaltyReward(string rewardId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveLoyaltyRewardResponse&gt; RetrieveLoyaltyReward(RetrieveLoyaltyRewardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14457,10 +14604,13 @@ Retrieves a loyalty reward.
 ```csharp
 try
 {
-    var response = await client.Loyalty.RetrieveLoyaltyReward(rewardId);
+    var response = await client.Loyalty.RetrieveLoyaltyReward(new RetrieveLoyaltyRewardRequest
+    {
+        RewardId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveLoyaltyRewardResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14469,14 +14619,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>rewardId</code> | <code>string</code> | The ID of the [loyalty reward](entity:LoyaltyReward) to retrieve. |
+<code>[RetrieveLoyaltyRewardRequest](src/Square/Requests/Loyalty/RetrieveLoyaltyRewardRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14486,9 +14634,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveLoyaltyRewardResponse](Models/RetrieveLoyaltyRewardResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveLoyaltyRewardResponse](src/Square/Models/RetrieveLoyaltyRewardResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14499,7 +14647,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchLoyaltyAccountsResponse&gt; SearchLoyaltyAccounts(SearchLoyaltyAccountsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchLoyaltyAccountsResponse&gt; SearchLoyaltyAccounts(SearchLoyaltyAccountsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14526,10 +14674,13 @@ Search results are sorted by `created_at` in ascending order.
 ```csharp
 try
 {
-    var response = await client.Loyalty.SearchLoyaltyAccounts(body);
+    var response = await client.Loyalty.SearchLoyaltyAccounts(new SearchLoyaltyAccountsOperationRequest
+    {
+        Body = new SearchLoyaltyAccountsRequest(),
+    });
     // TODO: Handle 'response' of type SearchLoyaltyAccountsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14538,14 +14689,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchLoyaltyAccountsRequest](Models/SearchLoyaltyAccountsRequest.cs)</code> | - |
+<code>[SearchLoyaltyAccountsOperationRequest](src/Square/Requests/Loyalty/SearchLoyaltyAccountsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14555,9 +14704,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchLoyaltyAccountsResponse](Models/SearchLoyaltyAccountsResponse.cs)</code>
+**OnSuccess**: <code>[SearchLoyaltyAccountsResponse](src/Square/Models/SearchLoyaltyAccountsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14568,7 +14717,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchLoyaltyEventsResponse&gt; SearchLoyaltyEvents(SearchLoyaltyEventsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchLoyaltyEventsResponse&gt; SearchLoyaltyEvents(SearchLoyaltyEventsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14598,10 +14747,13 @@ Search results are sorted by `created_at` in descending order.
 ```csharp
 try
 {
-    var response = await client.Loyalty.SearchLoyaltyEvents(body);
+    var response = await client.Loyalty.SearchLoyaltyEvents(new SearchLoyaltyEventsOperationRequest
+    {
+        Body = new SearchLoyaltyEventsRequest(),
+    });
     // TODO: Handle 'response' of type SearchLoyaltyEventsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14610,14 +14762,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchLoyaltyEventsRequest](Models/SearchLoyaltyEventsRequest.cs)</code> | - |
+<code>[SearchLoyaltyEventsOperationRequest](src/Square/Requests/Loyalty/SearchLoyaltyEventsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14627,9 +14777,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchLoyaltyEventsResponse](Models/SearchLoyaltyEventsResponse.cs)</code>
+**OnSuccess**: <code>[SearchLoyaltyEventsResponse](src/Square/Models/SearchLoyaltyEventsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14640,7 +14790,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchLoyaltyRewardsResponse&gt; SearchLoyaltyRewards(SearchLoyaltyRewardsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchLoyaltyRewardsResponse&gt; SearchLoyaltyRewards(SearchLoyaltyRewardsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14669,10 +14819,13 @@ Search results are sorted by `updated_at` in descending order.
 ```csharp
 try
 {
-    var response = await client.Loyalty.SearchLoyaltyRewards(body);
+    var response = await client.Loyalty.SearchLoyaltyRewards(new SearchLoyaltyRewardsOperationRequest
+    {
+        Body = new SearchLoyaltyRewardsRequest(),
+    });
     // TODO: Handle 'response' of type SearchLoyaltyRewardsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14681,14 +14834,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchLoyaltyRewardsRequest](Models/SearchLoyaltyRewardsRequest.cs)</code> | - |
+<code>[SearchLoyaltyRewardsOperationRequest](src/Square/Requests/Loyalty/SearchLoyaltyRewardsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14698,9 +14849,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchLoyaltyRewardsResponse](Models/SearchLoyaltyRewardsResponse.cs)</code>
+**OnSuccess**: <code>[SearchLoyaltyRewardsResponse](src/Square/Models/SearchLoyaltyRewardsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14712,10 +14863,10 @@ catch (SdkException<RawError> ex)
 
 ## MerchantCustomAttributes
 
-> Source: [MerchantCustomAttributes](Api/MerchantCustomAttributes.cs)
+> Source: [MerchantCustomAttributes](src/Square/Api/MerchantCustomAttributes.cs)
 
 <details>
-<summary><code>Task&lt;BulkDeleteMerchantCustomAttributesResponse&gt; BulkDeleteMerchantCustomAttributes(BulkDeleteMerchantCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkDeleteMerchantCustomAttributesResponse&gt; BulkDeleteMerchantCustomAttributes(BulkDeleteMerchantCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14740,10 +14891,20 @@ To delete a custom attribute owned by another application, the `visibility` sett
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.BulkDeleteMerchantCustomAttributes(body);
+    var response = await client.MerchantCustomAttributes.BulkDeleteMerchantCustomAttributes(
+        new BulkDeleteMerchantCustomAttributesOperationRequest
+        {
+            Body = new BulkDeleteMerchantCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BulkDeleteMerchantCustomAttributesRequestMerchantCustomAttributeDeleteRequest>
+                {
+                    ["key"] = new BulkDeleteMerchantCustomAttributesRequestMerchantCustomAttributeDeleteRequest(),
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkDeleteMerchantCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14752,14 +14913,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkDeleteMerchantCustomAttributesRequest](Models/BulkDeleteMerchantCustomAttributesRequest.cs)</code> | - |
+<code>[BulkDeleteMerchantCustomAttributesOperationRequest](src/Square/Requests/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14769,9 +14928,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkDeleteMerchantCustomAttributesResponse](Models/BulkDeleteMerchantCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkDeleteMerchantCustomAttributesResponse](src/Square/Models/BulkDeleteMerchantCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14782,7 +14941,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkUpsertMerchantCustomAttributesResponse&gt; BulkUpsertMerchantCustomAttributes(BulkUpsertMerchantCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkUpsertMerchantCustomAttributesResponse&gt; BulkUpsertMerchantCustomAttributes(BulkUpsertMerchantCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14814,10 +14973,24 @@ must be `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.BulkUpsertMerchantCustomAttributes(body);
+    var response = await client.MerchantCustomAttributes.BulkUpsertMerchantCustomAttributes(
+        new BulkUpsertMerchantCustomAttributesOperationRequest
+        {
+            Body = new BulkUpsertMerchantCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BulkUpsertMerchantCustomAttributesRequestMerchantCustomAttributeUpsertRequest>
+                {
+                    ["key"] = new BulkUpsertMerchantCustomAttributesRequestMerchantCustomAttributeUpsertRequest
+                    {
+                        MerchantId = "some example string",
+                        CustomAttribute = new CustomAttribute(),
+                    },
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkUpsertMerchantCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14826,14 +14999,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkUpsertMerchantCustomAttributesRequest](Models/BulkUpsertMerchantCustomAttributesRequest.cs)</code> | - |
+<code>[BulkUpsertMerchantCustomAttributesOperationRequest](src/Square/Requests/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14843,9 +15014,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkUpsertMerchantCustomAttributesResponse](Models/BulkUpsertMerchantCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkUpsertMerchantCustomAttributesResponse](src/Square/Models/BulkUpsertMerchantCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14856,7 +15027,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateMerchantCustomAttributeDefinitionResponse&gt; CreateMerchantCustomAttributeDefinition(CreateMerchantCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateMerchantCustomAttributeDefinitionResponse&gt; CreateMerchantCustomAttributeDefinition(CreateMerchantCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14885,10 +15056,17 @@ to set the custom attribute for a merchant.
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.CreateMerchantCustomAttributeDefinition(body);
+    var response = await client.MerchantCustomAttributes.CreateMerchantCustomAttributeDefinition(
+        new CreateMerchantCustomAttributeDefinitionOperationRequest
+        {
+            Body = new CreateMerchantCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type CreateMerchantCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14897,14 +15075,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateMerchantCustomAttributeDefinitionRequest](Models/CreateMerchantCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[CreateMerchantCustomAttributeDefinitionOperationRequest](src/Square/Requests/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14914,9 +15090,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateMerchantCustomAttributeDefinitionResponse](Models/CreateMerchantCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[CreateMerchantCustomAttributeDefinitionResponse](src/Square/Models/CreateMerchantCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14927,7 +15103,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteMerchantCustomAttributeResponse&gt; DeleteMerchantCustomAttribute(string merchantId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteMerchantCustomAttributeResponse&gt; DeleteMerchantCustomAttribute(DeleteMerchantCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -14952,10 +15128,11 @@ To delete a custom attribute owned by another application, the `visibility` sett
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.DeleteMerchantCustomAttribute(merchantId, key);
+    var response = await client.MerchantCustomAttributes.DeleteMerchantCustomAttribute(
+        new DeleteMerchantCustomAttributeRequest { MerchantId = "some example string", Key = "some example string" });
     // TODO: Handle 'response' of type DeleteMerchantCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -14964,15 +15141,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>merchantId</code> | <code>string</code> | The ID of the target [merchant](entity:Merchant). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to delete. This key must match the `key` of a custom<br>attribute definition in the Square seller account. If the requesting application is not the<br>definition owner, you must use the qualified key. |
+<code>[DeleteMerchantCustomAttributeRequest](src/Square/Requests/MerchantCustomAttributes/DeleteMerchantCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -14982,9 +15156,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteMerchantCustomAttributeResponse](Models/DeleteMerchantCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[DeleteMerchantCustomAttributeResponse](src/Square/Models/DeleteMerchantCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -14995,7 +15169,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteMerchantCustomAttributeDefinitionResponse&gt; DeleteMerchantCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteMerchantCustomAttributeDefinitionResponse&gt; DeleteMerchantCustomAttributeDefinition(DeleteMerchantCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15021,10 +15195,11 @@ Only the definition owner can delete a custom attribute definition.
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.DeleteMerchantCustomAttributeDefinition(key);
+    var response = await client.MerchantCustomAttributes.DeleteMerchantCustomAttributeDefinition(
+        new DeleteMerchantCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type DeleteMerchantCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15033,14 +15208,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to delete. |
+<code>[DeleteMerchantCustomAttributeDefinitionRequest](src/Square/Requests/MerchantCustomAttributes/DeleteMerchantCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15050,9 +15223,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteMerchantCustomAttributeDefinitionResponse](Models/DeleteMerchantCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[DeleteMerchantCustomAttributeDefinitionResponse](src/Square/Models/DeleteMerchantCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15063,7 +15236,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListMerchantCustomAttributeDefinitionsResponse&gt; ListMerchantCustomAttributeDefinitions(VisibilityFilter? visibilityFilter, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListMerchantCustomAttributeDefinitionsResponse&gt; ListMerchantCustomAttributeDefinitions(ListMerchantCustomAttributeDefinitionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15089,12 +15262,11 @@ applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.ListMerchantCustomAttributeDefinitions(visibilityFilter,
-        limit,
-        cursor);
+    var response = await client.MerchantCustomAttributes.ListMerchantCustomAttributeDefinitions(
+        new ListMerchantCustomAttributeDefinitionsRequest());
     // TODO: Handle 'response' of type ListMerchantCustomAttributeDefinitionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15103,16 +15275,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>visibilityFilter</code> | <code>[VisibilityFilter?](Models/Enums/VisibilityFilter.cs)</code> | Filters the `CustomAttributeDefinition` results by their `visibility` values. |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory.<br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.<br>The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListMerchantCustomAttributeDefinitionsRequest](src/Square/Requests/MerchantCustomAttributes/ListMerchantCustomAttributeDefinitionsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15122,9 +15290,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListMerchantCustomAttributeDefinitionsResponse](Models/ListMerchantCustomAttributeDefinitionsResponse.cs)</code>
+**OnSuccess**: <code>[ListMerchantCustomAttributeDefinitionsResponse](src/Square/Models/ListMerchantCustomAttributeDefinitionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15135,7 +15303,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListMerchantCustomAttributesResponse&gt; ListMerchantCustomAttributes(string merchantId, VisibilityFilter? visibilityFilter, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListMerchantCustomAttributesResponse&gt; ListMerchantCustomAttributes(ListMerchantCustomAttributesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15163,13 +15331,11 @@ and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.ListMerchantCustomAttributes(merchantId,
-        visibilityFilter,
-        limit,
-        cursor);
+    var response = await client.MerchantCustomAttributes.ListMerchantCustomAttributes(
+        new ListMerchantCustomAttributesRequest { MerchantId = "some example string" });
     // TODO: Handle 'response' of type ListMerchantCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15178,18 +15344,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>merchantId</code> | <code>string</code> | The ID of the target [merchant](entity:Merchant). |
-| <code>visibilityFilter</code> | <code>[VisibilityFilter?](Models/Enums/VisibilityFilter.cs)</code> | Filters the `CustomAttributeDefinition` results by their `visibility` values. |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory.<br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.<br>The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint.<br>Provide this cursor to retrieve the next page of results for your original request. For more<br>information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>withDefinitions</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of each<br>custom attribute. Set this parameter to `true` to get the name and description of each custom<br>attribute, information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[ListMerchantCustomAttributesRequest](src/Square/Requests/MerchantCustomAttributes/ListMerchantCustomAttributesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15199,9 +15359,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListMerchantCustomAttributesResponse](Models/ListMerchantCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[ListMerchantCustomAttributesResponse](src/Square/Models/ListMerchantCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15212,7 +15372,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveMerchantCustomAttributeResponse&gt; RetrieveMerchantCustomAttribute(string merchantId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveMerchantCustomAttributeResponse&gt; RetrieveMerchantCustomAttribute(RetrieveMerchantCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15239,10 +15399,11 @@ To retrieve a custom attribute owned by another application, the `visibility` se
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.RetrieveMerchantCustomAttribute(merchantId, key, version);
+    var response = await client.MerchantCustomAttributes.RetrieveMerchantCustomAttribute(
+        new RetrieveMerchantCustomAttributeRequest { MerchantId = "some example string", Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveMerchantCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15251,17 +15412,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>merchantId</code> | <code>string</code> | The ID of the target [merchant](entity:Merchant). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to retrieve. This key must match the `key` of a custom<br>attribute definition in the Square seller account. If the requesting application is not the<br>definition owner, you must use the qualified key. |
-| <code>version</code> | <code>int?</code> | The current version of the custom attribute, which is used for strongly consistent reads to<br>guarantee that you receive the most up-to-date data. When included in the request, Square<br>returns the specified version or a higher version if one exists. If the specified version is<br>higher than the current version, Square returns a `BAD_REQUEST` error. |
-| <code>withDefinition</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of<br>the custom attribute. Set this parameter to `true` to get the name and description of the custom<br>attribute, information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[RetrieveMerchantCustomAttributeRequest](src/Square/Requests/MerchantCustomAttributes/RetrieveMerchantCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15271,9 +15427,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveMerchantCustomAttributeResponse](Models/RetrieveMerchantCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveMerchantCustomAttributeResponse](src/Square/Models/RetrieveMerchantCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15284,7 +15440,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveMerchantCustomAttributeDefinitionResponse&gt; RetrieveMerchantCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveMerchantCustomAttributeDefinitionResponse&gt; RetrieveMerchantCustomAttributeDefinition(RetrieveMerchantCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15309,10 +15465,11 @@ setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.RetrieveMerchantCustomAttributeDefinition(key, version);
+    var response = await client.MerchantCustomAttributes.RetrieveMerchantCustomAttributeDefinition(
+        new RetrieveMerchantCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveMerchantCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15321,15 +15478,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to retrieve. If the requesting application<br>is not the definition owner, you must use the qualified key. |
-| <code>version</code> | <code>int?</code> | The current version of the custom attribute definition, which is used for strongly consistent<br>reads to guarantee that you receive the most up-to-date data. When included in the request,<br>Square returns the specified version or a higher version if one exists. If the specified version<br>is higher than the current version, Square returns a `BAD_REQUEST` error. |
+<code>[RetrieveMerchantCustomAttributeDefinitionRequest](src/Square/Requests/MerchantCustomAttributes/RetrieveMerchantCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15339,9 +15493,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveMerchantCustomAttributeDefinitionResponse](Models/RetrieveMerchantCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveMerchantCustomAttributeDefinitionResponse](src/Square/Models/RetrieveMerchantCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15352,7 +15506,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateMerchantCustomAttributeDefinitionResponse&gt; UpdateMerchantCustomAttributeDefinition(string key, UpdateMerchantCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateMerchantCustomAttributeDefinitionResponse&gt; UpdateMerchantCustomAttributeDefinition(UpdateMerchantCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15378,10 +15532,18 @@ Only the definition owner can update a custom attribute definition.
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.UpdateMerchantCustomAttributeDefinition(key, body);
+    var response = await client.MerchantCustomAttributes.UpdateMerchantCustomAttributeDefinition(
+        new UpdateMerchantCustomAttributeDefinitionOperationRequest
+        {
+            Key = "some example string",
+            Body = new UpdateMerchantCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type UpdateMerchantCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15390,15 +15552,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to update. |
-| <code>body</code> | <code>[UpdateMerchantCustomAttributeDefinitionRequest](Models/UpdateMerchantCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[UpdateMerchantCustomAttributeDefinitionOperationRequest](src/Square/Requests/MerchantCustomAttributes/UpdateMerchantCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15408,9 +15567,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateMerchantCustomAttributeDefinitionResponse](Models/UpdateMerchantCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[UpdateMerchantCustomAttributeDefinitionResponse](src/Square/Models/UpdateMerchantCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15421,7 +15580,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpsertMerchantCustomAttributeResponse&gt; UpsertMerchantCustomAttribute(string merchantId, string key, UpsertMerchantCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpsertMerchantCustomAttributeResponse&gt; UpsertMerchantCustomAttribute(UpsertMerchantCustomAttributeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15449,10 +15608,16 @@ must be `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.MerchantCustomAttributes.UpsertMerchantCustomAttribute(merchantId, key, body);
+    var response = await client.MerchantCustomAttributes.UpsertMerchantCustomAttribute(
+        new UpsertMerchantCustomAttributeOperationRequest
+        {
+            MerchantId = "some example string",
+            Key = "some example string",
+            Body = new UpsertMerchantCustomAttributeRequest { CustomAttribute = new CustomAttribute() },
+        });
     // TODO: Handle 'response' of type UpsertMerchantCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15461,16 +15626,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>merchantId</code> | <code>string</code> | The ID of the target [merchant](entity:Merchant). |
-| <code>key</code> | <code>string</code> | The key of the custom attribute to create or update. This key must match the `key` of a<br>custom attribute definition in the Square seller account. If the requesting application is not<br>the definition owner, you must use the qualified key. |
-| <code>body</code> | <code>[UpsertMerchantCustomAttributeRequest](Models/UpsertMerchantCustomAttributeRequest.cs)</code> | - |
+<code>[UpsertMerchantCustomAttributeOperationRequest](src/Square/Requests/MerchantCustomAttributes/UpsertMerchantCustomAttributeOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15480,9 +15641,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpsertMerchantCustomAttributeResponse](Models/UpsertMerchantCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[UpsertMerchantCustomAttributeResponse](src/Square/Models/UpsertMerchantCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15494,10 +15655,10 @@ catch (SdkException<RawError> ex)
 
 ## Merchants
 
-> Source: [Merchants](Api/Merchants.cs)
+> Source: [Merchants](src/Square/Api/Merchants.cs)
 
 <details>
-<summary><code>Task&lt;ListMerchantsResponse&gt; ListMerchants(int? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListMerchantsResponse&gt; ListMerchants(ListMerchantsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15529,10 +15690,10 @@ endpoint to retrieve the merchant information.
 ```csharp
 try
 {
-    var response = await client.Merchants.ListMerchants(cursor);
+    var response = await client.Merchants.ListMerchants(new ListMerchantsRequest());
     // TODO: Handle 'response' of type ListMerchantsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15541,14 +15702,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>int?</code> | The cursor generated by the previous response. |
+<code>[ListMerchantsRequest](src/Square/Requests/Merchants/ListMerchantsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15558,9 +15717,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListMerchantsResponse](Models/ListMerchantsResponse.cs)</code>
+**OnSuccess**: <code>[ListMerchantsResponse](src/Square/Models/ListMerchantsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15571,7 +15730,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveMerchantResponse&gt; RetrieveMerchant(string merchantId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveMerchantResponse&gt; RetrieveMerchant(RetrieveMerchantRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15594,10 +15753,13 @@ Retrieves the `Merchant` object for the given `merchant_id`.
 ```csharp
 try
 {
-    var response = await client.Merchants.RetrieveMerchant(merchantId);
+    var response = await client.Merchants.RetrieveMerchant(new RetrieveMerchantRequest
+    {
+        MerchantId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveMerchantResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15606,14 +15768,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>merchantId</code> | <code>string</code> | The ID of the merchant to retrieve. If the string "me" is supplied as the ID,<br>then retrieve the merchant that is currently accessible to this call. |
+<code>[RetrieveMerchantRequest](src/Square/Requests/Merchants/RetrieveMerchantRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15623,9 +15783,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveMerchantResponse](Models/RetrieveMerchantResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveMerchantResponse](src/Square/Models/RetrieveMerchantResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15637,10 +15797,10 @@ catch (SdkException<RawError> ex)
 
 ## OAuth
 
-> Source: [OAuth](Api/OAuth.cs)
+> Source: [OAuth](src/Square/Api/OAuth.cs)
 
 <details>
-<summary><code>Task&lt;ObtainTokenResponse&gt; ObtainToken(ObtainTokenRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ObtainTokenResponse&gt; ObtainToken(ObtainTokenOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15683,10 +15843,13 @@ Application clients should never interact directly with OAuth tokens.
 ```csharp
 try
 {
-    var response = await client.OAuth.ObtainToken(body);
+    var response = await client.OAuth.ObtainToken(new ObtainTokenOperationRequest
+    {
+        Body = new ObtainTokenRequest { ClientId = "some example string", GrantType = "some example string" },
+    });
     // TODO: Handle 'response' of type ObtainTokenResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15695,14 +15858,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[ObtainTokenRequest](Models/ObtainTokenRequest.cs)</code> | - |
+<code>[ObtainTokenOperationRequest](src/Square/Requests/OAuth/ObtainTokenOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15712,9 +15873,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ObtainTokenResponse](Models/ObtainTokenResponse.cs)</code>
+**OnSuccess**: <code>[ObtainTokenResponse](src/Square/Models/ObtainTokenResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15725,7 +15886,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveTokenStatusResponse&gt; RetrieveTokenStatus(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveTokenStatusResponse&gt; RetrieveTokenStatus(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15764,7 +15925,7 @@ try
     var response = await client.OAuth.RetrieveTokenStatus();
     // TODO: Handle 'response' of type RetrieveTokenStatusResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15778,9 +15939,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveTokenStatusResponse](Models/RetrieveTokenStatusResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveTokenStatusResponse](src/Square/Models/RetrieveTokenStatusResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15791,7 +15952,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RevokeTokenResponse&gt; RevokeToken(RevokeTokenRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RevokeTokenResponse&gt; RevokeToken(RevokeTokenOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15827,10 +15988,10 @@ page for your application in the Developer Dashboard.
 ```csharp
 try
 {
-    var response = await client.OAuth.RevokeToken(body);
+    var response = await client.OAuth.RevokeToken(new RevokeTokenOperationRequest { Body = new RevokeTokenRequest() });
     // TODO: Handle 'response' of type RevokeTokenResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15839,14 +16000,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[RevokeTokenRequest](Models/RevokeTokenRequest.cs)</code> | - |
+<code>[RevokeTokenOperationRequest](src/Square/Requests/OAuth/RevokeTokenOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15856,9 +16015,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RevokeTokenResponse](Models/RevokeTokenResponse.cs)</code>
+**OnSuccess**: <code>[RevokeTokenResponse](src/Square/Models/RevokeTokenResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15870,10 +16029,10 @@ catch (SdkException<RawError> ex)
 
 ## OrderCustomAttributes
 
-> Source: [OrderCustomAttributes](Api/OrderCustomAttributes.cs)
+> Source: [OrderCustomAttributes](src/Square/Api/OrderCustomAttributes.cs)
 
 <details>
-<summary><code>Task&lt;BulkDeleteOrderCustomAttributesResponse&gt; BulkDeleteOrderCustomAttributes(BulkDeleteOrderCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkDeleteOrderCustomAttributesResponse&gt; BulkDeleteOrderCustomAttributes(BulkDeleteOrderCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15909,10 +16068,23 @@ must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attribut
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.BulkDeleteOrderCustomAttributes(body);
+    var response = await client.OrderCustomAttributes.BulkDeleteOrderCustomAttributes(
+        new BulkDeleteOrderCustomAttributesOperationRequest
+        {
+            Body = new BulkDeleteOrderCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BulkDeleteOrderCustomAttributesRequestDeleteCustomAttribute>
+                {
+                    ["key"] = new BulkDeleteOrderCustomAttributesRequestDeleteCustomAttribute
+                    {
+                        OrderId = "some example string",
+                    },
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkDeleteOrderCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15921,14 +16093,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkDeleteOrderCustomAttributesRequest](Models/BulkDeleteOrderCustomAttributesRequest.cs)</code> | - |
+<code>[BulkDeleteOrderCustomAttributesOperationRequest](src/Square/Requests/OrderCustomAttributes/BulkDeleteOrderCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -15938,9 +16108,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkDeleteOrderCustomAttributesResponse](Models/BulkDeleteOrderCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkDeleteOrderCustomAttributesResponse](src/Square/Models/BulkDeleteOrderCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -15951,7 +16121,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkUpsertOrderCustomAttributesResponse&gt; BulkUpsertOrderCustomAttributes(BulkUpsertOrderCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkUpsertOrderCustomAttributesResponse&gt; BulkUpsertOrderCustomAttributes(BulkUpsertOrderCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -15987,10 +16157,24 @@ must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attribut
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.BulkUpsertOrderCustomAttributes(body);
+    var response = await client.OrderCustomAttributes.BulkUpsertOrderCustomAttributes(
+        new BulkUpsertOrderCustomAttributesOperationRequest
+        {
+            Body = new BulkUpsertOrderCustomAttributesRequest
+            {
+                Values = new Dictionary<string, BulkUpsertOrderCustomAttributesRequestUpsertCustomAttribute>
+                {
+                    ["key"] = new BulkUpsertOrderCustomAttributesRequestUpsertCustomAttribute
+                    {
+                        CustomAttribute = new CustomAttribute(),
+                        OrderId = "some example string",
+                    },
+                },
+            },
+        });
     // TODO: Handle 'response' of type BulkUpsertOrderCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -15999,14 +16183,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkUpsertOrderCustomAttributesRequest](Models/BulkUpsertOrderCustomAttributesRequest.cs)</code> | - |
+<code>[BulkUpsertOrderCustomAttributesOperationRequest](src/Square/Requests/OrderCustomAttributes/BulkUpsertOrderCustomAttributesOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16016,9 +16198,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkUpsertOrderCustomAttributesResponse](Models/BulkUpsertOrderCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[BulkUpsertOrderCustomAttributesResponse](src/Square/Models/BulkUpsertOrderCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16029,7 +16211,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateOrderCustomAttributeDefinitionResponse&gt; CreateOrderCustomAttributeDefinition(CreateOrderCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateOrderCustomAttributeDefinitionResponse&gt; CreateOrderCustomAttributeDefinition(CreateOrderCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16056,10 +16238,17 @@ in the Square seller account.
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.CreateOrderCustomAttributeDefinition(body);
+    var response = await client.OrderCustomAttributes.CreateOrderCustomAttributeDefinition(
+        new CreateOrderCustomAttributeDefinitionOperationRequest
+        {
+            Body = new CreateOrderCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type CreateOrderCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16068,14 +16257,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateOrderCustomAttributeDefinitionRequest](Models/CreateOrderCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[CreateOrderCustomAttributeDefinitionOperationRequest](src/Square/Requests/OrderCustomAttributes/CreateOrderCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16085,9 +16272,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateOrderCustomAttributeDefinitionResponse](Models/CreateOrderCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[CreateOrderCustomAttributeDefinitionResponse](src/Square/Models/CreateOrderCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16098,7 +16285,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteOrderCustomAttributeResponse&gt; DeleteOrderCustomAttribute(string orderId, string customAttributeKey, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteOrderCustomAttributeResponse&gt; DeleteOrderCustomAttribute(DeleteOrderCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16125,10 +16312,14 @@ To delete a custom attribute owned by another application, the `visibility` sett
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.DeleteOrderCustomAttribute(orderId, customAttributeKey);
+    var response = await client.OrderCustomAttributes.DeleteOrderCustomAttribute(new DeleteOrderCustomAttributeRequest
+    {
+        OrderId = "some example string",
+        CustomAttributeKey = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteOrderCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16137,15 +16328,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>orderId</code> | <code>string</code> | The ID of the target [order](entity:Order). |
-| <code>customAttributeKey</code> | <code>string</code> | The key of the custom attribute to delete.  This key must match the key of an<br>existing custom attribute definition. |
+<code>[DeleteOrderCustomAttributeRequest](src/Square/Requests/OrderCustomAttributes/DeleteOrderCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16155,9 +16343,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteOrderCustomAttributeResponse](Models/DeleteOrderCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[DeleteOrderCustomAttributeResponse](src/Square/Models/DeleteOrderCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16168,7 +16356,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteOrderCustomAttributeDefinitionResponse&gt; DeleteOrderCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteOrderCustomAttributeDefinitionResponse&gt; DeleteOrderCustomAttributeDefinition(DeleteOrderCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16193,10 +16381,11 @@ Only the definition owner can delete a custom attribute definition.
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.DeleteOrderCustomAttributeDefinition(key);
+    var response = await client.OrderCustomAttributes.DeleteOrderCustomAttributeDefinition(
+        new DeleteOrderCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type DeleteOrderCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16205,14 +16394,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to delete. |
+<code>[DeleteOrderCustomAttributeDefinitionRequest](src/Square/Requests/OrderCustomAttributes/DeleteOrderCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16222,9 +16409,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteOrderCustomAttributeDefinitionResponse](Models/DeleteOrderCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[DeleteOrderCustomAttributeDefinitionResponse](src/Square/Models/DeleteOrderCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16235,7 +16422,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListOrderCustomAttributeDefinitionsResponse&gt; ListOrderCustomAttributeDefinitions(VisibilityFilter? visibilityFilter, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListOrderCustomAttributeDefinitionsResponse&gt; ListOrderCustomAttributeDefinitions(ListOrderCustomAttributeDefinitionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16263,12 +16450,11 @@ seller-defined custom attributes (also known as custom fields) are always set to
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.ListOrderCustomAttributeDefinitions(visibilityFilter,
-        cursor,
-        limit);
+    var response = await client.OrderCustomAttributes.ListOrderCustomAttributeDefinitions(
+        new ListOrderCustomAttributeDefinitionsRequest());
     // TODO: Handle 'response' of type ListOrderCustomAttributeDefinitionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16277,16 +16463,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>visibilityFilter</code> | <code>[VisibilityFilter?](Models/Enums/VisibilityFilter.cs)</code> | Requests that all of the custom attributes be returned, or only those that are read-only or read-write. |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint. <br>Provide this cursor to retrieve the next page of results for your original request. <br>For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory. <br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. <br>The default value is 20.<br>For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination). |
+<code>[ListOrderCustomAttributeDefinitionsRequest](src/Square/Requests/OrderCustomAttributes/ListOrderCustomAttributeDefinitionsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16296,9 +16478,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListOrderCustomAttributeDefinitionsResponse](Models/ListOrderCustomAttributeDefinitionsResponse.cs)</code>
+**OnSuccess**: <code>[ListOrderCustomAttributeDefinitionsResponse](src/Square/Models/ListOrderCustomAttributeDefinitionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16309,7 +16491,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListOrderCustomAttributesResponse&gt; ListOrderCustomAttributes(string orderId, VisibilityFilter? visibilityFilter, string? cursor, int? limit, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListOrderCustomAttributesResponse&gt; ListOrderCustomAttributes(ListOrderCustomAttributesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16339,13 +16521,13 @@ and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.ListOrderCustomAttributes(orderId,
-        visibilityFilter,
-        cursor,
-        limit);
+    var response = await client.OrderCustomAttributes.ListOrderCustomAttributes(new ListOrderCustomAttributesRequest
+    {
+        OrderId = "some example string",
+    });
     // TODO: Handle 'response' of type ListOrderCustomAttributesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16354,18 +16536,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>orderId</code> | <code>string</code> | The ID of the target [order](entity:Order). |
-| <code>visibilityFilter</code> | <code>[VisibilityFilter?](Models/Enums/VisibilityFilter.cs)</code> | Requests that all of the custom attributes be returned, or only those that are read-only or read-write. |
-| <code>cursor</code> | <code>string?</code> | The cursor returned in the paged response from the previous call to this endpoint. <br>Provide this cursor to retrieve the next page of results for your original request. <br>For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to return in a single paged response. This limit is advisory. <br>The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. <br>The default value is 20.<br>For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination). |
-| <code>withDefinitions</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of each<br>custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, <br>information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[ListOrderCustomAttributesRequest](src/Square/Requests/OrderCustomAttributes/ListOrderCustomAttributesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16375,9 +16551,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListOrderCustomAttributesResponse](Models/ListOrderCustomAttributesResponse.cs)</code>
+**OnSuccess**: <code>[ListOrderCustomAttributesResponse](src/Square/Models/ListOrderCustomAttributesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16388,7 +16564,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveOrderCustomAttributeResponse&gt; RetrieveOrderCustomAttribute(string orderId, string customAttributeKey, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveOrderCustomAttributeResponse&gt; RetrieveOrderCustomAttribute(RetrieveOrderCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16418,12 +16594,15 @@ also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.RetrieveOrderCustomAttribute(orderId,
-        customAttributeKey,
-        version);
+    var response = await client.OrderCustomAttributes.RetrieveOrderCustomAttribute(
+        new RetrieveOrderCustomAttributeRequest
+        {
+            OrderId = "some example string",
+            CustomAttributeKey = "some example string",
+        });
     // TODO: Handle 'response' of type RetrieveOrderCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16432,17 +16611,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>orderId</code> | <code>string</code> | The ID of the target [order](entity:Order). |
-| <code>customAttributeKey</code> | <code>string</code> | The key of the custom attribute to retrieve.  This key must match the key of an<br>existing custom attribute definition. |
-| <code>version</code> | <code>int?</code> | To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency)<br>control, include this optional field and specify the current version of the custom attribute. |
-| <code>withDefinition</code> | <code>bool?</code> | Indicates whether to return the [custom attribute definition](entity:CustomAttributeDefinition) in the `definition` field of each <br>custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, <br>information about the data type, or other definition details. The default value is `false`.<br>**Default**: false |
+<code>[RetrieveOrderCustomAttributeRequest](src/Square/Requests/OrderCustomAttributes/RetrieveOrderCustomAttributeRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16452,9 +16626,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveOrderCustomAttributeResponse](Models/RetrieveOrderCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveOrderCustomAttributeResponse](src/Square/Models/RetrieveOrderCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16465,7 +16639,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveOrderCustomAttributeDefinitionResponse&gt; RetrieveOrderCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveOrderCustomAttributeDefinitionResponse&gt; RetrieveOrderCustomAttributeDefinition(RetrieveOrderCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16492,10 +16666,11 @@ setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note t
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.RetrieveOrderCustomAttributeDefinition(key, version);
+    var response = await client.OrderCustomAttributes.RetrieveOrderCustomAttributeDefinition(
+        new RetrieveOrderCustomAttributeDefinitionRequest { Key = "some example string" });
     // TODO: Handle 'response' of type RetrieveOrderCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16504,15 +16679,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to retrieve. |
-| <code>version</code> | <code>int?</code> | To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency)<br>control, include this optional field and specify the current version of the custom attribute. |
+<code>[RetrieveOrderCustomAttributeDefinitionRequest](src/Square/Requests/OrderCustomAttributes/RetrieveOrderCustomAttributeDefinitionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16522,9 +16694,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveOrderCustomAttributeDefinitionResponse](Models/RetrieveOrderCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveOrderCustomAttributeDefinitionResponse](src/Square/Models/RetrieveOrderCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16535,7 +16707,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateOrderCustomAttributeDefinitionResponse&gt; UpdateOrderCustomAttributeDefinition(string key, UpdateOrderCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateOrderCustomAttributeDefinitionResponse&gt; UpdateOrderCustomAttributeDefinition(UpdateOrderCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16560,10 +16732,18 @@ Only the definition owner can update a custom attribute definition. Note that se
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.UpdateOrderCustomAttributeDefinition(key, body);
+    var response = await client.OrderCustomAttributes.UpdateOrderCustomAttributeDefinition(
+        new UpdateOrderCustomAttributeDefinitionOperationRequest
+        {
+            Key = "some example string",
+            Body = new UpdateOrderCustomAttributeDefinitionRequest
+            {
+                CustomAttributeDefinition = new CustomAttributeDefinition(),
+            },
+        });
     // TODO: Handle 'response' of type UpdateOrderCustomAttributeDefinitionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16572,15 +16752,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>key</code> | <code>string</code> | The key of the custom attribute definition to update. |
-| <code>body</code> | <code>[UpdateOrderCustomAttributeDefinitionRequest](Models/UpdateOrderCustomAttributeDefinitionRequest.cs)</code> | - |
+<code>[UpdateOrderCustomAttributeDefinitionOperationRequest](src/Square/Requests/OrderCustomAttributes/UpdateOrderCustomAttributeDefinitionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16590,9 +16767,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateOrderCustomAttributeDefinitionResponse](Models/UpdateOrderCustomAttributeDefinitionResponse.cs)</code>
+**OnSuccess**: <code>[UpdateOrderCustomAttributeDefinitionResponse](src/Square/Models/UpdateOrderCustomAttributeDefinitionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16603,7 +16780,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpsertOrderCustomAttributeResponse&gt; UpsertOrderCustomAttribute(string orderId, string customAttributeKey, UpsertOrderCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpsertOrderCustomAttributeResponse&gt; UpsertOrderCustomAttribute(UpsertOrderCustomAttributeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16634,10 +16811,16 @@ must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attribut
 ```csharp
 try
 {
-    var response = await client.OrderCustomAttributes.UpsertOrderCustomAttribute(orderId, customAttributeKey, body);
+    var response = await client.OrderCustomAttributes.UpsertOrderCustomAttribute(
+        new UpsertOrderCustomAttributeOperationRequest
+        {
+            OrderId = "some example string",
+            CustomAttributeKey = "some example string",
+            Body = new UpsertOrderCustomAttributeRequest { CustomAttribute = new CustomAttribute() },
+        });
     // TODO: Handle 'response' of type UpsertOrderCustomAttributeResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16646,16 +16829,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>orderId</code> | <code>string</code> | The ID of the target [order](entity:Order). |
-| <code>customAttributeKey</code> | <code>string</code> | The key of the custom attribute to create or update.  This key must match the key <br>of an existing custom attribute definition. |
-| <code>body</code> | <code>[UpsertOrderCustomAttributeRequest](Models/UpsertOrderCustomAttributeRequest.cs)</code> | - |
+<code>[UpsertOrderCustomAttributeOperationRequest](src/Square/Requests/OrderCustomAttributes/UpsertOrderCustomAttributeOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16665,9 +16844,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpsertOrderCustomAttributeResponse](Models/UpsertOrderCustomAttributeResponse.cs)</code>
+**OnSuccess**: <code>[UpsertOrderCustomAttributeResponse](src/Square/Models/UpsertOrderCustomAttributeResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16679,10 +16858,10 @@ catch (SdkException<RawError> ex)
 
 ## Orders
 
-> Source: [Orders](Api/Orders.cs)
+> Source: [Orders](src/Square/Api/Orders.cs)
 
 <details>
-<summary><code>Task&lt;BatchRetrieveOrdersResponse&gt; BatchRetrieveOrders(BatchRetrieveOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BatchRetrieveOrdersResponse&gt; BatchRetrieveOrders(BatchRetrieveOrdersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16707,10 +16886,13 @@ If a given order ID does not exist, the ID is ignored instead of generating an e
 ```csharp
 try
 {
-    var response = await client.Orders.BatchRetrieveOrders(body);
+    var response = await client.Orders.BatchRetrieveOrders(new BatchRetrieveOrdersOperationRequest
+    {
+        Body = new BatchRetrieveOrdersRequest { OrderIds = ["some example string"] },
+    });
     // TODO: Handle 'response' of type BatchRetrieveOrdersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16719,14 +16901,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BatchRetrieveOrdersRequest](Models/BatchRetrieveOrdersRequest.cs)</code> | - |
+<code>[BatchRetrieveOrdersOperationRequest](src/Square/Requests/Orders/BatchRetrieveOrdersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16736,9 +16916,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BatchRetrieveOrdersResponse](Models/BatchRetrieveOrdersResponse.cs)</code>
+**OnSuccess**: <code>[BatchRetrieveOrdersResponse](src/Square/Models/BatchRetrieveOrdersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16749,7 +16929,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CalculateOrderResponse&gt; CalculateOrder(CalculateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CalculateOrderResponse&gt; CalculateOrder(CalculateOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16772,10 +16952,13 @@ Enables applications to preview order pricing without creating an order.
 ```csharp
 try
 {
-    var response = await client.Orders.CalculateOrder(body);
+    var response = await client.Orders.CalculateOrder(new CalculateOrderOperationRequest
+    {
+        Body = new CalculateOrderRequest { Order = new Order { LocationId = "some example string" } },
+    });
     // TODO: Handle 'response' of type CalculateOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16784,14 +16967,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CalculateOrderRequest](Models/CalculateOrderRequest.cs)</code> | - |
+<code>[CalculateOrderOperationRequest](src/Square/Requests/Orders/CalculateOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16801,9 +16982,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CalculateOrderResponse](Models/CalculateOrderResponse.cs)</code>
+**OnSuccess**: <code>[CalculateOrderResponse](src/Square/Models/CalculateOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16814,7 +16995,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CloneOrderResponse&gt; CloneOrder(CloneOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CloneOrderResponse&gt; CloneOrder(CloneOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16838,10 +17019,13 @@ only the core fields (such as line items, taxes, and discounts) copied from the 
 ```csharp
 try
 {
-    var response = await client.Orders.CloneOrder(body);
+    var response = await client.Orders.CloneOrder(new CloneOrderOperationRequest
+    {
+        Body = new CloneOrderRequest { OrderId = "some example string" },
+    });
     // TODO: Handle 'response' of type CloneOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16850,14 +17034,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CloneOrderRequest](Models/CloneOrderRequest.cs)</code> | - |
+<code>[CloneOrderOperationRequest](src/Square/Requests/Orders/CloneOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16867,9 +17049,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CloneOrderResponse](Models/CloneOrderResponse.cs)</code>
+**OnSuccess**: <code>[CloneOrderResponse](src/Square/Models/CloneOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16880,7 +17062,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateOrderResponse&gt; CreateOrder(CreateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateOrderResponse&gt; CreateOrder(CreateOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16909,10 +17091,10 @@ You can modify open orders using the [UpdateOrder](api-endpoint:Orders-UpdateOrd
 ```csharp
 try
 {
-    var response = await client.Orders.CreateOrder(body);
+    var response = await client.Orders.CreateOrder(new CreateOrderOperationRequest { Body = new CreateOrderRequest() });
     // TODO: Handle 'response' of type CreateOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16921,14 +17103,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateOrderRequest](Models/CreateOrderRequest.cs)</code> | - |
+<code>[CreateOrderOperationRequest](src/Square/Requests/Orders/CreateOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -16938,9 +17118,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateOrderResponse](Models/CreateOrderResponse.cs)</code>
+**OnSuccess**: <code>[CreateOrderResponse](src/Square/Models/CreateOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -16951,7 +17131,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;PayOrderResponse&gt; PayOrder(string orderId, PayOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;PayOrderResponse&gt; PayOrder(PayOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -16987,10 +17167,14 @@ Using a delayed capture payment with `PayOrder` completes the approved payment.
 ```csharp
 try
 {
-    var response = await client.Orders.PayOrder(orderId, body);
+    var response = await client.Orders.PayOrder(new PayOrderOperationRequest
+    {
+        OrderId = "some example string",
+        Body = new PayOrderRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type PayOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -16999,15 +17183,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>orderId</code> | <code>string</code> | The ID of the order being paid. |
-| <code>body</code> | <code>[PayOrderRequest](Models/PayOrderRequest.cs)</code> | - |
+<code>[PayOrderOperationRequest](src/Square/Requests/Orders/PayOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17017,9 +17198,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[PayOrderResponse](Models/PayOrderResponse.cs)</code>
+**OnSuccess**: <code>[PayOrderResponse](src/Square/Models/PayOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17030,7 +17211,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveOrderResponse&gt; RetrieveOrder(string orderId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveOrderResponse&gt; RetrieveOrder(RetrieveOrderRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17053,10 +17234,10 @@ Retrieves an [Order](entity:Order) by ID.
 ```csharp
 try
 {
-    var response = await client.Orders.RetrieveOrder(orderId);
+    var response = await client.Orders.RetrieveOrder(new RetrieveOrderRequest { OrderId = "some example string" });
     // TODO: Handle 'response' of type RetrieveOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17065,14 +17246,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>orderId</code> | <code>string</code> | The ID of the order to retrieve. |
+<code>[RetrieveOrderRequest](src/Square/Requests/Orders/RetrieveOrderRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17082,9 +17261,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveOrderResponse](Models/RetrieveOrderResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveOrderResponse](src/Square/Models/RetrieveOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17095,7 +17274,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchOrdersResponse&gt; SearchOrders(SearchOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchOrdersResponse&gt; SearchOrders(SearchOrdersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17134,10 +17313,13 @@ not the time it was subsequently transmitted to Square.
 ```csharp
 try
 {
-    var response = await client.Orders.SearchOrders(body);
+    var response = await client.Orders.SearchOrders(new SearchOrdersOperationRequest
+    {
+        Body = new SearchOrdersRequest(),
+    });
     // TODO: Handle 'response' of type SearchOrdersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17146,14 +17328,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchOrdersRequest](Models/SearchOrdersRequest.cs)</code> | - |
+<code>[SearchOrdersOperationRequest](src/Square/Requests/Orders/SearchOrdersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17163,9 +17343,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchOrdersResponse](Models/SearchOrdersResponse.cs)</code>
+**OnSuccess**: <code>[SearchOrdersResponse](src/Square/Models/SearchOrdersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17176,7 +17356,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateOrderResponse&gt; UpdateOrder(string orderId, UpdateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateOrderResponse&gt; UpdateOrder(UpdateOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17213,10 +17393,14 @@ To pay for an order, see
 ```csharp
 try
 {
-    var response = await client.Orders.UpdateOrder(orderId, body);
+    var response = await client.Orders.UpdateOrder(new UpdateOrderOperationRequest
+    {
+        OrderId = "some example string",
+        Body = new UpdateOrderRequest(),
+    });
     // TODO: Handle 'response' of type UpdateOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17225,15 +17409,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>orderId</code> | <code>string</code> | The ID of the order to update. |
-| <code>body</code> | <code>[UpdateOrderRequest](Models/UpdateOrderRequest.cs)</code> | - |
+<code>[UpdateOrderOperationRequest](src/Square/Requests/Orders/UpdateOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17243,9 +17424,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateOrderResponse](Models/UpdateOrderResponse.cs)</code>
+**OnSuccess**: <code>[UpdateOrderResponse](src/Square/Models/UpdateOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17257,10 +17438,10 @@ catch (SdkException<RawError> ex)
 
 ## Payments
 
-> Source: [Payments](Api/Payments.cs)
+> Source: [Payments](src/Square/Api/Payments.cs)
 
 <details>
-<summary><code>Task&lt;CancelPaymentResponse&gt; CancelPayment(string paymentId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelPaymentResponse&gt; CancelPayment(CancelPaymentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17284,10 +17465,10 @@ the APPROVED `status`.
 ```csharp
 try
 {
-    var response = await client.Payments.CancelPayment(paymentId);
+    var response = await client.Payments.CancelPayment(new CancelPaymentRequest { PaymentId = "some example string" });
     // TODO: Handle 'response' of type CancelPaymentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17296,14 +17477,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>paymentId</code> | <code>string</code> | The ID of the payment to cancel. |
+<code>[CancelPaymentRequest](src/Square/Requests/Payments/CancelPaymentRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17313,9 +17492,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelPaymentResponse](Models/CancelPaymentResponse.cs)</code>
+**OnSuccess**: <code>[CancelPaymentResponse](src/Square/Models/CancelPaymentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17326,7 +17505,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CancelPaymentByIdempotencyKeyResponse&gt; CancelPaymentByIdempotencyKey(CancelPaymentByIdempotencyKeyRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelPaymentByIdempotencyKeyResponse&gt; CancelPaymentByIdempotencyKey(CancelPaymentByIdempotencyKeyOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17359,10 +17538,13 @@ returns successfully.
 ```csharp
 try
 {
-    var response = await client.Payments.CancelPaymentByIdempotencyKey(body);
+    var response = await client.Payments.CancelPaymentByIdempotencyKey(new CancelPaymentByIdempotencyKeyOperationRequest
+    {
+        Body = new CancelPaymentByIdempotencyKeyRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type CancelPaymentByIdempotencyKeyResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17371,14 +17553,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CancelPaymentByIdempotencyKeyRequest](Models/CancelPaymentByIdempotencyKeyRequest.cs)</code> | - |
+<code>[CancelPaymentByIdempotencyKeyOperationRequest](src/Square/Requests/Payments/CancelPaymentByIdempotencyKeyOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17388,9 +17568,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelPaymentByIdempotencyKeyResponse](Models/CancelPaymentByIdempotencyKeyResponse.cs)</code>
+**OnSuccess**: <code>[CancelPaymentByIdempotencyKeyResponse](src/Square/Models/CancelPaymentByIdempotencyKeyResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17401,7 +17581,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CompletePaymentResponse&gt; CompletePayment(string paymentId, CompletePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CompletePaymentResponse&gt; CompletePayment(CompletePaymentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17427,10 +17607,14 @@ You can use this endpoint to complete a payment with the APPROVED `status`.
 ```csharp
 try
 {
-    var response = await client.Payments.CompletePayment(paymentId, body);
+    var response = await client.Payments.CompletePayment(new CompletePaymentOperationRequest
+    {
+        PaymentId = "some example string",
+        Body = new CompletePaymentRequest(),
+    });
     // TODO: Handle 'response' of type CompletePaymentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17439,15 +17623,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>paymentId</code> | <code>string</code> | The unique ID identifying the payment to be completed. |
-| <code>body</code> | <code>[CompletePaymentRequest](Models/CompletePaymentRequest.cs)</code> | - |
+<code>[CompletePaymentOperationRequest](src/Square/Requests/Payments/CompletePaymentOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17457,9 +17638,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CompletePaymentResponse](Models/CompletePaymentResponse.cs)</code>
+**OnSuccess**: <code>[CompletePaymentResponse](src/Square/Models/CompletePaymentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17470,7 +17651,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreatePaymentResponse&gt; CreatePayment(CreatePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreatePaymentResponse&gt; CreatePayment(CreatePaymentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17500,10 +17681,13 @@ The endpoint creates a
 ```csharp
 try
 {
-    var response = await client.Payments.CreatePayment(body);
+    var response = await client.Payments.CreatePayment(new CreatePaymentOperationRequest
+    {
+        Body = new CreatePaymentRequest { SourceId = "some example string", IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type CreatePaymentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17512,14 +17696,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreatePaymentRequest](Models/CreatePaymentRequest.cs)</code> | - |
+<code>[CreatePaymentOperationRequest](src/Square/Requests/Payments/CreatePaymentOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17529,9 +17711,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreatePaymentResponse](Models/CreatePaymentResponse.cs)</code>
+**OnSuccess**: <code>[CreatePaymentResponse](src/Square/Models/CreatePaymentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17542,7 +17724,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetPaymentResponse&gt; GetPayment(string paymentId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetPaymentResponse&gt; GetPayment(GetPaymentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17565,10 +17747,10 @@ Retrieves details for a specific payment.
 ```csharp
 try
 {
-    var response = await client.Payments.GetPayment(paymentId);
+    var response = await client.Payments.GetPayment(new GetPaymentRequest { PaymentId = "some example string" });
     // TODO: Handle 'response' of type GetPaymentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17577,14 +17759,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>paymentId</code> | <code>string</code> | A unique ID for the desired payment. |
+<code>[GetPaymentRequest](src/Square/Requests/Payments/GetPaymentRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17594,9 +17774,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetPaymentResponse](Models/GetPaymentResponse.cs)</code>
+**OnSuccess**: <code>[GetPaymentResponse](src/Square/Models/GetPaymentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17607,7 +17787,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListPaymentsResponse&gt; ListPayments(string? beginTime, string? endTime, string? sortOrder, string? cursor, string? locationId, long? total, string? last4, string? cardBrand, int? limit, string? offlineBeginTime, string? offlineEndTime, string? updatedAtBeginTime, string? updatedAtEndTime, ListPaymentsRequestSortField? sortField, bool? isOfflinePayment = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListPaymentsResponse&gt; ListPayments(ListPaymentsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17635,23 +17815,10 @@ The maximum results per page is 100.
 ```csharp
 try
 {
-    var response = await client.Payments.ListPayments(beginTime,
-        endTime,
-        sortOrder,
-        cursor,
-        locationId,
-        total,
-        last4,
-        cardBrand,
-        limit,
-        offlineBeginTime,
-        offlineEndTime,
-        updatedAtBeginTime,
-        updatedAtEndTime,
-        sortField);
+    var response = await client.Payments.ListPayments(new ListPaymentsRequest());
     // TODO: Handle 'response' of type ListPaymentsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17660,28 +17827,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>beginTime</code> | <code>string?</code> | Indicates the start of the time range to retrieve payments for, in RFC 3339 format.<br>The range is determined using the `created_at` field for each Payment.<br>Inclusive. Default: The current time minus one year. |
-| <code>endTime</code> | <code>string?</code> | Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The<br>range is determined using the `created_at` field for each Payment.<br><br>Default: The current time. |
-| <code>sortOrder</code> | <code>string?</code> | The order in which results are listed by `ListPaymentsRequest.sort_field`:<br>- `ASC` - Oldest to newest.<br>- `DESC` - Newest to oldest (default). |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>locationId</code> | <code>string?</code> | Limit results to the location supplied. By default, results are returned<br>for the default (main) location associated with the seller. |
-| <code>total</code> | <code>long?</code> | The exact amount in the `total_money` for a payment. |
-| <code>last4</code> | <code>string?</code> | The last four digits of a payment card. |
-| <code>cardBrand</code> | <code>string?</code> | The brand of the payment card (for example, VISA). |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to be returned in a single page.<br>It is possible to receive fewer results than the specified limit on a given page.<br><br>The default value of 100 is also the maximum allowed value. If the provided value is <br>greater than 100, it is ignored and the default value is used instead.<br><br>Default: `100` |
-| <code>offlineBeginTime</code> | <code>string?</code> | Indicates the start of the time range for which to retrieve offline payments, in RFC 3339<br>format for timestamps. The range is determined using the<br>`offline_payment_details.client_created_at` field for each Payment. If set, payments without a<br>value set in `offline_payment_details.client_created_at` will not be returned.<br><br>Default: The current time. |
-| <code>offlineEndTime</code> | <code>string?</code> | Indicates the end of the time range for which to retrieve offline payments, in RFC 3339<br>format for timestamps. The range is determined using the<br>`offline_payment_details.client_created_at` field for each Payment. If set, payments without a<br>value set in `offline_payment_details.client_created_at` will not be returned.<br><br>Default: The current time. |
-| <code>updatedAtBeginTime</code> | <code>string?</code> | Indicates the start of the time range to retrieve payments for, in RFC 3339 format.  The<br>range is determined using the `updated_at` field for each Payment. |
-| <code>updatedAtEndTime</code> | <code>string?</code> | Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The<br>range is determined using the `updated_at` field for each Payment. |
-| <code>sortField</code> | <code>[ListPaymentsRequestSortField?](Models/Enums/ListPaymentsRequestSortField.cs)</code> | The field used to sort results by. The default is `CREATED_AT`. |
-| <code>isOfflinePayment</code> | <code>bool?</code> | Whether the payment was taken offline or not.<br>**Default**: false |
+<code>[ListPaymentsRequest](src/Square/Requests/Payments/ListPaymentsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17691,9 +17842,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListPaymentsResponse](Models/ListPaymentsResponse.cs)</code>
+**OnSuccess**: <code>[ListPaymentsResponse](src/Square/Models/ListPaymentsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17704,7 +17855,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdatePaymentResponse&gt; UpdatePayment(string paymentId, UpdatePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdatePaymentResponse&gt; UpdatePayment(UpdatePaymentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17728,10 +17879,14 @@ You can update the `amount_money` and `tip_money` using this endpoint.
 ```csharp
 try
 {
-    var response = await client.Payments.UpdatePayment(paymentId, body);
+    var response = await client.Payments.UpdatePayment(new UpdatePaymentOperationRequest
+    {
+        PaymentId = "some example string",
+        Body = new UpdatePaymentRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type UpdatePaymentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17740,15 +17895,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>paymentId</code> | <code>string</code> | The ID of the payment to update. |
-| <code>body</code> | <code>[UpdatePaymentRequest](Models/UpdatePaymentRequest.cs)</code> | - |
+<code>[UpdatePaymentOperationRequest](src/Square/Requests/Payments/UpdatePaymentOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17758,9 +17910,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdatePaymentResponse](Models/UpdatePaymentResponse.cs)</code>
+**OnSuccess**: <code>[UpdatePaymentResponse](src/Square/Models/UpdatePaymentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17772,10 +17924,10 @@ catch (SdkException<RawError> ex)
 
 ## Payouts
 
-> Source: [Payouts](Api/Payouts.cs)
+> Source: [Payouts](src/Square/Api/Payouts.cs)
 
 <details>
-<summary><code>Task&lt;GetPayoutResponse&gt; GetPayout(string payoutId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetPayoutResponse&gt; GetPayout(GetPayoutRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17799,10 +17951,10 @@ To call this endpoint, set `PAYOUTS_READ` for the OAuth scope.
 ```csharp
 try
 {
-    var response = await client.Payouts.GetPayout(payoutId);
+    var response = await client.Payouts.GetPayout(new GetPayoutRequest { PayoutId = "some example string" });
     // TODO: Handle 'response' of type GetPayoutResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17811,14 +17963,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>payoutId</code> | <code>string</code> | The ID of the payout to retrieve the information for. |
+<code>[GetPayoutRequest](src/Square/Requests/Payouts/GetPayoutRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17828,9 +17978,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetPayoutResponse](Models/GetPayoutResponse.cs)</code>
+**OnSuccess**: <code>[GetPayoutResponse](src/Square/Models/GetPayoutResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17841,7 +17991,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListPayoutEntriesResponse&gt; ListPayoutEntries(string payoutId, SortOrder? sortOrder, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListPayoutEntriesResponse&gt; ListPayoutEntries(ListPayoutEntriesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17865,10 +18015,13 @@ To call this endpoint, set `PAYOUTS_READ` for the OAuth scope.
 ```csharp
 try
 {
-    var response = await client.Payouts.ListPayoutEntries(payoutId, sortOrder, cursor, limit);
+    var response = await client.Payouts.ListPayoutEntries(new ListPayoutEntriesRequest
+    {
+        PayoutId = "some example string",
+    });
     // TODO: Handle 'response' of type ListPayoutEntriesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17877,17 +18030,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>payoutId</code> | <code>string</code> | The ID of the payout to retrieve the information for. |
-| <code>sortOrder</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | The order in which payout entries are listed. |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).<br>If request parameters change between requests, subsequent results may contain duplicates or missing records. |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to be returned in a single page.<br>It is possible to receive fewer results than the specified limit on a given page.<br>The default value of 100 is also the maximum allowed value. If the provided value is<br>greater than 100, it is ignored and the default value is used instead.<br>Default: `100` |
+<code>[ListPayoutEntriesRequest](src/Square/Requests/Payouts/ListPayoutEntriesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17897,9 +18045,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListPayoutEntriesResponse](Models/ListPayoutEntriesResponse.cs)</code>
+**OnSuccess**: <code>[ListPayoutEntriesResponse](src/Square/Models/ListPayoutEntriesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17910,7 +18058,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListPayoutsResponse&gt; ListPayouts(string? locationId, PayoutStatus? status, string? beginTime, string? endTime, SortOrder? sortOrder, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListPayoutsResponse&gt; ListPayouts(ListPayoutsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -17935,10 +18083,10 @@ To call this endpoint, set `PAYOUTS_READ` for the OAuth scope.
 ```csharp
 try
 {
-    var response = await client.Payouts.ListPayouts(locationId, status, beginTime, endTime, sortOrder, cursor, limit);
+    var response = await client.Payouts.ListPayouts(new ListPayoutsRequest());
     // TODO: Handle 'response' of type ListPayoutsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -17947,20 +18095,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string?</code> | The ID of the location for which to list the payouts.<br>By default, payouts are returned for the default (main) location associated with the seller. |
-| <code>status</code> | <code>[PayoutStatus?](Models/Enums/PayoutStatus.cs)</code> | If provided, only payouts with the given status are returned. |
-| <code>beginTime</code> | <code>string?</code> | The timestamp for the beginning of the payout creation time, in RFC 3339 format.<br>Inclusive. Default: The current time minus one year. |
-| <code>endTime</code> | <code>string?</code> | The timestamp for the end of the payout creation time, in RFC 3339 format.<br>Default: The current time. |
-| <code>sortOrder</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | The order in which payouts are listed. |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).<br>If request parameters change between requests, subsequent results may contain duplicates or missing records. |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to be returned in a single page.<br>It is possible to receive fewer results than the specified limit on a given page.<br>The default value of 100 is also the maximum allowed value. If the provided value is<br>greater than 100, it is ignored and the default value is used instead.<br>Default: `100` |
+<code>[ListPayoutsRequest](src/Square/Requests/Payouts/ListPayoutsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -17970,9 +18110,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListPayoutsResponse](Models/ListPayoutsResponse.cs)</code>
+**OnSuccess**: <code>[ListPayoutsResponse](src/Square/Models/ListPayoutsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -17984,10 +18124,10 @@ catch (SdkException<RawError> ex)
 
 ## Refunds
 
-> Source: [Refunds](Api/Refunds.cs)
+> Source: [Refunds](src/Square/Api/Refunds.cs)
 
 <details>
-<summary><code>Task&lt;GetPaymentRefundResponse&gt; GetPaymentRefund(string refundId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetPaymentRefundResponse&gt; GetPaymentRefund(GetPaymentRefundRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18010,10 +18150,13 @@ Retrieves a specific refund using the `refund_id`.
 ```csharp
 try
 {
-    var response = await client.Refunds.GetPaymentRefund(refundId);
+    var response = await client.Refunds.GetPaymentRefund(new GetPaymentRefundRequest
+    {
+        RefundId = "some example string",
+    });
     // TODO: Handle 'response' of type GetPaymentRefundResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18022,14 +18165,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>refundId</code> | <code>string</code> | The unique ID for the desired `PaymentRefund`. |
+<code>[GetPaymentRefundRequest](src/Square/Requests/Refunds/GetPaymentRefundRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18039,9 +18180,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetPaymentRefundResponse](Models/GetPaymentRefundResponse.cs)</code>
+**OnSuccess**: <code>[GetPaymentRefundResponse](src/Square/Models/GetPaymentRefundResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18052,7 +18193,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListPaymentRefundsResponse&gt; ListPaymentRefunds(string? beginTime, string? endTime, string? sortOrder, string? cursor, string? locationId, string? status, string? sourceType, int? limit, string? updatedAtBeginTime, string? updatedAtEndTime, ListPaymentRefundsRequestSortField? sortField, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListPaymentRefundsResponse&gt; ListPaymentRefunds(ListPaymentRefundsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18080,20 +18221,10 @@ The maximum results per page is 100.
 ```csharp
 try
 {
-    var response = await client.Refunds.ListPaymentRefunds(beginTime,
-        endTime,
-        sortOrder,
-        cursor,
-        locationId,
-        status,
-        sourceType,
-        limit,
-        updatedAtBeginTime,
-        updatedAtEndTime,
-        sortField);
+    var response = await client.Refunds.ListPaymentRefunds(new ListPaymentRefundsRequest());
     // TODO: Handle 'response' of type ListPaymentRefundsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18102,24 +18233,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>beginTime</code> | <code>string?</code> | Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339 <br>format.  The range is determined using the `created_at` field for each `PaymentRefund`. <br><br>Default: The current time minus one year. |
-| <code>endTime</code> | <code>string?</code> | Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339 <br>format.  The range is determined using the `created_at` field for each `PaymentRefund`.<br><br>Default: The current time. |
-| <code>sortOrder</code> | <code>string?</code> | The order in which results are listed by `PaymentRefund.created_at`:<br>- `ASC` - Oldest to newest.<br>- `DESC` - Newest to oldest (default). |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this cursor to retrieve the next set of results for the original query.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>locationId</code> | <code>string?</code> | Limit results to the location supplied. By default, results are returned<br>for all locations associated with the seller. |
-| <code>status</code> | <code>string?</code> | If provided, only refunds with the given status are returned.<br>For a list of refund status values, see [PaymentRefund](entity:PaymentRefund).<br><br>Default: If omitted, refunds are returned regardless of their status. |
-| <code>sourceType</code> | <code>string?</code> | If provided, only returns refunds whose payments have the indicated source type.<br>Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `CASH`, and `EXTERNAL`.<br>For information about these payment source types, see<br>[Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).<br><br>Default: If omitted, refunds are returned regardless of the source type. |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to be returned in a single page.<br><br>It is possible to receive fewer results than the specified limit on a given page.<br><br>If the supplied value is greater than 100, no more than 100 results are returned.<br><br>Default: 100 |
-| <code>updatedAtBeginTime</code> | <code>string?</code> | Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339<br>format.  The range is determined using the `updated_at` field for each `PaymentRefund`.<br><br>Default: If omitted, the time range starts at `begin_time`. |
-| <code>updatedAtEndTime</code> | <code>string?</code> | Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339<br>format.  The range is determined using the `updated_at` field for each `PaymentRefund`.<br><br>Default: The current time. |
-| <code>sortField</code> | <code>[ListPaymentRefundsRequestSortField?](Models/Enums/ListPaymentRefundsRequestSortField.cs)</code> | The field used to sort results by. The default is `CREATED_AT`. |
+<code>[ListPaymentRefundsRequest](src/Square/Requests/Refunds/ListPaymentRefundsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18129,9 +18248,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListPaymentRefundsResponse](Models/ListPaymentRefundsResponse.cs)</code>
+**OnSuccess**: <code>[ListPaymentRefundsResponse](src/Square/Models/ListPaymentRefundsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18142,7 +18261,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RefundPaymentResponse&gt; RefundPayment(RefundPaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RefundPaymentResponse&gt; RefundPayment(RefundPaymentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18168,10 +18287,13 @@ refund of a cash or external payment. For more information, see
 ```csharp
 try
 {
-    var response = await client.Refunds.RefundPayment(body);
+    var response = await client.Refunds.RefundPayment(new RefundPaymentOperationRequest
+    {
+        Body = new RefundPaymentRequest { IdempotencyKey = "some example string", AmountMoney = new Money() },
+    });
     // TODO: Handle 'response' of type RefundPaymentResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18180,14 +18302,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[RefundPaymentRequest](Models/RefundPaymentRequest.cs)</code> | - |
+<code>[RefundPaymentOperationRequest](src/Square/Requests/Refunds/RefundPaymentOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18197,9 +18317,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RefundPaymentResponse](Models/RefundPaymentResponse.cs)</code>
+**OnSuccess**: <code>[RefundPaymentResponse](src/Square/Models/RefundPaymentResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18211,10 +18331,10 @@ catch (SdkException<RawError> ex)
 
 ## Sites
 
-> Source: [Sites](Api/Sites.cs)
+> Source: [Sites](src/Square/Api/Sites.cs)
 
 <details>
-<summary><code>Task&lt;ListSitesResponse&gt; ListSites(RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListSitesResponse&gt; ListSites(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18243,7 +18363,7 @@ try
     var response = await client.Sites.ListSites();
     // TODO: Handle 'response' of type ListSitesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18257,9 +18377,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListSitesResponse](Models/ListSitesResponse.cs)</code>
+**OnSuccess**: <code>[ListSitesResponse](src/Square/Models/ListSitesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18271,10 +18391,10 @@ catch (SdkException<RawError> ex)
 
 ## Snippets
 
-> Source: [Snippets](Api/Snippets.cs)
+> Source: [Snippets](src/Square/Api/Snippets.cs)
 
 <details>
-<summary><code>Task&lt;DeleteSnippetResponse&gt; DeleteSnippet(string siteId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteSnippetResponse&gt; DeleteSnippet(DeleteSnippetRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18302,10 +18422,10 @@ __Note:__ Square Online APIs are publicly available as part of an early access p
 ```csharp
 try
 {
-    var response = await client.Snippets.DeleteSnippet(siteId);
+    var response = await client.Snippets.DeleteSnippet(new DeleteSnippetRequest { SiteId = "some example string" });
     // TODO: Handle 'response' of type DeleteSnippetResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18314,14 +18434,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>siteId</code> | <code>string</code> | The ID of the site that contains the snippet. |
+<code>[DeleteSnippetRequest](src/Square/Requests/Snippets/DeleteSnippetRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18331,9 +18449,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteSnippetResponse](Models/DeleteSnippetResponse.cs)</code>
+**OnSuccess**: <code>[DeleteSnippetResponse](src/Square/Models/DeleteSnippetResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18344,7 +18462,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveSnippetResponse&gt; RetrieveSnippet(string siteId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveSnippetResponse&gt; RetrieveSnippet(RetrieveSnippetRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18372,10 +18490,10 @@ __Note:__ Square Online APIs are publicly available as part of an early access p
 ```csharp
 try
 {
-    var response = await client.Snippets.RetrieveSnippet(siteId);
+    var response = await client.Snippets.RetrieveSnippet(new RetrieveSnippetRequest { SiteId = "some example string" });
     // TODO: Handle 'response' of type RetrieveSnippetResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18384,14 +18502,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>siteId</code> | <code>string</code> | The ID of the site that contains the snippet. |
+<code>[RetrieveSnippetRequest](src/Square/Requests/Snippets/RetrieveSnippetRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18401,9 +18517,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveSnippetResponse](Models/RetrieveSnippetResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveSnippetResponse](src/Square/Models/RetrieveSnippetResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18414,7 +18530,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpsertSnippetResponse&gt; UpsertSnippet(string siteId, UpsertSnippetRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpsertSnippetResponse&gt; UpsertSnippet(UpsertSnippetOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18443,10 +18559,14 @@ __Note:__ Square Online APIs are publicly available as part of an early access p
 ```csharp
 try
 {
-    var response = await client.Snippets.UpsertSnippet(siteId, body);
+    var response = await client.Snippets.UpsertSnippet(new UpsertSnippetOperationRequest
+    {
+        SiteId = "some example string",
+        Body = new UpsertSnippetRequest { Snippet = new Snippet { Content = "some example string" } },
+    });
     // TODO: Handle 'response' of type UpsertSnippetResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18455,15 +18575,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>siteId</code> | <code>string</code> | The ID of the site where you want to add or update the snippet. |
-| <code>body</code> | <code>[UpsertSnippetRequest](Models/UpsertSnippetRequest.cs)</code> | - |
+<code>[UpsertSnippetOperationRequest](src/Square/Requests/Snippets/UpsertSnippetOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18473,9 +18590,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpsertSnippetResponse](Models/UpsertSnippetResponse.cs)</code>
+**OnSuccess**: <code>[UpsertSnippetResponse](src/Square/Models/UpsertSnippetResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18487,10 +18604,10 @@ catch (SdkException<RawError> ex)
 
 ## Subscriptions
 
-> Source: [Subscriptions](Api/Subscriptions.cs)
+> Source: [Subscriptions](src/Square/Api/Subscriptions.cs)
 
 <details>
-<summary><code>Task&lt;BulkSwapPlanResponse&gt; BulkSwapPlan(BulkSwapPlanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkSwapPlanResponse&gt; BulkSwapPlan(BulkSwapPlanOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18514,10 +18631,18 @@ variation. For more information, see [Swap Subscription Plan Variations](https:/
 ```csharp
 try
 {
-    var response = await client.Subscriptions.BulkSwapPlan(body);
+    var response = await client.Subscriptions.BulkSwapPlan(new BulkSwapPlanOperationRequest
+    {
+        Body = new BulkSwapPlanRequest
+        {
+            NewPlanVariationId = "some example string",
+            OldPlanVariationId = "some example string",
+            LocationId = "some example string",
+        },
+    });
     // TODO: Handle 'response' of type BulkSwapPlanResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18526,14 +18651,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkSwapPlanRequest](Models/BulkSwapPlanRequest.cs)</code> | - |
+<code>[BulkSwapPlanOperationRequest](src/Square/Requests/Subscriptions/BulkSwapPlanOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18543,9 +18666,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkSwapPlanResponse](Models/BulkSwapPlanResponse.cs)</code>
+**OnSuccess**: <code>[BulkSwapPlanResponse](src/Square/Models/BulkSwapPlanResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18556,7 +18679,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CancelSubscriptionResponse&gt; CancelSubscription(string subscriptionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelSubscriptionResponse&gt; CancelSubscription(CancelSubscriptionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18581,10 +18704,13 @@ the subscription status changes from ACTIVE to CANCELED.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.CancelSubscription(subscriptionId);
+    var response = await client.Subscriptions.CancelSubscription(new CancelSubscriptionRequest
+    {
+        SubscriptionId = "some example string",
+    });
     // TODO: Handle 'response' of type CancelSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18593,14 +18719,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription to cancel. |
+<code>[CancelSubscriptionRequest](src/Square/Requests/Subscriptions/CancelSubscriptionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18610,9 +18734,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelSubscriptionResponse](Models/CancelSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[CancelSubscriptionResponse](src/Square/Models/CancelSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18623,7 +18747,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ChangeBillingAnchorDateResponse&gt; ChangeBillingAnchorDate(string subscriptionId, ChangeBillingAnchorDateRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ChangeBillingAnchorDateResponse&gt; ChangeBillingAnchorDate(ChangeBillingAnchorDateOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18647,10 +18771,14 @@ for a subscription.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.ChangeBillingAnchorDate(subscriptionId, body);
+    var response = await client.Subscriptions.ChangeBillingAnchorDate(new ChangeBillingAnchorDateOperationRequest
+    {
+        SubscriptionId = "some example string",
+        Body = new ChangeBillingAnchorDateRequest(),
+    });
     // TODO: Handle 'response' of type ChangeBillingAnchorDateResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18659,15 +18787,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription to update the billing anchor date. |
-| <code>body</code> | <code>[ChangeBillingAnchorDateRequest](Models/ChangeBillingAnchorDateRequest.cs)</code> | - |
+<code>[ChangeBillingAnchorDateOperationRequest](src/Square/Requests/Subscriptions/ChangeBillingAnchorDateOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18677,9 +18802,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ChangeBillingAnchorDateResponse](Models/ChangeBillingAnchorDateResponse.cs)</code>
+**OnSuccess**: <code>[ChangeBillingAnchorDateResponse](src/Square/Models/ChangeBillingAnchorDateResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18690,7 +18815,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateSubscriptionResponse&gt; CreateSubscription(CreateSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateSubscriptionResponse&gt; CreateSubscription(CreateSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18720,10 +18845,13 @@ For more information, see [Create a subscription](https://developer.squareup.com
 ```csharp
 try
 {
-    var response = await client.Subscriptions.CreateSubscription(body);
+    var response = await client.Subscriptions.CreateSubscription(new CreateSubscriptionOperationRequest
+    {
+        Body = new CreateSubscriptionRequest { LocationId = "some example string", CustomerId = "some example string" },
+    });
     // TODO: Handle 'response' of type CreateSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18732,14 +18860,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateSubscriptionRequest](Models/CreateSubscriptionRequest.cs)</code> | - |
+<code>[CreateSubscriptionOperationRequest](src/Square/Requests/Subscriptions/CreateSubscriptionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18749,9 +18875,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateSubscriptionResponse](Models/CreateSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[CreateSubscriptionResponse](src/Square/Models/CreateSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18762,7 +18888,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteSubscriptionActionResponse&gt; DeleteSubscriptionAction(string subscriptionId, string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteSubscriptionActionResponse&gt; DeleteSubscriptionAction(DeleteSubscriptionActionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18785,10 +18911,14 @@ Deletes a scheduled action for a subscription.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.DeleteSubscriptionAction(subscriptionId, actionId);
+    var response = await client.Subscriptions.DeleteSubscriptionAction(new DeleteSubscriptionActionRequest
+    {
+        SubscriptionId = "some example string",
+        ActionId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteSubscriptionActionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18797,15 +18927,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription the targeted action is to act upon. |
-| <code>actionId</code> | <code>string</code> | The ID of the targeted action to be deleted. |
+<code>[DeleteSubscriptionActionRequest](src/Square/Requests/Subscriptions/DeleteSubscriptionActionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18815,9 +18942,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteSubscriptionActionResponse](Models/DeleteSubscriptionActionResponse.cs)</code>
+**OnSuccess**: <code>[DeleteSubscriptionActionResponse](src/Square/Models/DeleteSubscriptionActionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18828,7 +18955,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListSubscriptionEventsResponse&gt; ListSubscriptionEvents(string subscriptionId, string? cursor, int? limit, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListSubscriptionEventsResponse&gt; ListSubscriptionEvents(ListSubscriptionEventsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18851,10 +18978,13 @@ Lists all [events](https://developer.squareup.com/docs/subscriptions-api/actions
 ```csharp
 try
 {
-    var response = await client.Subscriptions.ListSubscriptionEvents(subscriptionId, cursor, limit);
+    var response = await client.Subscriptions.ListSubscriptionEvents(new ListSubscriptionEventsRequest
+    {
+        SubscriptionId = "some example string",
+    });
     // TODO: Handle 'response' of type ListSubscriptionEventsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18863,16 +18993,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription to retrieve the events for. |
-| <code>cursor</code> | <code>string?</code> | When the total number of resulting subscription events exceeds the limit of a paged response, <br>specify the cursor returned from a preceding response here to fetch the next set of results.<br>If the cursor is unset, the response contains the last page of the results.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>limit</code> | <code>int?</code> | The upper limit on the number of subscription events to return<br>in a paged response. |
+<code>[ListSubscriptionEventsRequest](src/Square/Requests/Subscriptions/ListSubscriptionEventsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18882,9 +19008,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListSubscriptionEventsResponse](Models/ListSubscriptionEventsResponse.cs)</code>
+**OnSuccess**: <code>[ListSubscriptionEventsResponse](src/Square/Models/ListSubscriptionEventsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18895,7 +19021,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;PauseSubscriptionResponse&gt; PauseSubscription(string subscriptionId, PauseSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;PauseSubscriptionResponse&gt; PauseSubscription(PauseSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18918,10 +19044,14 @@ Schedules a `PAUSE` action to pause an active subscription.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.PauseSubscription(subscriptionId, body);
+    var response = await client.Subscriptions.PauseSubscription(new PauseSubscriptionOperationRequest
+    {
+        SubscriptionId = "some example string",
+        Body = new PauseSubscriptionRequest(),
+    });
     // TODO: Handle 'response' of type PauseSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18930,15 +19060,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription to pause. |
-| <code>body</code> | <code>[PauseSubscriptionRequest](Models/PauseSubscriptionRequest.cs)</code> | - |
+<code>[PauseSubscriptionOperationRequest](src/Square/Requests/Subscriptions/PauseSubscriptionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -18948,9 +19075,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[PauseSubscriptionResponse](Models/PauseSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[PauseSubscriptionResponse](src/Square/Models/PauseSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -18961,7 +19088,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ResumeSubscriptionResponse&gt; ResumeSubscription(string subscriptionId, ResumeSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ResumeSubscriptionResponse&gt; ResumeSubscription(ResumeSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -18984,10 +19111,14 @@ Schedules a `RESUME` action to resume a paused or a deactivated subscription.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.ResumeSubscription(subscriptionId, body);
+    var response = await client.Subscriptions.ResumeSubscription(new ResumeSubscriptionOperationRequest
+    {
+        SubscriptionId = "some example string",
+        Body = new ResumeSubscriptionRequest(),
+    });
     // TODO: Handle 'response' of type ResumeSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -18996,15 +19127,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription to resume. |
-| <code>body</code> | <code>[ResumeSubscriptionRequest](Models/ResumeSubscriptionRequest.cs)</code> | - |
+<code>[ResumeSubscriptionOperationRequest](src/Square/Requests/Subscriptions/ResumeSubscriptionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19014,9 +19142,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ResumeSubscriptionResponse](Models/ResumeSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[ResumeSubscriptionResponse](src/Square/Models/ResumeSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19027,7 +19155,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveSubscriptionResponse&gt; RetrieveSubscription(string subscriptionId, string? include, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveSubscriptionResponse&gt; RetrieveSubscription(RetrieveSubscriptionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19050,10 +19178,13 @@ Retrieves a specific subscription.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.RetrieveSubscription(subscriptionId, include);
+    var response = await client.Subscriptions.RetrieveSubscription(new RetrieveSubscriptionRequest
+    {
+        SubscriptionId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19062,15 +19193,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription to retrieve. |
-| <code>include</code> | <code>string?</code> | A query parameter to specify related information to be included in the response. <br><br>The supported query parameter values are: <br><br>- `actions`: to include scheduled actions on the targeted subscription. |
+<code>[RetrieveSubscriptionRequest](src/Square/Requests/Subscriptions/RetrieveSubscriptionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19080,9 +19208,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveSubscriptionResponse](Models/RetrieveSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveSubscriptionResponse](src/Square/Models/RetrieveSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19093,7 +19221,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchSubscriptionsResponse&gt; SearchSubscriptions(SearchSubscriptionsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchSubscriptionsResponse&gt; SearchSubscriptions(SearchSubscriptionsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19129,10 +19257,13 @@ customer by subscription creation date.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.SearchSubscriptions(body);
+    var response = await client.Subscriptions.SearchSubscriptions(new SearchSubscriptionsOperationRequest
+    {
+        Body = new SearchSubscriptionsRequest(),
+    });
     // TODO: Handle 'response' of type SearchSubscriptionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19141,14 +19272,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchSubscriptionsRequest](Models/SearchSubscriptionsRequest.cs)</code> | - |
+<code>[SearchSubscriptionsOperationRequest](src/Square/Requests/Subscriptions/SearchSubscriptionsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19158,9 +19287,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchSubscriptionsResponse](Models/SearchSubscriptionsResponse.cs)</code>
+**OnSuccess**: <code>[SearchSubscriptionsResponse](src/Square/Models/SearchSubscriptionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19171,7 +19300,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SwapPlanResponse&gt; SwapPlan(string subscriptionId, SwapPlanRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SwapPlanResponse&gt; SwapPlan(SwapPlanOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19195,10 +19324,14 @@ For more information, see [Swap Subscription Plan Variations](https://developer.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.SwapPlan(subscriptionId, body);
+    var response = await client.Subscriptions.SwapPlan(new SwapPlanOperationRequest
+    {
+        SubscriptionId = "some example string",
+        Body = new SwapPlanRequest(),
+    });
     // TODO: Handle 'response' of type SwapPlanResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19207,15 +19340,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription to swap the subscription plan for. |
-| <code>body</code> | <code>[SwapPlanRequest](Models/SwapPlanRequest.cs)</code> | - |
+<code>[SwapPlanOperationRequest](src/Square/Requests/Subscriptions/SwapPlanOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19225,9 +19355,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SwapPlanResponse](Models/SwapPlanResponse.cs)</code>
+**OnSuccess**: <code>[SwapPlanResponse](src/Square/Models/SwapPlanResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19238,7 +19368,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateSubscriptionResponse&gt; UpdateSubscription(string subscriptionId, UpdateSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateSubscriptionResponse&gt; UpdateSubscription(UpdateSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19262,10 +19392,14 @@ To clear a field, set its value to `null`.
 ```csharp
 try
 {
-    var response = await client.Subscriptions.UpdateSubscription(subscriptionId, body);
+    var response = await client.Subscriptions.UpdateSubscription(new UpdateSubscriptionOperationRequest
+    {
+        SubscriptionId = "some example string",
+        Body = new UpdateSubscriptionRequest(),
+    });
     // TODO: Handle 'response' of type UpdateSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19274,15 +19408,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | The ID of the subscription to update. |
-| <code>body</code> | <code>[UpdateSubscriptionRequest](Models/UpdateSubscriptionRequest.cs)</code> | - |
+<code>[UpdateSubscriptionOperationRequest](src/Square/Requests/Subscriptions/UpdateSubscriptionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19292,9 +19423,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateSubscriptionResponse](Models/UpdateSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[UpdateSubscriptionResponse](src/Square/Models/UpdateSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19306,10 +19437,10 @@ catch (SdkException<RawError> ex)
 
 ## Team
 
-> Source: [Team](Api/Team.cs)
+> Source: [Team](src/Square/Api/Team.cs)
 
 <details>
-<summary><code>Task&lt;BulkCreateTeamMembersResponse&gt; BulkCreateTeamMembers(BulkCreateTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkCreateTeamMembersResponse&gt; BulkCreateTeamMembers(BulkCreateTeamMembersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19337,10 +19468,16 @@ Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/t
 ```csharp
 try
 {
-    var response = await client.Team.BulkCreateTeamMembers(body);
+    var response = await client.Team.BulkCreateTeamMembers(new BulkCreateTeamMembersOperationRequest
+    {
+        Body = new BulkCreateTeamMembersRequest
+        {
+            TeamMembers = new Dictionary<string, CreateTeamMemberRequest> { ["key"] = new CreateTeamMemberRequest() },
+        },
+    });
     // TODO: Handle 'response' of type BulkCreateTeamMembersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19349,14 +19486,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkCreateTeamMembersRequest](Models/BulkCreateTeamMembersRequest.cs)</code> | - |
+<code>[BulkCreateTeamMembersOperationRequest](src/Square/Requests/Team/BulkCreateTeamMembersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19366,9 +19501,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkCreateTeamMembersResponse](Models/BulkCreateTeamMembersResponse.cs)</code>
+**OnSuccess**: <code>[BulkCreateTeamMembersResponse](src/Square/Models/BulkCreateTeamMembersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19379,7 +19514,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkUpdateTeamMembersResponse&gt; BulkUpdateTeamMembers(BulkUpdateTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkUpdateTeamMembersResponse&gt; BulkUpdateTeamMembers(BulkUpdateTeamMembersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19406,10 +19541,16 @@ Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/t
 ```csharp
 try
 {
-    var response = await client.Team.BulkUpdateTeamMembers(body);
+    var response = await client.Team.BulkUpdateTeamMembers(new BulkUpdateTeamMembersOperationRequest
+    {
+        Body = new BulkUpdateTeamMembersRequest
+        {
+            TeamMembers = new Dictionary<string, UpdateTeamMemberRequest> { ["key"] = new UpdateTeamMemberRequest() },
+        },
+    });
     // TODO: Handle 'response' of type BulkUpdateTeamMembersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19418,14 +19559,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkUpdateTeamMembersRequest](Models/BulkUpdateTeamMembersRequest.cs)</code> | - |
+<code>[BulkUpdateTeamMembersOperationRequest](src/Square/Requests/Team/BulkUpdateTeamMembersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19435,9 +19574,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkUpdateTeamMembersResponse](Models/BulkUpdateTeamMembersResponse.cs)</code>
+**OnSuccess**: <code>[BulkUpdateTeamMembersResponse](src/Square/Models/BulkUpdateTeamMembersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19448,7 +19587,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateJobResponse&gt; CreateJob(CreateJobRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateJobResponse&gt; CreateJob(CreateJobOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19472,10 +19611,13 @@ compensation is defined in a [job assignment](entity:JobAssignment) in a team me
 ```csharp
 try
 {
-    var response = await client.Team.CreateJob(body);
+    var response = await client.Team.CreateJob(new CreateJobOperationRequest
+    {
+        Body = new CreateJobRequest { Job = new Job(), IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type CreateJobResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19484,14 +19626,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateJobRequest](Models/CreateJobRequest.cs)</code> | - |
+<code>[CreateJobOperationRequest](src/Square/Requests/Team/CreateJobOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19501,9 +19641,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateJobResponse](Models/CreateJobResponse.cs)</code>
+**OnSuccess**: <code>[CreateJobResponse](src/Square/Models/CreateJobResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19514,7 +19654,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateTeamMemberResponse&gt; CreateTeamMember(CreateTeamMemberRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateTeamMemberResponse&gt; CreateTeamMember(CreateTeamMemberOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19542,10 +19682,13 @@ Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/t
 ```csharp
 try
 {
-    var response = await client.Team.CreateTeamMember(body);
+    var response = await client.Team.CreateTeamMember(new CreateTeamMemberOperationRequest
+    {
+        Body = new CreateTeamMemberRequest(),
+    });
     // TODO: Handle 'response' of type CreateTeamMemberResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19554,14 +19697,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateTeamMemberRequest](Models/CreateTeamMemberRequest.cs)</code> | - |
+<code>[CreateTeamMemberOperationRequest](src/Square/Requests/Team/CreateTeamMemberOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19571,9 +19712,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateTeamMemberResponse](Models/CreateTeamMemberResponse.cs)</code>
+**OnSuccess**: <code>[CreateTeamMemberResponse](src/Square/Models/CreateTeamMemberResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19584,7 +19725,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListJobsResponse&gt; ListJobs(string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListJobsResponse&gt; ListJobs(ListJobsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19607,10 +19748,10 @@ Lists jobs in a seller account. Results are sorted by title in ascending order.
 ```csharp
 try
 {
-    var response = await client.Team.ListJobs(cursor);
+    var response = await client.Team.ListJobs(new ListJobsRequest());
     // TODO: Handle 'response' of type ListJobsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19619,14 +19760,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | The pagination cursor returned by the previous call to this endpoint. Provide this<br>cursor to retrieve the next page of results for your original request. For more information,<br>see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
+<code>[ListJobsRequest](src/Square/Requests/Team/ListJobsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19636,9 +19775,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListJobsResponse](Models/ListJobsResponse.cs)</code>
+**OnSuccess**: <code>[ListJobsResponse](src/Square/Models/ListJobsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19649,7 +19788,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveJobResponse&gt; RetrieveJob(string jobId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveJobResponse&gt; RetrieveJob(RetrieveJobRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19672,10 +19811,10 @@ Retrieves a specified job.
 ```csharp
 try
 {
-    var response = await client.Team.RetrieveJob(jobId);
+    var response = await client.Team.RetrieveJob(new RetrieveJobRequest { JobId = "some example string" });
     // TODO: Handle 'response' of type RetrieveJobResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19684,14 +19823,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>jobId</code> | <code>string</code> | The ID of the job to retrieve. |
+<code>[RetrieveJobRequest](src/Square/Requests/Team/RetrieveJobRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19701,9 +19838,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveJobResponse](Models/RetrieveJobResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveJobResponse](src/Square/Models/RetrieveJobResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19714,7 +19851,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveTeamMemberResponse&gt; RetrieveTeamMember(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveTeamMemberResponse&gt; RetrieveTeamMember(RetrieveTeamMemberRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19738,10 +19875,13 @@ Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/t
 ```csharp
 try
 {
-    var response = await client.Team.RetrieveTeamMember(teamMemberId);
+    var response = await client.Team.RetrieveTeamMember(new RetrieveTeamMemberRequest
+    {
+        TeamMemberId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveTeamMemberResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19750,14 +19890,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>teamMemberId</code> | <code>string</code> | The ID of the team member to retrieve. |
+<code>[RetrieveTeamMemberRequest](src/Square/Requests/Team/RetrieveTeamMemberRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19767,9 +19905,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveTeamMemberResponse](Models/RetrieveTeamMemberResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveTeamMemberResponse](src/Square/Models/RetrieveTeamMemberResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19780,7 +19918,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveWageSettingResponse&gt; RetrieveWageSetting(string teamMemberId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveWageSettingResponse&gt; RetrieveWageSetting(RetrieveWageSettingRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19808,10 +19946,13 @@ to get this information directly from the `TeamMember.wage_setting` field.
 ```csharp
 try
 {
-    var response = await client.Team.RetrieveWageSetting(teamMemberId);
+    var response = await client.Team.RetrieveWageSetting(new RetrieveWageSettingRequest
+    {
+        TeamMemberId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveWageSettingResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19820,14 +19961,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>teamMemberId</code> | <code>string</code> | The ID of the team member for which to retrieve the wage setting. |
+<code>[RetrieveWageSettingRequest](src/Square/Requests/Team/RetrieveWageSettingRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19837,9 +19976,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveWageSettingResponse](Models/RetrieveWageSettingResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveWageSettingResponse](src/Square/Models/RetrieveWageSettingResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19850,7 +19989,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchTeamMembersResponse&gt; SearchTeamMembers(SearchTeamMembersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchTeamMembersResponse&gt; SearchTeamMembers(SearchTeamMembersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19875,10 +20014,13 @@ the team member is the Square account owner.
 ```csharp
 try
 {
-    var response = await client.Team.SearchTeamMembers(body);
+    var response = await client.Team.SearchTeamMembers(new SearchTeamMembersOperationRequest
+    {
+        Body = new SearchTeamMembersRequest(),
+    });
     // TODO: Handle 'response' of type SearchTeamMembersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19887,14 +20029,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchTeamMembersRequest](Models/SearchTeamMembersRequest.cs)</code> | - |
+<code>[SearchTeamMembersOperationRequest](src/Square/Requests/Team/SearchTeamMembersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19904,9 +20044,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchTeamMembersResponse](Models/SearchTeamMembersResponse.cs)</code>
+**OnSuccess**: <code>[SearchTeamMembersResponse](src/Square/Models/SearchTeamMembersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19917,7 +20057,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateJobResponse&gt; UpdateJob(string jobId, UpdateJobRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateJobResponse&gt; UpdateJob(UpdateJobOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -19942,10 +20082,14 @@ tip eligibility propagate to all `TeamMemberWage` objects that reference the job
 ```csharp
 try
 {
-    var response = await client.Team.UpdateJob(jobId, body);
+    var response = await client.Team.UpdateJob(new UpdateJobOperationRequest
+    {
+        JobId = "some example string",
+        Body = new UpdateJobRequest { Job = new Job() },
+    });
     // TODO: Handle 'response' of type UpdateJobResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -19954,15 +20098,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>jobId</code> | <code>string</code> | The ID of the job to update. |
-| <code>body</code> | <code>[UpdateJobRequest](Models/UpdateJobRequest.cs)</code> | - |
+<code>[UpdateJobOperationRequest](src/Square/Requests/Team/UpdateJobOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -19972,9 +20113,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateJobResponse](Models/UpdateJobResponse.cs)</code>
+**OnSuccess**: <code>[UpdateJobResponse](src/Square/Models/UpdateJobResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -19985,7 +20126,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateTeamMemberResponse&gt; UpdateTeamMember(string teamMemberId, UpdateTeamMemberRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateTeamMemberResponse&gt; UpdateTeamMember(UpdateTeamMemberOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20009,10 +20150,14 @@ Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/t
 ```csharp
 try
 {
-    var response = await client.Team.UpdateTeamMember(teamMemberId, body);
+    var response = await client.Team.UpdateTeamMember(new UpdateTeamMemberOperationRequest
+    {
+        TeamMemberId = "some example string",
+        Body = new UpdateTeamMemberRequest(),
+    });
     // TODO: Handle 'response' of type UpdateTeamMemberResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20021,15 +20166,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>teamMemberId</code> | <code>string</code> | The ID of the team member to update. |
-| <code>body</code> | <code>[UpdateTeamMemberRequest](Models/UpdateTeamMemberRequest.cs)</code> | - |
+<code>[UpdateTeamMemberOperationRequest](src/Square/Requests/Team/UpdateTeamMemberOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20039,9 +20181,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateTeamMemberResponse](Models/UpdateTeamMemberResponse.cs)</code>
+**OnSuccess**: <code>[UpdateTeamMemberResponse](src/Square/Models/UpdateTeamMemberResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20052,7 +20194,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateWageSettingResponse&gt; UpdateWageSetting(string teamMemberId, UpdateWageSettingRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateWageSettingResponse&gt; UpdateWageSetting(UpdateWageSettingOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20082,10 +20224,14 @@ to manage the `TeamMember.wage_setting` field directly.
 ```csharp
 try
 {
-    var response = await client.Team.UpdateWageSetting(teamMemberId, body);
+    var response = await client.Team.UpdateWageSetting(new UpdateWageSettingOperationRequest
+    {
+        TeamMemberId = "some example string",
+        Body = new UpdateWageSettingRequest { WageSetting = new WageSetting() },
+    });
     // TODO: Handle 'response' of type UpdateWageSettingResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20094,15 +20240,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>teamMemberId</code> | <code>string</code> | The ID of the team member for which to update the `WageSetting` object. |
-| <code>body</code> | <code>[UpdateWageSettingRequest](Models/UpdateWageSettingRequest.cs)</code> | - |
+<code>[UpdateWageSettingOperationRequest](src/Square/Requests/Team/UpdateWageSettingOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20112,9 +20255,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateWageSettingResponse](Models/UpdateWageSettingResponse.cs)</code>
+**OnSuccess**: <code>[UpdateWageSettingResponse](src/Square/Models/UpdateWageSettingResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20126,10 +20269,10 @@ catch (SdkException<RawError> ex)
 
 ## Terminal
 
-> Source: [Terminal](Api/Terminal.cs)
+> Source: [Terminal](src/Square/Api/Terminal.cs)
 
 <details>
-<summary><code>Task&lt;CancelTerminalActionResponse&gt; CancelTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelTerminalActionResponse&gt; CancelTerminalAction(CancelTerminalActionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20152,10 +20295,13 @@ Cancels a Terminal action request if the status of the request permits it.
 ```csharp
 try
 {
-    var response = await client.Terminal.CancelTerminalAction(actionId);
+    var response = await client.Terminal.CancelTerminalAction(new CancelTerminalActionRequest
+    {
+        ActionId = "some example string",
+    });
     // TODO: Handle 'response' of type CancelTerminalActionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20164,14 +20310,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>actionId</code> | <code>string</code> | Unique ID for the desired `TerminalAction`. |
+<code>[CancelTerminalActionRequest](src/Square/Requests/Terminal/CancelTerminalActionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20181,9 +20325,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelTerminalActionResponse](Models/CancelTerminalActionResponse.cs)</code>
+**OnSuccess**: <code>[CancelTerminalActionResponse](src/Square/Models/CancelTerminalActionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20194,7 +20338,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CancelTerminalCheckoutResponse&gt; CancelTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelTerminalCheckoutResponse&gt; CancelTerminalCheckout(CancelTerminalCheckoutRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20217,10 +20361,13 @@ Cancels a Terminal checkout request if the status of the request permits it.
 ```csharp
 try
 {
-    var response = await client.Terminal.CancelTerminalCheckout(checkoutId);
+    var response = await client.Terminal.CancelTerminalCheckout(new CancelTerminalCheckoutRequest
+    {
+        CheckoutId = "some example string",
+    });
     // TODO: Handle 'response' of type CancelTerminalCheckoutResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20229,14 +20376,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>checkoutId</code> | <code>string</code> | The unique ID for the desired `TerminalCheckout`. |
+<code>[CancelTerminalCheckoutRequest](src/Square/Requests/Terminal/CancelTerminalCheckoutRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20246,9 +20391,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelTerminalCheckoutResponse](Models/CancelTerminalCheckoutResponse.cs)</code>
+**OnSuccess**: <code>[CancelTerminalCheckoutResponse](src/Square/Models/CancelTerminalCheckoutResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20259,7 +20404,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CancelTerminalRefundResponse&gt; CancelTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelTerminalRefundResponse&gt; CancelTerminalRefund(CancelTerminalRefundRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20282,10 +20427,13 @@ Cancels an Interac Terminal refund request by refund request ID if the status of
 ```csharp
 try
 {
-    var response = await client.Terminal.CancelTerminalRefund(terminalRefundId);
+    var response = await client.Terminal.CancelTerminalRefund(new CancelTerminalRefundRequest
+    {
+        TerminalRefundId = "some example string",
+    });
     // TODO: Handle 'response' of type CancelTerminalRefundResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20294,14 +20442,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>terminalRefundId</code> | <code>string</code> | The unique ID for the desired `TerminalRefund`. |
+<code>[CancelTerminalRefundRequest](src/Square/Requests/Terminal/CancelTerminalRefundRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20311,9 +20457,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelTerminalRefundResponse](Models/CancelTerminalRefundResponse.cs)</code>
+**OnSuccess**: <code>[CancelTerminalRefundResponse](src/Square/Models/CancelTerminalRefundResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20324,7 +20470,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateTerminalActionResponse&gt; CreateTerminalAction(CreateTerminalActionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateTerminalActionResponse&gt; CreateTerminalAction(CreateTerminalActionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20347,10 +20493,17 @@ Creates a Terminal action request and sends it to the specified device.
 ```csharp
 try
 {
-    var response = await client.Terminal.CreateTerminalAction(body);
+    var response = await client.Terminal.CreateTerminalAction(new CreateTerminalActionOperationRequest
+    {
+        Body = new CreateTerminalActionRequest
+        {
+            IdempotencyKey = "some example string",
+            Action = new TerminalAction(),
+        },
+    });
     // TODO: Handle 'response' of type CreateTerminalActionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20359,14 +20512,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateTerminalActionRequest](Models/CreateTerminalActionRequest.cs)</code> | - |
+<code>[CreateTerminalActionOperationRequest](src/Square/Requests/Terminal/CreateTerminalActionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20376,9 +20527,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateTerminalActionResponse](Models/CreateTerminalActionResponse.cs)</code>
+**OnSuccess**: <code>[CreateTerminalActionResponse](src/Square/Models/CreateTerminalActionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20389,7 +20540,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateTerminalCheckoutResponse&gt; CreateTerminalCheckout(CreateTerminalCheckoutRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateTerminalCheckoutResponse&gt; CreateTerminalCheckout(CreateTerminalCheckoutOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20413,10 +20564,21 @@ for the requested amount.
 ```csharp
 try
 {
-    var response = await client.Terminal.CreateTerminalCheckout(body);
+    var response = await client.Terminal.CreateTerminalCheckout(new CreateTerminalCheckoutOperationRequest
+    {
+        Body = new CreateTerminalCheckoutRequest
+        {
+            IdempotencyKey = "some example string",
+            Checkout = new TerminalCheckout
+            {
+                AmountMoney = new Money(),
+                DeviceOptions = new DeviceCheckoutOptions { DeviceId = "some example string" },
+            },
+        },
+    });
     // TODO: Handle 'response' of type CreateTerminalCheckoutResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20425,14 +20587,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateTerminalCheckoutRequest](Models/CreateTerminalCheckoutRequest.cs)</code> | - |
+<code>[CreateTerminalCheckoutOperationRequest](src/Square/Requests/Terminal/CreateTerminalCheckoutOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20442,9 +20602,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateTerminalCheckoutResponse](Models/CreateTerminalCheckoutResponse.cs)</code>
+**OnSuccess**: <code>[CreateTerminalCheckoutResponse](src/Square/Models/CreateTerminalCheckoutResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20455,7 +20615,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateTerminalRefundResponse&gt; CreateTerminalRefund(CreateTerminalRefundRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateTerminalRefundResponse&gt; CreateTerminalRefund(CreateTerminalRefundOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20478,10 +20638,13 @@ Creates a request to refund an Interac payment completed on a Square Terminal. R
 ```csharp
 try
 {
-    var response = await client.Terminal.CreateTerminalRefund(body);
+    var response = await client.Terminal.CreateTerminalRefund(new CreateTerminalRefundOperationRequest
+    {
+        Body = new CreateTerminalRefundRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type CreateTerminalRefundResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20490,14 +20653,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateTerminalRefundRequest](Models/CreateTerminalRefundRequest.cs)</code> | - |
+<code>[CreateTerminalRefundOperationRequest](src/Square/Requests/Terminal/CreateTerminalRefundOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20507,9 +20668,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateTerminalRefundResponse](Models/CreateTerminalRefundResponse.cs)</code>
+**OnSuccess**: <code>[CreateTerminalRefundResponse](src/Square/Models/CreateTerminalRefundResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20520,7 +20681,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DismissTerminalActionResponse&gt; DismissTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DismissTerminalActionResponse&gt; DismissTerminalAction(DismissTerminalActionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20545,10 +20706,13 @@ See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/
 ```csharp
 try
 {
-    var response = await client.Terminal.DismissTerminalAction(actionId);
+    var response = await client.Terminal.DismissTerminalAction(new DismissTerminalActionRequest
+    {
+        ActionId = "some example string",
+    });
     // TODO: Handle 'response' of type DismissTerminalActionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20557,14 +20721,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>actionId</code> | <code>string</code> | Unique ID for the `TerminalAction` associated with the action to be dismissed. |
+<code>[DismissTerminalActionRequest](src/Square/Requests/Terminal/DismissTerminalActionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20574,9 +20736,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DismissTerminalActionResponse](Models/DismissTerminalActionResponse.cs)</code>
+**OnSuccess**: <code>[DismissTerminalActionResponse](src/Square/Models/DismissTerminalActionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20587,7 +20749,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DismissTerminalCheckoutResponse&gt; DismissTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DismissTerminalCheckoutResponse&gt; DismissTerminalCheckout(DismissTerminalCheckoutRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20610,10 +20772,13 @@ Dismisses a Terminal checkout request if the status and type of the request perm
 ```csharp
 try
 {
-    var response = await client.Terminal.DismissTerminalCheckout(checkoutId);
+    var response = await client.Terminal.DismissTerminalCheckout(new DismissTerminalCheckoutRequest
+    {
+        CheckoutId = "some example string",
+    });
     // TODO: Handle 'response' of type DismissTerminalCheckoutResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20622,14 +20787,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>checkoutId</code> | <code>string</code> | Unique ID for the `TerminalCheckout` associated with the checkout to be dismissed. |
+<code>[DismissTerminalCheckoutRequest](src/Square/Requests/Terminal/DismissTerminalCheckoutRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20639,9 +20802,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DismissTerminalCheckoutResponse](Models/DismissTerminalCheckoutResponse.cs)</code>
+**OnSuccess**: <code>[DismissTerminalCheckoutResponse](src/Square/Models/DismissTerminalCheckoutResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20652,7 +20815,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DismissTerminalRefundResponse&gt; DismissTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DismissTerminalRefundResponse&gt; DismissTerminalRefund(DismissTerminalRefundRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20675,10 +20838,13 @@ Dismisses a Terminal refund request if the status and type of the request permit
 ```csharp
 try
 {
-    var response = await client.Terminal.DismissTerminalRefund(terminalRefundId);
+    var response = await client.Terminal.DismissTerminalRefund(new DismissTerminalRefundRequest
+    {
+        TerminalRefundId = "some example string",
+    });
     // TODO: Handle 'response' of type DismissTerminalRefundResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20687,14 +20853,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>terminalRefundId</code> | <code>string</code> | Unique ID for the `TerminalRefund` associated with the refund to be dismissed. |
+<code>[DismissTerminalRefundRequest](src/Square/Requests/Terminal/DismissTerminalRefundRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20704,9 +20868,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DismissTerminalRefundResponse](Models/DismissTerminalRefundResponse.cs)</code>
+**OnSuccess**: <code>[DismissTerminalRefundResponse](src/Square/Models/DismissTerminalRefundResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20717,7 +20881,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetTerminalActionResponse&gt; GetTerminalAction(string actionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetTerminalActionResponse&gt; GetTerminalAction(GetTerminalActionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20740,10 +20904,13 @@ Retrieves a Terminal action request by `action_id`. Terminal action requests are
 ```csharp
 try
 {
-    var response = await client.Terminal.GetTerminalAction(actionId);
+    var response = await client.Terminal.GetTerminalAction(new GetTerminalActionRequest
+    {
+        ActionId = "some example string",
+    });
     // TODO: Handle 'response' of type GetTerminalActionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20752,14 +20919,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>actionId</code> | <code>string</code> | Unique ID for the desired `TerminalAction`. |
+<code>[GetTerminalActionRequest](src/Square/Requests/Terminal/GetTerminalActionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20769,9 +20934,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetTerminalActionResponse](Models/GetTerminalActionResponse.cs)</code>
+**OnSuccess**: <code>[GetTerminalActionResponse](src/Square/Models/GetTerminalActionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20782,7 +20947,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetTerminalCheckoutResponse&gt; GetTerminalCheckout(string checkoutId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetTerminalCheckoutResponse&gt; GetTerminalCheckout(GetTerminalCheckoutRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20805,10 +20970,13 @@ Retrieves a Terminal checkout request by `checkout_id`. Terminal checkout reques
 ```csharp
 try
 {
-    var response = await client.Terminal.GetTerminalCheckout(checkoutId);
+    var response = await client.Terminal.GetTerminalCheckout(new GetTerminalCheckoutRequest
+    {
+        CheckoutId = "some example string",
+    });
     // TODO: Handle 'response' of type GetTerminalCheckoutResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20817,14 +20985,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>checkoutId</code> | <code>string</code> | The unique ID for the desired `TerminalCheckout`. |
+<code>[GetTerminalCheckoutRequest](src/Square/Requests/Terminal/GetTerminalCheckoutRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20834,9 +21000,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetTerminalCheckoutResponse](Models/GetTerminalCheckoutResponse.cs)</code>
+**OnSuccess**: <code>[GetTerminalCheckoutResponse](src/Square/Models/GetTerminalCheckoutResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20847,7 +21013,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;GetTerminalRefundResponse&gt; GetTerminalRefund(string terminalRefundId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;GetTerminalRefundResponse&gt; GetTerminalRefund(GetTerminalRefundRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20870,10 +21036,13 @@ Retrieves an Interac Terminal refund object by ID. Terminal refund objects are a
 ```csharp
 try
 {
-    var response = await client.Terminal.GetTerminalRefund(terminalRefundId);
+    var response = await client.Terminal.GetTerminalRefund(new GetTerminalRefundRequest
+    {
+        TerminalRefundId = "some example string",
+    });
     // TODO: Handle 'response' of type GetTerminalRefundResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20882,14 +21051,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>terminalRefundId</code> | <code>string</code> | The unique ID for the desired `TerminalRefund`. |
+<code>[GetTerminalRefundRequest](src/Square/Requests/Terminal/GetTerminalRefundRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20899,9 +21066,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[GetTerminalRefundResponse](Models/GetTerminalRefundResponse.cs)</code>
+**OnSuccess**: <code>[GetTerminalRefundResponse](src/Square/Models/GetTerminalRefundResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20912,7 +21079,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchTerminalActionsResponse&gt; SearchTerminalActions(SearchTerminalActionsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchTerminalActionsResponse&gt; SearchTerminalActions(SearchTerminalActionsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -20935,10 +21102,13 @@ Retrieves a filtered list of Terminal action requests created by the account mak
 ```csharp
 try
 {
-    var response = await client.Terminal.SearchTerminalActions(body);
+    var response = await client.Terminal.SearchTerminalActions(new SearchTerminalActionsOperationRequest
+    {
+        Body = new SearchTerminalActionsRequest(),
+    });
     // TODO: Handle 'response' of type SearchTerminalActionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -20947,14 +21117,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchTerminalActionsRequest](Models/SearchTerminalActionsRequest.cs)</code> | - |
+<code>[SearchTerminalActionsOperationRequest](src/Square/Requests/Terminal/SearchTerminalActionsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -20964,9 +21132,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchTerminalActionsResponse](Models/SearchTerminalActionsResponse.cs)</code>
+**OnSuccess**: <code>[SearchTerminalActionsResponse](src/Square/Models/SearchTerminalActionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -20977,7 +21145,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchTerminalCheckoutsResponse&gt; SearchTerminalCheckouts(SearchTerminalCheckoutsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchTerminalCheckoutsResponse&gt; SearchTerminalCheckouts(SearchTerminalCheckoutsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21000,10 +21168,13 @@ Returns a filtered list of Terminal checkout requests created by the application
 ```csharp
 try
 {
-    var response = await client.Terminal.SearchTerminalCheckouts(body);
+    var response = await client.Terminal.SearchTerminalCheckouts(new SearchTerminalCheckoutsOperationRequest
+    {
+        Body = new SearchTerminalCheckoutsRequest(),
+    });
     // TODO: Handle 'response' of type SearchTerminalCheckoutsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21012,14 +21183,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchTerminalCheckoutsRequest](Models/SearchTerminalCheckoutsRequest.cs)</code> | - |
+<code>[SearchTerminalCheckoutsOperationRequest](src/Square/Requests/Terminal/SearchTerminalCheckoutsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21029,9 +21198,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchTerminalCheckoutsResponse](Models/SearchTerminalCheckoutsResponse.cs)</code>
+**OnSuccess**: <code>[SearchTerminalCheckoutsResponse](src/Square/Models/SearchTerminalCheckoutsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21042,7 +21211,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchTerminalRefundsResponse&gt; SearchTerminalRefunds(SearchTerminalRefundsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchTerminalRefundsResponse&gt; SearchTerminalRefunds(SearchTerminalRefundsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21065,10 +21234,13 @@ Retrieves a filtered list of Interac Terminal refund requests created by the sel
 ```csharp
 try
 {
-    var response = await client.Terminal.SearchTerminalRefunds(body);
+    var response = await client.Terminal.SearchTerminalRefunds(new SearchTerminalRefundsOperationRequest
+    {
+        Body = new SearchTerminalRefundsRequest(),
+    });
     // TODO: Handle 'response' of type SearchTerminalRefundsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21077,14 +21249,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchTerminalRefundsRequest](Models/SearchTerminalRefundsRequest.cs)</code> | - |
+<code>[SearchTerminalRefundsOperationRequest](src/Square/Requests/Terminal/SearchTerminalRefundsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21094,9 +21264,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchTerminalRefundsResponse](Models/SearchTerminalRefundsResponse.cs)</code>
+**OnSuccess**: <code>[SearchTerminalRefundsResponse](src/Square/Models/SearchTerminalRefundsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21108,10 +21278,10 @@ catch (SdkException<RawError> ex)
 
 ## Transactions
 
-> Source: [Transactions](Api/Transactions.cs)
+> Source: [Transactions](src/Square/Api/Transactions.cs)
 
 <details>
-<summary><code>Task&lt;CaptureTransactionResponse&gt; CaptureTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CaptureTransactionResponse&gt; CaptureTransaction(CaptureTransactionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21139,10 +21309,14 @@ for more information.
 ```csharp
 try
 {
-    var response = await client.Transactions.CaptureTransaction(locationId, transactionId);
+    var response = await client.Transactions.CaptureTransaction(new CaptureTransactionRequest
+    {
+        LocationId = "some example string",
+        TransactionId = "some example string",
+    });
     // TODO: Handle 'response' of type CaptureTransactionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21151,15 +21325,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | - |
-| <code>transactionId</code> | <code>string</code> | - |
+<code>[CaptureTransactionRequest](src/Square/Requests/Transactions/CaptureTransactionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21169,9 +21340,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CaptureTransactionResponse](Models/CaptureTransactionResponse.cs)</code>
+**OnSuccess**: <code>[CaptureTransactionResponse](src/Square/Models/CaptureTransactionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21182,7 +21353,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListTransactionsResponse&gt; ListTransactions(string locationId, string? beginTime, string? endTime, SortOrder? sortOrder, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListTransactionsResponse&gt; ListTransactions(ListTransactionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21210,10 +21381,13 @@ Max results per [page](https://developer.squareup.com/docs/working-with-apis/pag
 ```csharp
 try
 {
-    var response = await client.Transactions.ListTransactions(locationId, beginTime, endTime, sortOrder, cursor);
+    var response = await client.Transactions.ListTransactions(new ListTransactionsRequest
+    {
+        LocationId = "some example string",
+    });
     // TODO: Handle 'response' of type ListTransactionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21222,18 +21396,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location to list transactions for. |
-| <code>beginTime</code> | <code>string?</code> | The beginning of the requested reporting period, in RFC 3339 format.<br><br>See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.<br><br>Default value: The current time minus one year. |
-| <code>endTime</code> | <code>string?</code> | The end of the requested reporting period, in RFC 3339 format.<br><br>See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.<br><br>Default value: The current time. |
-| <code>sortOrder</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | The order in which results are listed in the response (`ASC` for<br>oldest first, `DESC` for newest first).<br><br>Default value: `DESC` |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this to retrieve the next set of results for your original query.<br><br>See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information. |
+<code>[ListTransactionsRequest](src/Square/Requests/Transactions/ListTransactionsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21243,9 +21411,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListTransactionsResponse](Models/ListTransactionsResponse.cs)</code>
+**OnSuccess**: <code>[ListTransactionsResponse](src/Square/Models/ListTransactionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21256,7 +21424,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveTransactionResponse&gt; RetrieveTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveTransactionResponse&gt; RetrieveTransaction(RetrieveTransactionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21279,10 +21447,14 @@ Retrieves details for a single transaction.
 ```csharp
 try
 {
-    var response = await client.Transactions.RetrieveTransaction(locationId, transactionId);
+    var response = await client.Transactions.RetrieveTransaction(new RetrieveTransactionRequest
+    {
+        LocationId = "some example string",
+        TransactionId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveTransactionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21291,15 +21463,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the transaction's associated location. |
-| <code>transactionId</code> | <code>string</code> | The ID of the transaction to retrieve. |
+<code>[RetrieveTransactionRequest](src/Square/Requests/Transactions/RetrieveTransactionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21309,9 +21478,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveTransactionResponse](Models/RetrieveTransactionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveTransactionResponse](src/Square/Models/RetrieveTransactionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21322,7 +21491,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;VoidTransactionResponse&gt; VoidTransaction(string locationId, string transactionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;VoidTransactionResponse&gt; VoidTransaction(VoidTransactionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21350,10 +21519,14 @@ for more information.
 ```csharp
 try
 {
-    var response = await client.Transactions.VoidTransaction(locationId, transactionId);
+    var response = await client.Transactions.VoidTransaction(new VoidTransactionRequest
+    {
+        LocationId = "some example string",
+        TransactionId = "some example string",
+    });
     // TODO: Handle 'response' of type VoidTransactionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21362,15 +21535,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | - |
-| <code>transactionId</code> | <code>string</code> | - |
+<code>[VoidTransactionRequest](src/Square/Requests/Transactions/VoidTransactionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21380,9 +21550,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[VoidTransactionResponse](Models/VoidTransactionResponse.cs)</code>
+**OnSuccess**: <code>[VoidTransactionResponse](src/Square/Models/VoidTransactionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21394,10 +21564,10 @@ catch (SdkException<RawError> ex)
 
 ## TransferOrderApi
 
-> Source: [TransferOrderApi](Api/TransferOrderApi.cs)
+> Source: [TransferOrderApi](src/Square/Api/TransferOrderApi.cs)
 
 <details>
-<summary><code>Task&lt;CancelTransferOrderResponse&gt; CancelTransferOrder(string transferOrderId, CancelTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CancelTransferOrderResponse&gt; CancelTransferOrder(CancelTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21429,10 +21599,14 @@ Creates a [transfer_order.updated](webhook:transfer_order.updated) webhook event
 ```csharp
 try
 {
-    var response = await client.TransferOrderApi.CancelTransferOrder(transferOrderId, body);
+    var response = await client.TransferOrderApi.CancelTransferOrder(new CancelTransferOrderOperationRequest
+    {
+        TransferOrderId = "some example string",
+        Body = new CancelTransferOrderRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type CancelTransferOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21441,15 +21615,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>transferOrderId</code> | <code>string</code> | The ID of the transfer order to cancel. Must be in STARTED or PARTIALLY_RECEIVED status. |
-| <code>body</code> | <code>[CancelTransferOrderRequest](Models/CancelTransferOrderRequest.cs)</code> | - |
+<code>[CancelTransferOrderOperationRequest](src/Square/Requests/TransferOrderApi/CancelTransferOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21459,9 +21630,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CancelTransferOrderResponse](Models/CancelTransferOrderResponse.cs)</code>
+**OnSuccess**: <code>[CancelTransferOrderResponse](src/Square/Models/CancelTransferOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21472,7 +21643,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateTransferOrderResponse&gt; CreateTransferOrder(CreateTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateTransferOrderResponse&gt; CreateTransferOrder(CreateTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21514,10 +21685,21 @@ Creates a [transfer_order.created](webhook:transfer_order.created) webhook event
 ```csharp
 try
 {
-    var response = await client.TransferOrderApi.CreateTransferOrder(body);
+    var response = await client.TransferOrderApi.CreateTransferOrder(new CreateTransferOrderOperationRequest
+    {
+        Body = new CreateTransferOrderRequest
+        {
+            IdempotencyKey = "some example string",
+            TransferOrder = new CreateTransferOrderData
+            {
+                SourceLocationId = "some example string",
+                DestinationLocationId = "some example string",
+            },
+        },
+    });
     // TODO: Handle 'response' of type CreateTransferOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21526,14 +21708,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateTransferOrderRequest](Models/CreateTransferOrderRequest.cs)</code> | - |
+<code>[CreateTransferOrderOperationRequest](src/Square/Requests/TransferOrderApi/CreateTransferOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21543,9 +21723,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateTransferOrderResponse](Models/CreateTransferOrderResponse.cs)</code>
+**OnSuccess**: <code>[CreateTransferOrderResponse](src/Square/Models/CreateTransferOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21556,7 +21736,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteTransferOrderResponse&gt; DeleteTransferOrder(string transferOrderId, long? version, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteTransferOrderResponse&gt; DeleteTransferOrder(DeleteTransferOrderRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21583,10 +21763,13 @@ Creates a [transfer_order.deleted](webhook:transfer_order.deleted) webhook event
 ```csharp
 try
 {
-    var response = await client.TransferOrderApi.DeleteTransferOrder(transferOrderId, version);
+    var response = await client.TransferOrderApi.DeleteTransferOrder(new DeleteTransferOrderRequest
+    {
+        TransferOrderId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteTransferOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21595,15 +21778,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>transferOrderId</code> | <code>string</code> | The ID of the transfer order to delete |
-| <code>version</code> | <code>long?</code> | Version for optimistic concurrency |
+<code>[DeleteTransferOrderRequest](src/Square/Requests/TransferOrderApi/DeleteTransferOrderRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21613,9 +21793,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteTransferOrderResponse](Models/DeleteTransferOrderResponse.cs)</code>
+**OnSuccess**: <code>[DeleteTransferOrderResponse](src/Square/Models/DeleteTransferOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21626,7 +21806,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ReceiveTransferOrderResponse&gt; ReceiveTransferOrder(string transferOrderId, ReceiveTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ReceiveTransferOrderResponse&gt; ReceiveTransferOrder(ReceiveTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21664,10 +21844,18 @@ Creates a [transfer_order.updated](webhook:transfer_order.updated) webhook event
 ```csharp
 try
 {
-    var response = await client.TransferOrderApi.ReceiveTransferOrder(transferOrderId, body);
+    var response = await client.TransferOrderApi.ReceiveTransferOrder(new ReceiveTransferOrderOperationRequest
+    {
+        TransferOrderId = "some example string",
+        Body = new ReceiveTransferOrderRequest
+        {
+            IdempotencyKey = "some example string",
+            Receipt = new TransferOrderGoodsReceipt(),
+        },
+    });
     // TODO: Handle 'response' of type ReceiveTransferOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21676,15 +21864,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>transferOrderId</code> | <code>string</code> | The ID of the transfer order to receive items for |
-| <code>body</code> | <code>[ReceiveTransferOrderRequest](Models/ReceiveTransferOrderRequest.cs)</code> | - |
+<code>[ReceiveTransferOrderOperationRequest](src/Square/Requests/TransferOrderApi/ReceiveTransferOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21694,9 +21879,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ReceiveTransferOrderResponse](Models/ReceiveTransferOrderResponse.cs)</code>
+**OnSuccess**: <code>[ReceiveTransferOrderResponse](src/Square/Models/ReceiveTransferOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21707,7 +21892,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveTransferOrderResponse&gt; RetrieveTransferOrder(string transferOrderId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveTransferOrderResponse&gt; RetrieveTransferOrder(RetrieveTransferOrderRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21736,10 +21921,13 @@ order details including:
 ```csharp
 try
 {
-    var response = await client.TransferOrderApi.RetrieveTransferOrder(transferOrderId);
+    var response = await client.TransferOrderApi.RetrieveTransferOrder(new RetrieveTransferOrderRequest
+    {
+        TransferOrderId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveTransferOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21748,14 +21936,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>transferOrderId</code> | <code>string</code> | The ID of the transfer order to retrieve |
+<code>[RetrieveTransferOrderRequest](src/Square/Requests/TransferOrderApi/RetrieveTransferOrderRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21765,9 +21951,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveTransferOrderResponse](Models/RetrieveTransferOrderResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveTransferOrderResponse](src/Square/Models/RetrieveTransferOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21778,7 +21964,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchTransferOrdersResponse&gt; SearchTransferOrders(SearchTransferOrdersRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchTransferOrdersResponse&gt; SearchTransferOrders(SearchTransferOrdersOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21807,10 +21993,13 @@ Common search scenarios:
 ```csharp
 try
 {
-    var response = await client.TransferOrderApi.SearchTransferOrders(body);
+    var response = await client.TransferOrderApi.SearchTransferOrders(new SearchTransferOrdersOperationRequest
+    {
+        Body = new SearchTransferOrdersRequest(),
+    });
     // TODO: Handle 'response' of type SearchTransferOrdersResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21819,14 +22008,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchTransferOrdersRequest](Models/SearchTransferOrdersRequest.cs)</code> | - |
+<code>[SearchTransferOrdersOperationRequest](src/Square/Requests/TransferOrderApi/SearchTransferOrdersOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21836,9 +22023,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchTransferOrdersResponse](Models/SearchTransferOrdersResponse.cs)</code>
+**OnSuccess**: <code>[SearchTransferOrdersResponse](src/Square/Models/SearchTransferOrdersResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21849,7 +22036,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;StartTransferOrderResponse&gt; StartTransferOrder(string transferOrderId, StartTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;StartTransferOrderResponse&gt; StartTransferOrder(StartTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21879,10 +22066,14 @@ Creates a [transfer_order.updated](webhook:transfer_order.updated) webhook event
 ```csharp
 try
 {
-    var response = await client.TransferOrderApi.StartTransferOrder(transferOrderId, body);
+    var response = await client.TransferOrderApi.StartTransferOrder(new StartTransferOrderOperationRequest
+    {
+        TransferOrderId = "some example string",
+        Body = new StartTransferOrderRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type StartTransferOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21891,15 +22082,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>transferOrderId</code> | <code>string</code> | The ID of the transfer order to start. Must be in DRAFT status. |
-| <code>body</code> | <code>[StartTransferOrderRequest](Models/StartTransferOrderRequest.cs)</code> | - |
+<code>[StartTransferOrderOperationRequest](src/Square/Requests/TransferOrderApi/StartTransferOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21909,9 +22097,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[StartTransferOrderResponse](Models/StartTransferOrderResponse.cs)</code>
+**OnSuccess**: <code>[StartTransferOrderResponse](src/Square/Models/StartTransferOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21922,7 +22110,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateTransferOrderResponse&gt; UpdateTransferOrder(string transferOrderId, UpdateTransferOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateTransferOrderResponse&gt; UpdateTransferOrder(UpdateTransferOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -21948,10 +22136,18 @@ Creates a [transfer_order.updated](webhook:transfer_order.updated) webhook event
 ```csharp
 try
 {
-    var response = await client.TransferOrderApi.UpdateTransferOrder(transferOrderId, body);
+    var response = await client.TransferOrderApi.UpdateTransferOrder(new UpdateTransferOrderOperationRequest
+    {
+        TransferOrderId = "some example string",
+        Body = new UpdateTransferOrderRequest
+        {
+            IdempotencyKey = "some example string",
+            TransferOrder = new UpdateTransferOrderData(),
+        },
+    });
     // TODO: Handle 'response' of type UpdateTransferOrderResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -21960,15 +22156,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>transferOrderId</code> | <code>string</code> | The ID of the transfer order to update |
-| <code>body</code> | <code>[UpdateTransferOrderRequest](Models/UpdateTransferOrderRequest.cs)</code> | - |
+<code>[UpdateTransferOrderOperationRequest](src/Square/Requests/TransferOrderApi/UpdateTransferOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -21978,9 +22171,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateTransferOrderResponse](Models/UpdateTransferOrderResponse.cs)</code>
+**OnSuccess**: <code>[UpdateTransferOrderResponse](src/Square/Models/UpdateTransferOrderResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -21992,10 +22185,10 @@ catch (SdkException<RawError> ex)
 
 ## V1Transactions
 
-> Source: [V1Transactions](Api/V1Transactions.cs)
+> Source: [V1Transactions](src/Square/Api/V1Transactions.cs)
 
 <details>
-<summary><code>Task&lt;IReadOnlyList&lt;V1Order&gt;&gt; V1ListOrders(string locationId, SortOrder? order, int? limit, string? batchToken, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;IReadOnlyList&lt;V1Order&gt;&gt; V1ListOrders(V1ListOrdersRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22018,10 +22211,13 @@ Provides summary information for a merchant's online store orders.
 ```csharp
 try
 {
-    var response = await client.V1Transactions.V1ListOrders(locationId, order, limit, batchToken);
+    var response = await client.V1Transactions.V1ListOrders(new V1ListOrdersRequest
+    {
+        LocationId = "some example string",
+    });
     // TODO: Handle 'response' of type IReadOnlyList<V1Order>
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22030,17 +22226,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the location to list online store orders for. |
-| <code>order</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | The order in which payments are listed in the response. |
-| <code>limit</code> | <code>int?</code> | The maximum number of payments to return in a single response. This value cannot exceed 200. |
-| <code>batchToken</code> | <code>string?</code> | A pagination cursor to retrieve the next set of results for your<br>original query to the endpoint. |
+<code>[V1ListOrdersRequest](src/Square/Requests/V1Transactions/V1ListOrdersRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22050,9 +22241,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>IReadOnlyList&lt;[V1Order](Models/V1Order.cs)&gt;</code>
+**OnSuccess**: <code>IReadOnlyList&lt;[V1Order](src/Square/Models/V1Order.cs)&gt;</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22063,7 +22254,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;V1Order&gt; V1RetrieveOrder(string locationId, string orderId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;V1Order&gt; V1RetrieveOrder(V1RetrieveOrderRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22086,10 +22277,14 @@ Provides comprehensive information for a single online store order, including th
 ```csharp
 try
 {
-    var response = await client.V1Transactions.V1RetrieveOrder(locationId, orderId);
+    var response = await client.V1Transactions.V1RetrieveOrder(new V1RetrieveOrderRequest
+    {
+        LocationId = "some example string",
+        OrderId = "some example string",
+    });
     // TODO: Handle 'response' of type V1Order
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22098,15 +22293,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the order's associated location. |
-| <code>orderId</code> | <code>string</code> | The order's Square-issued ID. You obtain this value from Order objects returned by the List Orders endpoint |
+<code>[V1RetrieveOrderRequest](src/Square/Requests/V1Transactions/V1RetrieveOrderRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22116,9 +22308,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[V1Order](Models/V1Order.cs)</code>
+**OnSuccess**: <code>[V1Order](src/Square/Models/V1Order.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22129,7 +22321,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;V1Order&gt; V1UpdateOrder(string locationId, string orderId, V1UpdateOrderRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;V1Order&gt; V1UpdateOrder(V1UpdateOrderOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22152,10 +22344,15 @@ Updates the details of an online store order. Every update you perform on an ord
 ```csharp
 try
 {
-    var response = await client.V1Transactions.V1UpdateOrder(locationId, orderId, body);
+    var response = await client.V1Transactions.V1UpdateOrder(new V1UpdateOrderOperationRequest
+    {
+        LocationId = "some example string",
+        OrderId = "some example string",
+        Body = new V1UpdateOrderRequest { Action = V1UpdateOrderRequestAction.Complete },
+    });
     // TODO: Handle 'response' of type V1Order
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22164,16 +22361,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>locationId</code> | <code>string</code> | The ID of the order's associated location. |
-| <code>orderId</code> | <code>string</code> | The order's Square-issued ID. You obtain this value from Order objects returned by the List Orders endpoint |
-| <code>body</code> | <code>[V1UpdateOrderRequest](Models/V1UpdateOrderRequest.cs)</code> | - |
+<code>[V1UpdateOrderOperationRequest](src/Square/Requests/V1Transactions/V1UpdateOrderOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22183,9 +22376,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[V1Order](Models/V1Order.cs)</code>
+**OnSuccess**: <code>[V1Order](src/Square/Models/V1Order.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22197,10 +22390,10 @@ catch (SdkException<RawError> ex)
 
 ## Vendors
 
-> Source: [Vendors](Api/Vendors.cs)
+> Source: [Vendors](src/Square/Api/Vendors.cs)
 
 <details>
-<summary><code>Task&lt;BulkCreateVendorsResponse&gt; BulkCreateVendors(BulkCreateVendorsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkCreateVendorsResponse&gt; BulkCreateVendors(BulkCreateVendorsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22223,10 +22416,13 @@ Creates one or more [Vendor](entity:Vendor) objects to represent suppliers to a 
 ```csharp
 try
 {
-    var response = await client.Vendors.BulkCreateVendors(body);
+    var response = await client.Vendors.BulkCreateVendors(new BulkCreateVendorsOperationRequest
+    {
+        Body = new BulkCreateVendorsRequest { Vendors = new Dictionary<string, Vendor> { ["key"] = new Vendor() } },
+    });
     // TODO: Handle 'response' of type BulkCreateVendorsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22235,14 +22431,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkCreateVendorsRequest](Models/BulkCreateVendorsRequest.cs)</code> | - |
+<code>[BulkCreateVendorsOperationRequest](src/Square/Requests/Vendors/BulkCreateVendorsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22252,9 +22446,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkCreateVendorsResponse](Models/BulkCreateVendorsResponse.cs)</code>
+**OnSuccess**: <code>[BulkCreateVendorsResponse](src/Square/Models/BulkCreateVendorsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22265,7 +22459,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkRetrieveVendorsResponse&gt; BulkRetrieveVendors(BulkRetrieveVendorsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkRetrieveVendorsResponse&gt; BulkRetrieveVendors(BulkRetrieveVendorsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22288,10 +22482,13 @@ Retrieves one or more vendors of specified [Vendor](entity:Vendor) IDs.
 ```csharp
 try
 {
-    var response = await client.Vendors.BulkRetrieveVendors(body);
+    var response = await client.Vendors.BulkRetrieveVendors(new BulkRetrieveVendorsOperationRequest
+    {
+        Body = new BulkRetrieveVendorsRequest(),
+    });
     // TODO: Handle 'response' of type BulkRetrieveVendorsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22300,14 +22497,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkRetrieveVendorsRequest](Models/BulkRetrieveVendorsRequest.cs)</code> | - |
+<code>[BulkRetrieveVendorsOperationRequest](src/Square/Requests/Vendors/BulkRetrieveVendorsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22317,9 +22512,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkRetrieveVendorsResponse](Models/BulkRetrieveVendorsResponse.cs)</code>
+**OnSuccess**: <code>[BulkRetrieveVendorsResponse](src/Square/Models/BulkRetrieveVendorsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22330,7 +22525,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;BulkUpdateVendorsResponse&gt; BulkUpdateVendors(BulkUpdateVendorsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;BulkUpdateVendorsResponse&gt; BulkUpdateVendors(BulkUpdateVendorsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22353,10 +22548,19 @@ Updates one or more of existing [Vendor](entity:Vendor) objects as suppliers to 
 ```csharp
 try
 {
-    var response = await client.Vendors.BulkUpdateVendors(body);
+    var response = await client.Vendors.BulkUpdateVendors(new BulkUpdateVendorsOperationRequest
+    {
+        Body = new BulkUpdateVendorsRequest
+        {
+            Vendors = new Dictionary<string, UpdateVendorRequest>
+            {
+                ["key"] = new UpdateVendorRequest { Vendor = new Vendor() },
+            },
+        },
+    });
     // TODO: Handle 'response' of type BulkUpdateVendorsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22365,14 +22569,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[BulkUpdateVendorsRequest](Models/BulkUpdateVendorsRequest.cs)</code> | - |
+<code>[BulkUpdateVendorsOperationRequest](src/Square/Requests/Vendors/BulkUpdateVendorsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22382,9 +22584,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[BulkUpdateVendorsResponse](Models/BulkUpdateVendorsResponse.cs)</code>
+**OnSuccess**: <code>[BulkUpdateVendorsResponse](src/Square/Models/BulkUpdateVendorsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22395,7 +22597,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;CreateVendorResponse&gt; CreateVendor(CreateVendorRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateVendorResponse&gt; CreateVendor(CreateVendorOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22418,10 +22620,13 @@ Creates a single [Vendor](entity:Vendor) object to represent a supplier to a sel
 ```csharp
 try
 {
-    var response = await client.Vendors.CreateVendor(body);
+    var response = await client.Vendors.CreateVendor(new CreateVendorOperationRequest
+    {
+        Body = new CreateVendorRequest { IdempotencyKey = "some example string" },
+    });
     // TODO: Handle 'response' of type CreateVendorResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22430,14 +22635,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateVendorRequest](Models/CreateVendorRequest.cs)</code> | - |
+<code>[CreateVendorOperationRequest](src/Square/Requests/Vendors/CreateVendorOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22447,9 +22650,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateVendorResponse](Models/CreateVendorResponse.cs)</code>
+**OnSuccess**: <code>[CreateVendorResponse](src/Square/Models/CreateVendorResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22460,7 +22663,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveVendorResponse&gt; RetrieveVendor(string vendorId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveVendorResponse&gt; RetrieveVendor(RetrieveVendorRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22483,10 +22686,10 @@ Retrieves the vendor of a specified [Vendor](entity:Vendor) ID.
 ```csharp
 try
 {
-    var response = await client.Vendors.RetrieveVendor(vendorId);
+    var response = await client.Vendors.RetrieveVendor(new RetrieveVendorRequest { VendorId = "some example string" });
     // TODO: Handle 'response' of type RetrieveVendorResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22495,14 +22698,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>vendorId</code> | <code>string</code> | ID of the [Vendor](entity:Vendor) to retrieve. |
+<code>[RetrieveVendorRequest](src/Square/Requests/Vendors/RetrieveVendorRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22512,9 +22713,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveVendorResponse](Models/RetrieveVendorResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveVendorResponse](src/Square/Models/RetrieveVendorResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22525,7 +22726,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;SearchVendorsResponse&gt; SearchVendors(SearchVendorsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;SearchVendorsResponse&gt; SearchVendors(SearchVendorsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22548,10 +22749,13 @@ Searches for vendors using a filter against supported [Vendor](entity:Vendor) pr
 ```csharp
 try
 {
-    var response = await client.Vendors.SearchVendors(body);
+    var response = await client.Vendors.SearchVendors(new SearchVendorsOperationRequest
+    {
+        Body = new SearchVendorsRequest(),
+    });
     // TODO: Handle 'response' of type SearchVendorsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22560,14 +22764,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[SearchVendorsRequest](Models/SearchVendorsRequest.cs)</code> | - |
+<code>[SearchVendorsOperationRequest](src/Square/Requests/Vendors/SearchVendorsOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22577,9 +22779,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[SearchVendorsResponse](Models/SearchVendorsResponse.cs)</code>
+**OnSuccess**: <code>[SearchVendorsResponse](src/Square/Models/SearchVendorsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22590,7 +22792,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateVendorResponse&gt; UpdateVendor(string vendorId, UpdateVendorRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateVendorResponse&gt; UpdateVendor(UpdateVendorOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22613,10 +22815,14 @@ Updates an existing [Vendor](entity:Vendor) object as a supplier to a seller.
 ```csharp
 try
 {
-    var response = await client.Vendors.UpdateVendor(vendorId, body);
+    var response = await client.Vendors.UpdateVendor(new UpdateVendorOperationRequest
+    {
+        VendorId = "some example string",
+        Body = new UpdateVendorRequest { Vendor = new Vendor() },
+    });
     // TODO: Handle 'response' of type UpdateVendorResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22625,15 +22831,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>vendorId</code> | <code>string</code> | - |
-| <code>body</code> | <code>[UpdateVendorRequest](Models/UpdateVendorRequest.cs)</code> | - |
+<code>[UpdateVendorOperationRequest](src/Square/Requests/Vendors/UpdateVendorOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22643,9 +22846,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateVendorResponse](Models/UpdateVendorResponse.cs)</code>
+**OnSuccess**: <code>[UpdateVendorResponse](src/Square/Models/UpdateVendorResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22657,10 +22860,10 @@ catch (SdkException<RawError> ex)
 
 ## WebhookSubscriptions
 
-> Source: [WebhookSubscriptions](Api/WebhookSubscriptions.cs)
+> Source: [WebhookSubscriptions](src/Square/Api/WebhookSubscriptions.cs)
 
 <details>
-<summary><code>Task&lt;CreateWebhookSubscriptionResponse&gt; CreateWebhookSubscription(CreateWebhookSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;CreateWebhookSubscriptionResponse&gt; CreateWebhookSubscription(CreateWebhookSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22683,10 +22886,14 @@ Creates a webhook subscription.
 ```csharp
 try
 {
-    var response = await client.WebhookSubscriptions.CreateWebhookSubscription(body);
+    var response = await client.WebhookSubscriptions.CreateWebhookSubscription(
+        new CreateWebhookSubscriptionOperationRequest
+        {
+            Body = new CreateWebhookSubscriptionRequest { Subscription = new WebhookSubscription() },
+        });
     // TODO: Handle 'response' of type CreateWebhookSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22695,14 +22902,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>body</code> | <code>[CreateWebhookSubscriptionRequest](Models/CreateWebhookSubscriptionRequest.cs)</code> | - |
+<code>[CreateWebhookSubscriptionOperationRequest](src/Square/Requests/WebhookSubscriptions/CreateWebhookSubscriptionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22712,9 +22917,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[CreateWebhookSubscriptionResponse](Models/CreateWebhookSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[CreateWebhookSubscriptionResponse](src/Square/Models/CreateWebhookSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22725,7 +22930,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;DeleteWebhookSubscriptionResponse&gt; DeleteWebhookSubscription(string subscriptionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;DeleteWebhookSubscriptionResponse&gt; DeleteWebhookSubscription(DeleteWebhookSubscriptionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22748,10 +22953,13 @@ Deletes a webhook subscription.
 ```csharp
 try
 {
-    var response = await client.WebhookSubscriptions.DeleteWebhookSubscription(subscriptionId);
+    var response = await client.WebhookSubscriptions.DeleteWebhookSubscription(new DeleteWebhookSubscriptionRequest
+    {
+        SubscriptionId = "some example string",
+    });
     // TODO: Handle 'response' of type DeleteWebhookSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22760,14 +22968,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | [REQUIRED] The ID of the [Subscription](entity:WebhookSubscription) to delete. |
+<code>[DeleteWebhookSubscriptionRequest](src/Square/Requests/WebhookSubscriptions/DeleteWebhookSubscriptionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22777,9 +22983,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[DeleteWebhookSubscriptionResponse](Models/DeleteWebhookSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[DeleteWebhookSubscriptionResponse](src/Square/Models/DeleteWebhookSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22790,7 +22996,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListWebhookEventTypesResponse&gt; ListWebhookEventTypes(string? apiVersion, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListWebhookEventTypesResponse&gt; ListWebhookEventTypes(ListWebhookEventTypesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22813,10 +23019,10 @@ Lists all webhook event types that can be subscribed to.
 ```csharp
 try
 {
-    var response = await client.WebhookSubscriptions.ListWebhookEventTypes(apiVersion);
+    var response = await client.WebhookSubscriptions.ListWebhookEventTypes(new ListWebhookEventTypesRequest());
     // TODO: Handle 'response' of type ListWebhookEventTypesResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22825,14 +23031,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>apiVersion</code> | <code>string?</code> | The API version for which to list event types. Setting this field overrides the default version used by the application. |
+<code>[ListWebhookEventTypesRequest](src/Square/Requests/WebhookSubscriptions/ListWebhookEventTypesRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22842,9 +23046,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListWebhookEventTypesResponse](Models/ListWebhookEventTypesResponse.cs)</code>
+**OnSuccess**: <code>[ListWebhookEventTypesResponse](src/Square/Models/ListWebhookEventTypesResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22855,7 +23059,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;ListWebhookSubscriptionsResponse&gt; ListWebhookSubscriptions(string? cursor, SortOrder? sortOrder, int? limit, bool? includeDisabled = false, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;ListWebhookSubscriptionsResponse&gt; ListWebhookSubscriptions(ListWebhookSubscriptionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22878,10 +23082,10 @@ Lists all webhook subscriptions owned by your application.
 ```csharp
 try
 {
-    var response = await client.WebhookSubscriptions.ListWebhookSubscriptions(cursor, sortOrder, limit);
+    var response = await client.WebhookSubscriptions.ListWebhookSubscriptions(new ListWebhookSubscriptionsRequest());
     // TODO: Handle 'response' of type ListWebhookSubscriptionsResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22890,17 +23094,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>cursor</code> | <code>string?</code> | A pagination cursor returned by a previous call to this endpoint.<br>Provide this to retrieve the next set of results for your original query.<br><br>For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). |
-| <code>sortOrder</code> | <code>[SortOrder?](Models/Enums/SortOrder.cs)</code> | Sorts the returned list by when the [Subscription](entity:WebhookSubscription) was created with the specified order.<br>This field defaults to ASC. |
-| <code>limit</code> | <code>int?</code> | The maximum number of results to be returned in a single page.<br>It is possible to receive fewer results than the specified limit on a given page.<br>The default value of 100 is also the maximum allowed value.<br><br>Default: 100 |
-| <code>includeDisabled</code> | <code>bool?</code> | Includes disabled [Subscription](entity:WebhookSubscription)s.<br>By default, all enabled [Subscription](entity:WebhookSubscription)s are returned.<br>**Default**: false |
+<code>[ListWebhookSubscriptionsRequest](src/Square/Requests/WebhookSubscriptions/ListWebhookSubscriptionsRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22910,9 +23109,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[ListWebhookSubscriptionsResponse](Models/ListWebhookSubscriptionsResponse.cs)</code>
+**OnSuccess**: <code>[ListWebhookSubscriptionsResponse](src/Square/Models/ListWebhookSubscriptionsResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22923,7 +23122,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;RetrieveWebhookSubscriptionResponse&gt; RetrieveWebhookSubscription(string subscriptionId, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;RetrieveWebhookSubscriptionResponse&gt; RetrieveWebhookSubscription(RetrieveWebhookSubscriptionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -22946,10 +23145,13 @@ Retrieves a webhook subscription identified by its ID.
 ```csharp
 try
 {
-    var response = await client.WebhookSubscriptions.RetrieveWebhookSubscription(subscriptionId);
+    var response = await client.WebhookSubscriptions.RetrieveWebhookSubscription(new RetrieveWebhookSubscriptionRequest
+    {
+        SubscriptionId = "some example string",
+    });
     // TODO: Handle 'response' of type RetrieveWebhookSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -22958,14 +23160,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | [REQUIRED] The ID of the [Subscription](entity:WebhookSubscription) to retrieve. |
+<code>[RetrieveWebhookSubscriptionRequest](src/Square/Requests/WebhookSubscriptions/RetrieveWebhookSubscriptionRequest.cs)</code>
 
 </dd>
 </dl>
@@ -22975,9 +23175,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[RetrieveWebhookSubscriptionResponse](Models/RetrieveWebhookSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[RetrieveWebhookSubscriptionResponse](src/Square/Models/RetrieveWebhookSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -22988,7 +23188,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;TestWebhookSubscriptionResponse&gt; TestWebhookSubscription(string subscriptionId, TestWebhookSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;TestWebhookSubscriptionResponse&gt; TestWebhookSubscription(TestWebhookSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -23011,10 +23211,14 @@ Tests a webhook subscription by sending a test event to the notification URL.
 ```csharp
 try
 {
-    var response = await client.WebhookSubscriptions.TestWebhookSubscription(subscriptionId, body);
+    var response = await client.WebhookSubscriptions.TestWebhookSubscription(new TestWebhookSubscriptionOperationRequest
+    {
+        SubscriptionId = "some example string",
+        Body = new TestWebhookSubscriptionRequest(),
+    });
     // TODO: Handle 'response' of type TestWebhookSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -23023,15 +23227,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | [REQUIRED] The ID of the [Subscription](entity:WebhookSubscription) to test. |
-| <code>body</code> | <code>[TestWebhookSubscriptionRequest](Models/TestWebhookSubscriptionRequest.cs)</code> | - |
+<code>[TestWebhookSubscriptionOperationRequest](src/Square/Requests/WebhookSubscriptions/TestWebhookSubscriptionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -23041,9 +23242,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[TestWebhookSubscriptionResponse](Models/TestWebhookSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[TestWebhookSubscriptionResponse](src/Square/Models/TestWebhookSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -23054,7 +23255,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateWebhookSubscriptionResponse&gt; UpdateWebhookSubscription(string subscriptionId, UpdateWebhookSubscriptionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateWebhookSubscriptionResponse&gt; UpdateWebhookSubscription(UpdateWebhookSubscriptionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -23077,10 +23278,15 @@ Updates a webhook subscription.
 ```csharp
 try
 {
-    var response = await client.WebhookSubscriptions.UpdateWebhookSubscription(subscriptionId, body);
+    var response = await client.WebhookSubscriptions.UpdateWebhookSubscription(
+        new UpdateWebhookSubscriptionOperationRequest
+        {
+            SubscriptionId = "some example string",
+            Body = new UpdateWebhookSubscriptionRequest(),
+        });
     // TODO: Handle 'response' of type UpdateWebhookSubscriptionResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -23089,15 +23295,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | [REQUIRED] The ID of the [Subscription](entity:WebhookSubscription) to update. |
-| <code>body</code> | <code>[UpdateWebhookSubscriptionRequest](Models/UpdateWebhookSubscriptionRequest.cs)</code> | - |
+<code>[UpdateWebhookSubscriptionOperationRequest](src/Square/Requests/WebhookSubscriptions/UpdateWebhookSubscriptionOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -23107,9 +23310,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateWebhookSubscriptionResponse](Models/UpdateWebhookSubscriptionResponse.cs)</code>
+**OnSuccess**: <code>[UpdateWebhookSubscriptionResponse](src/Square/Models/UpdateWebhookSubscriptionResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>
@@ -23120,7 +23323,7 @@ catch (SdkException<RawError> ex)
 </details>
 
 <details>
-<summary><code>Task&lt;UpdateWebhookSubscriptionSignatureKeyResponse&gt; UpdateWebhookSubscriptionSignatureKey(string subscriptionId, UpdateWebhookSubscriptionSignatureKeyRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default);</code></summary>
+<summary><code>Task&lt;UpdateWebhookSubscriptionSignatureKeyResponse&gt; UpdateWebhookSubscriptionSignatureKey(UpdateWebhookSubscriptionSignatureKeyOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default);</code></summary>
 
 <dl>
 <dd>
@@ -23143,10 +23346,15 @@ Updates a webhook subscription by replacing the existing signature key with a ne
 ```csharp
 try
 {
-    var response = await client.WebhookSubscriptions.UpdateWebhookSubscriptionSignatureKey(subscriptionId, body);
+    var response = await client.WebhookSubscriptions.UpdateWebhookSubscriptionSignatureKey(
+        new UpdateWebhookSubscriptionSignatureKeyOperationRequest
+        {
+            SubscriptionId = "some example string",
+            Body = new UpdateWebhookSubscriptionSignatureKeyRequest(),
+        });
     // TODO: Handle 'response' of type UpdateWebhookSubscriptionSignatureKeyResponse
 }
-catch (SdkException<RawError> ex)
+catch (ApiException<RawError> ex)
 {
     // TODO: Handle 'ex.Error' of type RawError
 }
@@ -23155,15 +23363,12 @@ catch (SdkException<RawError> ex)
 </dd>
 </dl>
 
-### Parameters
+### Request
 
 <dl>
 <dd>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| <code>subscriptionId</code> | <code>string</code> | [REQUIRED] The ID of the [Subscription](entity:WebhookSubscription) to update. |
-| <code>body</code> | <code>[UpdateWebhookSubscriptionSignatureKeyRequest](Models/UpdateWebhookSubscriptionSignatureKeyRequest.cs)</code> | - |
+<code>[UpdateWebhookSubscriptionSignatureKeyOperationRequest](src/Square/Requests/WebhookSubscriptions/UpdateWebhookSubscriptionSignatureKeyOperationRequest.cs)</code>
 
 </dd>
 </dl>
@@ -23173,9 +23378,9 @@ catch (SdkException<RawError> ex)
 <dl>
 <dd>
 
-**OnSuccess**: <code>[UpdateWebhookSubscriptionSignatureKeyResponse](Models/UpdateWebhookSubscriptionSignatureKeyResponse.cs)</code>
+**OnSuccess**: <code>[UpdateWebhookSubscriptionSignatureKeyResponse](src/Square/Models/UpdateWebhookSubscriptionSignatureKeyResponse.cs)</code>
 
-**OnError**: <code>[SdkException](Core/Exceptions/SdkException.cs)&lt;[RawError](Core/ErrorResponse/RawError.cs)&gt;</code>
+**OnError**: <code>[ApiException](src/Square/Core/Exceptions/ApiException.cs)&lt;[RawError](src/Square/Core/ErrorResponse/RawError.cs)&gt;</code>
 
 </dd>
 </dl>

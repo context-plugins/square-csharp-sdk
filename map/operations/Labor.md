@@ -2,333 +2,372 @@
 
 # Labor — operations
 
-Accessor: `client.Labor` · Source: `Api/Labor.cs` · 27 operations
+Accessor: `client.Labor` · Source: `src/Square/Api/Labor.cs` · 27 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkPublishScheduledShifts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkPublishScheduledShifts(BulkPublishScheduledShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkPublishScheduledShifts(BulkPublishScheduledShiftsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkPublishScheduledShiftsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkPublishScheduledShiftsRequest` | `Models/BulkPublishScheduledShiftsRequest.cs` |
-| `BulkPublishScheduledShiftsResponse` | `Models/BulkPublishScheduledShiftsResponse.cs` |
+| `BulkPublishScheduledShiftsOperationRequest` | `src/Square/Requests/Labor/BulkPublishScheduledShiftsOperationRequest.cs` |
+| `BulkPublishScheduledShiftsRequest` | `src/Square/Models/BulkPublishScheduledShiftsRequest.cs` |
+| `BulkPublishScheduledShiftsResponse` | `src/Square/Models/BulkPublishScheduledShiftsResponse.cs` |
 
 ### CreateBreakType
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateBreakType(CreateBreakTypeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateBreakType(CreateBreakTypeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateBreakTypeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateBreakTypeRequest` | `Models/CreateBreakTypeRequest.cs` |
-| `CreateBreakTypeResponse` | `Models/CreateBreakTypeResponse.cs` |
+| `CreateBreakTypeOperationRequest` | `src/Square/Requests/Labor/CreateBreakTypeOperationRequest.cs` |
+| `CreateBreakTypeRequest` | `src/Square/Models/CreateBreakTypeRequest.cs` |
+| `CreateBreakTypeResponse` | `src/Square/Models/CreateBreakTypeResponse.cs` |
 
 ### CreateScheduledShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateScheduledShift(CreateScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateScheduledShift(CreateScheduledShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateScheduledShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateScheduledShiftRequest` | `Models/CreateScheduledShiftRequest.cs` |
-| `CreateScheduledShiftResponse` | `Models/CreateScheduledShiftResponse.cs` |
+| `CreateScheduledShiftOperationRequest` | `src/Square/Requests/Labor/CreateScheduledShiftOperationRequest.cs` |
+| `CreateScheduledShiftRequest` | `src/Square/Models/CreateScheduledShiftRequest.cs` |
+| `CreateScheduledShiftResponse` | `src/Square/Models/CreateScheduledShiftResponse.cs` |
 
 ### CreateShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateShift(CreateShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateShift(CreateShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateShiftRequest` | `Models/CreateShiftRequest.cs` |
-| `CreateShiftResponse` | `Models/CreateShiftResponse.cs` |
+| `CreateShiftOperationRequest` | `src/Square/Requests/Labor/CreateShiftOperationRequest.cs` |
+| `CreateShiftRequest` | `src/Square/Models/CreateShiftRequest.cs` |
+| `CreateShiftResponse` | `src/Square/Models/CreateShiftResponse.cs` |
 
 ### CreateTimecard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateTimecard(CreateTimecardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateTimecard(CreateTimecardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateTimecardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateTimecardRequest` | `Models/CreateTimecardRequest.cs` |
-| `CreateTimecardResponse` | `Models/CreateTimecardResponse.cs` |
+| `CreateTimecardOperationRequest` | `src/Square/Requests/Labor/CreateTimecardOperationRequest.cs` |
+| `CreateTimecardRequest` | `src/Square/Models/CreateTimecardRequest.cs` |
+| `CreateTimecardResponse` | `src/Square/Models/CreateTimecardResponse.cs` |
 
 ### DeleteBreakType
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteBreakType(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteBreakType(DeleteBreakTypeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `DeleteBreakTypeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteBreakTypeResponse` | `Models/DeleteBreakTypeResponse.cs` |
+| `DeleteBreakTypeRequest` | `src/Square/Requests/Labor/DeleteBreakTypeRequest.cs` |
+| `DeleteBreakTypeResponse` | `src/Square/Models/DeleteBreakTypeResponse.cs` |
 
 ### DeleteShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteShift(DeleteShiftRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `DeleteShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteShiftResponse` | `Models/DeleteShiftResponse.cs` |
+| `DeleteShiftRequest` | `src/Square/Requests/Labor/DeleteShiftRequest.cs` |
+| `DeleteShiftResponse` | `src/Square/Models/DeleteShiftResponse.cs` |
 
 ### DeleteTimecard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteTimecard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteTimecard(DeleteTimecardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `DeleteTimecardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteTimecardResponse` | `Models/DeleteTimecardResponse.cs` |
+| `DeleteTimecardRequest` | `src/Square/Requests/Labor/DeleteTimecardRequest.cs` |
+| `DeleteTimecardResponse` | `src/Square/Models/DeleteTimecardResponse.cs` |
 
 ### GetBreakType
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetBreakType(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetBreakType(GetBreakTypeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `GetBreakTypeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetBreakTypeResponse` | `Models/GetBreakTypeResponse.cs` |
+| `GetBreakTypeRequest` | `src/Square/Requests/Labor/GetBreakTypeRequest.cs` |
+| `GetBreakTypeResponse` | `src/Square/Models/GetBreakTypeResponse.cs` |
 
 ### GetEmployeeWage
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetEmployeeWage(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetEmployeeWage(GetEmployeeWageRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `GetEmployeeWageResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetEmployeeWageResponse` | `Models/GetEmployeeWageResponse.cs` |
+| `GetEmployeeWageRequest` | `src/Square/Requests/Labor/GetEmployeeWageRequest.cs` |
+| `GetEmployeeWageResponse` | `src/Square/Models/GetEmployeeWageResponse.cs` |
 
 ### GetShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetShift(GetShiftRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `GetShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetShiftResponse` | `Models/GetShiftResponse.cs` |
+| `GetShiftRequest` | `src/Square/Requests/Labor/GetShiftRequest.cs` |
+| `GetShiftResponse` | `src/Square/Models/GetShiftResponse.cs` |
 
 ### GetTeamMemberWage
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetTeamMemberWage(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetTeamMemberWage(GetTeamMemberWageRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `GetTeamMemberWageResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetTeamMemberWageResponse` | `Models/GetTeamMemberWageResponse.cs` |
+| `GetTeamMemberWageRequest` | `src/Square/Requests/Labor/GetTeamMemberWageRequest.cs` |
+| `GetTeamMemberWageResponse` | `src/Square/Models/GetTeamMemberWageResponse.cs` |
 
 ### ListBreakTypes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListBreakTypes(string? locationId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `locationId` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `location_id` ← `locationId`, `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListBreakTypes(ListBreakTypesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `location_id` ← `LocationId`, `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListBreakTypesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListBreakTypesResponse` | `Models/ListBreakTypesResponse.cs` |
+| `ListBreakTypesRequest` | `src/Square/Requests/Labor/ListBreakTypesRequest.cs` |
+| `ListBreakTypesResponse` | `src/Square/Models/ListBreakTypesResponse.cs` |
 
 ### ListEmployeeWages
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListEmployeeWages(string? employeeId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `employeeId` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `employee_id` ← `employeeId`, `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListEmployeeWages(ListEmployeeWagesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `employee_id` ← `EmployeeId`, `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListEmployeeWagesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListEmployeeWagesResponse` | `Models/ListEmployeeWagesResponse.cs` |
+| `ListEmployeeWagesRequest` | `src/Square/Requests/Labor/ListEmployeeWagesRequest.cs` |
+| `ListEmployeeWagesResponse` | `src/Square/Models/ListEmployeeWagesResponse.cs` |
 
 ### ListTeamMemberWages
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListTeamMemberWages(string? teamMemberId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `teamMemberId` — nullable, no default → **must pass explicitly**
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `team_member_id` ← `teamMemberId`, `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListTeamMemberWages(ListTeamMemberWagesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `team_member_id` ← `TeamMemberId`, `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListTeamMemberWagesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListTeamMemberWagesResponse` | `Models/ListTeamMemberWagesResponse.cs` |
+| `ListTeamMemberWagesRequest` | `src/Square/Requests/Labor/ListTeamMemberWagesRequest.cs` |
+| `ListTeamMemberWagesResponse` | `src/Square/Models/ListTeamMemberWagesResponse.cs` |
 
 ### ListWorkweekConfigs
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListWorkweekConfigs(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListWorkweekConfigs(ListWorkweekConfigsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListWorkweekConfigsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListWorkweekConfigsResponse` | `Models/ListWorkweekConfigsResponse.cs` |
+| `ListWorkweekConfigsRequest` | `src/Square/Requests/Labor/ListWorkweekConfigsRequest.cs` |
+| `ListWorkweekConfigsResponse` | `src/Square/Models/ListWorkweekConfigsResponse.cs` |
 
 ### PublishScheduledShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `PublishScheduledShift(string id, PublishScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `PublishScheduledShift(PublishScheduledShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`, `Body`
 - **Returns**: `PublishScheduledShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `PublishScheduledShiftRequest` | `Models/PublishScheduledShiftRequest.cs` |
-| `PublishScheduledShiftResponse` | `Models/PublishScheduledShiftResponse.cs` |
+| `PublishScheduledShiftOperationRequest` | `src/Square/Requests/Labor/PublishScheduledShiftOperationRequest.cs` |
+| `PublishScheduledShiftRequest` | `src/Square/Models/PublishScheduledShiftRequest.cs` |
+| `PublishScheduledShiftResponse` | `src/Square/Models/PublishScheduledShiftResponse.cs` |
 
 ### RetrieveScheduledShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveScheduledShift(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveScheduledShift(RetrieveScheduledShiftRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `RetrieveScheduledShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveScheduledShiftResponse` | `Models/RetrieveScheduledShiftResponse.cs` |
+| `RetrieveScheduledShiftRequest` | `src/Square/Requests/Labor/RetrieveScheduledShiftRequest.cs` |
+| `RetrieveScheduledShiftResponse` | `src/Square/Models/RetrieveScheduledShiftResponse.cs` |
 
 ### RetrieveTimecard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveTimecard(string id, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveTimecard(RetrieveTimecardRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`
 - **Returns**: `RetrieveTimecardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveTimecardResponse` | `Models/RetrieveTimecardResponse.cs` |
+| `RetrieveTimecardRequest` | `src/Square/Requests/Labor/RetrieveTimecardRequest.cs` |
+| `RetrieveTimecardResponse` | `src/Square/Models/RetrieveTimecardResponse.cs` |
 
 ### SearchScheduledShifts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchScheduledShifts(SearchScheduledShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchScheduledShifts(SearchScheduledShiftsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchScheduledShiftsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchScheduledShiftsRequest` | `Models/SearchScheduledShiftsRequest.cs` |
-| `SearchScheduledShiftsResponse` | `Models/SearchScheduledShiftsResponse.cs` |
+| `SearchScheduledShiftsOperationRequest` | `src/Square/Requests/Labor/SearchScheduledShiftsOperationRequest.cs` |
+| `SearchScheduledShiftsRequest` | `src/Square/Models/SearchScheduledShiftsRequest.cs` |
+| `SearchScheduledShiftsResponse` | `src/Square/Models/SearchScheduledShiftsResponse.cs` |
 
 ### SearchShifts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchShifts(SearchShiftsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchShifts(SearchShiftsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchShiftsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchShiftsRequest` | `Models/SearchShiftsRequest.cs` |
-| `SearchShiftsResponse` | `Models/SearchShiftsResponse.cs` |
+| `SearchShiftsOperationRequest` | `src/Square/Requests/Labor/SearchShiftsOperationRequest.cs` |
+| `SearchShiftsRequest` | `src/Square/Models/SearchShiftsRequest.cs` |
+| `SearchShiftsResponse` | `src/Square/Models/SearchShiftsResponse.cs` |
 
 ### SearchTimecards
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchTimecards(SearchTimecardsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchTimecards(SearchTimecardsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchTimecardsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchTimecardsRequest` | `Models/SearchTimecardsRequest.cs` |
-| `SearchTimecardsResponse` | `Models/SearchTimecardsResponse.cs` |
+| `SearchTimecardsOperationRequest` | `src/Square/Requests/Labor/SearchTimecardsOperationRequest.cs` |
+| `SearchTimecardsRequest` | `src/Square/Models/SearchTimecardsRequest.cs` |
+| `SearchTimecardsResponse` | `src/Square/Models/SearchTimecardsResponse.cs` |
 
 ### UpdateBreakType
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateBreakType(string id, UpdateBreakTypeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateBreakType(UpdateBreakTypeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`, `Body`
 - **Returns**: `UpdateBreakTypeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateBreakTypeRequest` | `Models/UpdateBreakTypeRequest.cs` |
-| `UpdateBreakTypeResponse` | `Models/UpdateBreakTypeResponse.cs` |
+| `UpdateBreakTypeOperationRequest` | `src/Square/Requests/Labor/UpdateBreakTypeOperationRequest.cs` |
+| `UpdateBreakTypeRequest` | `src/Square/Models/UpdateBreakTypeRequest.cs` |
+| `UpdateBreakTypeResponse` | `src/Square/Models/UpdateBreakTypeResponse.cs` |
 
 ### UpdateScheduledShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateScheduledShift(string id, UpdateScheduledShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateScheduledShift(UpdateScheduledShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`, `Body`
 - **Returns**: `UpdateScheduledShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateScheduledShiftRequest` | `Models/UpdateScheduledShiftRequest.cs` |
-| `UpdateScheduledShiftResponse` | `Models/UpdateScheduledShiftResponse.cs` |
+| `UpdateScheduledShiftOperationRequest` | `src/Square/Requests/Labor/UpdateScheduledShiftOperationRequest.cs` |
+| `UpdateScheduledShiftRequest` | `src/Square/Models/UpdateScheduledShiftRequest.cs` |
+| `UpdateScheduledShiftResponse` | `src/Square/Models/UpdateScheduledShiftResponse.cs` |
 
 ### UpdateShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateShift(string id, UpdateShiftRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateShift(UpdateShiftOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`, `Body`
 - **Returns**: `UpdateShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateShiftRequest` | `Models/UpdateShiftRequest.cs` |
-| `UpdateShiftResponse` | `Models/UpdateShiftResponse.cs` |
+| `UpdateShiftOperationRequest` | `src/Square/Requests/Labor/UpdateShiftOperationRequest.cs` |
+| `UpdateShiftRequest` | `src/Square/Models/UpdateShiftRequest.cs` |
+| `UpdateShiftResponse` | `src/Square/Models/UpdateShiftResponse.cs` |
 
 ### UpdateTimecard
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateTimecard(string id, UpdateTimecardRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateTimecard(UpdateTimecardOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`, `Body`
 - **Returns**: `UpdateTimecardResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateTimecardRequest` | `Models/UpdateTimecardRequest.cs` |
-| `UpdateTimecardResponse` | `Models/UpdateTimecardResponse.cs` |
+| `UpdateTimecardOperationRequest` | `src/Square/Requests/Labor/UpdateTimecardOperationRequest.cs` |
+| `UpdateTimecardRequest` | `src/Square/Models/UpdateTimecardRequest.cs` |
+| `UpdateTimecardResponse` | `src/Square/Models/UpdateTimecardResponse.cs` |
 
 ### UpdateWorkweekConfig
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateWorkweekConfig(string id, UpdateWorkweekConfigRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateWorkweekConfig(UpdateWorkweekConfigOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Id`, `Body`
 - **Returns**: `UpdateWorkweekConfigResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateWorkweekConfigRequest` | `Models/UpdateWorkweekConfigRequest.cs` |
-| `UpdateWorkweekConfigResponse` | `Models/UpdateWorkweekConfigResponse.cs` |
+| `UpdateWorkweekConfigOperationRequest` | `src/Square/Requests/Labor/UpdateWorkweekConfigOperationRequest.cs` |
+| `UpdateWorkweekConfigRequest` | `src/Square/Models/UpdateWorkweekConfigRequest.cs` |
+| `UpdateWorkweekConfigResponse` | `src/Square/Models/UpdateWorkweekConfigResponse.cs` |
 

@@ -2,40 +2,44 @@
 
 # OAuth — operations
 
-Accessor: `client.OAuth` · Source: `Api/OAuth.cs` · 3 operations
+Accessor: `client.OAuth` · Source: `src/Square/Api/OAuth.cs` · 3 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### ObtainToken
 
-- **Signature**: `ObtainToken(ObtainTokenRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `ObtainToken(ObtainTokenOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `ObtainTokenResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ObtainTokenRequest` | `Models/ObtainTokenRequest.cs` |
-| `ObtainTokenResponse` | `Models/ObtainTokenResponse.cs` |
+| `ObtainTokenOperationRequest` | `src/Square/Requests/OAuth/ObtainTokenOperationRequest.cs` |
+| `ObtainTokenRequest` | `src/Square/Models/ObtainTokenRequest.cs` |
+| `ObtainTokenResponse` | `src/Square/Models/ObtainTokenResponse.cs` |
 
 ### RetrieveTokenStatus
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveTokenStatus(RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RetrieveTokenStatus(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `RetrieveTokenStatusResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveTokenStatusResponse` | `Models/RetrieveTokenStatusResponse.cs` |
+| `RetrieveTokenStatusResponse` | `src/Square/Models/RetrieveTokenStatusResponse.cs` |
 
 ### RevokeToken
 
-- **Signature**: `RevokeToken(RevokeTokenRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `RevokeToken(RevokeTokenOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `RevokeTokenResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RevokeTokenRequest` | `Models/RevokeTokenRequest.cs` |
-| `RevokeTokenResponse` | `Models/RevokeTokenResponse.cs` |
+| `RevokeTokenOperationRequest` | `src/Square/Requests/OAuth/RevokeTokenOperationRequest.cs` |
+| `RevokeTokenRequest` | `src/Square/Models/RevokeTokenRequest.cs` |
+| `RevokeTokenResponse` | `src/Square/Models/RevokeTokenResponse.cs` |
 

@@ -2,92 +2,103 @@
 
 # Payments — operations
 
-Accessor: `client.Payments` · Source: `Api/Payments.cs` · 7 operations
+Accessor: `client.Payments` · Source: `src/Square/Api/Payments.cs` · 7 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CancelPayment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelPayment(string paymentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelPayment(CancelPaymentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PaymentId`
 - **Returns**: `CancelPaymentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelPaymentResponse` | `Models/CancelPaymentResponse.cs` |
+| `CancelPaymentRequest` | `src/Square/Requests/Payments/CancelPaymentRequest.cs` |
+| `CancelPaymentResponse` | `src/Square/Models/CancelPaymentResponse.cs` |
 
 ### CancelPaymentByIdempotencyKey
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CancelPaymentByIdempotencyKey(CancelPaymentByIdempotencyKeyRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CancelPaymentByIdempotencyKey(CancelPaymentByIdempotencyKeyOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CancelPaymentByIdempotencyKeyResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CancelPaymentByIdempotencyKeyRequest` | `Models/CancelPaymentByIdempotencyKeyRequest.cs` |
-| `CancelPaymentByIdempotencyKeyResponse` | `Models/CancelPaymentByIdempotencyKeyResponse.cs` |
+| `CancelPaymentByIdempotencyKeyOperationRequest` | `src/Square/Requests/Payments/CancelPaymentByIdempotencyKeyOperationRequest.cs` |
+| `CancelPaymentByIdempotencyKeyRequest` | `src/Square/Models/CancelPaymentByIdempotencyKeyRequest.cs` |
+| `CancelPaymentByIdempotencyKeyResponse` | `src/Square/Models/CancelPaymentByIdempotencyKeyResponse.cs` |
 
 ### CompletePayment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CompletePayment(string paymentId, CompletePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CompletePayment(CompletePaymentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PaymentId`, `Body`
 - **Returns**: `CompletePaymentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CompletePaymentRequest` | `Models/CompletePaymentRequest.cs` |
-| `CompletePaymentResponse` | `Models/CompletePaymentResponse.cs` |
+| `CompletePaymentOperationRequest` | `src/Square/Requests/Payments/CompletePaymentOperationRequest.cs` |
+| `CompletePaymentRequest` | `src/Square/Models/CompletePaymentRequest.cs` |
+| `CompletePaymentResponse` | `src/Square/Models/CompletePaymentResponse.cs` |
 
 ### CreatePayment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreatePayment(CreatePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreatePayment(CreatePaymentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreatePaymentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreatePaymentRequest` | `Models/CreatePaymentRequest.cs` |
-| `CreatePaymentResponse` | `Models/CreatePaymentResponse.cs` |
+| `CreatePaymentOperationRequest` | `src/Square/Requests/Payments/CreatePaymentOperationRequest.cs` |
+| `CreatePaymentRequest` | `src/Square/Models/CreatePaymentRequest.cs` |
+| `CreatePaymentResponse` | `src/Square/Models/CreatePaymentResponse.cs` |
 
 ### GetPayment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `GetPayment(string paymentId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `GetPayment(GetPaymentRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PaymentId`
 - **Returns**: `GetPaymentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `GetPaymentResponse` | `Models/GetPaymentResponse.cs` |
+| `GetPaymentRequest` | `src/Square/Requests/Payments/GetPaymentRequest.cs` |
+| `GetPaymentResponse` | `src/Square/Models/GetPaymentResponse.cs` |
 
 ### ListPayments
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListPayments(string? beginTime, string? endTime, string? sortOrder, string? cursor, string? locationId, long? total, string? last4, string? cardBrand, int? limit, string? offlineBeginTime, string? offlineEndTime, string? updatedAtBeginTime, string? updatedAtEndTime, ListPaymentsRequestSortField? sortField, bool? isOfflinePayment = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 14 params (`beginTime` … `sortField`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-  - defaults: `isOfflinePayment` = `false`
-- **Query params (wire ← C#)**: `begin_time` ← `beginTime`, `end_time` ← `endTime`, `sort_order` ← `sortOrder`, `cursor` ← `cursor`, `location_id` ← `locationId`, `total` ← `total`, `last_4` ← `last4`, `card_brand` ← `cardBrand`, `limit` ← `limit`, `is_offline_payment` ← `isOfflinePayment`, `offline_begin_time` ← `offlineBeginTime`, `offline_end_time` ← `offlineEndTime`, `updated_at_begin_time` ← `updatedAtBeginTime`, `updated_at_end_time` ← `updatedAtEndTime`, `sort_field` ← `sortField`
+- **Signature**: `ListPayments(ListPaymentsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `begin_time` ← `BeginTime`, `end_time` ← `EndTime`, `sort_order` ← `SortOrder`, `cursor` ← `Cursor`, `location_id` ← `LocationId`, `total` ← `Total`, `last_4` ← `Last4`, `card_brand` ← `CardBrand`, `limit` ← `Limit`, `is_offline_payment` ← `IsOfflinePayment`, `offline_begin_time` ← `OfflineBeginTime`, `offline_end_time` ← `OfflineEndTime`, `updated_at_begin_time` ← `UpdatedAtBeginTime`, `updated_at_end_time` ← `UpdatedAtEndTime`, `sort_field` ← `SortField`
 - **Returns**: `ListPaymentsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListPaymentsRequestSortField` | `Models/Enums/ListPaymentsRequestSortField.cs` |
-| `ListPaymentsResponse` | `Models/ListPaymentsResponse.cs` |
+| `ListPaymentsRequest` | `src/Square/Requests/Payments/ListPaymentsRequest.cs` |
+| `ListPaymentsRequestSortField` | `src/Square/Models/Enums/ListPaymentsRequestSortField.cs` |
+| `ListPaymentsResponse` | `src/Square/Models/ListPaymentsResponse.cs` |
 
 ### UpdatePayment
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdatePayment(string paymentId, UpdatePaymentRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdatePayment(UpdatePaymentOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `PaymentId`, `Body`
 - **Returns**: `UpdatePaymentResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdatePaymentRequest` | `Models/UpdatePaymentRequest.cs` |
-| `UpdatePaymentResponse` | `Models/UpdatePaymentResponse.cs` |
+| `UpdatePaymentOperationRequest` | `src/Square/Requests/Payments/UpdatePaymentOperationRequest.cs` |
+| `UpdatePaymentRequest` | `src/Square/Models/UpdatePaymentRequest.cs` |
+| `UpdatePaymentResponse` | `src/Square/Models/UpdatePaymentResponse.cs` |
 

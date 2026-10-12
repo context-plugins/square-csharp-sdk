@@ -2,145 +2,158 @@
 
 # BookingCustomAttributes — operations
 
-Accessor: `client.BookingCustomAttributes` · Source: `Api/BookingCustomAttributes.cs` · 11 operations
+Accessor: `client.BookingCustomAttributes` · Source: `src/Square/Api/BookingCustomAttributes.cs` · 11 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BulkDeleteBookingCustomAttributes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkDeleteBookingCustomAttributes(BulkDeleteBookingCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkDeleteBookingCustomAttributes(BulkDeleteBookingCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkDeleteBookingCustomAttributesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkDeleteBookingCustomAttributesRequest` | `Models/BulkDeleteBookingCustomAttributesRequest.cs` |
-| `BulkDeleteBookingCustomAttributesResponse` | `Models/BulkDeleteBookingCustomAttributesResponse.cs` |
+| `BulkDeleteBookingCustomAttributesOperationRequest` | `src/Square/Requests/BookingCustomAttributes/BulkDeleteBookingCustomAttributesOperationRequest.cs` |
+| `BulkDeleteBookingCustomAttributesRequest` | `src/Square/Models/BulkDeleteBookingCustomAttributesRequest.cs` |
+| `BulkDeleteBookingCustomAttributesResponse` | `src/Square/Models/BulkDeleteBookingCustomAttributesResponse.cs` |
 
 ### BulkUpsertBookingCustomAttributes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BulkUpsertBookingCustomAttributes(BulkUpsertBookingCustomAttributesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BulkUpsertBookingCustomAttributes(BulkUpsertBookingCustomAttributesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BulkUpsertBookingCustomAttributesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BulkUpsertBookingCustomAttributesRequest` | `Models/BulkUpsertBookingCustomAttributesRequest.cs` |
-| `BulkUpsertBookingCustomAttributesResponse` | `Models/BulkUpsertBookingCustomAttributesResponse.cs` |
+| `BulkUpsertBookingCustomAttributesOperationRequest` | `src/Square/Requests/BookingCustomAttributes/BulkUpsertBookingCustomAttributesOperationRequest.cs` |
+| `BulkUpsertBookingCustomAttributesRequest` | `src/Square/Models/BulkUpsertBookingCustomAttributesRequest.cs` |
+| `BulkUpsertBookingCustomAttributesResponse` | `src/Square/Models/BulkUpsertBookingCustomAttributesResponse.cs` |
 
 ### CreateBookingCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateBookingCustomAttributeDefinition(CreateBookingCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateBookingCustomAttributeDefinition(CreateBookingCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateBookingCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateBookingCustomAttributeDefinitionRequest` | `Models/CreateBookingCustomAttributeDefinitionRequest.cs` |
-| `CreateBookingCustomAttributeDefinitionResponse` | `Models/CreateBookingCustomAttributeDefinitionResponse.cs` |
+| `CreateBookingCustomAttributeDefinitionOperationRequest` | `src/Square/Requests/BookingCustomAttributes/CreateBookingCustomAttributeDefinitionOperationRequest.cs` |
+| `CreateBookingCustomAttributeDefinitionRequest` | `src/Square/Models/CreateBookingCustomAttributeDefinitionRequest.cs` |
+| `CreateBookingCustomAttributeDefinitionResponse` | `src/Square/Models/CreateBookingCustomAttributeDefinitionResponse.cs` |
 
 ### DeleteBookingCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteBookingCustomAttribute(string bookingId, string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteBookingCustomAttribute(DeleteBookingCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BookingId`, `Key`
 - **Returns**: `DeleteBookingCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteBookingCustomAttributeResponse` | `Models/DeleteBookingCustomAttributeResponse.cs` |
+| `DeleteBookingCustomAttributeRequest` | `src/Square/Requests/BookingCustomAttributes/DeleteBookingCustomAttributeRequest.cs` |
+| `DeleteBookingCustomAttributeResponse` | `src/Square/Models/DeleteBookingCustomAttributeResponse.cs` |
 
 ### DeleteBookingCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteBookingCustomAttributeDefinition(string key, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteBookingCustomAttributeDefinition(DeleteBookingCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`
 - **Returns**: `DeleteBookingCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteBookingCustomAttributeDefinitionResponse` | `Models/DeleteBookingCustomAttributeDefinitionResponse.cs` |
+| `DeleteBookingCustomAttributeDefinitionRequest` | `src/Square/Requests/BookingCustomAttributes/DeleteBookingCustomAttributeDefinitionRequest.cs` |
+| `DeleteBookingCustomAttributeDefinitionResponse` | `src/Square/Models/DeleteBookingCustomAttributeDefinitionResponse.cs` |
 
 ### ListBookingCustomAttributeDefinitions
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListBookingCustomAttributeDefinitions(int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListBookingCustomAttributeDefinitions(ListBookingCustomAttributeDefinitionsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListBookingCustomAttributeDefinitionsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListBookingCustomAttributeDefinitionsResponse` | `Models/ListBookingCustomAttributeDefinitionsResponse.cs` |
+| `ListBookingCustomAttributeDefinitionsRequest` | `src/Square/Requests/BookingCustomAttributes/ListBookingCustomAttributeDefinitionsRequest.cs` |
+| `ListBookingCustomAttributeDefinitionsResponse` | `src/Square/Models/ListBookingCustomAttributeDefinitionsResponse.cs` |
 
 ### ListBookingCustomAttributes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListBookingCustomAttributes(string bookingId, int? limit, string? cursor, bool? withDefinitions = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - defaults: `withDefinitions` = `false`
-- **Query params (wire ← C#)**: `limit` ← `limit`, `cursor` ← `cursor`, `with_definitions` ← `withDefinitions`
+- **Signature**: `ListBookingCustomAttributes(ListBookingCustomAttributesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BookingId`
+- **Query params (wire ← C#)**: `limit` ← `Limit`, `cursor` ← `Cursor`, `with_definitions` ← `WithDefinitions`
 - **Returns**: `ListBookingCustomAttributesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListBookingCustomAttributesResponse` | `Models/ListBookingCustomAttributesResponse.cs` |
+| `ListBookingCustomAttributesRequest` | `src/Square/Requests/BookingCustomAttributes/ListBookingCustomAttributesRequest.cs` |
+| `ListBookingCustomAttributesResponse` | `src/Square/Models/ListBookingCustomAttributesResponse.cs` |
 
 ### RetrieveBookingCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveBookingCustomAttribute(string bookingId, string key, int? version, bool? withDefinition = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-  - defaults: `withDefinition` = `false`
-- **Query params (wire ← C#)**: `with_definition` ← `withDefinition`, `version` ← `version`
+- **Signature**: `RetrieveBookingCustomAttribute(RetrieveBookingCustomAttributeRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BookingId`, `Key`
+- **Query params (wire ← C#)**: `with_definition` ← `WithDefinition`, `version` ← `Version`
 - **Returns**: `RetrieveBookingCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveBookingCustomAttributeResponse` | `Models/RetrieveBookingCustomAttributeResponse.cs` |
+| `RetrieveBookingCustomAttributeRequest` | `src/Square/Requests/BookingCustomAttributes/RetrieveBookingCustomAttributeRequest.cs` |
+| `RetrieveBookingCustomAttributeResponse` | `src/Square/Models/RetrieveBookingCustomAttributeResponse.cs` |
 
 ### RetrieveBookingCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveBookingCustomAttributeDefinition(string key, int? version, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `version` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `version` ← `version`
+- **Signature**: `RetrieveBookingCustomAttributeDefinition(RetrieveBookingCustomAttributeDefinitionRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`
+- **Query params (wire ← C#)**: `version` ← `Version`
 - **Returns**: `RetrieveBookingCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveBookingCustomAttributeDefinitionResponse` | `Models/RetrieveBookingCustomAttributeDefinitionResponse.cs` |
+| `RetrieveBookingCustomAttributeDefinitionRequest` | `src/Square/Requests/BookingCustomAttributes/RetrieveBookingCustomAttributeDefinitionRequest.cs` |
+| `RetrieveBookingCustomAttributeDefinitionResponse` | `src/Square/Models/RetrieveBookingCustomAttributeDefinitionResponse.cs` |
 
 ### UpdateBookingCustomAttributeDefinition
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateBookingCustomAttributeDefinition(string key, UpdateBookingCustomAttributeDefinitionRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateBookingCustomAttributeDefinition(UpdateBookingCustomAttributeDefinitionOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Key`, `Body`
 - **Returns**: `UpdateBookingCustomAttributeDefinitionResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateBookingCustomAttributeDefinitionRequest` | `Models/UpdateBookingCustomAttributeDefinitionRequest.cs` |
-| `UpdateBookingCustomAttributeDefinitionResponse` | `Models/UpdateBookingCustomAttributeDefinitionResponse.cs` |
+| `UpdateBookingCustomAttributeDefinitionOperationRequest` | `src/Square/Requests/BookingCustomAttributes/UpdateBookingCustomAttributeDefinitionOperationRequest.cs` |
+| `UpdateBookingCustomAttributeDefinitionRequest` | `src/Square/Models/UpdateBookingCustomAttributeDefinitionRequest.cs` |
+| `UpdateBookingCustomAttributeDefinitionResponse` | `src/Square/Models/UpdateBookingCustomAttributeDefinitionResponse.cs` |
 
 ### UpsertBookingCustomAttribute
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpsertBookingCustomAttribute(string bookingId, string key, UpsertBookingCustomAttributeRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpsertBookingCustomAttribute(UpsertBookingCustomAttributeOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `BookingId`, `Key`, `Body`
 - **Returns**: `UpsertBookingCustomAttributeResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpsertBookingCustomAttributeRequest` | `Models/UpsertBookingCustomAttributeRequest.cs` |
-| `UpsertBookingCustomAttributeResponse` | `Models/UpsertBookingCustomAttributeResponse.cs` |
+| `UpsertBookingCustomAttributeOperationRequest` | `src/Square/Requests/BookingCustomAttributes/UpsertBookingCustomAttributeOperationRequest.cs` |
+| `UpsertBookingCustomAttributeRequest` | `src/Square/Models/UpsertBookingCustomAttributeRequest.cs` |
+| `UpsertBookingCustomAttributeResponse` | `src/Square/Models/UpsertBookingCustomAttributeResponse.cs` |
 

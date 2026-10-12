@@ -2,32 +2,34 @@
 
 # GiftCardActivities — operations
 
-Accessor: `client.GiftCardActivities` · Source: `Api/GiftCardActivities.cs` · 2 operations
+Accessor: `client.GiftCardActivities` · Source: `src/Square/Api/GiftCardActivities.cs` · 2 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### CreateGiftCardActivity
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateGiftCardActivity(CreateGiftCardActivityRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CreateGiftCardActivity(CreateGiftCardActivityOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `CreateGiftCardActivityResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateGiftCardActivityRequest` | `Models/CreateGiftCardActivityRequest.cs` |
-| `CreateGiftCardActivityResponse` | `Models/CreateGiftCardActivityResponse.cs` |
+| `CreateGiftCardActivityOperationRequest` | `src/Square/Requests/GiftCardActivities/CreateGiftCardActivityOperationRequest.cs` |
+| `CreateGiftCardActivityRequest` | `src/Square/Models/CreateGiftCardActivityRequest.cs` |
+| `CreateGiftCardActivityResponse` | `src/Square/Models/CreateGiftCardActivityResponse.cs` |
 
 ### ListGiftCardActivities
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListGiftCardActivities(string? giftCardId, string? type, string? locationId, string? beginTime, string? endTime, int? limit, string? cursor, string? sortOrder, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 8 params (`giftCardId` … `sortOrder`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `gift_card_id` ← `giftCardId`, `type` ← `type`, `location_id` ← `locationId`, `begin_time` ← `beginTime`, `end_time` ← `endTime`, `limit` ← `limit`, `cursor` ← `cursor`, `sort_order` ← `sortOrder`
+- **Signature**: `ListGiftCardActivities(ListGiftCardActivitiesRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `gift_card_id` ← `GiftCardId`, `type` ← `Type`, `location_id` ← `LocationId`, `begin_time` ← `BeginTime`, `end_time` ← `EndTime`, `limit` ← `Limit`, `cursor` ← `Cursor`, `sort_order` ← `SortOrder`
 - **Returns**: `ListGiftCardActivitiesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListGiftCardActivitiesResponse` | `Models/ListGiftCardActivitiesResponse.cs` |
+| `ListGiftCardActivitiesRequest` | `src/Square/Requests/GiftCardActivities/ListGiftCardActivitiesRequest.cs` |
+| `ListGiftCardActivitiesResponse` | `src/Square/Models/ListGiftCardActivitiesResponse.cs` |
 

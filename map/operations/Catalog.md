@@ -2,182 +2,197 @@
 
 # Catalog — operations
 
-Accessor: `client.Catalog` · Source: `Api/Catalog.cs` · 14 operations
+Accessor: `client.Catalog` · Source: `src/Square/Api/Catalog.cs` · 14 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### BatchDeleteCatalogObjects
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BatchDeleteCatalogObjects(BatchDeleteCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BatchDeleteCatalogObjects(BatchDeleteCatalogObjectsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchDeleteCatalogObjectsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchDeleteCatalogObjectsRequest` | `Models/BatchDeleteCatalogObjectsRequest.cs` |
-| `BatchDeleteCatalogObjectsResponse` | `Models/BatchDeleteCatalogObjectsResponse.cs` |
+| `BatchDeleteCatalogObjectsOperationRequest` | `src/Square/Requests/Catalog/BatchDeleteCatalogObjectsOperationRequest.cs` |
+| `BatchDeleteCatalogObjectsRequest` | `src/Square/Models/BatchDeleteCatalogObjectsRequest.cs` |
+| `BatchDeleteCatalogObjectsResponse` | `src/Square/Models/BatchDeleteCatalogObjectsResponse.cs` |
 
 ### BatchRetrieveCatalogObjects
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BatchRetrieveCatalogObjects(BatchRetrieveCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BatchRetrieveCatalogObjects(BatchRetrieveCatalogObjectsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchRetrieveCatalogObjectsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchRetrieveCatalogObjectsRequest` | `Models/BatchRetrieveCatalogObjectsRequest.cs` |
-| `BatchRetrieveCatalogObjectsResponse` | `Models/BatchRetrieveCatalogObjectsResponse.cs` |
+| `BatchRetrieveCatalogObjectsOperationRequest` | `src/Square/Requests/Catalog/BatchRetrieveCatalogObjectsOperationRequest.cs` |
+| `BatchRetrieveCatalogObjectsRequest` | `src/Square/Models/BatchRetrieveCatalogObjectsRequest.cs` |
+| `BatchRetrieveCatalogObjectsResponse` | `src/Square/Models/BatchRetrieveCatalogObjectsResponse.cs` |
 
 ### BatchUpsertCatalogObjects
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `BatchUpsertCatalogObjects(BatchUpsertCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `BatchUpsertCatalogObjects(BatchUpsertCatalogObjectsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `BatchUpsertCatalogObjectsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `BatchUpsertCatalogObjectsRequest` | `Models/BatchUpsertCatalogObjectsRequest.cs` |
-| `BatchUpsertCatalogObjectsResponse` | `Models/BatchUpsertCatalogObjectsResponse.cs` |
+| `BatchUpsertCatalogObjectsOperationRequest` | `src/Square/Requests/Catalog/BatchUpsertCatalogObjectsOperationRequest.cs` |
+| `BatchUpsertCatalogObjectsRequest` | `src/Square/Models/BatchUpsertCatalogObjectsRequest.cs` |
+| `BatchUpsertCatalogObjectsResponse` | `src/Square/Models/BatchUpsertCatalogObjectsResponse.cs` |
 
 ### CatalogInfo
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CatalogInfo(RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `CatalogInfo(RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `CatalogInfoResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CatalogInfoResponse` | `Models/CatalogInfoResponse.cs` |
+| `CatalogInfoResponse` | `src/Square/Models/CatalogInfoResponse.cs` |
 
 ### CreateCatalogImage
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `CreateCatalogImage(CreateCatalogImageRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `request` — nullable, no default → **must pass explicitly**
-  - `imageFile` — nullable, no default → **must pass explicitly**
+- **Signature**: `CreateCatalogImage(CreateCatalogImageOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
 - **Returns**: `CreateCatalogImageResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `CreateCatalogImageRequest` | `Models/CreateCatalogImageRequest.cs` |
-| `CreateCatalogImageResponse` | `Models/CreateCatalogImageResponse.cs` |
+| `CreateCatalogImageOperationRequest` | `src/Square/Requests/Catalog/CreateCatalogImageOperationRequest.cs` |
+| `CreateCatalogImageRequest` | `src/Square/Models/CreateCatalogImageRequest.cs` |
+| `CreateCatalogImageResponse` | `src/Square/Models/CreateCatalogImageResponse.cs` |
 
 ### DeleteCatalogObject
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `DeleteCatalogObject(string objectId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `DeleteCatalogObject(DeleteCatalogObjectRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ObjectId`
 - **Returns**: `DeleteCatalogObjectResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `DeleteCatalogObjectResponse` | `Models/DeleteCatalogObjectResponse.cs` |
+| `DeleteCatalogObjectRequest` | `src/Square/Requests/Catalog/DeleteCatalogObjectRequest.cs` |
+| `DeleteCatalogObjectResponse` | `src/Square/Models/DeleteCatalogObjectResponse.cs` |
 
 ### ListCatalog
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListCatalog(string? cursor, string? types, long? catalogVersion, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `cursor` — nullable, no default → **must pass explicitly**
-  - `types` — nullable, no default → **must pass explicitly**
-  - `catalogVersion` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `cursor` ← `cursor`, `types` ← `types`, `catalog_version` ← `catalogVersion`
+- **Signature**: `ListCatalog(ListCatalogRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+- **Query params (wire ← C#)**: `cursor` ← `Cursor`, `types` ← `Types`, `catalog_version` ← `CatalogVersion`
 - **Returns**: `ListCatalogResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListCatalogResponse` | `Models/ListCatalogResponse.cs` |
+| `ListCatalogRequest` | `src/Square/Requests/Catalog/ListCatalogRequest.cs` |
+| `ListCatalogResponse` | `src/Square/Models/ListCatalogResponse.cs` |
 
 ### RetrieveCatalogObject
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveCatalogObject(string objectId, long? catalogVersion, bool? includeRelatedObjects = false, bool? includeCategoryPathToRoot = false, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `catalogVersion` — nullable, no default → **must pass explicitly**
-  - defaults: `includeRelatedObjects` = `false`, `includeCategoryPathToRoot` = `false`
-- **Query params (wire ← C#)**: `include_related_objects` ← `includeRelatedObjects`, `catalog_version` ← `catalogVersion`, `include_category_path_to_root` ← `includeCategoryPathToRoot`
+- **Signature**: `RetrieveCatalogObject(RetrieveCatalogObjectRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ObjectId`
+- **Query params (wire ← C#)**: `include_related_objects` ← `IncludeRelatedObjects`, `catalog_version` ← `CatalogVersion`, `include_category_path_to_root` ← `IncludeCategoryPathToRoot`
 - **Returns**: `RetrieveCatalogObjectResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveCatalogObjectResponse` | `Models/RetrieveCatalogObjectResponse.cs` |
+| `RetrieveCatalogObjectRequest` | `src/Square/Requests/Catalog/RetrieveCatalogObjectRequest.cs` |
+| `RetrieveCatalogObjectResponse` | `src/Square/Models/RetrieveCatalogObjectResponse.cs` |
 
 ### SearchCatalogItems
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchCatalogItems(SearchCatalogItemsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchCatalogItems(SearchCatalogItemsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchCatalogItemsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchCatalogItemsRequest` | `Models/SearchCatalogItemsRequest.cs` |
-| `SearchCatalogItemsResponse` | `Models/SearchCatalogItemsResponse.cs` |
+| `SearchCatalogItemsOperationRequest` | `src/Square/Requests/Catalog/SearchCatalogItemsOperationRequest.cs` |
+| `SearchCatalogItemsRequest` | `src/Square/Models/SearchCatalogItemsRequest.cs` |
+| `SearchCatalogItemsResponse` | `src/Square/Models/SearchCatalogItemsResponse.cs` |
 
 ### SearchCatalogObjects
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `SearchCatalogObjects(SearchCatalogObjectsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `SearchCatalogObjects(SearchCatalogObjectsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `SearchCatalogObjectsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SearchCatalogObjectsRequest` | `Models/SearchCatalogObjectsRequest.cs` |
-| `SearchCatalogObjectsResponse` | `Models/SearchCatalogObjectsResponse.cs` |
+| `SearchCatalogObjectsOperationRequest` | `src/Square/Requests/Catalog/SearchCatalogObjectsOperationRequest.cs` |
+| `SearchCatalogObjectsRequest` | `src/Square/Models/SearchCatalogObjectsRequest.cs` |
+| `SearchCatalogObjectsResponse` | `src/Square/Models/SearchCatalogObjectsResponse.cs` |
 
 ### UpdateCatalogImage
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateCatalogImage(string imageId, UpdateCatalogImageRequest? request, BinaryContent? imageFile, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `request` — nullable, no default → **must pass explicitly**
-  - `imageFile` — nullable, no default → **must pass explicitly**
+- **Signature**: `UpdateCatalogImage(UpdateCatalogImageOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ImageId`
 - **Returns**: `UpdateCatalogImageResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateCatalogImageRequest` | `Models/UpdateCatalogImageRequest.cs` |
-| `UpdateCatalogImageResponse` | `Models/UpdateCatalogImageResponse.cs` |
+| `UpdateCatalogImageOperationRequest` | `src/Square/Requests/Catalog/UpdateCatalogImageOperationRequest.cs` |
+| `UpdateCatalogImageRequest` | `src/Square/Models/UpdateCatalogImageRequest.cs` |
+| `UpdateCatalogImageResponse` | `src/Square/Models/UpdateCatalogImageResponse.cs` |
 
 ### UpdateItemModifierLists
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateItemModifierLists(UpdateItemModifierListsRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateItemModifierLists(UpdateItemModifierListsOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `UpdateItemModifierListsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateItemModifierListsRequest` | `Models/UpdateItemModifierListsRequest.cs` |
-| `UpdateItemModifierListsResponse` | `Models/UpdateItemModifierListsResponse.cs` |
+| `UpdateItemModifierListsOperationRequest` | `src/Square/Requests/Catalog/UpdateItemModifierListsOperationRequest.cs` |
+| `UpdateItemModifierListsRequest` | `src/Square/Models/UpdateItemModifierListsRequest.cs` |
+| `UpdateItemModifierListsResponse` | `src/Square/Models/UpdateItemModifierListsResponse.cs` |
 
 ### UpdateItemTaxes
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpdateItemTaxes(UpdateItemTaxesRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpdateItemTaxes(UpdateItemTaxesOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `UpdateItemTaxesResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpdateItemTaxesRequest` | `Models/UpdateItemTaxesRequest.cs` |
-| `UpdateItemTaxesResponse` | `Models/UpdateItemTaxesResponse.cs` |
+| `UpdateItemTaxesOperationRequest` | `src/Square/Requests/Catalog/UpdateItemTaxesOperationRequest.cs` |
+| `UpdateItemTaxesRequest` | `src/Square/Models/UpdateItemTaxesRequest.cs` |
+| `UpdateItemTaxesResponse` | `src/Square/Models/UpdateItemTaxesResponse.cs` |
 
 ### UpsertCatalogObject
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `UpsertCatalogObject(UpsertCatalogObjectRequest body, RequestOptions? requestOptions = null, CancellationToken ct = default)`
+- **Signature**: `UpsertCatalogObject(UpsertCatalogObjectOperationRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `Body`
 - **Returns**: `UpsertCatalogObjectResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `UpsertCatalogObjectRequest` | `Models/UpsertCatalogObjectRequest.cs` |
-| `UpsertCatalogObjectResponse` | `Models/UpsertCatalogObjectResponse.cs` |
+| `UpsertCatalogObjectOperationRequest` | `src/Square/Requests/Catalog/UpsertCatalogObjectOperationRequest.cs` |
+| `UpsertCatalogObjectRequest` | `src/Square/Models/UpsertCatalogObjectRequest.cs` |
+| `UpsertCatalogObjectResponse` | `src/Square/Models/UpsertCatalogObjectResponse.cs` |
 

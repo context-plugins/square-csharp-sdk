@@ -2,47 +2,50 @@
 
 # CashDrawers — operations
 
-Accessor: `client.CashDrawers` · Source: `Api/CashDrawers.cs` · 3 operations
+Accessor: `client.CashDrawers` · Source: `src/Square/Api/CashDrawers.cs` · 3 operations
 
 **Type sources**: the file declaring each type an operation names (`RawError` excluded — see sdk-map.md).
 
 ### ListCashDrawerShiftEvents
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListCashDrawerShiftEvents(string shiftId, string locationId, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - `limit` — nullable, no default → **must pass explicitly**
-  - `cursor` — nullable, no default → **must pass explicitly**
-- **Query params (wire ← C#)**: `location_id` ← `locationId`, `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListCashDrawerShiftEvents(ListCashDrawerShiftEventsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ShiftId`, `LocationId`
+- **Query params (wire ← C#)**: `location_id` ← `LocationId`, `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListCashDrawerShiftEventsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `ListCashDrawerShiftEventsResponse` | `Models/ListCashDrawerShiftEventsResponse.cs` |
+| `ListCashDrawerShiftEventsRequest` | `src/Square/Requests/CashDrawers/ListCashDrawerShiftEventsRequest.cs` |
+| `ListCashDrawerShiftEventsResponse` | `src/Square/Models/ListCashDrawerShiftEventsResponse.cs` |
 
 ### ListCashDrawerShifts
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `ListCashDrawerShifts(string locationId, SortOrder? sortOrder, string? beginTime, string? endTime, int? limit, string? cursor, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-  - 5 params (`sortOrder` … `cursor`) — nullable, no default → **must pass explicitly** (pass `null` to skip)
-- **Query params (wire ← C#)**: `location_id` ← `locationId`, `sort_order` ← `sortOrder`, `begin_time` ← `beginTime`, `end_time` ← `endTime`, `limit` ← `limit`, `cursor` ← `cursor`
+- **Signature**: `ListCashDrawerShifts(ListCashDrawerShiftsRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `LocationId`
+- **Query params (wire ← C#)**: `location_id` ← `LocationId`, `sort_order` ← `SortOrder`, `begin_time` ← `BeginTime`, `end_time` ← `EndTime`, `limit` ← `Limit`, `cursor` ← `Cursor`
 - **Returns**: `ListCashDrawerShiftsResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `SortOrder` | `Models/Enums/SortOrder.cs` |
-| `ListCashDrawerShiftsResponse` | `Models/ListCashDrawerShiftsResponse.cs` |
+| `ListCashDrawerShiftsRequest` | `src/Square/Requests/CashDrawers/ListCashDrawerShiftsRequest.cs` |
+| `SortOrder` | `src/Square/Models/Enums/SortOrder.cs` |
+| `ListCashDrawerShiftsResponse` | `src/Square/Models/ListCashDrawerShiftsResponse.cs` |
 
 ### RetrieveCashDrawerShift
 
 - **Auth**: `options.Oauth2`
-- **Signature**: `RetrieveCashDrawerShift(string shiftId, string locationId, RequestOptions? requestOptions = null, CancellationToken ct = default)`
-- **Query params (wire ← C#)**: `location_id` ← `locationId`
+- **Signature**: `RetrieveCashDrawerShift(RetrieveCashDrawerShiftRequest request, RequestOptions? requestOptions = null, CancellationToken cancellationToken = default)`
+  - required: `ShiftId`, `LocationId`
+- **Query params (wire ← C#)**: `location_id` ← `LocationId`
 - **Returns**: `RetrieveCashDrawerShiftResponse`
-- **Error**: `SdkException<RawError>` — **Case B**
+- **Error**: `ApiException<RawError>` — **Case B**
 
 | Type | Source |
 | --- | --- |
-| `RetrieveCashDrawerShiftResponse` | `Models/RetrieveCashDrawerShiftResponse.cs` |
+| `RetrieveCashDrawerShiftRequest` | `src/Square/Requests/CashDrawers/RetrieveCashDrawerShiftRequest.cs` |
+| `RetrieveCashDrawerShiftResponse` | `src/Square/Models/RetrieveCashDrawerShiftResponse.cs` |
 
